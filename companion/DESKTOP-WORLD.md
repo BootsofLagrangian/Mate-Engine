@@ -39,6 +39,44 @@ dialogue and resizing take priority over autonomous movement. Moving or closing
 the supporting window requires revalidation and detachment. This is not a full
 physics simulation, jumping planner or arbitrary wall-climbing system.
 
+## Local behavior and occasional model directions
+
+The native host now connects `BehaviorDirector`, `LivingBehavior`, user interest
+points and `DesktopAutonomy`. Quiet waiting does not invoke the LLM. The local
+director schedules long rests, occasional looks, posture changes and exploration,
+using the character profile's bounded `behavior_style`. Conversation, recording,
+dragging and explicit gesture previews take priority over wandering.
+
+Open **행동** to add a named point, drag its small desktop marker, and choose
+**이동** or **살펴보기**. Points persist across launches. Inspecting keeps the pet
+in place; moving still requires a reachable destination on its current support.
+Placing a marker in empty space does not create a floor or a bridge. The marker
+can be hidden independently of its saved target.
+
+An ordinary conversation turn may return `move_to`, `inspect` or `rest` with a
+listed target ID. User commands, model directions and local exploration enter the
+same cancellable intent queue. User commands take priority; repeated action/done
+metadata does not start an action twice. Spoken acknowledgements drain before
+walking resumes. The model receives bounded names and IDs, while the native
+controller owns geometry and checks reachability. Unknown, expired or removed
+targets do not execute. A small model can still verbally promise an unavailable
+action; rejecting the command does not guarantee correct dialogue semantics.
+
+External observations can use `observe_interest(id, point, confidence, ttl, kind,
+label)`. They expire, are bounded in number, and cannot overwrite user or support
+IDs. This is the connection point for future recognition and prop providers;
+neither screen recognition nor prop rendering is implied by receiving an interest.
+
+Motion clips remain reusable humanoid assets. Walking phase follows actual window
+displacement; stance IK compensates that movement in the rig's 3D frame. This is
+a bounded animation/contact controller, not full-body dynamics. The desktop
+support is still a horizontal projected surface. Depth used by leg motion and
+body turns is distinct from navigating a general 3D desktop world.
+
+See [native behavior controls](native/README.md)
+and the component evidence in `diagnostics/behavior/` and
+`diagnostics/liveliness/`.
+
 ## Planned: props and tools
 
 These are extension requirements, **not implemented capabilities**. Start with a

@@ -4,7 +4,15 @@
 슈발·라이스·에이신 프로필, 음성 입력 Thinker + 전용 Uma TTS, 작업 에이전트,
 VRMA 동작과 데스크톱 이동은 [범용 엔진](engine/README.md)으로 연결됩니다.
 창 경계 상호작용과 향후 소품 확장은 [Desktop world 계획](DESKTOP-WORLD.md)에 정리했습니다.
-아래는 기존 브라우저/Unity 어댑터의 실행 방법입니다.
+Windows에서는 [Launch-Mate.cmd](windows/Launch-Mate.cmd)로 실행합니다.
+**행동** 탭에서 이름 있는 지점을 만들고 표식을 끌어 배치한 뒤 이동·살펴보기를
+요청할 수 있습니다. 자율 대기에는 LLM 호출이 필요하지 않으며, 대화 중 받은
+간헐적 행동 지시도 같은 제어기로 연결됩니다.
+
+## 기존 브라우저 / Unity 어댑터
+
+이하 실행 방법과 모델 설명은 기존 어댑터용입니다. 현재 네이티브 호스트의
+음성 입력 모델은 Qwen2.5-Omni 3B Thinker이며 전용 Uma TTS를 사용합니다.
 
 Mate Engine에 Cheval Grand의 대화, 음성 인식, 음성 합성, 표정·행동을 연결합니다. Unity 없이 실행할 수 있는 브라우저 화면도 같은 로컬 서버를 사용합니다.
 

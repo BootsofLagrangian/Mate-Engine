@@ -1,0 +1,43 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+LIVELINESS_CHECK matching authored behavior profile loaded true {}
+LIVELINESS_CHECK director uses matching authored profile true {"effective_style":{"curiosity":0.3,"gaze_hold_s":2.8,"idle_interval_s":15.0,"posture_strength":0.35,"response_delay_s":0.5}}
+LIVELINESS_CHECK meaningful quiet gaps true {"intervals":[21.3000000000002,29.5000000000006],"quiet_seconds":54.9999999999994}
+LIVELINESS_CHECK varied director states true {"states":["rest","approach","arrive","curious","anticipate","walk","sleepy"]}
+LIVELINESS_CHECK stationary head avoids jitter true {"allframe_peak_acceleration":508.443031311035,"allframe_peak_speed":86.1500854492188,"head_excursions_over3deg":13,"p95_acceleration":2.37595751881599,"p95_speed":1.72475123405457,"peak_acceleration":46.5213131904602,"peak_speed":3.26444530487061}
+LIVELINESS_CHECK purposeful glances stay bounded true {"measured_frames":76,"p95_acceleration":59.2667770385742,"p95_speed":18.041130065918,"peak_acceleration":65.0980353355408,"peak_speed":18.2097911834717}
+LIVELINESS_CHECK unknown target explicitly rejected true {"accepted":false,"reason":"unknown_target"}
+LIVELINESS_CHECK user and LLM use same unknown-target path true {"llm":{"accepted":false,"reason":"unknown_target"},"user":{"accepted":false,"reason":"unknown_target"}}
+LIVELINESS_CHECK unknown action explicitly rejected true {"accepted":false,"reason":"invalid"}
+LIVELINESS_CHECK catalogued unreachable point reports terminal status true {"outcomes":[{"id":"local:3","outcome":"arrived","time":59.5333333333325},{"id":"probe:unreachable","outcome":"unreachable","time":94.0333333333306}]}
+LIVELINESS_CHECK known user target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK visible anticipatory gaze before desktop travel true {"anticipate_start":100.566666666664,"first_gaze":100.83333333333,"first_motion":104.13333333333,"lead_seconds":3.29999999999981}
+LIVELINESS_CHECK directed journey covers 200 desktop pixels true {"distance":865.0}
+LIVELINESS_CHECK known llm target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK travel starts before speaking preemption true {}
+LIVELINESS_CHECK speaking stops within first post-context frame true {"first_frame_displacement":0.0,"first_frame_speed":0.0}
+LIVELINESS_CHECK speaking holds desktop position true {"drift":0.0}
+LIVELINESS_CHECK speaking release does not instantly restart obsolete travel true {}
+LIVELINESS_CHECK speaking resumes eligible behavior true {"elapsed":4.29999999999976,"state":"rest"}
+LIVELINESS_CHECK known llm target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK travel starts before dragging preemption true {}
+LIVELINESS_CHECK dragging stops within first post-context frame true {"first_frame_displacement":0.0,"first_frame_speed":0.0}
+LIVELINESS_CHECK dragging holds desktop position true {"drift":0.0}
+LIVELINESS_CHECK dragging release does not instantly restart obsolete travel true {}
+LIVELINESS_CHECK dragging resumes eligible behavior true {"elapsed":4.29999999999976,"state":"rest"}
+LIVELINESS_CHECK known llm target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK travel starts before panel preemption true {}
+LIVELINESS_CHECK panel stops within first post-context frame true {"first_frame_displacement":0.0,"first_frame_speed":0.0}
+LIVELINESS_CHECK panel holds desktop position true {"drift":0.0}
+LIVELINESS_CHECK panel release does not instantly restart obsolete travel true {}
+LIVELINESS_CHECK panel resumes eligible behavior true {"elapsed":4.29999999999976,"state":"rest"}
+LIVELINESS_CHECK non-vacuous planted-foot coverage true {"epochs":46,"exclusions":{"not_walking":3650,"turning":0,"unplanted_or_blending":5},"measured_frames":929,"walking_frames":934}
+LIVELINESS_CHECK actual desktop planted ankle drift true {"max_px":0.0539257936179638,"p95_px":0.0001220703125,"sole_reference_max_px":0.0539257936179638,"support_height_peak_px":0.0166015625}
+LIVELINESS_CHECK gait phase freezes without desktop displacement true {"moving_phase_residual":0.00147275203207683,"peak_phase_drift":0.0}
+LIVELINESS_CHECK known user target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK interrupted turn has nonzero heading velocity true {}
+LIVELINESS_CHECK speaking preempts mid-turn desktop departure true {}
+LIVELINESS_CHECK turn heading derivative limits true {"acceleration_deg_s2":100.008312846244,"speed_deg_s":70.0001840863053}
+LIVELINESS_CHECK departure heading aligned true {"max_error_degrees":0.0034697309702055}
+LIVELINESS_CHECK turn actual desktop support drift true {"epochs":24,"max_ankle_px":0.0001220703125,"max_sole_reference_px":0.0,"supported_frames":372,"turn_frames":402,"unsupported_seconds":1.0}
+LIVELINESS_RESULT failures=0 frames=4931 report=/home/hard2251/workspace/mate-engine/Mate-Engine/companion/diagnostics/liveliness/turn-results/rice-shower-30fps/report.json

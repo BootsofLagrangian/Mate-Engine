@@ -38,6 +38,9 @@ func _process(_delta: float) -> bool:
 	_test_pet_scale()
 	_test_surface_wiring()
 	_test_panel_vrma_and_autonomy()
+	_test_interest_points()
+	_test_interest_markers()
+	_test_panel_behavior_tab()
 	_test_vrm_runtime()
 	print("\nselftest: %d passed, %d failed (%d ms)" % [_passed, _failures.size(), Time.get_ticks_msec() - t0])
 	for f in _failures:
@@ -988,6 +991,270 @@ func _test_panel_vrma_and_autonomy() -> void:
 	check(panel._surface_status.text == "표면 걷기: 창 3개", "surface status label")
 	var budget := ControlPanel.PANEL_WIDTH - 30.0
 	check(panel.widest_child()["width"] <= budget, "new roaming/surface section keeps the panel within the CJK budget (%s)" % str(panel.widest_child()))
+	panel.queue_free()
+
+
+## Interest points as pure data: validation of persisted/untrusted entries, stable never-reused ids,
+## the MAX_POINTS cap, catalog without coordinates, and off-screen points parked instead of movable.
+func _test_interest_points() -> void:
+	print("[interest points: validation + persistence]")
+	check(InterestPoints.is_valid_id("pt_1") and InterestPoints.is_valid_id("win:1A/x.y@z-") and not InterestPoints.is_valid_id("") and not InterestPoints.is_valid_id("한글") and not InterestPoints.is_valid_id("a b") and not InterestPoints.is_valid_id("x".repeat(97)), "id charset/length follows the backend target id rule")
+	check(InterestPoints.sanitize_label("  책상  왼쪽\n ", "f") == "책상  왼쪽", "label strips control chars and edges")
+	check(InterestPoints.sanitize_label("", "지점 3") == "지점 3" and InterestPoints.sanitize_label(42, "f") == "f", "empty/non-string label falls back")
+	check(InterestPoints.sanitize_label("x".repeat(80), "f").length() == InterestPoints.LABEL_MAX, "label capped at LABEL_MAX")
+	check(InterestPoints.sanitize_kind("prop") == "prop" and InterestPoints.sanitize_kind("pointer") == "point" and InterestPoints.sanitize_kind(null) == "point", "kind limited to saved-point kinds, default point")
+	check(InterestPoints.sanitize_coord(12.6) == 13 and InterestPoints.sanitize_coord(-1920) == -1920 and InterestPoints.sanitize_coord(NAN) == null and InterestPoints.sanitize_coord(INF) == null and InterestPoints.sanitize_coord(1e9) == null and InterestPoints.sanitize_coord("5") == null, "coordinates: finite, bounded, rounded to int")
+	check(InterestPoints.sanitize_point({"id": "pt_2", "label": "a", "x": 1.0, "y": 2.0}, "f") == {"id": "pt_2", "label": "a", "kind": "point", "x": 1, "y": 2}, "JSON floats become ints, missing kind defaults")
+	check(InterestPoints.sanitize_point({"id": "pt_2", "label": "a", "x": 1}, "f").is_empty() and InterestPoints.sanitize_point({"id": "bad id", "x": 1, "y": 1}, "f").is_empty() and InterestPoints.sanitize_point("junk", "f").is_empty(), "missing coordinate / bad id / non-dict entries are dropped")
+
+	var ip := InterestPoints.new()
+	root.add_child(ip)
+	ip.screen_provider = func() -> Array: return [Rect2i(0, 0, 1920, 1040), Rect2i(-1280, 200, 1280, 1024)]
+	var changes: Array = [] # lambdas capture ints by value; count with an array
+	ip.changed.connect(func(): changes.append(1))
+	# Persisted file with JSON floats, a duplicate id, a corrupt entry and an old counter.
+	ip.set_points({"points": [
+		{"id": "pt_3", "label": "모니터", "kind": "point", "x": 100.0, "y": 200.0},
+		{"id": "pt_3", "label": "dup", "kind": "point", "x": 1, "y": 1},
+		{"id": "pt_7", "label": "", "kind": "weird", "x": -1000.0, "y": 600.0},
+		{"id": "pt_9", "label": "nan", "x": NAN, "y": 1},
+	], "next_id": 2.0})
+	check(ip.count() == 2 and changes.size() == 1, "load keeps 2 of 4 entries (dup/corrupt dropped) and emits once (%d, %d)" % [ip.count(), changes.size()])
+	check(ip.get_point("pt_7") == {"id": "pt_7", "label": "지점 2", "kind": "point", "x": -1000, "y": 600}, "repaired entry: fallback label, default kind, int coords (%s)" % str(ip.get_point("pt_7")))
+	check(ip.sanitized_data()["next_id"] == 8, "id counter never moves below the highest loaded id (%s)" % str(ip.sanitized_data()["next_id"]))
+	ip.set_points(ip.sanitized_data())
+	check(changes.size() == 1, "re-applying the same data does not emit")
+	var added := ip.add_point("새 지점", Vector2i(300, 300))
+	check(added == "pt_8" and ip.count() == 3 and changes.size() == 2, "add assigns the next stable id (%s)" % added)
+	check(ip.rename_point("pt_8", "  키보드 ") and ip.get_point("pt_8")["label"] == "키보드" and ip.get_point("pt_8")["id"] == "pt_8", "rename keeps the id")
+	check(ip.rename_point("pt_8", "키보드") and changes.size() == 3, "no-op rename does not emit")
+	check(ip.move_point("pt_8", Vector2i(400, 401)) and ip.position_of("pt_8") == Vector2i(400, 401) and changes.size() == 4, "move updates coordinates")
+	check(not ip.move_point("pt_8", Vector2i(InterestPoints.COORD_LIMIT + 1, 0)) and ip.position_of("pt_8") == Vector2i(400, 401), "out-of-bounds move refused")
+	check(not ip.rename_point("nope", "x") and not ip.remove_point("nope") and ip.get_point("nope").is_empty(), "unknown ids are refused")
+	check(ip.remove_point("pt_8") and ip.count() == 2 and ip.add_point("다시", Vector2i(1, 1)) == "pt_9", "removed id is never reused")
+	while not ip.is_full():
+		ip.add_point("", Vector2i(10, 10))
+	check(ip.count() == InterestPoints.MAX_POINTS and ip.add_point("overflow", Vector2i(0, 0)) == "", "capped at %d, overflow add returns empty id" % InterestPoints.MAX_POINTS)
+	check(ip.get_point("pt_10")["label"] == "지점 10", "empty label defaults to the numbered name")
+	var cat := ip.catalog()
+	var cat_ok := cat.size() == InterestPoints.MAX_POINTS
+	for c in cat:
+		cat_ok = cat_ok and c.keys().size() == 3 and c.has("id") and c.has("label") and c.has("kind") and InterestPoints.is_valid_id(c["id"]) and InterestPoints.KINDS.has(c["kind"])
+	check(cat_ok, "catalog is exactly [{id,label,kind}] without coordinates")
+	var data := ip.sanitized_data()
+	var ip2 := InterestPoints.new()
+	ip2.set_points(JSON.parse_string(JSON.stringify(data)))
+	check(ip2.sanitized_data() == data, "sanitized_data survives a JSON round trip unchanged")
+	ip2.free()
+	ip.set_points("garbage")
+	check(ip.count() == 0 and ip.sanitized_data()["next_id"] == 15, "garbage input clears the list but keeps the counter (%s)" % str(ip.sanitized_data()))
+	ip.set_points([{"id": "pt_1", "label": "a", "x": 5, "y": 5}])
+	check(ip.count() == 1 and ip.sanitized_data()["next_id"] == 15, "bare array accepted; counter still never goes backwards")
+	# Screen validation: negative-origin monitor is valid, a point off every monitor is parked.
+	ip.add_point("왼쪽 모니터", Vector2i(-640, 700))
+	var parked := ip.add_point("사라진 모니터", Vector2i(2500, 300))
+	check(ip.point_status("pt_1") == "ready" and ip.point_status("pt_15") == "ready" and ip.point_status(parked) == "parked" and ip.point_status("nope") == "missing", "status: on-screen ready, negative origin ready, off-screen parked")
+	check(ip.reachable("pt_15") and not ip.reachable(parked), "parked points are never reachable for movement")
+	var rows := ip.rows()
+	check(rows.size() == 3 and rows[2]["status_text"] == "화면 밖 · 보류" and rows[0]["status_text"] == "화면 안", "rows carry readable status text")
+	ip.screen_provider = func() -> Array: return [Rect2i(0, 0, 3000, 1000)]
+	check(ip.reachable(parked) and not ip.reachable("pt_15"), "status follows the current monitors, data stays saved")
+	# Regression: a pin dropped exactly on the work-area floor (usable rect bottom, y == end.y) is a
+	# valid target; the right edge column (x == end.x) is not, nor is one pixel below the floor.
+	var work := [Rect2i(0, 0, 1920, 1040)]
+	check(InterestPoints.point_on_screens(Vector2i(960, 1040), work), "floor pixel y == bottom is on screen")
+	check(InterestPoints.point_on_screens(Vector2i(0, 0), work) and InterestPoints.point_on_screens(Vector2i(1919, 1040), work), "top-left origin and bottom-right (last column, floor row) are on screen")
+	check(not InterestPoints.point_on_screens(Vector2i(1920, 500), work) and not InterestPoints.point_on_screens(Vector2i(-1, 500), work), "right edge column and left of origin are off screen")
+	check(not InterestPoints.point_on_screens(Vector2i(960, 1041), work) and not InterestPoints.point_on_screens(Vector2i(960, -1), work), "one pixel below the floor / above the top is off screen")
+	check(InterestPoints.point_on_screens(Vector2i(-1, 1224), [Rect2i(-1280, 200, 1280, 1024)]) and not InterestPoints.point_on_screens(Vector2i(0, 1224), [Rect2i(-1280, 200, 1280, 1024)]), "negative-origin monitor: floor row valid, its right edge column excluded")
+	check(InterestPoints.point_on_screens(Vector2i(5, 5), [Rect2(0, 0, 10, 10)]) and not InterestPoints.point_on_screens(Vector2i(5, 5), [Rect2i(0, 0, 0, 0), "junk", null]), "Rect2 accepted; empty/garbage rects ignored")
+	var floor_id := ip.add_point("바닥", Vector2i(1500, 1000))
+	check(ip.point_status(floor_id) == "ready" and ip.reachable(floor_id), "a saved point on the floor row of the current monitor is ready, not parked")
+	ip.anchor_provider = func() -> Vector2: return Vector2(1200.4, 640.6)
+	check(ip.suggest_position() == Vector2i(1200, 640) + Vector2i(InterestPoints.ADD_STAGGER * ip.count(), 0) and ip.count() == 4, "new points start at the host anchor, staggered per existing point (%s)" % str(ip.suggest_position()))
+	ip.queue_free()
+
+
+## Marker windows without touching the OS: in headless mode native sub-windows are unavailable, so
+## the marker nodes stay hidden while every geometry/lifecycle rule (tip == point, drag commit,
+## focus-loss/close cleanup, delete/hide/exit cleanup, parked points never get a window) is checked.
+func _test_interest_markers() -> void:
+	print("[interest markers: geometry + lifecycle]")
+	check(InterestPoints.tip_of(InterestPoints.marker_position_for(Vector2i(-333, 777))) == Vector2i(-333, 777), "window position <-> tip is an exact integer round trip")
+	var poly := InterestPoints.pin_polygon()
+	check(not Geometry2D.triangulate_polygon(poly).is_empty(), "pin outline is renderable without self-intersection")
+	check(Geometry2D.is_point_in_polygon(Vector2(InterestPoints.MARKER_TIP) - Vector2(0.0, 1.5), poly) and Geometry2D.is_point_in_polygon(Vector2(18, 15), poly) and not Geometry2D.is_point_in_polygon(Vector2(2, 44), poly), "passthrough polygon covers head and tip only")
+	var pb := Rect2(poly[0], Vector2.ZERO)
+	for p in poly:
+		pb = pb.expand(p)
+	check(pb.position.x >= 0 and pb.position.y >= 0 and pb.end.x <= InterestPoints.MARKER_SIZE.x and pb.end.y <= InterestPoints.MARKER_SIZE.y, "pin fits inside the marker window")
+	var ip := InterestPoints.new()
+	root.add_child(ip)
+	ip.screen_provider = func() -> Array: return [Rect2i(0, 0, 1920, 1080)]
+	var st := ip.marker_status()
+	check(not bool(st["ok"]) and not str(st["reason"]).is_empty() and not ip.markers_available(), "headless: markers reported unavailable with a readable reason (%s)" % str(st["reason"]))
+	var a := ip.add_point("A", Vector2i(500, 500))
+	var b := ip.add_point("B", Vector2i(900, 200))
+	var parked := ip.add_point("P", Vector2i(5000, 5000))
+	check(ip.marker_count() == 0, "no marker nodes before the toggle")
+	var marker_events: Array = []
+	ip.markers_changed.connect(func(): marker_events.append(1))
+	ip.set_markers_visible(true)
+	check(ip.markers_shown and marker_events.size() == 1 and ip.marker_count() == 2 and ip.marker_for(parked) == null, "toggle on: one marker per on-screen point, none for the parked one")
+	var ma: Window = ip.marker_for(a)
+	check(ma != null and not ma.visible and ma.get_parent() == ip and ma.position == Vector2i(500, 500) - InterestPoints.MARKER_TIP and ma.size == InterestPoints.MARKER_SIZE, "marker node is a hidden child window whose tip sits on the point (no OS window in headless)")
+	check(ma.always_on_top and ma.borderless and ma.transparent and ma.unfocusable and ma.unresizable and ma.mouse_passthrough_polygon.size() == poly.size(), "marker flags: always on top, borderless, transparent, unfocusable, pin-only hit area")
+	var placed: Array = []
+	ip.point_placed.connect(func(id: String, pos: Vector2i): placed.append([id, pos]))
+	var changes: Array = []
+	ip.changed.connect(func(): changes.append(1))
+	ma.drag_begin(Vector2i(510, 470)) # grab 10 px right of the window origin... relative to tip
+	ma.drag_update(Vector2i(610, 520))
+	check(ma.dragging and ma.position == Vector2i(500, 500) - InterestPoints.MARKER_TIP + Vector2i(100, 50), "drag keeps the grab offset")
+	check(ip.position_of(a) == Vector2i(500, 500) and changes.is_empty(), "point is not moved until the drag ends")
+	ma.drag_end()
+	check(not ma.dragging and ip.position_of(a) == Vector2i(600, 550) and placed == [[a, Vector2i(600, 550)]] and changes.size() == 1, "release commits the tip pixel exactly (%s)" % str(ip.position_of(a)))
+	ma.drag_end()
+	check(placed.size() == 1, "a second release without a drag is a no-op")
+	ma.drag_begin(Vector2i(600, 550))
+	ma.drag_update(Vector2i(650, 550))
+	ma._on_focus_lost()
+	check(not ma.dragging and ip.position_of(a) == Vector2i(650, 550), "focus loss ends the drag where the window is")
+	ip.move_point(b, Vector2i(910, 210))
+	check(ip.marker_for(b).position == Vector2i(910, 210) - InterestPoints.MARKER_TIP, "data move repositions the marker")
+	ip.rename_point(b, "B2")
+	check(ip.marker_for(b)._pin.label_text == "B2" and ip.marker_for(b)._pin.number == 2, "marker shows the number and follows renames")
+	ip.remove_point(b)
+	check(ip.marker_count() == 1 and ip.marker_for(b) == null and ip.count() == 2, "delete frees that marker window")
+	ip.screen_provider = func() -> Array: return [Rect2i(0, 0, 8000, 8000)]
+	ip.set_markers_visible(true)
+	check(ip.marker_count() == 2 and ip.marker_for(parked) != null, "a point that becomes reachable gets its marker on the next sync")
+	ip.screen_provider = func() -> Array: return [Rect2i(0, 0, 1920, 1080)]
+	ip.set_markers_visible(true)
+	check(ip.marker_count() == 1 and ip.marker_for(parked) == null and ip.has_point(parked), "a point that leaves the screens loses its window but stays saved")
+	var mb: Window = ip.marker_for(a)
+	mb.drag_begin(Vector2i(650, 550))
+	mb._on_close()
+	check(not ip.markers_shown and ip.marker_count() == 0 and marker_events.size() == 2 and ip.position_of(a) == Vector2i(650, 550), "closing a marker ends its drag and hides all markers")
+	ip.set_markers_visible(true)
+	check(ip.marker_count() == 1, "markers come back on request")
+	ip.set_markers_visible(false)
+	check(ip.marker_count() == 0 and ip.get_child_count() == 0, "toggle off frees every marker node")
+	ip.set_markers_visible(true)
+	root.remove_child(ip)
+	check(ip.marker_count() == 0 and ip.get_child_count() == 0 and ip.count() == 2, "leaving the tree frees markers, data intact")
+	root.add_child(ip)
+	ip.set_markers_visible(true)
+	var live := ip.marker_for(a)
+	ip.free()
+	check(not is_instance_valid(live) or (live.get_parent() == null and live.is_queued_for_deletion()), "freeing the manager releases its marker windows")
+
+
+## Behavior tab: liveliness toggle/state, the interest point list bound to a real InterestPoints
+## manager (add -> markers on for placing, rename/remove, go/inspect only for reachable points)
+## and the unbound mode where the host feeds rows and consumes the request signals.
+func _test_panel_behavior_tab() -> void:
+	print("[panel: behavior tab]")
+	_ensure_settings_singleton()
+	var panel := ControlPanel.new()
+	root.add_child(panel)
+	var tab_names: Array = []
+	for i in panel._tabs.get_tab_count():
+		tab_names.append(panel._tabs.get_tab_title(i))
+	check(tab_names.has("행동") and tab_names.has("대화") and tab_names.has("모션") and tab_names.has("작업") and tab_names.has("설정"), "behavior tab added next to the existing tabs (%s)" % str(tab_names))
+	var got: Array = []
+	panel.setting_changed.connect(func(k: String, v: Variant): got.append([k, v]))
+	check(panel.behavior_enabled(), "behavior enabled by default")
+	panel._behavior_check.button_pressed = false
+	check(got.has(["behavior_enabled", false]), "toggle emits behavior_enabled")
+	got.clear()
+	panel.set_behavior_enabled(true)
+	check(panel.behavior_enabled() and got.is_empty(), "host mirror does not re-emit")
+	check(ControlPanel.behavior_state_text("move_to", "책상") == "'책상' 쪽으로 가는 중" and ControlPanel.behavior_state_text("inspect", "창") == "제자리에서 '창' 살펴보는 중" and ControlPanel.behavior_state_text("rest", "") == "쉬는 중" and ControlPanel.behavior_state_text("", "") == "자유롭게 지내는 중" and ControlPanel.behavior_state_text("move_to", "x", false) == "스스로 행동 끔 · 산책만", "readable state wording without protocol names")
+	panel.set_behavior_state(ControlPanel.behavior_state_text("inspect", "창"))
+	check(panel._behavior_state.text == "지금: 제자리에서 '창' 살펴보는 중", "state label")
+	panel.set_behavior_enabled(false)
+	check(panel._behavior_state.text == "지금: 스스로 행동 끔 · 산책만", "disabling explains the state")
+	panel.set_behavior_enabled(true)
+
+	# Bound to a real manager.
+	var ip := InterestPoints.new()
+	root.add_child(ip)
+	ip.screen_provider = func() -> Array: return [Rect2i(0, 0, 1920, 1080)]
+	ip.anchor_provider = func() -> Vector2: return Vector2(700, 500)
+	panel.bind_interest_points(ip)
+	var requests: Array = []
+	panel.point_add_requested.connect(func(l: String): requests.append(["add", l]))
+	panel.point_rename_requested.connect(func(id: String, l: String): requests.append(["rename", id, l]))
+	panel.point_remove_requested.connect(func(id: String): requests.append(["remove", id]))
+	var markers: Array = []
+	panel.markers_toggled.connect(func(on: bool): markers.append(on))
+	var goes: Array = []
+	panel.point_go.connect(func(id: String): goes.append(["go", id]))
+	panel.point_inspect.connect(func(id: String): goes.append(["inspect", id]))
+	check(panel._point_go.disabled and panel._point_inspect.disabled and panel._point_rename.disabled and panel._point_remove.disabled and not panel._point_add.disabled, "empty list: only add enabled")
+	panel._point_name.text = " 모니터 왼쪽 "
+	panel._request_add_point()
+	check(ip.count() == 1 and ip.get_point("pt_1")["label"] == "모니터 왼쪽" and ip.position_of("pt_1") == Vector2i(700, 500), "add creates the point near the pet with the typed name")
+	check(requests == [["add", "모니터 왼쪽"]] and panel._point_name.text.is_empty(), "add signal fired, input cleared")
+	check(panel.selected_point_id() == "pt_1" and panel.markers_shown() and ip.markers_shown and markers == [true], "new point selected and markers shown for placing")
+	check(panel._point_list.item_count == 1 and panel._point_list.get_item_text(0).contains("모니터 왼쪽") and panel._point_list.get_item_text(0).contains("화면 안"), "list row shows name and readable status (%s)" % panel._point_list.get_item_text(0))
+	check(not panel._point_go.disabled and not panel._point_inspect.disabled, "reachable selection enables go/inspect")
+	check(panel._point_inspect.tooltip_text.contains("제자리") and panel._point_inspect.tooltip_text.contains("걸어가지 않음") and panel._point_go.tooltip_text.contains("걸어갑니다"), "tooltips: inspect stays put and looks, go walks")
+	panel._markers_check.button_pressed = false
+	check(panel._point_hint.text.contains("살펴보기는 제자리") and panel._point_hint.text.contains("가보기는") and not panel._point_hint.text.contains("움직입니다"), "hint no longer says inspect moves (%s)" % panel._point_hint.text)
+	panel._markers_check.button_pressed = true
+	markers.clear()
+	markers.append(true)
+	check(panel._point_hint.text.contains("표식 창 사용 불가"), "headless: hint explains markers cannot be shown here (%s)" % panel._point_hint.text)
+	panel._point_go.pressed.emit()
+	panel._point_inspect.pressed.emit()
+	check(goes == [["go", "pt_1"], ["inspect", "pt_1"]], "go/inspect emit the selected id (%s)" % str(goes))
+	panel._point_name.text = "왼쪽 화면"
+	panel._request_rename_point()
+	check(ip.get_point("pt_1")["label"] == "왼쪽 화면" and panel._point_list.get_item_text(0).contains("왼쪽 화면") and requests[-1] == ["rename", "pt_1", "왼쪽 화면"] and panel.selected_point_id() == "pt_1", "rename applied, list refreshed, selection kept")
+	panel._request_rename_point()
+	check(ip.get_point("pt_1")["label"] == "왼쪽 화면" and panel._point_hint.text.contains("바꿀 이름"), "rename with an empty name is refused with a hint")
+	ip.screen_provider = func() -> Array: return [Rect2i(-1920, 0, 1920, 1080)]
+	ip.set_points(ip.sanitized_data()) # no data change -> no signal; the panel refreshes on the next change
+	ip.add_point("보이는 곳", Vector2i(-100, 100))
+	panel.select_point("pt_1")
+	check(panel._point_go.disabled and panel._point_inspect.disabled and panel._point_hint.text.contains("화면 밖"), "parked selection disables go/inspect and explains why")
+	panel.select_point("pt_2")
+	check(not panel._point_go.disabled, "reachable point on a negative-origin monitor is allowed")
+	panel._markers_check.button_pressed = false
+	check(markers == [true, false] and not ip.markers_shown and ip.marker_count() == 0, "marker toggle off hides/frees markers")
+	panel.select_point("pt_1")
+	panel._request_remove_point()
+	check(ip.count() == 1 and not ip.has_point("pt_1") and requests[-1] == ["remove", "pt_1"] and panel._point_list.item_count == 1, "remove deletes the point and refreshes the list")
+	while not ip.is_full():
+		ip.add_point("", Vector2i(-50, 50))
+	check(panel._point_add.disabled and panel._point_hint.text.contains("가득"), "full list disables add")
+	var before := ip.count()
+	panel._point_name.text = "overflow"
+	panel._request_add_point()
+	check(ip.count() == before, "add ignored when full")
+	# Unbound mode: host feeds rows, panel emits requests only.
+	panel.bind_interest_points(null)
+	panel.set_interest_points([{"id": "w:1", "label": "창", "status": "ready"}, {"id": "w:2", "label": "멀리", "status": "parked"}])
+	panel.select_point("w:2")
+	check(panel._point_list.item_count == 2 and panel._point_go.disabled and panel.interest_point_rows().size() == 2, "unbound rows with parked status")
+	panel.select_point("w:1")
+	panel._point_name.text = "새 이름"
+	requests.clear()
+	panel._request_rename_point()
+	panel._request_remove_point()
+	panel._point_name.text = "추가할 곳"
+	panel._request_add_point()
+	check(requests == [["rename", "w:1", "새 이름"], ["remove", "w:1"], ["add", "추가할 곳"]] and panel._point_list.item_count == 2, "unbound: requests emitted, list untouched until the host answers")
+	ip.add_point("x", Vector2i(0, 0))
+	check(panel._point_list.item_count == 2, "unbound panel no longer follows the old manager")
+	var budget := ControlPanel.PANEL_WIDTH - 30.0
+	check(panel.widest_child()["width"] <= budget, "behavior tab keeps the panel within the CJK budget (%s)" % str(panel.widest_child()))
+	# The opt-in Windows probe must at least parse here; it refuses to run off Windows (exit 2).
+	var probe: GDScript = load("res://tools/probe_windows_points.gd")
+	check(probe != null and probe.can_instantiate(), "tools/probe_windows_points.gd compiles (headless parse only)")
+	ip.queue_free()
 	panel.queue_free()
 
 

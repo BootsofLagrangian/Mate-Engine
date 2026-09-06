@@ -1,0 +1,147 @@
+{
+  "scope": "Packaged Windows stepped-motion milestone before new authored-asset integration",
+  "executable_bytes": 96856904,
+  "executable_sha256": "a497b995e22242d4d761e6c1da37941f66359f3d846e67acc3a1999394d64496",
+  "liveliness_checks": 40,
+  "liveliness_failures": 0,
+  "controlled_run_valid": true,
+  "capture_count": 1325,
+  "capture_errors": 0,
+  "voice_intent": {
+    "checks": [
+      {
+        "label": "live native avatar and backend ready",
+        "ok": true
+      },
+      {
+        "label": "actual monitor floor ready for movement",
+        "ok": true
+      },
+      {
+        "label": "named left target available",
+        "ok": true
+      },
+      {
+        "label": "GPU reply completed and actual voice drained",
+        "ok": true
+      },
+      {
+        "label": "GPU returned valid Japanese dialogue",
+        "ok": true
+      },
+      {
+        "label": "streamed dedicated voice received without dropped frames",
+        "ok": true
+      },
+      {
+        "label": "real model requests the listed left target",
+        "ok": true
+      },
+      {
+        "label": "action and done carry identical intent",
+        "ok": true
+      },
+      {
+        "label": "pet stays in place during actual spoken acknowledgement",
+        "ok": true
+      },
+      {
+        "label": "native controller reports actual arrival",
+        "ok": true
+      },
+      {
+        "label": "actual Windows window moved left by over 120 pixels",
+        "ok": true
+      },
+      {
+        "label": "action/done duplicates produce one arrival",
+        "ok": true
+      }
+    ],
+    "failures": 0,
+    "first_pcm_ms": 968,
+    "speech_drift_px": 0.0,
+    "window_start": "(890, 672)",
+    "window_end": "(-354, 672)",
+    "outcomes": [
+      {
+        "id": "t1-5163:intent",
+        "outcome": "arrived",
+        "time": 32.4891799999992
+      }
+    ],
+    "renderer": "NVIDIA GeForce RTX 4090"
+  },
+  "voice_capture_count": 175,
+  "voice_capture_errors": 0,
+  "world_checks": [
+    {
+      "label": "avatar and motions ready",
+      "ok": true
+    },
+    {
+      "label": "actual fixture detected by Windows source",
+      "ok": true
+    },
+    {
+      "label": "foot attaches to actual window top",
+      "ok": true
+    },
+    {
+      "label": "manual scale applies",
+      "ok": true
+    },
+    {
+      "label": "scale preserves support height",
+      "ok": true
+    },
+    {
+      "label": "surface target accepted",
+      "ok": true
+    },
+    {
+      "label": "actual native window moved laterally",
+      "ok": true
+    },
+    {
+      "label": "opening panel pauses actual movement",
+      "ok": true
+    },
+    {
+      "label": "manual sit reattaches seat on window",
+      "ok": true
+    },
+    {
+      "label": "talking retains seated contact",
+      "ok": true
+    },
+    {
+      "label": "closed support detaches and stands",
+      "ok": true
+    },
+    {
+      "label": "actual workarea floor attaches",
+      "ok": true
+    },
+    {
+      "label": "measured sole matches actual floor",
+      "ok": true
+    },
+    {
+      "label": "visible bounds and sole agree",
+      "ok": true
+    },
+    {
+      "label": "actual floor lateral target accepted",
+      "ok": true
+    },
+    {
+      "label": "actual native window walks along floor",
+      "ok": true
+    },
+    {
+      "label": "owned geometry helper stopped",
+      "ok": true
+    }
+  ]
+}

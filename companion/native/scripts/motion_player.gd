@@ -26,6 +26,9 @@ var _vrma_loop := false
 var _vrma_repeat := 1
 var _vrma_intensity := 1.0
 var _transition_from: Dictionary = {}
+var _transition_velocity: Dictionary = {}
+var _previous_pose: Dictionary = {}
+var _pose_velocity: Dictionary = {}
 var _transition_start := 0.0
 const TRANSITION_SECONDS := 0.45
 var _facing_target := 0.0
@@ -34,6 +37,17 @@ var _contact_pose := "foot"
 var _contact_hand := "right"
 var _contact_target := Vector3.INF
 var contact_reachable := false
+var gait := DesktopGait.new()
+var turn := TurnStepper.new()
+var _heading_pending := false
+const HEADING_SPEED := deg_to_rad(70.0)
+const HEADING_ACCEL := deg_to_rad(100.0)
+var _ambient_name := "rest"
+var _ambient_strength := 0.0
+var _ambient_target := 0.0
+var _ambient_look := Vector2.INF
+var _ambient_pose: Dictionary = {}
+var _ambient_velocity: Dictionary = {}
 var avatar: VrmAvatar
 var bank: MotionBank = MotionBank.new()
 var idle_enabled := true
@@ -61,6 +75,7 @@ var _blink_next := 2.0
 var _blink_phase := -1.0
 var _pet_until := 0.0
 var _gaze_current := Vector2(0.5, 0.45)
+var _gaze_velocity := Vector2.ZERO
 var _noise := FastNoiseLite.new()
 var _blink_value := 0.0
 var _mouth_smooth := 0.0
@@ -84,6 +99,7 @@ func play_gesture(name: String, emotion: String = "", intensity: float = 1.0, sp
 	if vrma_clips.has(name):
 		var started := play_vrma(name, speed, false, repeat)
 		_vrma_intensity = clampf(intensity, 0.0, 1.0)
+		_preview = preview
 		return started
 	_begin_transition()
 	_vrma_name = ""
@@ -163,7 +179,23 @@ func reset_all() -> void:
 	mouth_open = 0.0
 	_mouth_smooth = 0.0
 	_contact_pose = "foot"
+	_contact_target = Vector3.INF
+	contact_reachable = false
+	turn.cancel()
+	gait = DesktopGait.new()
 	_facing_target = 0.0
+	_facing_velocity = 0.0
+	_heading_pending = false
+	_hand_goals.clear()
+	_applied.clear()
+	_transition_from.clear()
+	_transition_velocity.clear()
+	_previous_pose.clear()
+	_pose_velocity.clear()
+	_ambient_pose.clear()
+	_ambient_velocity.clear()
+	_gaze_velocity = Vector2.ZERO
+	_gaze_current = Vector2(0.5,0.45)
 	_pet_until = 0.0
 
 
@@ -176,6 +208,7 @@ func _process(delta: float) -> void:
 	elapsed += delta
 	if avatar == null or not avatar.has_model():
 		return
+	_check_model_identity()
 	_update_facing(delta)
 	var k := 1.0 - exp(-SMOOTH_RATE * delta)
 	var target := {}
@@ -202,7 +235,7 @@ func _process(delta: float) -> void:
 	# 3. Gaze toward the pointer (head only; eye bones differ between rigs)
 	if gaze_enabled:
 		var wanted := gaze_target if gaze_has_target else Vector2(0.5 + 0.12 * sin(elapsed * 0.23), 0.45 + 0.08 * sin(elapsed * 0.31 + 0.4))
-		_gaze_current = _gaze_current.lerp(wanted, 1.0 - exp(-4.0 * delta))
+		_advance_gaze(wanted,delta)
 		var yaw := clampf((_gaze_current.x - 0.5) * 36.0, -14.0, 14.0) # + = look toward the character's right
 		var pitch := clampf((_gaze_current.y - 0.45) * 24.0, -10.0, 12.0)
 		_add(target, "head", Vector3(pitch * 0.7, yaw * 0.7, 0.0))
@@ -229,10 +262,6 @@ func _process(delta: float) -> void:
 			_applied.erase(bone)
 		else:
 			_applied[bone] = nxt
-	if _avatar_id != avatar.model.get_instance_id():
-		_avatar_id = avatar.model.get_instance_id()
-		_hand_goals.clear()
-		_transition_from.clear()
 	var use_ik := ik_enabled and not _custom_motion
 	if use_ik:
 		for side in ["left", "right"]:
@@ -258,6 +287,8 @@ func _process(delta: float) -> void:
 			gesture_finished.emit(finished)
 		else:
 			var local_time := fmod(time, maxf(clip.duration,0.001))
+			if _vrma_loop and _vrma_name in ["walk","walk_formal"] and gait.has_sample() and _contact_pose == "foot":
+				local_time = gait.phase*clip.duration
 			var blend := smoothstep(0.0, TRANSITION_SECONDS, elapsed-_vrma_start)
 			if not _vrma_loop:
 				blend *= smoothstep(0.0, TRANSITION_SECONDS, (total-time)/_vrma_speed)
@@ -269,10 +300,13 @@ func _process(delta: float) -> void:
 					if bone == "hips" or "Leg" in bone or "Foot" in bone or "Toes" in bone:
 						sampled_pose.erase(bone)
 			avatar.apply_normalized_rotations(sampled_pose, blend * _vrma_intensity)
+	_apply_ambient(delta)
 	var contact_solvable := false
 	if _contact_pose == "lean":
 		contact_solvable = avatar.apply_hand_contact(_contact_hand,_contact_target)
 	_apply_transition()
+	gait.apply(avatar,delta,_vrma_loop and _vrma_name in ["walk","walk_formal"] and _contact_pose == "foot" and not _custom_motion and not turn.active)
+	turn.apply(avatar,delta,_facing_target,_preview or _custom_motion or _contact_pose != "foot")
 	# A geometrically solvable target is not yet attached while blending in.
 	# Report the rendered wrist's final world-space error (1.5 cm threshold).
 	contact_reachable = contact_solvable and avatar.bone_global_position(_contact_hand+"Hand").distance_to(_contact_target) < 0.015
@@ -289,6 +323,7 @@ func _process(delta: float) -> void:
 	avatar.set_expression("aa", clampf(_mouth_smooth * 0.55, 0.0, 0.55))
 	avatar.set_expression("oh", minf(0.6 - clampf(_mouth_smooth * 0.55, 0.0, 0.55), clampf(_mouth_smooth * 0.10 * (0.5 + 0.5 * sin(elapsed * 9.0)), 0.0, 0.10)))
 	avatar.apply_expressions()
+	_record_pose_velocity(delta)
 
 
 func _update_blink(delta: float) -> void:
@@ -372,6 +407,7 @@ func play_vrma(name: String, speed: float = 1.0, loop: bool = false, repeat: int
 
 
 func _begin_transition() -> void:
+	_transition_velocity = _pose_velocity.duplicate()
 	_transition_from.clear()
 	_transition_start = elapsed
 	if avatar == null or not avatar.has_model():
@@ -391,23 +427,67 @@ func _apply_transition() -> void:
 		if idx >= avatar.skeleton.get_bone_count():
 			continue
 		var wanted := avatar.skeleton.get_bone_pose_rotation(idx)
-		avatar.skeleton.set_bone_pose_rotation(idx, _transition_from[idx].slerp(wanted,weight))
+		var carried: Quaternion = _transition_from[idx]
+		var velocity: Vector3 = _transition_velocity.get(idx,Vector3.ZERO)
+		if velocity.length() > 0.00001:
+			# Integrate a decaying outgoing angular velocity. Quintic blending
+			# then preserves the pose derivative at interruption instead of
+			# instantly freezing a moving head at a static snapshot.
+			var travel := TRANSITION_SECONDS*(u-u*u+u*u*u/3.0)
+			carried = (carried*Quaternion(velocity.normalized(),velocity.length()*travel)).normalized()
+		avatar.skeleton.set_bone_pose_rotation(idx, carried.slerp(wanted,weight))
 
 
 ## Screen-space velocity (+X right). No model translation: the desktop host
 ## owns window position; this only turns the character into its travel direction.
 func set_locomotion_direction(velocity: Vector2) -> void:
-	_facing_target = deg_to_rad(82.0)*signf(velocity.x) if absf(velocity.x) > 1.0 else 0.0
+	if absf(velocity.x) > 1.0:
+		set_heading_intent(velocity)
+
+func set_heading_intent(direction_px: Vector2) -> void:
+	if absf(direction_px.x) <= 0.001:
+		return
+	var wanted := deg_to_rad(82.0)*signf(direction_px.x)
+	if absf(angle_difference(_facing_target,wanted)) > 0.001:
+		_facing_target = wanted
+		_heading_pending = true
+
+func face_front() -> void:
+	_facing_target = 0.0
+	_heading_pending = true
+
+func heading_ready() -> bool:
+	return avatar != null and absf(angle_difference(avatar.rotation.y,_facing_target)) < deg_to_rad(1.0) and absf(_facing_velocity) < deg_to_rad(2.0) and not turn.active
+
+func cancel_heading() -> void:
+	if avatar == null:
+		return
+	# Preserve current velocity while braking; stopping the OS window does not
+	# require an instantaneous stop in the character's angular motion.
+	_facing_target = avatar.rotation.y+signf(_facing_velocity)*_facing_velocity*_facing_velocity/(2*HEADING_ACCEL)
+	_heading_pending = absf(_facing_velocity) > deg_to_rad(1)
 
 func _update_facing(delta: float) -> void:
+	var blocked := _preview or _custom_motion
+	if blocked:
+		turn.cancel()
+		cancel_heading()
 	var difference := angle_difference(avatar.rotation.y,_facing_target)
-	var wanted := clampf(difference*5.0,-deg_to_rad(140),deg_to_rad(140))
-	_facing_velocity = move_toward(_facing_velocity,wanted,deg_to_rad(360)*delta)
-	var step := _facing_velocity*delta
-	if absf(step) > absf(difference) and signf(step) == signf(difference):
-		step = difference
-		_facing_velocity = 0.0
-	avatar.rotation.y += step
+	if _heading_pending and not blocked and _contact_pose == "foot" and absf(difference) > deg_to_rad(2) and not turn.active:
+		turn.begin(avatar,_facing_target)
+		_heading_pending = false
+	var steps := maxi(1,int(ceil(delta*120)))
+	var dt := delta/steps
+	for i in steps:
+		difference = angle_difference(avatar.rotation.y,_facing_target)
+		var braking := maxf(0,sqrt(2*HEADING_ACCEL*absf(difference))-HEADING_ACCEL*dt)
+		var wanted := signf(difference)*minf(HEADING_SPEED,braking)
+		_facing_velocity = move_toward(_facing_velocity,wanted,HEADING_ACCEL*dt)
+		var step := _facing_velocity*dt
+		if absf(step) > absf(difference) and signf(step) == signf(difference):
+			step = difference
+			_facing_velocity = 0.0
+		avatar.rotation.y += step
 
 ## A sit needs the imported sit_idle clip. Lean requires an explicit nearby
 ## surface point; the host must inspect contact_reachable before attaching it.
@@ -447,3 +527,151 @@ func _apply_seated_base() -> void:
 		if bone != "hips" and not ("Leg" in bone or "Foot" in bone or "Toes" in bone):
 			pose.erase(bone)
 	avatar.apply_normalized_rotations(pose,1.0)
+
+
+## Host calls once after actual window movement, even when displacement is zero.
+## Effective pixels/metre = orthographic camera ppm * user avatar scale.
+func set_locomotion_sample(velocity_px: Vector2, traveled_px: Vector2, pixels_per_metre: float, supported: bool = true) -> void:
+	var owns_legs := _vrma_loop and _vrma_name in ["walk","walk_formal"] and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active
+	if owns_legs:
+		set_locomotion_direction(velocity_px)
+	gait.sample(velocity_px,traveled_px,pixels_per_metre,supported and owns_legs)
+	if avatar != null and avatar.has_model():
+		gait.compensate_movement(avatar)
+
+## Bounded low-rate behavior intent; speech/gestures retain expression ownership.
+## Optional look point is normalized viewport coordinates. Explicit user gaze
+## remains higher priority. Strength clamps to 0..1, unknown states become rest.
+func set_ambient_state(name: String, strength: float = 1.0, look: Vector2 = Vector2.INF) -> void:
+	_ambient_name = name if name in ["rest","curious","anticipate","settle","sleepy","attentive","thinking","working","listening"] else "rest"
+	_ambient_target = clampf(strength,0.0,1.0)
+	_ambient_look = look.clamp(Vector2.ZERO,Vector2.ONE) if look.is_finite() else Vector2.INF
+
+func _apply_ambient(delta: float) -> void:
+	if _custom_motion or _preview:
+		_ambient_pose.clear()
+		_ambient_velocity.clear()
+		return
+	_ambient_strength = lerpf(_ambient_strength,_ambient_target,1-exp(-1.8*delta))
+	var desired := {"chest":Vector3.ZERO,"head":Vector3.ZERO,"neck":Vector3.ZERO}
+	var strength := _ambient_strength
+	# Authored gestures remain dominant; ambient never alters an editor preview.
+	if _custom_motion or _preview:
+		strength = 0.0
+	elif is_gesture_active():
+		strength *= 0.25
+	match _ambient_name:
+		"attentive", "listening":
+			desired.chest = Vector3(0.7,0,0)*strength
+			desired.head = Vector3(-0.5,0,0.8)*strength
+		"thinking":
+			desired.head = Vector3(1.0,-1.5,1.2)*strength
+			desired.chest = Vector3(0.4,0,0)*strength
+		"working":
+			desired.head = Vector3(1.8,0,0.3*sin(elapsed*0.21))*strength
+			desired.chest = Vector3(1.0,0,0)*strength
+		"curious":
+			desired.head = Vector3(-1.0,0,2.0)*strength
+			desired.chest = Vector3(0.8,0,0)*strength
+		"anticipate":
+			desired.chest = Vector3(1.8,0,0.5*sin(elapsed*0.5))*strength
+			desired.head = Vector3(-0.7,0,0)*strength
+		"settle":
+			desired.chest = Vector3(-0.8,0,0)*strength
+		"sleepy":
+			desired.head = Vector3(2.0,0,1.0)*strength
+			# No forced blink/speech changes: expression driver owns the face.
+		"rest":
+			desired.chest = Vector3(0,0,0.6*sin(elapsed*0.23))*strength
+	if _ambient_look.is_finite() and not gaze_has_target:
+		var yaw := clampf((_ambient_look.x-0.5)*16,-6,6)*strength
+		var pitch := clampf((_ambient_look.y-0.5)*10,-4,4)*strength
+		desired.head += Vector3(pitch*0.65,yaw*0.65,0)
+		desired.neck = Vector3(pitch*0.35,yaw*0.35,0)
+	for bone in desired:
+		var position: Vector3 = _ambient_pose.get(bone,Vector3.ZERO)
+		var velocity: Vector3 = _ambient_velocity.get(bone,Vector3.ZERO)
+		var steps := maxi(1,int(ceil(delta*120)))
+		var dt := delta/steps
+		for i in steps:
+			var remaining: Vector3 = desired[bone]-position
+			var limit := minf(3.0,maxf(0,sqrt(24.0*remaining.length())-12.0*dt))
+			velocity = velocity.move_toward(remaining.normalized()*limit,12.0*dt)
+			var step := velocity*dt
+			if step.dot(remaining) > remaining.length_squared():
+				step = remaining
+				velocity = Vector3.ZERO
+			position += step
+		_ambient_pose[bone] = position
+		_ambient_velocity[bone] = velocity
+	avatar.add_pose_offsets(_ambient_pose)
+
+
+## Acceleration-limited pursuit with a stopping-distance speed limit. A fixed
+## integration ceiling makes 30/60 FPS target steps follow the same trajectory.
+func _advance_gaze(wanted: Vector2, delta: float) -> void:
+	# Pursue the reachable angular endpoint. Clamping only the output yaw
+	# would abruptly cut velocity while the normalized pursuit kept moving.
+	wanted = wanted.clamp(Vector2(0.5-14.0/36.0,0.45-10.0/24.0),Vector2(0.5+14.0/36.0,0.45+12.0/24.0))
+	const MAX_SPEED := 0.6
+	const MAX_ACCEL := 1.8
+	var steps := maxi(1,int(ceil(delta*120.0)))
+	var dt := delta/steps
+	for i in steps:
+		var remaining := wanted-_gaze_current
+		var distance := remaining.length()
+		if distance < 0.00001 and _gaze_velocity.length() < MAX_ACCEL*dt:
+			_gaze_current = wanted
+			_gaze_velocity = Vector2.ZERO
+			continue
+		var stopping_speed := maxf(0.0,sqrt(2.0*MAX_ACCEL*distance)-MAX_ACCEL*dt)
+		var wanted_velocity := remaining.normalized()*minf(MAX_SPEED,stopping_speed)
+		_gaze_velocity = _gaze_velocity.move_toward(wanted_velocity,MAX_ACCEL*dt)
+		var step := _gaze_velocity*dt
+		if step.dot(remaining) > remaining.length_squared():
+			step = remaining
+			_gaze_velocity = Vector2.ZERO
+		_gaze_current += step
+
+
+func _record_pose_velocity(delta: float) -> void:
+	if delta <= 0.00001:
+		return
+	for idx in avatar.bone_rest_local:
+		var current := avatar.skeleton.get_bone_pose_rotation(idx)
+		if _previous_pose.has(idx):
+			var change: Quaternion = (_previous_pose[idx].inverse()*current).normalized()
+			if change.w < 0:
+				change = Quaternion(-change.x,-change.y,-change.z,-change.w)
+			var vector := Vector3(change.x,change.y,change.z)
+			var sine := vector.length()
+			# atan2 avoids acos(w) precision loss for sub-degree pose steps.
+			var angle := 2.0*atan2(sine,change.w)
+			var velocity := vector*(angle/(sine*delta)) if sine > 0.0000001 else Vector3.ZERO
+			_pose_velocity[idx] = velocity.limit_length(deg_to_rad(120.0))
+		_previous_pose[idx] = current
+
+
+## This runs before facing or any IK. A caller may replace the model directly,
+## so correctness cannot depend on the host remembering reset_all().
+func _check_model_identity() -> void:
+	var current_id := avatar.model.get_instance_id()
+	if current_id == _avatar_id:
+		return
+	var replacing := _avatar_id != 0
+	_avatar_id = current_id
+	_hand_goals.clear()
+	_transition_from.clear()
+	_transition_velocity.clear()
+	_previous_pose.clear()
+	_pose_velocity.clear()
+	_applied.clear()
+	if replacing:
+		turn.cancel()
+		gait = DesktopGait.new()
+		_facing_target = avatar.rotation.y
+		_facing_velocity = 0.0
+		_heading_pending = false
+		_contact_pose = "foot"
+		_contact_target = Vector3.INF
+		contact_reachable = false

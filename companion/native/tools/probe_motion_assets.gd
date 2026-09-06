@@ -31,7 +31,9 @@ func run() -> void:
 			player.play_gesture("nod")
 			player._process(1.0/60)
 			var jump := difference(before,snapshot(avatar))
-			if jump > 1.0:
+			# Outgoing local velocity is preserved (runtime cap120deg/s),
+			# so a moving joint may legitimately travel up to2deg at60FPS.
+			if jump > 2.1:
 				failures += 1
 			for frame in 60:
 				player._process(1.0/60)

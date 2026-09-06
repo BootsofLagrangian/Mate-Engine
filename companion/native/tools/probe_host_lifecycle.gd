@@ -131,6 +131,7 @@ func _run() -> void:
 	_test_focus_loss()
 	_test_sit()
 	_test_done_fallback()
+	_test_living_lifecycle()
 	print("Host lifecycle: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures or checks < 25 else 0)
 
@@ -254,4 +255,37 @@ func _test_done_fallback() -> void:
 	host._on_event({"type": "action", "turn_id": "acted", "gesture": "wave", "intensity": 0.7, "speed": 0.9})
 	host._on_event({"type": "done", "turn_id": "acted", "gesture": "wave", "intensity": 0.7, "speed": 0.9})
 	check(host.motion.gestures.size() == 1, "done never replays an already completed action gesture")
+	host.motion.gestures.clear()
+	host._on_event({"type":"action", "turn_id":"navigation", "gesture":"walk"})
+	check(host.motion.gestures[0][0] == "idle", "dialogue cannot bypass navigation with a marching clip")
+	host.free()
+
+func _test_living_lifecycle() -> void:
+	var host := make_host()
+	var living := LivingBehavior.new()
+	host.add_child(living)
+	living.host = host
+	living.points = InterestPoints.new()
+	living.add_child(living.points)
+	host.session.character_id = "saved-character"
+	living._refresh_targets()
+	check(living.director.style.idle_interval_s == 12.0, "saved ID can initialize before catalogue")
+	host.session.characters = [{"id":"saved-character", "behavior_style":{"idle_interval_s":27.0, "curiosity":0.2}}]
+	living._refresh_targets()
+	check(living.director.style.idle_interval_s == 27.0 and living.director.style.curiosity == 0.2, "same-ID catalogue arrival applies authored behavior")
+	host.session.characters[0].behavior_style.idle_interval_s = 31.0
+	living._refresh_targets()
+	check(living.director.style.idle_interval_s == 31.0, "same-ID backend catalogue refresh replaces stale style")
+	living.observe_interest("test-point", Vector2(700, 700), 1.0, 30.0, "point", "Test point")
+	var user_request := living.request_intent({"kind":"rest"}, "user", "user-survives")
+	living._event({"type":"action", "turn_id":"failed-turn", "intent":{"kind":"inspect", "target_id":"test-point"}})
+	check(living.director._queue.size() == 2 and not living.director._history.has("failed-turn:intent"), "both user and model intents remain pending before failed done")
+	living._event({"type":"done", "turn_id":"failed-turn", "ok":false})
+	check(living.director.drain_outcomes().any(func(entry): return entry.id == "failed-turn:intent" and entry.outcome == "failed") and not living.director._queue.any(func(entry): return entry.id == "failed-turn:intent"), "failed done cancels previously queued model intent with failed outcome")
+	check(user_request.accepted and living.director._queue.any(func(entry): return entry.id == "user-survives"), "failed model turn preserves unrelated user intent")
+	for i in 100:
+		living.observe_interest("external-%d" % i, Vector2(i, 500), 0.5, 30.0)
+	check(living._external.size() <= 16, "external observations have a bounded backing store")
+	living.observe_interest("support:left", Vector2(-9999, 0))
+	check(not living._external.has("support:left"), "external observation cannot replace reserved support ID")
 	host.free()

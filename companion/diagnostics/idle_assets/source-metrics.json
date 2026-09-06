@@ -1,0 +1,334 @@
+{
+  "source_sha256": "69591853d817488edaa8fd9bf8fc1d821eaeaf789f8627b3cd23b41c4ed67997",
+  "metrics_scope": "local rotation quaternion pairwise maximum excursion; not world head trajectory or perceptual naturalness",
+  "clips": [
+    {
+      "clip": "Idle_Loop",
+      "bones": {
+        "pelvis": {
+          "range_deg": 1.72,
+          "seam_deg": 0.105,
+          "max_speed_deg_s": 4.75
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 2.02,
+          "seam_deg": 0.163,
+          "max_speed_deg_s": 4.89
+        },
+        "neck_01": {
+          "range_deg": 2.02,
+          "seam_deg": 0.163,
+          "max_speed_deg_s": 5.04
+        },
+        "Head": {
+          "range_deg": 4.4,
+          "seam_deg": 0.39,
+          "max_speed_deg_s": 10.81
+        },
+        "upperarm_l": {
+          "range_deg": 5.94,
+          "seam_deg": 0.056,
+          "max_speed_deg_s": 14.04
+        },
+        "upperarm_r": {
+          "range_deg": 4.27,
+          "seam_deg": 0.217,
+          "max_speed_deg_s": 10.62
+        }
+      },
+      "duration": 2.5
+    },
+    {
+      "clip": "Idle_Talking_Loop",
+      "bones": {
+        "pelvis": {
+          "range_deg": 1.15,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 2.91
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 3.24,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 14.34
+        },
+        "neck_01": {
+          "range_deg": 3.24,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 14.29
+        },
+        "Head": {
+          "range_deg": 9.03,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 65.75
+        },
+        "upperarm_l": {
+          "range_deg": 33.88,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 107.16
+        },
+        "upperarm_r": {
+          "range_deg": 16.2,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 143.69
+        }
+      },
+      "duration": 2.933333396911621
+    },
+    {
+      "clip": "Sitting_Enter",
+      "bones": {
+        "pelvis": {
+          "range_deg": 24.13,
+          "seam_deg": 14.345,
+          "max_speed_deg_s": 98.58
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 7.86,
+          "seam_deg": 1.122,
+          "max_speed_deg_s": 24.44
+        },
+        "neck_01": {
+          "range_deg": 7.81,
+          "seam_deg": 1.123,
+          "max_speed_deg_s": 24.27
+        },
+        "Head": {
+          "range_deg": 9.89,
+          "seam_deg": 4.532,
+          "max_speed_deg_s": 46.52
+        },
+        "upperarm_l": {
+          "range_deg": 22.37,
+          "seam_deg": 10.592,
+          "max_speed_deg_s": 124.86
+        },
+        "upperarm_r": {
+          "range_deg": 32.75,
+          "seam_deg": 17.472,
+          "max_speed_deg_s": 155.18
+        }
+      },
+      "duration": 1.2999999523162842
+    },
+    {
+      "clip": "Sitting_Exit",
+      "bones": {
+        "pelvis": {
+          "range_deg": 30.52,
+          "seam_deg": 14.345,
+          "max_speed_deg_s": 120.32
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 18.39,
+          "seam_deg": 1.122,
+          "max_speed_deg_s": 75.04
+        },
+        "neck_01": {
+          "range_deg": 18.39,
+          "seam_deg": 1.123,
+          "max_speed_deg_s": 75.03
+        },
+        "Head": {
+          "range_deg": 9.38,
+          "seam_deg": 4.532,
+          "max_speed_deg_s": 48.91
+        },
+        "upperarm_l": {
+          "range_deg": 32.04,
+          "seam_deg": 10.592,
+          "max_speed_deg_s": 185.65
+        },
+        "upperarm_r": {
+          "range_deg": 65.14,
+          "seam_deg": 17.472,
+          "max_speed_deg_s": 262.85
+        }
+      },
+      "duration": 1.0333333015441895
+    },
+    {
+      "clip": "Sitting_Idle_Loop",
+      "bones": {
+        "pelvis": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 1.55,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 2.91
+        },
+        "neck_01": {
+          "range_deg": 1.55,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 2.91
+        },
+        "Head": {
+          "range_deg": 3.91,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 7.69
+        },
+        "upperarm_l": {
+          "range_deg": 3.39,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 6.82
+        },
+        "upperarm_r": {
+          "range_deg": 2.92,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 5.57
+        }
+      },
+      "duration": 1.6666666269302368
+    },
+    {
+      "clip": "Sitting_Talking_Loop",
+      "bones": {
+        "pelvis": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 3.22,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 16.23
+        },
+        "neck_01": {
+          "range_deg": 3.22,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 16.27
+        },
+        "Head": {
+          "range_deg": 9.03,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 65.75
+        },
+        "upperarm_l": {
+          "range_deg": 30.49,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 105.39
+        },
+        "upperarm_r": {
+          "range_deg": 17.92,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 116.14
+        }
+      },
+      "duration": 2.933333396911621
+    },
+    {
+      "clip": "Walk_Formal_Loop",
+      "bones": {
+        "pelvis": {
+          "range_deg": 6.35,
+          "seam_deg": 0.04,
+          "max_speed_deg_s": 14.19
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 4.86,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 13.69
+        },
+        "neck_01": {
+          "range_deg": 3.01,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 10.81
+        },
+        "Head": {
+          "range_deg": 3.05,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 11.01
+        },
+        "upperarm_l": {
+          "range_deg": 2.65,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 6.05
+        },
+        "upperarm_r": {
+          "range_deg": 3.12,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 7.02
+        }
+      },
+      "duration": 1.3333333730697632
+    },
+    {
+      "clip": "Walk_Loop",
+      "bones": {
+        "pelvis": {
+          "range_deg": 6.27,
+          "seam_deg": 0.04,
+          "max_speed_deg_s": 15.11
+        },
+        "spine_01": {
+          "range_deg": 0.0,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 0.0
+        },
+        "spine_03": {
+          "range_deg": 9.66,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 21.59
+        },
+        "neck_01": {
+          "range_deg": 6.44,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 15.43
+        },
+        "Head": {
+          "range_deg": 6.69,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 22.24
+        },
+        "upperarm_l": {
+          "range_deg": 32.8,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 106.23
+        },
+        "upperarm_r": {
+          "range_deg": 32.8,
+          "seam_deg": 0.0,
+          "max_speed_deg_s": 106.01
+        }
+      },
+      "duration": 1.3333333730697632
+    }
+  ]
+}

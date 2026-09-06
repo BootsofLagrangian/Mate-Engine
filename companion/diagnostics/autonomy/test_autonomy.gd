@@ -144,7 +144,8 @@ func state_tests() -> void:
 	pet.advance(6.0)
 	check(pet.state == "rest" and pet.position == stopped, "rest prevents random jitter")
 	pet.advance(1.1)
-	check(pet.state == "walk", "rest resumes autonomous landmark choice")
+	check(pet.state == "anticipate", "rest begins pre-move anticipation")
+	pet.advance(pet.ANTICIPATION_SECONDS + 0.01)
 	pet._travel_until = pet._time + 0.1
 	pet.advance(0.2)
 	check(pet.state == "rest" and pet.velocity == Vector2.ZERO, "travel watchdog stops stale movement")

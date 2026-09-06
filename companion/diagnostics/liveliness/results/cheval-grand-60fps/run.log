@@ -1,0 +1,39 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+LIVELINESS_CHECK matching authored behavior profile loaded true {}
+LIVELINESS_CHECK director uses matching authored profile true {"effective_style":{"curiosity":0.4,"gaze_hold_s":2.2,"idle_interval_s":14.0,"posture_strength":0.45,"response_delay_s":0.35}}
+LIVELINESS_CHECK meaningful quiet gaps true {"intervals":[19.8000000000002,32.9666666666661],"quiet_seconds":56.1499999999981}
+LIVELINESS_CHECK varied director states true {"states":["rest","approach","arrive","curious","anticipate","walk","sleepy"]}
+LIVELINESS_CHECK stationary head avoids jitter true {"allframe_peak_acceleration":1374.57103729248,"allframe_peak_speed":155.0576171875,"head_excursions_over3deg":10,"p95_acceleration":2.382997199893,"p95_speed":1.70022940635681,"peak_acceleration":44.475120306015,"peak_speed":4.06132984161377}
+LIVELINESS_CHECK purposeful glances stay bounded true {"measured_frames":154,"p95_acceleration":60.8578276634216,"p95_speed":17.4644470214844,"peak_acceleration":64.2138862609863,"peak_speed":17.527681350708}
+LIVELINESS_CHECK unknown target explicitly rejected true {"accepted":false,"reason":"unknown_target"}
+LIVELINESS_CHECK user and LLM use same unknown-target path true {"llm":{"accepted":false,"reason":"unknown_target"},"user":{"accepted":false,"reason":"unknown_target"}}
+LIVELINESS_CHECK unknown action explicitly rejected true {"accepted":false,"reason":"invalid"}
+LIVELINESS_CHECK catalogued unreachable point reports terminal status true {"outcomes":[{"id":"local:3","outcome":"arrived","time":56.0166666666648},{"id":"probe:unreachable","outcome":"unreachable","time":94.0166666666626}]}
+LIVELINESS_CHECK known user target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK visible anticipatory gaze before desktop travel true {"anticipate_start":100.533333333329,"first_gaze":100.799999999996,"first_motion":101.816666666662,"lead_seconds":1.01666666666661}
+LIVELINESS_CHECK directed journey covers 200 desktop pixels true {"distance":1046.0}
+LIVELINESS_CHECK known llm target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK travel starts before speaking preemption true {}
+LIVELINESS_CHECK speaking stops within first post-context frame true {"first_frame_displacement":0.0,"first_frame_speed":0.0}
+LIVELINESS_CHECK speaking holds desktop position true {"drift":0.0}
+LIVELINESS_CHECK speaking release does not instantly restart obsolete travel true {}
+LIVELINESS_CHECK speaking resumes eligible behavior true {"elapsed":4.29999999999976,"state":"rest"}
+LIVELINESS_CHECK known llm target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK travel starts before dragging preemption true {}
+LIVELINESS_CHECK dragging stops within first post-context frame true {"first_frame_displacement":0.0,"first_frame_speed":0.0}
+LIVELINESS_CHECK dragging holds desktop position true {"drift":0.0}
+LIVELINESS_CHECK dragging release does not instantly restart obsolete travel true {}
+LIVELINESS_CHECK dragging resumes eligible behavior true {"elapsed":4.30000000000342,"state":"rest"}
+LIVELINESS_CHECK known llm target accepted true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK travel starts before panel preemption true {}
+LIVELINESS_CHECK panel stops within first post-context frame true {"first_frame_displacement":0.0,"first_frame_speed":0.0}
+LIVELINESS_CHECK panel holds desktop position true {"drift":0.0}
+LIVELINESS_CHECK panel release does not instantly restart obsolete travel true {}
+LIVELINESS_CHECK panel resumes eligible behavior true {"elapsed":4.30000000000342,"state":"rest"}
+LIVELINESS_CHECK non-vacuous planted-foot coverage true {"epochs":49,"exclusions":{"not_walking":7062,"turning":0,"unplanted_or_blending":15},"measured_frames":1989,"walking_frames":2004}
+LIVELINESS_CHECK actual desktop planted ankle drift true {"max_px":0.0616822391748428,"p95_px":0.0291428659111261,"sole_reference_max_px":0.0616822391748428,"support_height_peak_px":0.017822265625}
+LIVELINESS_CHECK gait phase freezes without desktop displacement true {"moving_phase_residual":0.000491452729437639,"peak_phase_drift":0.0}
+LIVELINESS_RESULT failures=0 frames=9066 report=/home/hard2251/workspace/mate-engine/Mate-Engine/companion/diagnostics/liveliness/results/cheval-grand-60fps/report.json
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2514)

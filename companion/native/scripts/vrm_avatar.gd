@@ -230,6 +230,7 @@ func apply_pose(offsets: Dictionary) -> void:
 	# Clear last-frame IK before applying hierarchical offsets.
 	for idx in bone_rest_local.keys():
 		skeleton.set_bone_pose_rotation(idx, bone_rest_local[idx])
+	set_hips_height_offset(0.0)
 	var pose := offsets.duplicate()
 	for side in ["left", "right"]:
 		var sign_side := 1.0 if side == "left" else -1.0
@@ -513,3 +514,27 @@ func _calibrate_soles() -> void:
 				unique[key] = true
 				_sole_points_rest.append(point)
 	sole_calibration = {"method": "foot_weighted_mesh" if used_weighted else "mesh_minimum", "floor_y": floor_y,"sole_points": _sole_points_rest.size(),"foot_vertices": weighted.size()}
+
+
+## Small gait crouch without accumulating root translation across frames.
+func set_hips_height_offset(height: float) -> void:
+	if skeleton == null or not bone_index.has("hips"):
+		return
+	var idx: int = bone_index["hips"]
+	var parent := skeleton.get_bone_parent(idx)
+	var parent_basis := skeleton.get_bone_global_pose(parent).basis.orthonormalized() if parent >= 0 else Basis.IDENTITY
+	var rest := skeleton.get_bone_rest(idx).origin
+	skeleton.set_bone_pose_position(idx,rest+parent_basis.inverse()*Vector3(0,height,0))
+
+## A bounded additive layer over the final authored rotation. Intended for
+## subtle attention/posture only, not replacement animation tracks.
+func add_pose_offsets(offsets: Dictionary) -> void:
+	if skeleton == null:
+		return
+	for bone in offsets:
+		if not bone_index.has(bone):
+			continue
+		var idx: int = bone_index[bone]
+		var g: Basis = bone_rest_global[idx]
+		var delta := (g.inverse()*canonical_to_basis(offsets[bone])*g).get_rotation_quaternion()
+		skeleton.set_bone_pose_rotation(idx,(skeleton.get_bone_pose_rotation(idx)*delta).normalized())

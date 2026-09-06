@@ -39,6 +39,13 @@ const DEFAULTS := {
 	# Any imported loop is used as ambient idle only through the motion owner's ambient API that
 	# blends under gestures/gaze/IK (see AutonomyBridge.ambient_idle_choice).
 	"idle_clip": "auto",
+	# Liveliness (behavior tab "행동"): may the pet act on its own toward the user's interest points
+	# (walk over / look at them, rest)? Off = the roaming above only, no named intentions.
+	"behavior_enabled": true,
+	# InterestPoints.sanitized_data(): {"points": [{id,label,kind,x,y}...], "next_id": n}. x/y are
+	# global desktop pixels (negative on monitors left of/above the primary); the id counter is
+	# persisted so removed ids are never reused. Always re-sanitized by InterestPoints.set_points.
+	"interest_points": {"points": [], "next_id": 1},
 }
 
 var data: Dictionary = {}

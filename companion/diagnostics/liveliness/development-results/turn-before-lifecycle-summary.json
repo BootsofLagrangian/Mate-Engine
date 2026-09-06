@@ -1,0 +1,229 @@
+{
+  "scope": "authored profiles simulated desktop scale0.6; turn matrix",
+  "checks": 240,
+  "failures": 0,
+  "cells": [
+    {
+      "cell": "cheval-grand-30fps",
+      "checks": 40,
+      "failures": 0,
+      "turn heading derivative limits": {
+        "acceleration_deg_s2": 100.008312846244,
+        "speed_deg_s": 70.0001840863053
+      },
+      "departure heading aligned": {
+        "max_error_degrees": 0.0034697309702055
+      },
+      "turn actual desktop support drift": {
+        "epochs": 24,
+        "max_ankle_px": 0.0001220703125,
+        "max_sole_reference_px": 0.0001220703125,
+        "supported_frames": 372,
+        "turn_frames": 402,
+        "unsupported_seconds": 1.0
+      },
+      "stationary head avoids jitter": {
+        "allframe_peak_acceleration": 484.981384277344,
+        "allframe_peak_speed": 85.3957366943359,
+        "head_excursions_over3deg": 11,
+        "p95_acceleration": 2.38606229424477,
+        "p95_speed": 1.69959259033203,
+        "peak_acceleration": 46.5286803245544,
+        "peak_speed": 3.48806858062744
+      },
+      "actual desktop planted ankle drift": {
+        "max_px": 0.0613717511296272,
+        "p95_px": 0.000984162325039506,
+        "sole_reference_max_px": 0.0613717511296272,
+        "support_height_peak_px": 0.0166015625
+      },
+      "interrupted_skeleton_head_acceleration": 908.319854736328,
+      "turn_support_coverage": 0.925373134328358
+    },
+    {
+      "cell": "cheval-grand-60fps",
+      "checks": 40,
+      "failures": 0,
+      "turn heading derivative limits": {
+        "acceleration_deg_s2": 100.051343038014,
+        "speed_deg_s": 70.0002865391429
+      },
+      "departure heading aligned": {
+        "max_error_degrees": 0.0034697309702055
+      },
+      "turn actual desktop support drift": {
+        "epochs": 24,
+        "max_ankle_px": 0.000172633488546126,
+        "max_sole_reference_px": 0.0001220703125,
+        "supported_frames": 726,
+        "turn_frames": 786,
+        "unsupported_seconds": 1.0
+      },
+      "stationary head avoids jitter": {
+        "allframe_peak_acceleration": 1362.07042694092,
+        "allframe_peak_speed": 85.3930053710938,
+        "head_excursions_over3deg": 11,
+        "p95_acceleration": 2.38809429109097,
+        "p95_speed": 1.7021187543869,
+        "peak_acceleration": 44.475120306015,
+        "peak_speed": 3.58420014381409
+      },
+      "actual desktop planted ankle drift": {
+        "max_px": 0.0631494149565697,
+        "p95_px": 0.0290783680975437,
+        "sole_reference_max_px": 0.06313207000494,
+        "support_height_peak_px": 0.015380859375
+      },
+      "interrupted_skeleton_head_acceleration": 914.755554199219,
+      "turn_support_coverage": 0.923664122137405
+    },
+    {
+      "cell": "eishin-flash-30fps",
+      "checks": 40,
+      "failures": 0,
+      "turn heading derivative limits": {
+        "acceleration_deg_s2": 100.008312846244,
+        "speed_deg_s": 70.0001840863053
+      },
+      "departure heading aligned": {
+        "max_error_degrees": 0.0034697309702055
+      },
+      "turn actual desktop support drift": {
+        "epochs": 24,
+        "max_ankle_px": 0.027099609375,
+        "max_sole_reference_px": 0.027099609375,
+        "supported_frames": 372,
+        "turn_frames": 402,
+        "unsupported_seconds": 1.0
+      },
+      "stationary head avoids jitter": {
+        "allframe_peak_acceleration": 510.182132720947,
+        "allframe_peak_speed": 85.4741744995117,
+        "head_excursions_over3deg": 11,
+        "p95_acceleration": 2.37362712621689,
+        "p95_speed": 1.68868100643158,
+        "peak_acceleration": 46.8000054359436,
+        "peak_speed": 2.51480770111084
+      },
+      "actual desktop planted ankle drift": {
+        "max_px": 0.0404143072664738,
+        "p95_px": 0.0001220703125,
+        "sole_reference_max_px": 0.0404008477926254,
+        "support_height_peak_px": 0.008544921875
+      },
+      "interrupted_skeleton_head_acceleration": 888.906898498535,
+      "turn_support_coverage": 0.925373134328358
+    },
+    {
+      "cell": "eishin-flash-60fps",
+      "checks": 40,
+      "failures": 0,
+      "turn heading derivative limits": {
+        "acceleration_deg_s2": 100.051343038014,
+        "speed_deg_s": 70.0002865391429
+      },
+      "departure heading aligned": {
+        "max_error_degrees": 0.0034697309702055
+      },
+      "turn actual desktop support drift": {
+        "epochs": 24,
+        "max_ankle_px": 0.02587890625,
+        "max_sole_reference_px": 0.026123046875,
+        "supported_frames": 726,
+        "turn_frames": 786,
+        "unsupported_seconds": 1.0
+      },
+      "stationary head avoids jitter": {
+        "allframe_peak_acceleration": 1320.04932403564,
+        "allframe_peak_speed": 85.4763336181641,
+        "head_excursions_over3deg": 13,
+        "p95_acceleration": 2.37083271145821,
+        "p95_speed": 1.68804895877838,
+        "peak_acceleration": 44.8259139060974,
+        "peak_speed": 2.64032816886902
+      },
+      "actual desktop planted ankle drift": {
+        "max_px": 0.0559589527547359,
+        "p95_px": 0.00013647876039613,
+        "sole_reference_max_px": 0.0559465698897839,
+        "support_height_peak_px": 0.01171875
+      },
+      "interrupted_skeleton_head_acceleration": 946.568126678467,
+      "turn_support_coverage": 0.923664122137405
+    },
+    {
+      "cell": "rice-shower-30fps",
+      "checks": 40,
+      "failures": 0,
+      "turn heading derivative limits": {
+        "acceleration_deg_s2": 100.008312846244,
+        "speed_deg_s": 70.0001840863053
+      },
+      "departure heading aligned": {
+        "max_error_degrees": 0.0034697309702055
+      },
+      "turn actual desktop support drift": {
+        "epochs": 24,
+        "max_ankle_px": 0.0001220703125,
+        "max_sole_reference_px": 0.0,
+        "supported_frames": 372,
+        "turn_frames": 402,
+        "unsupported_seconds": 1.0
+      },
+      "stationary head avoids jitter": {
+        "allframe_peak_acceleration": 508.443031311035,
+        "allframe_peak_speed": 86.1500854492188,
+        "head_excursions_over3deg": 13,
+        "p95_acceleration": 2.37595751881599,
+        "p95_speed": 1.72475123405457,
+        "peak_acceleration": 46.5213131904602,
+        "peak_speed": 3.26444530487061
+      },
+      "actual desktop planted ankle drift": {
+        "max_px": 0.0539257936179638,
+        "p95_px": 0.0001220703125,
+        "sole_reference_max_px": 0.0539257936179638,
+        "support_height_peak_px": 0.0166015625
+      },
+      "interrupted_skeleton_head_acceleration": 934.897155761719,
+      "turn_support_coverage": 0.925373134328358
+    },
+    {
+      "cell": "rice-shower-60fps",
+      "checks": 40,
+      "failures": 0,
+      "turn heading derivative limits": {
+        "acceleration_deg_s2": 100.051343038014,
+        "speed_deg_s": 70.0002865391429
+      },
+      "departure heading aligned": {
+        "max_error_degrees": 0.0034697309702055
+      },
+      "turn actual desktop support drift": {
+        "epochs": 24,
+        "max_ankle_px": 0.00478571653366089,
+        "max_sole_reference_px": 0.00466430000960827,
+        "supported_frames": 726,
+        "turn_frames": 786,
+        "unsupported_seconds": 1.0
+      },
+      "stationary head avoids jitter": {
+        "allframe_peak_acceleration": 1298.95957946777,
+        "allframe_peak_speed": 86.1532974243164,
+        "head_excursions_over3deg": 13,
+        "p95_acceleration": 2.38264091312885,
+        "p95_speed": 1.72140049934387,
+        "peak_acceleration": 44.5030725002289,
+        "peak_speed": 3.132483959198
+      },
+      "actual desktop planted ankle drift": {
+        "max_px": 0.0557904057204723,
+        "p95_px": 0.0262522138655186,
+        "sole_reference_max_px": 0.0557584799826145,
+        "support_height_peak_px": 0.017333984375
+      },
+      "interrupted_skeleton_head_acceleration": 974.275703430176,
+      "turn_support_coverage": 0.923664122137405
+    }
+  ]
+}

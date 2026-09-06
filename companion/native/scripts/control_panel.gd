@@ -22,6 +22,17 @@ signal backend_changed(url: String)
 signal collapse_requested
 ## Manual sit (true) / stand (false) on the current desktop support (surface mode only).
 signal sit_requested(sit: bool)
+## Behavior tab ("행동"): the user asked the pet to walk over to / look at a saved interest point.
+## The host closes the panel after an explicit go and queues the intention; nothing moves here.
+signal point_go(id: String)
+signal point_inspect(id: String)
+## Interest point edits. With bind_interest_points() these are also applied to the manager directly;
+## without it the host applies them and calls set_interest_points().
+signal point_add_requested(label: String)
+signal point_rename_requested(id: String, label: String)
+signal point_remove_requested(id: String)
+## "표식 보기": show/hide the draggable marker windows (editing aid, not persisted).
+signal markers_toggled(on: bool)
 
 const PANEL_WIDTH := 340.0
 ## Static helpers only; the Settings autoload is looked up at runtime so this script compiles
@@ -92,6 +103,20 @@ var _sit_button: Button
 var _sitting := false
 var _idle_clip_option: OptionButton
 var _tabs: TabContainer
+# behavior tab
+var _behavior_check: CheckButton
+var _behavior_state: Label
+var _point_list: ItemList
+var _point_name: LineEdit
+var _point_add: Button
+var _point_rename: Button
+var _point_remove: Button
+var _point_go: Button
+var _point_inspect: Button
+var _markers_check: CheckButton
+var _point_hint: Label
+var _point_rows: Array[Dictionary] = [] # last set_interest_points() rows (id,label,status,...)
+var _points_manager: Node # InterestPoints bound via bind_interest_points(), or null
 
 
 func _ready() -> void:
@@ -207,6 +232,7 @@ func _build() -> void:
 	_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vbox.add_child(_tabs)
 	_build_chat_tab()
+	_build_behavior_tab()
 	_build_motion_tab()
 	_build_work_tab()
 	_build_settings_tab()
@@ -282,6 +308,93 @@ func _build_chat_tab() -> void:
 	hint.add_theme_font_size_override("font_size", 11)
 	hint.modulate = Color(0.7, 0.7, 0.78)
 	v.add_child(hint)
+
+
+## "행동": may the pet act on its own, what it is doing now, and the user's named interest points
+## (add near the pet, drag the marker, then "가보기" / "살펴보기"). Plain product wording only.
+func _build_behavior_tab() -> void:
+	var v := _tab("행동")
+	_behavior_check = CheckButton.new()
+	_behavior_check.text = "스스로 행동하기"
+	_behavior_check.tooltip_text = "켜면 대화 중에 어울릴 때 저장한 지점으로 가거나 살펴보고, 가끔 쉽니다. 화면 내용은 읽지 않습니다. 꺼도 산책 설정은 그대로입니다."
+	_behavior_check.button_pressed = bool(_setting("behavior_enabled", true))
+	_behavior_check.toggled.connect(func(on: bool): setting_changed.emit("behavior_enabled", on))
+	v.add_child(_behavior_check)
+	_behavior_state = Label.new()
+	_behavior_state.text = "지금: " + behavior_state_text("", "", bool(_setting("behavior_enabled", true)))
+	_behavior_state.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_behavior_state.add_theme_font_size_override("font_size", 11)
+	_behavior_state.modulate = Color(0.7, 0.7, 0.78)
+	v.add_child(_behavior_state)
+
+	v.add_child(_section("관심 지점 (최대 %d개)" % InterestPoints.MAX_POINTS))
+	_point_list = ItemList.new()
+	_point_list.custom_minimum_size = Vector2(0, 120)
+	_point_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_point_list.select_mode = ItemList.SELECT_SINGLE
+	_point_list.item_selected.connect(func(_i: int): _refresh_point_buttons())
+	_point_list.empty_clicked.connect(func(_p: Vector2, _b: int):
+		_point_list.deselect_all()
+		_refresh_point_buttons())
+	v.add_child(_point_list)
+	var name_row := HBoxContainer.new()
+	v.add_child(name_row)
+	_point_name = LineEdit.new()
+	_point_name.placeholder_text = "이름 (예: 모니터 왼쪽 아래)"
+	_point_name.max_length = InterestPoints.LABEL_MAX
+	_point_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_point_name.text_submitted.connect(func(_t: String): _request_add_point())
+	name_row.add_child(_point_name)
+	_point_add = Button.new()
+	_point_add.text = "추가"
+	_point_add.tooltip_text = "펫 옆에 표식을 만듭니다. 표식을 원하는 자리로 끌어다 놓으면 그 끝점이 저장됩니다."
+	_point_add.pressed.connect(_request_add_point)
+	name_row.add_child(_point_add)
+	var edit_row := HBoxContainer.new()
+	v.add_child(edit_row)
+	_point_rename = Button.new()
+	_point_rename.text = "이름 바꾸기"
+	_point_rename.tooltip_text = "선택한 지점의 이름을 위 입력칸의 내용으로 바꿉니다"
+	_point_rename.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_point_rename.pressed.connect(_request_rename_point)
+	edit_row.add_child(_point_rename)
+	_point_remove = Button.new()
+	_point_remove.text = "삭제"
+	_point_remove.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_point_remove.pressed.connect(_request_remove_point)
+	edit_row.add_child(_point_remove)
+	_markers_check = CheckButton.new()
+	_markers_check.text = "표식 보기"
+	_markers_check.tooltip_text = "저장한 지점 위에 작은 표식 창을 띄웁니다. 끌어서 옮길 수 있고, 편집이 끝나면 숨기세요."
+	_markers_check.toggled.connect(_on_markers_toggled)
+	edit_row.add_child(_markers_check)
+	var act_row := HBoxContainer.new()
+	v.add_child(act_row)
+	_point_go = Button.new()
+	_point_go.text = "가보기"
+	_point_go.tooltip_text = "패널을 닫고 선택한 지점까지 걸어갑니다 (자리를 옮김)"
+	_point_go.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_point_go.pressed.connect(func():
+		var id := selected_point_id()
+		if not id.is_empty():
+			point_go.emit(id))
+	act_row.add_child(_point_go)
+	_point_inspect = Button.new()
+	_point_inspect.text = "살펴보기"
+	_point_inspect.tooltip_text = "패널을 닫고 제자리에 선 채 선택한 지점을 바라보며 살펴봅니다 (걸어가지 않음)"
+	_point_inspect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_point_inspect.pressed.connect(func():
+		var id := selected_point_id()
+		if not id.is_empty():
+			point_inspect.emit(id))
+	act_row.add_child(_point_inspect)
+	_point_hint = Label.new()
+	_point_hint.text = "지점이 없습니다. 이름을 적고 추가한 뒤 표식을 끌어 놓으세요."
+	_point_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_point_hint.add_theme_font_size_override("font_size", 11)
+	_point_hint.modulate = Color(0.7, 0.7, 0.78)
+	v.add_child(_point_hint)
+	_refresh_point_buttons()
 
 
 func _build_motion_tab() -> void:
@@ -962,6 +1075,198 @@ func set_avatar_info(text: String) -> void:
 
 func set_audio_stats(stats: Dictionary) -> void:
 	_audio_stats.text = "오디오 대기 %.1fs · 버퍼 %dms · 수신 %d · 무시 %d · 드롭 %d · %dHz" % [stats.get("pending_seconds", 0.0), stats.get("buffered_ms", 0), stats.get("accepted", 0), stats.get("stale", 0), stats.get("dropped_frames", 0), stats.get("rate", 0)]
+
+
+# ------------------------------------------------------------- behavior tab API
+
+## Readable "지금:" line for a queued/active intention. kind: "move_to" | "inspect" | "rest" | ""
+## (free), label = the point's name. Product wording only; no protocol names.
+static func behavior_state_text(kind: String, label: String, enabled: bool = true) -> String:
+	if not enabled:
+		return "스스로 행동 끔 · 산책만"
+	match kind:
+		"move_to":
+			return ("'%s' 쪽으로 가는 중" % label) if not label.is_empty() else "어딘가로 가는 중"
+		"inspect":
+			return ("제자리에서 '%s' 살펴보는 중" % label) if not label.is_empty() else "제자리에서 살펴보는 중"
+		"rest":
+			return "쉬는 중"
+	return "자유롭게 지내는 중"
+
+
+## Host-supplied readable state (use behavior_state_text or any short sentence).
+func set_behavior_state(text: String) -> void:
+	_behavior_state.text = "지금: " + text
+
+
+## Mirror the behavior_enabled setting without re-emitting.
+func set_behavior_enabled(on: bool) -> void:
+	_behavior_check.set_pressed_no_signal(on)
+	if _behavior_state.text.begins_with("지금: 스스로 행동 끔") or not on:
+		set_behavior_state(behavior_state_text("", "", on))
+
+
+func behavior_enabled() -> bool:
+	return _behavior_check.button_pressed
+
+
+## Wire an InterestPoints manager: the list follows its changed signal, and add/rename/remove/
+## marker toggles are applied to it directly (the *_requested signals still fire so the host can
+## log or persist). point_go / point_inspect stay host decisions.
+func bind_interest_points(manager: Node) -> void:
+	if _points_manager != null and is_instance_valid(_points_manager):
+		if _points_manager.changed.is_connected(_on_manager_changed):
+			_points_manager.changed.disconnect(_on_manager_changed)
+		if _points_manager.markers_changed.is_connected(_on_manager_markers_changed):
+			_points_manager.markers_changed.disconnect(_on_manager_markers_changed)
+	_points_manager = manager
+	if manager != null:
+		manager.changed.connect(_on_manager_changed)
+		manager.markers_changed.connect(_on_manager_markers_changed)
+		_on_manager_changed()
+		_on_manager_markers_changed()
+
+
+func _on_manager_changed() -> void:
+	if _points_manager != null and is_instance_valid(_points_manager):
+		set_interest_points(_points_manager.rows())
+
+
+func _on_manager_markers_changed() -> void:
+	if _points_manager == null or not is_instance_valid(_points_manager):
+		return
+	_markers_check.set_pressed_no_signal(_points_manager.markers_shown)
+	_refresh_point_buttons()
+
+
+## Rows [{id,label,status,status_text?,x?,y?}]; status "ready" | "parked" | anything else. Keeps
+## the current selection by id. Without a bound manager this is the host's way to fill the list.
+func set_interest_points(rows: Array) -> void:
+	var prev := selected_point_id()
+	_point_rows.clear()
+	_point_list.clear()
+	for r in rows:
+		if typeof(r) != TYPE_DICTIONARY or not r.has("id"):
+			continue
+		var row: Dictionary = r.duplicate()
+		var status := str(row.get("status", "ready"))
+		var status_text := str(row.get("status_text", InterestPoints.status_text(status)))
+		_point_rows.append(row)
+		var i := _point_list.item_count
+		_point_list.add_item("%d. %s · %s" % [i + 1, str(row.get("label", row["id"])), status_text])
+		_point_list.set_item_metadata(i, str(row["id"]))
+		if status != "ready":
+			_point_list.set_item_custom_fg_color(i, Color(0.8, 0.7, 0.5))
+			_point_list.set_item_tooltip(i, "저장은 되어 있지만 지금 화면에 없는 자리입니다. 그 화면이 돌아오면 다시 갈 수 있습니다.")
+		if str(row["id"]) == prev:
+			_point_list.select(i)
+	_refresh_point_buttons()
+
+
+func interest_point_rows() -> Array[Dictionary]:
+	return _point_rows.duplicate()
+
+
+func selected_point_id() -> String:
+	var sel := _point_list.get_selected_items()
+	if sel.is_empty():
+		return ""
+	return str(_point_list.get_item_metadata(sel[0]))
+
+
+func select_point(id: String) -> void:
+	for i in _point_list.item_count:
+		if str(_point_list.get_item_metadata(i)) == id:
+			_point_list.select(i)
+	_refresh_point_buttons()
+
+
+func _selected_row() -> Dictionary:
+	var id := selected_point_id()
+	for r in _point_rows:
+		if str(r["id"]) == id:
+			return r
+	return {}
+
+
+func _refresh_point_buttons() -> void:
+	var row := _selected_row()
+	var has := not row.is_empty()
+	var ready := has and str(row.get("status", "ready")) == "ready"
+	_point_rename.disabled = not has
+	_point_remove.disabled = not has
+	_point_go.disabled = not ready
+	_point_inspect.disabled = not ready
+	_point_add.disabled = _point_rows.size() >= InterestPoints.MAX_POINTS
+	var n := _point_rows.size()
+	if n == 0:
+		_point_hint.text = "지점이 없습니다. 이름을 적고 추가한 뒤 표식을 끌어 놓으세요."
+	elif has and not ready:
+		_point_hint.text = "'%s' 은(는) 지금 화면 밖에 있어 갈 수 없습니다. 표식을 다시 놓거나 그 화면을 연결하세요." % str(row.get("label", ""))
+	elif n >= InterestPoints.MAX_POINTS:
+		_point_hint.text = "지점이 가득 찼습니다 (%d개). 하나를 삭제하면 추가할 수 있습니다." % n
+	elif _markers_check.button_pressed:
+		var st: Dictionary = _points_manager.marker_status() if _points_manager != null and is_instance_valid(_points_manager) else {"ok": true}
+		if bool(st.get("ok", false)):
+			_point_hint.text = "표식을 끌어 놓으면 끝점 자리가 저장됩니다. 편집이 끝나면 '표식 보기'를 끄세요."
+		else:
+			_point_hint.text = "표식 창 사용 불가: " + str(st.get("reason", ""))
+	else:
+		_point_hint.text = "%d개 저장됨. 가보기는 그 자리까지 걸어가고, 살펴보기는 제자리에서 바라만 봅니다 (둘 다 패널이 닫힘)." % n
+
+
+func _request_add_point() -> void:
+	if _point_rows.size() >= InterestPoints.MAX_POINTS:
+		_point_hint.text = "지점이 가득 찼습니다 (%d개)." % InterestPoints.MAX_POINTS
+		return
+	var label := _point_name.text.strip_edges()
+	point_add_requested.emit(label)
+	if _points_manager != null and is_instance_valid(_points_manager):
+		var id: String = _points_manager.add_point(label)
+		if id.is_empty():
+			_point_hint.text = "지점을 추가할 수 없습니다."
+			return
+		_point_name.clear()
+		select_point(id)
+		# Adding is the start of editing: show the markers so the new pin can be dragged into place.
+		if not _markers_check.button_pressed:
+			_markers_check.button_pressed = true
+		else:
+			_points_manager.set_markers_visible(true)
+	else:
+		_point_name.clear()
+
+
+func _request_rename_point() -> void:
+	var id := selected_point_id()
+	var label := _point_name.text.strip_edges()
+	if id.is_empty() or label.is_empty():
+		_point_hint.text = "바꿀 이름을 위 입력칸에 적은 뒤 누르세요."
+		return
+	point_rename_requested.emit(id, label)
+	if _points_manager != null and is_instance_valid(_points_manager):
+		_points_manager.rename_point(id, label)
+	_point_name.clear()
+
+
+func _request_remove_point() -> void:
+	var id := selected_point_id()
+	if id.is_empty():
+		return
+	point_remove_requested.emit(id)
+	if _points_manager != null and is_instance_valid(_points_manager):
+		_points_manager.remove_point(id)
+
+
+func _on_markers_toggled(on: bool) -> void:
+	markers_toggled.emit(on)
+	if _points_manager != null and is_instance_valid(_points_manager):
+		_points_manager.set_markers_visible(on)
+	_refresh_point_buttons()
+
+
+func markers_shown() -> bool:
+	return _markers_check.button_pressed
 
 
 func focus_input() -> void:

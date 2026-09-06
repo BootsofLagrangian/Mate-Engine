@@ -73,6 +73,8 @@ func run() -> void:
 		return
 	fixture_dir = argument("--fixture-dir")
 	output = argument("--test-root").path_join("logs/windows-world")
+	if not argument("--output").is_empty():
+		output = argument("--output")
 	DirAccess.make_dir_recursive_absolute(output)
 	var metadata: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(fixture_dir.path_join("fixture.json")))
 	fixture_id = str(metadata.id)

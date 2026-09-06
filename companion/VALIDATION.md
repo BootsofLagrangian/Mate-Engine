@@ -1,5 +1,20 @@
 # Validation record — 2026-09-06
 
+The newer local-behavior and stepped-turn milestone is recorded in
+[Windows stepped-motion acceptance](diagnostics/liveliness/windows-stepped-baseline/README.md):
+40 continuous Windows checks, 12 normal-processing voice-to-movement checks and
+17 window-top/floor checks pass on the identified exported executable. The
+[three-rig turn matrix](diagnostics/liveliness/README.md) passes 240 checks;
+the native selftest passes 504, host lifecycle 34, heading callbacks 7 and fake
+protocol 59. Backend intent changes pass 111 tests, with real-model limitations
+retained in [intent validation](diagnostics/behavior/INTENT-VALIDATION.md).
+
+These records cover deterministic idle scheduling, user markers, occasional model
+intents, distance-driven gait, stepped turning and interruption ownership. They
+precede the subsequent search/integration of additional authored Uma motion assets.
+The remaining sections preserve the **earlier native baseline** and its original
+artifact identities; their executable hash is not the newer stepped-motion build.
+
 This is a development acceptance record, not a general reliability benchmark.
 The earlier browser/Unity-adapter record is preserved in [VALIDATION-LEGACY.md](VALIDATION-LEGACY.md).
 Both the Windows editor host and the exported Windows executable passed the voice

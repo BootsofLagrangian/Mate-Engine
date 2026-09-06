@@ -1,0 +1,618 @@
+{
+	"checks": [
+		{
+			"details": {
+				"intervals": [
+					17.266666666667,
+					35.5666666666659
+				],
+				"quiet_seconds": 57.099999999998
+			},
+			"label": "meaningful quiet gaps",
+			"ok": false
+		},
+		{
+			"details": {
+				"states": [
+					"rest",
+					"approach",
+					"arrive",
+					"curious",
+					"anticipate",
+					"walk",
+					"sleepy"
+				]
+			},
+			"label": "varied director states",
+			"ok": true
+		},
+		{
+			"details": {
+				"peak_acceleration": 175.056438446045,
+				"peak_speed": 11.3136281967163
+			},
+			"label": "stationary head avoids jitter",
+			"ok": false
+		},
+		{
+			"details": {
+				"accepted": false,
+				"reason": "unknown_target"
+			},
+			"label": "unknown target explicitly rejected",
+			"ok": true
+		},
+		{
+			"details": {
+				"llm": {
+					"accepted": false,
+					"reason": "unknown_target"
+				},
+				"user": {
+					"accepted": false,
+					"reason": "unknown_target"
+				}
+			},
+			"label": "user and LLM use same unknown-target path",
+			"ok": true
+		},
+		{
+			"details": {
+				"accepted": false,
+				"reason": "invalid"
+			},
+			"label": "unknown action explicitly rejected",
+			"ok": true
+		},
+		{
+			"details": {
+				"outcomes": [
+					{
+						"id": "local:3",
+						"outcome": "arrived",
+						"time": 53.6833333333316
+					},
+					{
+						"id": "probe:unreachable",
+						"outcome": "unreachable",
+						"time": 94.0166666666626
+					},
+					{
+						"id": "probe:travel",
+						"outcome": "interrupted",
+						"time": 100.566666666662
+					},
+					{
+						"id": "probe:preempt:speaking",
+						"outcome": "interrupted",
+						"time": 121.383333333328
+					},
+					{
+						"id": "probe:preempt:dragging",
+						"outcome": "interrupted",
+						"time": 131.816666666664
+					},
+					{
+						"id": "probe:preempt:panel",
+						"outcome": "interrupted",
+						"time": 149.400000000011
+					}
+				]
+			},
+			"label": "catalogued unreachable point reports terminal status",
+			"ok": true
+		},
+		{
+			"details": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"label": "known user target accepted",
+			"ok": true
+		},
+		{
+			"details": {
+				"anticipate_start": 100.533333333329,
+				"first_gaze": 100.583333333329,
+				"first_motion": -1.0,
+				"lead_seconds": -101.583333333329
+			},
+			"label": "visible anticipatory gaze before desktop travel",
+			"ok": false
+		},
+		{
+			"details": {
+				"distance": 0.0
+			},
+			"label": "directed journey covers 200 desktop pixels",
+			"ok": false
+		},
+		{
+			"details": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"label": "known llm target accepted",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "travel starts before speaking preemption",
+			"ok": true
+		},
+		{
+			"details": {
+				"drift": 0.0
+			},
+			"label": "speaking holds desktop position",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "speaking release does not instantly restart obsolete travel",
+			"ok": true
+		},
+		{
+			"details": {
+				"elapsed": 4.29999999999976,
+				"state": "rest"
+			},
+			"label": "speaking resumes eligible behavior",
+			"ok": true
+		},
+		{
+			"details": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"label": "known llm target accepted",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "travel starts before dragging preemption",
+			"ok": false
+		},
+		{
+			"details": {
+				"drift": 0.0
+			},
+			"label": "dragging holds desktop position",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "dragging release does not instantly restart obsolete travel",
+			"ok": true
+		},
+		{
+			"details": {
+				"elapsed": 4.30000000000342,
+				"state": "rest"
+			},
+			"label": "dragging resumes eligible behavior",
+			"ok": true
+		},
+		{
+			"details": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"label": "known llm target accepted",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "travel starts before panel preemption",
+			"ok": true
+		},
+		{
+			"details": {
+				"drift": 0.0
+			},
+			"label": "panel holds desktop position",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "panel release does not instantly restart obsolete travel",
+			"ok": true
+		},
+		{
+			"details": {
+				"elapsed": 4.30000000000342,
+				"state": "rest"
+			},
+			"label": "panel resumes eligible behavior",
+			"ok": true
+		},
+		{
+			"details": {
+				"epochs": 29
+			},
+			"label": "non-vacuous planted-foot coverage",
+			"ok": true
+		},
+		{
+			"details": {
+				"max_px": 0.0540082156658173,
+				"sole_reference_max_px": 0.0540082156658173
+			},
+			"label": "actual desktop planted ankle drift",
+			"ok": true
+		}
+	],
+	"epochs": [
+		{
+			"frames": 6,
+			"peak_drift": 0.0,
+			"point": "(810.6135, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(810.6135, 1400.0)",
+			"sole_peak_drift": 0.0,
+			"start": 33.5333333333327
+		},
+		{
+			"frames": 41,
+			"peak_drift": 0.00140910595655441,
+			"point": "(814.3602, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(814.3602, 1400.0)",
+			"sole_peak_drift": 0.00140380859375,
+			"start": 33.5333333333327
+		},
+		{
+			"frames": 46,
+			"peak_drift": 0.0297045633196831,
+			"point": "(872.681, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(872.681, 1400.0)",
+			"sole_peak_drift": 0.0297045633196831,
+			"start": 34.0999999999993
+		},
+		{
+			"frames": 51,
+			"peak_drift": 0.0317479632794857,
+			"point": "(929.5862, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(929.5862, 1400.0)",
+			"sole_peak_drift": 0.0317479632794857,
+			"start": 34.7333333333326
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0432411581277847,
+			"point": "(979.4363, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(979.4363, 1400.0)",
+			"sole_peak_drift": 0.043200645595789,
+			"start": 35.4333333333326
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.050384882837534,
+			"point": "(1037.523, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1037.523, 1400.0)",
+			"sole_peak_drift": 0.0503037832677364,
+			"start": 36.1499999999992
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0314659774303436,
+			"point": "(1087.872, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1087.872, 1400.0)",
+			"sole_peak_drift": 0.0315407104790211,
+			"start": 36.8666666666659
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0315810777246952,
+			"point": "(1146.627, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1146.627, 1400.0)",
+			"sole_peak_drift": 0.0315407104790211,
+			"start": 37.5999999999991
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0322378873825073,
+			"point": "(1197.94, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1197.94, 1400.0)",
+			"sole_peak_drift": 0.0321974195539951,
+			"start": 38.3333333333324
+		},
+		{
+			"frames": 53,
+			"peak_drift": 0.0438979864120483,
+			"point": "(1254.639, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1254.639, 1400.0)",
+			"sole_peak_drift": 0.0438171215355396,
+			"start": 39.0499999999991
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0511194840073586,
+			"point": "(1305.942, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1305.942, 1400.0)",
+			"sole_peak_drift": 0.0511194840073586,
+			"start": 39.7833333333324
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0529308207333088,
+			"point": "(1363.642, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1363.642, 1400.0)",
+			"sole_peak_drift": 0.0528502427041531,
+			"start": 40.499999999999
+		},
+		{
+			"frames": 53,
+			"peak_drift": 0.0507344268262386,
+			"point": "(1413.935, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1413.935, 1400.0)",
+			"sole_peak_drift": 0.0507344268262386,
+			"start": 41.2166666666656
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0320822037756443,
+			"point": "(1472.644, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1472.644, 1400.0)",
+			"sole_peak_drift": 0.0320822037756443,
+			"start": 41.9499999999989
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0318928398191929,
+			"point": "(1522.902, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1522.902, 1400.0)",
+			"sole_peak_drift": 0.0318519324064255,
+			"start": 42.6666666666655
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0316218659281731,
+			"point": "(1581.634, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1581.634, 1400.0)",
+			"sole_peak_drift": 0.0315810777246952,
+			"start": 43.3999999999988
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0322378873825073,
+			"point": "(1632.941, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1632.941, 1400.0)",
+			"sole_peak_drift": 0.0321974195539951,
+			"start": 44.1333333333321
+		},
+		{
+			"frames": 53,
+			"peak_drift": 0.0529308207333088,
+			"point": "(1689.639, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1689.639, 1400.0)",
+			"sole_peak_drift": 0.0528904050588608,
+			"start": 44.8499999999987
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0301046278327703,
+			"point": "(1740.942, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1740.942, 1400.0)",
+			"sole_peak_drift": 0.0301046278327703,
+			"start": 45.583333333332
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0320822037756443,
+			"point": "(1798.643, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1798.643, 1400.0)",
+			"sole_peak_drift": 0.0320822037756443,
+			"start": 46.2999999999987
+		},
+		{
+			"frames": 53,
+			"peak_drift": 0.0536623634397984,
+			"point": "(1848.935, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1848.935, 1400.0)",
+			"sole_peak_drift": 0.0536623634397984,
+			"start": 47.0166666666653
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0320822037756443,
+			"point": "(1907.644, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(1907.644, 1400.0)",
+			"sole_peak_drift": 0.0320822037756443,
+			"start": 47.7499999999986
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0320078060030937,
+			"point": "(1957.902, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(1957.902, 1400.0)",
+			"sole_peak_drift": 0.0319670438766479,
+			"start": 48.4666666666652
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0316962338984013,
+			"point": "(2016.634, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(2016.634, 1400.0)",
+			"sole_peak_drift": 0.0316962338984013,
+			"start": 49.1999999999985
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0323530100286007,
+			"point": "(2067.941, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(2067.941, 1400.0)",
+			"sole_peak_drift": 0.0323530100286007,
+			"start": 49.9333333333318
+		},
+		{
+			"frames": 53,
+			"peak_drift": 0.0303304810076952,
+			"point": "(2124.639, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(2124.639, 1400.0)",
+			"sole_peak_drift": 0.0303768720477819,
+			"start": 50.6499999999984
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0450558513402939,
+			"point": "(2175.942, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(2175.942, 1400.0)",
+			"sole_peak_drift": 0.0450153201818466,
+			"start": 51.3833333333317
+		},
+		{
+			"frames": 52,
+			"peak_drift": 0.0320822037756443,
+			"point": "(2233.643, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "left",
+			"sole": "(2233.643, 1400.0)",
+			"sole_peak_drift": 0.0320822037756443,
+			"start": 52.0999999999983
+		},
+		{
+			"frames": 51,
+			"peak_drift": 0.0540082156658173,
+			"point": "(2283.935, 1374.823)",
+			"scenario": "quiet_idle",
+			"side": "right",
+			"sole": "(2283.935, 1400.0)",
+			"sole_peak_drift": 0.0540082156658173,
+			"start": 52.816666666665
+		}
+	],
+	"events": [
+		{
+			"request": "unreachable",
+			"result": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"time": 93.9999999999959
+		},
+		{
+			"request": "probe:travel",
+			"response": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"source": "user",
+			"target": "(101.1587, 1400.0)",
+			"time": 97.9999999999957
+		},
+		{
+			"request": "probe:preempt:speaking",
+			"response": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"source": "llm",
+			"target": "(35.47351, 1400.0)",
+			"time": 119.999999999994
+		},
+		{
+			"request": "probe:preempt:dragging",
+			"response": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"source": "llm",
+			"target": "(101.1587, 1400.0)",
+			"time": 131.699999999997
+		},
+		{
+			"request": "probe:preempt:panel",
+			"response": {
+				"accepted": true,
+				"reason": "queued"
+			},
+			"source": "llm",
+			"target": "(35.47351, 1400.0)",
+			"time": 148.016666666677
+		}
+	],
+	"failures": 5,
+	"fps": 60,
+	"frames": 9343,
+	"missing_cells": [
+		"additional scales and direction-reversal matrix pending"
+	],
+	"model": "cheval-grand",
+	"scope": "actual main wiring; deterministic fixed-delta",
+	"seed": 2251,
+	"source_sha256": {
+		"behavior_director.gd": "3dcd998b89ff9afa1cd6b839ee67c0ce85663f5102ca0abc110475dcb3648752",
+		"desktop_autonomy.gd": "791925d045c2f4be9637b57000b7e883c84f25e5f60304021b51d702f3c668fb",
+		"desktop_gait.gd": "b28af90c4562088e6a146235085fd34e140f882b7b4317477e6a687b3cbbcee8",
+		"leg_ik.gd": "50f4d469e94d285bf77b2cefc542ed64da4cfe6087d354a5718ab7689865029c",
+		"living_behavior.gd": "5bdca24a8447c6a05f28ae050479c68a5b537021580b50eea1e4bfb8a2f54f34",
+		"main.gd": "e0879aac535ed81445113fd83c1461d13ab9e2acc4588e28dc12b4ab996b26bb",
+		"motion_player.gd": "1dad6cad3abaf2ecb778fbf69511238863783ae5eabc1e9e2a70b8c55c84871e",
+		"vrm_avatar.gd": "143b4e0c6fba49ae2039ef18dada4d5988ad26320b789f8ac408582f3214e6d2"
+	}
+}

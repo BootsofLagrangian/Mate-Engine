@@ -6,6 +6,8 @@ signal state_changed(state: String)
 signal locomotion_changed(moving: bool, velocity: Vector2)
 signal target_chosen(id: String, screen_point: Vector2, kind: String)
 signal support_changed(contact: Dictionary)
+signal navigation_finished(id: String, outcome: String)
+signal frame_moved(displacement: Vector2, velocity: Vector2)
 
 const SurfaceGeometry = preload("desktop_surfaces.gd")
 
@@ -15,6 +17,10 @@ const DECISION_SECONDS := 5.0
 const TRAVEL_TIMEOUT := 35.0
 const STEP := 1.0 / 120.0
 const MARGIN := 4.0
+const ANTICIPATION_SECONDS := 1.2
+const ARRIVAL_SECONDS := 0.7
+const WALK_EASE_SECONDS := 1.0
+const HEADING_TIMEOUT_SECONDS := 6.0
 
 var enabled := true
 var speed := 75.0
@@ -55,6 +61,15 @@ var _world_snapshot: Dictionary = {}
 var _world_stale := false
 var _using_fallback_monitors := true
 var _preferred_surface_id := ""
+var external_decisions := false
+var _active_target_id := ""
+var _anticipate_until := 0.0
+var _walk_elapsed := 0.0
+var _heading_ready_provider := Callable()
+var _heading_deadline := 0.0
+var _waiting_for_heading := false
+var _last_frame_position := Vector2.INF
+var last_request_outcome := ""
 
 
 func configure(host: Window, bounds_callback: Callable = Callable(), anchors_callback: Callable = Callable()) -> void:
@@ -62,6 +77,7 @@ func configure(host: Window, bounds_callback: Callable = Callable(), anchors_cal
 	_bounds_callback = bounds_callback
 	_anchors_callback = anchors_callback
 	position = Vector2(host.position)
+	_last_frame_position = position
 	_refresh_monitors()
 
 
@@ -124,26 +140,50 @@ func observe_interest(id: String, screen_point: Vector2, confidence: float = 0.5
 
 func move_to_interest(id: String) -> bool:
 	_expire_interests()
-	if not enabled or _blocked or _pointer_interaction or _time < _settle_until or not _interests.has(id):
+	last_request_outcome = "blocked"
+	if not enabled or _blocked or _pointer_interaction or _time < _settle_until:
 		return false
+	if not _interests.has(id):
+		last_request_outcome = "unknown_target"
+		return false
+	last_request_outcome = "unreachable"
 	var entry: Dictionary = _interests[id]
 	var destination := _nearest_safe_origin(Vector2(entry.point) - visible_bounds.get_center())
 	if surface_mode:
 		if _support.is_empty() or contact_pose != "foot":
 			return false
 		var span := _surface_origin_span(_support, _locked_anchor)
-		destination = Vector2(clampf(Vector2(entry.point).x - _locked_anchor.x, span.x, span.y),
+		var requested: Vector2 = entry.point
+		# A point on a different platform is not reached by projecting it onto ours.
+		if absf(requested.y - float(_support.y)) > 8.0 or requested.x - _locked_anchor.x < span.x - 8.0 or requested.x - _locked_anchor.x > span.y + 8.0:
+			return false
+		destination = Vector2(clampf(requested.x - _locked_anchor.x, span.x, span.y),
 			float(_support.y) - _locked_anchor.y)
 	if not destination.is_finite() or not _path_safe(position, destination):
 		return false
-	if position.distance_to(destination) < 24.0:
+	if position.distance_to(destination) <= 1.5:
 		_interests.erase(id)
-		return false
+		_finish_target("superseded")
+		_stop_motion()
+		_active_target_id = id
+		last_request_outcome = "arrived"
+		_finish_target("arrived")
+		_set_state("arrive")
+		_state_until = _time + ARRIVAL_SECONDS
+		return true
+	_finish_target("superseded")
+	_stop_motion()
+	_active_target_id = id
+	last_request_outcome = "started"
 	target = destination
+	_walk_elapsed = 0.0
+	_waiting_for_heading = false
+	_heading_deadline = _time + HEADING_TIMEOUT_SECONDS
+	_anticipate_until = _time + ANTICIPATION_SECONDS
 	_travel_until = _time + TRAVEL_TIMEOUT
 	_next_decision = _time + DECISION_SECONDS
 	_interests.erase(id)
-	_set_state("walk")
+	_set_state("anticipate")
 	target_chosen.emit(id, target + visible_bounds.get_center(), str(entry.kind))
 	return true
 
@@ -170,6 +210,10 @@ func _process(delta: float) -> void:
 	advance(delta)
 	if enabled and not _blocked and not _pointer_interaction and _time >= _settle_until:
 		_window.position = Vector2i(position.round())
+	var actual := Vector2(_window.position)
+	var displacement := actual - _last_frame_position if _last_frame_position.is_finite() else Vector2.ZERO
+	_last_frame_position = actual
+	frame_moved.emit(displacement, velocity if state == "walk" and not _blocked and not _pointer_interaction else Vector2.ZERO)
 
 
 ## Test hook: no DisplayServer or actual window mutation.
@@ -203,6 +247,14 @@ func _refresh_monitors() -> void:
 
 
 func advance(delta: float) -> void:
+	var before := position.round()
+	_advance_state(delta)
+	if _simulation:
+		frame_moved.emit(position.round() - before, velocity if state == "walk" and not _blocked and not _pointer_interaction else Vector2.ZERO)
+
+
+func _advance_state(delta: float) -> void:
+	var movement_delta := delta
 	if not is_finite(delta) or delta <= 0:
 		return
 	_time += delta
@@ -237,8 +289,33 @@ func advance(delta: float) -> void:
 		if _time >= _next_decision:
 			_begin_surface_attach()
 		return
+	if state == "anticipate":
+		if _time + 0.000001 < _anticipate_until:
+			return
+		var heading_ready := not _heading_ready_provider.is_valid() or bool(_heading_ready_provider.call())
+		if not heading_ready or (_waiting_for_heading and _time >= _heading_deadline):
+			_waiting_for_heading = true
+			if _time >= _heading_deadline:
+				_finish_target("heading_timeout")
+				_stop_motion()
+				_set_state("rest")
+				_state_until = _time + DECISION_SECONDS
+				_next_decision = _state_until
+			return
+		# A readiness callback observes this frame's rendered turn. Do not catch
+		# up movement for time spent waiting on the planted turning step.
+		movement_delta = 0.0 if _waiting_for_heading else clampf(_time - _anticipate_until, 0.0, delta)
+		_travel_until = (_time if _waiting_for_heading else _anticipate_until) + TRAVEL_TIMEOUT
+		_waiting_for_heading = false
+		_set_state("walk")
+	if state == "arrive":
+		if _time >= _state_until:
+			_set_state("inspect")
+			_state_until = _time + 3.0
+		return
 	if state == "walk" or state == "approach":
 		if _time >= _travel_until:
+			_finish_target("timeout")
 			_stop_motion()
 			_pending_support.clear()
 			_set_state("rest")
@@ -247,7 +324,7 @@ func advance(delta: float) -> void:
 			return
 		# Long scheduling stalls never become large desktop jumps. Wall clock TTLs
 		# still advance fully, while movement catches up by at most 100 ms.
-		var remaining := minf(delta, 0.1)
+		var remaining := minf(movement_delta, 0.1)
 		while remaining > 0.000001 and (state == "walk" or state == "approach"):
 			var dt := minf(remaining, STEP)
 			_integrate(dt)
@@ -275,14 +352,23 @@ func _integrate(dt: float) -> void:
 			_support = _pending_support.duplicate()
 			_pending_support.clear()
 			_emit_support()
-		_set_state("inspect")
-		_state_until = _time + 3.0
+		_finish_target("arrived")
+		_set_state("arrive")
+		_state_until = _time + ARRIVAL_SECONDS
 		return
 	var desired_speed := minf(speed, sqrt(maxf(0.0, 2.0 * acceleration * maxf(0.0, distance - 0.6))))
+	if state == "walk":
+		# Ease out of the standing turn. Substep time, rather than render frames,
+		# keeps the initial weight transfer identical under frame jitter. The
+		# stopping-distance cap and acceleration limit remain authoritative.
+		_walk_elapsed += dt
+		var progress := clampf(_walk_elapsed / WALK_EASE_SECONDS, 0.0, 1.0)
+		desired_speed = minf(desired_speed, speed * smoothstep(0.0, 1.0, progress))
 	var desired := offset.normalized() * desired_speed
 	velocity = velocity.move_toward(desired, acceleration * dt)
 	var next := position + velocity * dt
 	if not is_origin_safe(next):
+		_finish_target("unreachable")
 		_stop_motion()
 		_pending_support.clear()
 		_set_state("rest")
@@ -297,6 +383,11 @@ func _integrate(dt: float) -> void:
 
 
 func _choose_target() -> void:
+	if external_decisions:
+		_set_state("rest")
+		_state_until = _time + DECISION_SECONDS
+		_next_decision = _state_until
+		return
 	_next_decision = _time + DECISION_SECONDS
 	var ids := _interests.keys()
 	ids.sort_custom(func(a: String, b: String) -> bool:
@@ -401,6 +492,7 @@ func _path_safe(from: Vector2, to: Vector2) -> bool:
 
 
 func _interrupt() -> void:
+	_finish_target("interrupted")
 	_pending_support.clear()
 	_stop_motion()
 	_set_state("paused" if not enabled or _blocked or _pointer_interaction else "settle")
@@ -606,3 +698,42 @@ func _fallback_monitors() -> Array:
 		monitors.append({"id": "fallback:%d" % i, "work_x": area.position.x,
 			"work_y": area.position.y, "work_width": area.size.x, "work_height": area.size.y})
 	return monitors
+
+
+func set_external_decisions(value: bool) -> void:
+	external_decisions = value
+
+
+func cancel_target(reason: String = "cancelled") -> void:
+	_finish_target(reason)
+	_interrupt()
+
+
+func _finish_target(outcome: String) -> void:
+	if _active_target_id.is_empty():
+		return
+	var finished := _active_target_id
+	_active_target_id = ""
+	navigation_finished.emit(finished, outcome)
+
+
+func available_surface_targets() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if _support.is_empty() or contact_pose != "foot":
+		return result
+	var span := _surface_origin_span(_support, _locked_anchor)
+	if span.y - span.x < 60.0:
+		return result
+	result.append({"id": "support:left", "point": Vector2(span.x + _locked_anchor.x, float(_support.y)), "kind": "surface", "label": "현재 지지면 왼쪽"})
+	result.append({"id": "support:right", "point": Vector2(span.y + _locked_anchor.x, float(_support.y)), "kind": "surface", "label": "현재 지지면 오른쪽"})
+	return result
+
+
+func can_request_move() -> bool:
+	return enabled and not _blocked and not _pointer_interaction and _time >= _settle_until and is_origin_safe(position) and (not surface_mode or (not _support.is_empty() and contact_pose == "foot"))
+
+
+## Optional presentation gate. Heading owns only the 3D body; native travel remains
+## on its safe desktop surface. Empty provider preserves standalone behavior.
+func set_heading_ready_provider(provider: Callable = Callable()) -> void:
+	_heading_ready_provider = provider

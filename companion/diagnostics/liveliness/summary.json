@@ -1,0 +1,129 @@
+{
+  "scope": "six actual-main headless cells, authored profiles, default scale0.6, fixed-delta30/60Hz; actual Windows separate",
+  "cells": [
+    {
+      "cell": "cheval-grand-30fps",
+      "checks": 34,
+      "failures": 0,
+      "quiet_seconds": 55.8666666666661,
+      "quiet_intervals": [
+        19.8000000000001,
+        32.9000000000007
+      ],
+      "quiet_peak_speed": 3.95328688621521,
+      "quiet_peak_acceleration": 46.5286803245544,
+      "glance_peak_speed": 17.5715751647949,
+      "glance_peak_acceleration": 63.8232636451721,
+      "stance_epochs": 48,
+      "stance_peak_drift_px": 0.0589289925992489,
+      "stance_p95_drift_px": 0.000244140625,
+      "support_height_peak_px": 0.017333984375,
+      "anticipatory_lead_seconds": 0.999999999999943,
+      "gait_stationary_phase_drift": 0.0
+    },
+    {
+      "cell": "cheval-grand-60fps",
+      "checks": 34,
+      "failures": 0,
+      "quiet_seconds": 56.1499999999981,
+      "quiet_intervals": [
+        19.8000000000002,
+        32.9666666666661
+      ],
+      "quiet_peak_speed": 4.06132984161377,
+      "quiet_peak_acceleration": 44.475120306015,
+      "glance_peak_speed": 17.527681350708,
+      "glance_peak_acceleration": 64.2138862609863,
+      "stance_epochs": 49,
+      "stance_peak_drift_px": 0.0616822391748428,
+      "stance_p95_drift_px": 0.0291428659111261,
+      "support_height_peak_px": 0.017822265625,
+      "anticipatory_lead_seconds": 1.01666666666661,
+      "gait_stationary_phase_drift": 0.0
+    },
+    {
+      "cell": "eishin-flash-30fps",
+      "checks": 34,
+      "failures": 0,
+      "quiet_seconds": 55.7333333333327,
+      "quiet_intervals": [
+        25.8000000000004,
+        17.1,
+        9.96666666666664
+      ],
+      "quiet_peak_speed": 4.23671197891235,
+      "quiet_peak_acceleration": 46.8000054359436,
+      "glance_peak_speed": 18.0972213745117,
+      "glance_peak_acceleration": 62.1823596954346,
+      "stance_epochs": 48,
+      "stance_peak_drift_px": 0.0552309826016426,
+      "stance_p95_drift_px": 0.000172633488546126,
+      "support_height_peak_px": 0.011474609375,
+      "anticipatory_lead_seconds": 1.03333333333327,
+      "gait_stationary_phase_drift": 0.0
+    },
+    {
+      "cell": "eishin-flash-60fps",
+      "checks": 34,
+      "failures": 0,
+      "quiet_seconds": 55.9666666666648,
+      "quiet_intervals": [
+        25.7999999999998,
+        17.1000000000003,
+        10.0333333333334
+      ],
+      "quiet_peak_speed": 4.23036336898804,
+      "quiet_peak_acceleration": 44.8259139060974,
+      "glance_peak_speed": 18.1381549835205,
+      "glance_peak_acceleration": 63.7155032157898,
+      "stance_epochs": 49,
+      "stance_peak_drift_px": 0.055031917989254,
+      "stance_p95_drift_px": 0.00048828125,
+      "support_height_peak_px": 0.014892578125,
+      "anticipatory_lead_seconds": 1.04999999999994,
+      "gait_stationary_phase_drift": 0.0
+    },
+    {
+      "cell": "rice-shower-30fps",
+      "checks": 34,
+      "failures": 0,
+      "quiet_seconds": 55.7666666666661,
+      "quiet_intervals": [
+        21.3000000000002,
+        30.7666666666674
+      ],
+      "quiet_peak_speed": 4.2281436920166,
+      "quiet_peak_acceleration": 46.5213131904602,
+      "glance_peak_speed": 18.2097911834717,
+      "glance_peak_acceleration": 65.0980353355408,
+      "stance_epochs": 48,
+      "stance_peak_drift_px": 0.0501056611537933,
+      "stance_p95_drift_px": 0.0001220703125,
+      "support_height_peak_px": 0.0159912109375,
+      "anticipatory_lead_seconds": 0.999999999999943,
+      "gait_stationary_phase_drift": 0.0
+    },
+    {
+      "cell": "rice-shower-60fps",
+      "checks": 34,
+      "failures": 0,
+      "quiet_seconds": 56.0333333333314,
+      "quiet_intervals": [
+        21.2833333333334,
+        30.8166666666662
+      ],
+      "quiet_peak_speed": 4.3224024772644,
+      "quiet_peak_acceleration": 44.5030725002289,
+      "glance_peak_speed": 18.12619972229,
+      "glance_peak_acceleration": 65.4359865188599,
+      "stance_epochs": 49,
+      "stance_peak_drift_px": 0.0600293092429638,
+      "stance_p95_drift_px": 0.0258642919361591,
+      "support_height_peak_px": 0.019287109375,
+      "anticipatory_lead_seconds": 1.01666666666661,
+      "gait_stationary_phase_drift": 0.0
+    }
+  ],
+  "total_checks": 204,
+  "total_failures": 0
+}

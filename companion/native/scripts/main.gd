@@ -25,6 +25,7 @@ var session := CompanionSession.new()
 var autonomy: DesktopAutonomy # window roaming (Astra-owned module); policy in AutonomyBridge
 var world_source: DesktopWorldSource # Windows window/monitor rectangles at 1 Hz (Astra-owned; geometry only)
 var bridge := AutonomyBridge.new()
+var living: Node # local behavior/attention and user/LLM intention coordinator
 var panel: ControlPanel
 var camera: Camera3D
 var ui_layer: CanvasLayer
@@ -107,12 +108,17 @@ func _ready() -> void:
 	# Roaming: the module reads the window, the visible pet rect and the projected contact anchors;
 	# it starts blocked and only moves in collapsed pet mode once update_context() (per frame,
 	# below) clears every block.
-	autonomy.configure(get_window(), func() -> Rect2: return pet_rect, _projected_anchors)
+	autonomy.configure(get_window(), _navigation_rect, _projected_anchors)
+	autonomy.set_heading_ready_provider(func(): return motion.heading_ready())
 	autonomy.set_enabled(bool(Settings.get_value("autonomy_enabled", true)))
 	autonomy.set_speed(float(Settings.get_value("autonomy_speed", 75.0)))
 	_apply_surface_mode()
 	_refresh_autonomy_label()
 	_refresh_sit_button()
+	living = load("res://scripts/living_behavior.gd").new()
+	living.name = "LivingBehavior"
+	add_child(living)
+	living.configure(self)
 	client.connect_ws()
 	client.fetch_characters()
 	client.fetch_motions()
@@ -130,6 +136,8 @@ func _setup_window() -> void:
 	win.transparent = true
 	win.transparent_bg = true
 	win.title = "Mate Companion"
+	# Named interest markers are separate desktop windows, not child overlays.
+	get_tree().root.gui_embed_subwindows = false
 	get_viewport().transparent_bg = true
 	RenderingServer.set_default_clear_color(Color(0, 0, 0, 0))
 	if DisplayServer.has_feature(DisplayServer.FEATURE_WINDOW_TRANSPARENCY):
@@ -307,6 +315,8 @@ func _wire() -> void:
 
 	autonomy.state_changed.connect(func(s: String):
 		_autonomy_state = s
+		if s in ["paused", "settle", "no_surface", "no_space"]:
+			motion.cancel_heading()
 		if s == "no_surface" and _sit_active and not _sit_attached:
 			# The seated pose fits no safe support (would clip the work area): stand back up.
 			_stand_up("앉을 자리가 맞지 않아 다시 일어섭니다")
@@ -316,7 +326,11 @@ func _wire() -> void:
 	world_source.snapshot_changed.connect(func(snapshot: Dictionary): autonomy.set_world_snapshot(snapshot))
 	autonomy.target_chosen.connect(func(_id: String, screen_point: Vector2, _kind: String):
 		var here := Vector2(get_window().position) + pet_rect.get_center()
-		_travel_dir = clampf((screen_point.x - here.x) / 400.0, -1.0, 1.0))
+		_travel_dir = clampf((screen_point.x - here.x) / 400.0, -1.0, 1.0)
+		# A replacement target can arrive while already anticipating; state_changed
+		# would not fire again. Every accepted destination must update heading.
+		if autonomy.state == "anticipate":
+			motion.set_heading_intent(autonomy.target - autonomy.position))
 
 	session.event_accepted.connect(_on_event)
 	session.event_discarded.connect(func(ev: Dictionary, reason: String):
@@ -630,7 +644,7 @@ func _on_event(ev: Dictionary) -> void:
 			# and never restarted by a later locomotion stop.
 			bridge.note_dialogue(_now())
 			_walk_started = ""
-			motion.play_gesture(str(ev.get("gesture", "idle")), str(ev.get("emotion", "")), float(ev.get("intensity", 1.0)), float(ev.get("speed", 1.0)), int(ev.get("repeat", 1)))
+			motion.play_gesture(_dialogue_gesture_name(ev), str(ev.get("emotion", "")), float(ev.get("intensity", 1.0)), float(ev.get("speed", 1.0)), int(ev.get("repeat", 1)))
 		"done":
 			bridge.note_dialogue(_now())
 			var t := str(ev.get("text", session.text))
@@ -644,7 +658,7 @@ func _on_event(ev: Dictionary) -> void:
 			var action_seen := not done_turn.is_empty() and done_turn == _action_seen_turn
 			if not action_seen and not _dialogue_gesture_active() and ev.has("gesture"):
 				_walk_started = ""
-				motion.play_gesture(str(ev.get("gesture", "idle")), str(ev.get("emotion", "")),
+				motion.play_gesture(_dialogue_gesture_name(ev), str(ev.get("emotion", "")),
 					float(ev.get("intensity", 1.0)), float(ev.get("speed", 1.0)), int(ev.get("repeat", 1)))
 			elif ev.has("emotion"):
 				motion.set_emotion(str(ev["emotion"]))
@@ -666,6 +680,15 @@ func _on_event(ev: Dictionary) -> void:
 			panel.append_transcript("system", "음성 오류: " + str(ev.get("message", "")))
 
 
+func _dialogue_gesture_name(event: Dictionary) -> String:
+	var requested := str(event.get("gesture", "idle"))
+	# Travel and seated clips need verified geometry and contact ownership.
+	# A spoken suggestion cannot start marching in place or drop the seat anchor.
+	if requested in AutonomyBridge.WALK_CLIPS or requested == AutonomyBridge.SIT_CLIP:
+		return "idle"
+	return requested
+
+
 func _send_chat(text: String) -> void:
 	if client.state != "open":
 		panel.append_transcript("system", "백엔드에 연결되어 있지 않습니다")
@@ -674,6 +697,8 @@ func _send_chat(text: String) -> void:
 	_cancel_current()
 	var msg := session.make_chat(text)
 	audio.begin_turn(msg["turn_id"])
+	if living != null:
+		living.publish_world(true)
 	client.send(msg)
 	panel.append_transcript("user", text)
 
@@ -686,11 +711,15 @@ func _on_utterance(wav: PackedByteArray, seconds: float, source: String) -> void
 	_cancel_current()
 	var msg := session.make_audio(Marshalls.raw_to_base64(wav))
 	audio.begin_turn(msg["turn_id"])
+	if living != null:
+		living.publish_world(true)
 	client.send(msg)
 	panel.append_transcript("user", "[음성 %.1f초 · %s · %d bytes]" % [seconds, "PTT" if source == "ptt" else "VAD", wav.size()])
 
 
 func _cancel_current() -> void:
+	if living != null:
+		living.cancel("cancelled")
 	var id := session.cancel_turn()
 	if not id.is_empty():
 		client.send(session.make_cancel(id))
@@ -838,6 +867,7 @@ func _set_panel_open(open: bool, persist: bool = true) -> void:
 		# Never let the window run away while the user is in the panel: block this very frame
 		# instead of waiting for the next _process tick.
 		_push_autonomy_context()
+		motion.face_front()
 	_refresh_autonomy_label()
 	_update_passthrough(true)
 
@@ -911,8 +941,10 @@ func _process(delta: float) -> void:
 	_update_avatar_transform(delta)
 	_update_pet_rect()
 	_keep_pet_in_window()
-	_update_gaze()
 	_push_autonomy_context()
+	if living != null:
+		living.tick(delta)
+	_update_gaze()
 	_advance_pending_sit()
 	_update_float(delta)
 	_update_passthrough(false)
@@ -944,7 +976,7 @@ func _keep_pet_in_window() -> void:
 func _update_fps_cap() -> void:
 	var active := panel_open or audio.voice_active or motion.is_gesture_active() or _drag_active \
 		or mic.is_recording() or DisplayServer.window_is_focused() or session.activity != "idle" \
-		or _autonomy_state == "walk" or _autonomy_state == "approach" or _floating \
+		or _autonomy_state in ["walk", "approach", "anticipate"] or not motion.heading_ready() or _floating \
 		or not is_equal_approx(_pet_scale, _pet_scale_target)
 	if active != _fps_active or Engine.max_fps == 0:
 		_fps_active = active
@@ -973,6 +1005,8 @@ func _update_pet_rect() -> void:
 
 
 func _update_gaze() -> void:
+	if living != null and living.apply_attention():
+		return
 	var mouse := get_viewport().get_mouse_position()
 	var inside := Rect2(Vector2.ZERO, Vector2(WINDOW_SIZE)).has_point(mouse) and DisplayServer.window_is_focused() or pet_rect.grow(120).has_point(mouse)
 	if inside:
@@ -990,6 +1024,22 @@ func _update_gaze() -> void:
 		motion.gaze_has_target = true
 	else:
 		motion.gaze_has_target = false
+
+
+## Reserve enough horizontal room to turn before selecting an edge destination.
+## The hit area still follows the visible projection; navigation uses a yaw-invariant
+## envelope so widening shoulders during a reversal cannot invalidate its support.
+func _navigation_rect() -> Rect2:
+	if not avatar.has_model() or not _pivot_local.has("foot"):
+		return pet_rect
+	var pivot: Vector3 = _pivot_local.foot
+	var radius := 0.0
+	for i in 8:
+		var corner := _model_aabb.get_endpoint(i) - pivot
+		radius = maxf(radius, Vector2(corner.x, corner.z).length())
+	var foot: Vector2 = _projected_anchors().get("foot", pet_rect.get_center())
+	var half_width := radius * _px_per_m * _pet_scale
+	return Rect2(foot.x - half_width, _unclipped_pet_rect.position.y, half_width * 2.0, _unclipped_pet_rect.size.y)
 
 
 func _update_passthrough(force: bool) -> void:
@@ -1054,9 +1104,10 @@ func _push_autonomy_context() -> void:
 	if autonomy == null:
 		return
 	# Seated on a support: hold the module (it keeps the contact) so it never walks off until stood up.
-	var ctx := bridge.context(panel_open, mic.is_recording(), audio.voice_active, _drag_active,
+	var marker_dragging: bool = living != null and living.is_marker_dragging()
+	var ctx := bridge.context(panel_open, mic.is_recording(), audio.voice_active, _drag_active or marker_dragging,
 		session.activity, session.is_foreground_busy(), session.is_foreground_playing(), _now(),
-		_sit_active and _sit_attached)
+		(_sit_active and _sit_attached) or _dialogue_gesture_active())
 	autonomy.update_context(bool(ctx["panel_open"]), bool(ctx["listening"]), bool(ctx["speaking"]),
 		bool(ctx["dragging"]), bool(ctx["foreground_busy"]))
 	# Passthrough hides pointer events outside the pet region, so use the global pointer.
@@ -1090,7 +1141,7 @@ func _dialogue_gesture_active() -> bool:
 func _on_locomotion(moving: bool, velocity: Vector2) -> void:
 	# Surface mode: grounded walk only while the module is in "walk" on an attached support; an
 	# "approach" glide toward a support floats/idles instead. Facing follows real walking only and
-	# returns to the front on stop; it never touches gestures, so speech is not overridden.
+	# holds its heading on stop; explicit interaction may request a stepped return to front.
 	var grounded := AutonomyBridge.grounded(autonomy.surface_mode, autonomy.state, _support)
 	motion.set_locomotion_direction(AutonomyBridge.facing_velocity(moving, grounded, _sit_active, velocity))
 	var plan := AutonomyBridge.locomotion_plan(moving, _vrma_loaded, _dialogue_gesture_active(), autonomy.speed, grounded, _sit_active)
@@ -1262,6 +1313,8 @@ func _switch_pivot(kind: String) -> void:
 ## desktop point". This host never captures or reads the screen; callers supply the point.
 ## kind: "external" | "owned_task" | ... (free-form, forwarded to the autonomy module).
 func observe_interest(id: String, screen_point: Vector2, confidence: float = 0.5, ttl: float = 20.0, kind: String = "external") -> void:
+	if living != null:
+		living.observe_interest(id, screen_point, confidence, ttl, kind)
 	if autonomy != null:
 		autonomy.observe_interest(id, screen_point, confidence, ttl, kind)
 
