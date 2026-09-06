@@ -32,6 +32,7 @@ public class VRMLoader : MonoBehaviour
 
     void Start()
     {
+        if (ChevalCompanion.Instance != null) return; // Companion owns initial avatar load.
         string savedPath = SaveLoadHandler.Instance != null
             ? SaveLoadHandler.Instance.data.selectedModelPath
             : null;

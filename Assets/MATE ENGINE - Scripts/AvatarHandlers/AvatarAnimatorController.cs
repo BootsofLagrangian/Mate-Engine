@@ -47,8 +47,14 @@ public class AvatarAnimatorController : MonoBehaviour
     {
         animator ??= GetComponent<Animator>();
         Application.runInBackground = true;
-        enumerator = new MMDeviceEnumerator();
-        defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        try {
+            enumerator = new MMDeviceEnumerator();
+            defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+        } catch (System.Exception ex) {
+            UnityEngine.Debug.LogWarning("Audio endpoint unavailable: " + ex.Message);
+        }
+#endif
 
         animator.SetFloat(isFemaleParam, enableHusbandoMode ? 0f : 1f);
         animator.SetFloat(isMaleParam, enableHusbandoMode ? 1f : 0f);

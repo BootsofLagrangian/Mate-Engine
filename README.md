@@ -1,3 +1,13 @@
+# Cheval Grand companion extension
+
+Qwen2.5 1.5B + GPT-SoVITS v2 + faster-whisper + Drive VRM을 연결한 로컬 확장입니다. 기본 실행은 CUDA GPU이며 웹에서 음성 대화와 8종 합성 모션을 사용할 수 있습니다. Unity 연결 코드도 포함합니다.
+
+실행: `./companion/start.sh` → http://localhost:8765
+
+[설치·실행 안내](companion/README.md) · [실제 검증 결과와 Unity 미검증 범위](companion/VALIDATION.md)
+
+---
+
 # MateEngine for Linux (Unoffical)
 Github: https://github.com/Marksonthegamer/Mate-Engine-Linux-Port
 

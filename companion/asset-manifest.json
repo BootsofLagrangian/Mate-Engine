@@ -1,0 +1,32 @@
+[
+  {
+    "path": "assets/cheval-grand.vrm",
+    "bytes": 18567488,
+    "sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a"
+  },
+  {
+    "path": "assets/reference.mp3",
+    "bytes": 210272,
+    "sha256": "502dc4a9548c7edb00667b3e1aabef6eacff3dda050acffd483656d67ca9f7d2"
+  },
+  {
+    "path": "assets/reference.wav",
+    "bytes": 332878,
+    "sha256": "80188613efb6858223d3a110ee85f6a18977d7a244612bedf13166fcd3d58673"
+  },
+  {
+    "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+    "bytes": 155312957,
+    "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+  },
+  {
+    "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+    "bytes": 85007266,
+    "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+  },
+  {
+    "path": "models/qwen2.5-1.5b-instruct-q4_k_m.gguf",
+    "bytes": 1117320736,
+    "sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e"
+  }
+]

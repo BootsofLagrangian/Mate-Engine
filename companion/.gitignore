@@ -1,0 +1,11 @@
+.venv/
+assets/*
+!assets/.gitkeep
+models/
+vendor/
+logs/
+output/
+__pycache__/
+.pytest_cache/
+web/node_modules/
+web/dist/

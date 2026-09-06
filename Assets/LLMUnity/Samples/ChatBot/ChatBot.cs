@@ -123,8 +123,8 @@ namespace LLMUnitySamples
             inputBubble.AddValueChangedListener(onValueChanged);
             inputBubble.setInteractable(false);
 
-            ShowLoadedMessages();
-            _ = llmCharacter.Warmup(WarmUpCallback);
+            if (ChevalCompanion.Instance != null) WarmUpCallback();
+            else { ShowLoadedMessages(); _ = llmCharacter.Warmup(WarmUpCallback); }
             FindAvatarSmart();
         }
 
@@ -262,6 +262,24 @@ namespace LLMUnitySamples
 
             AddBubble(message, true);
             Bubble aiBubble = AddBubble("...", false);
+
+            if (ChevalCompanion.Instance != null)
+            {
+                if (ChevalCompanion.Instance.IsBusy)
+                {
+                    aiBubble.SetText("Companion is busy. Please retry shortly.");
+                    AllowInput();
+                    return;
+                }
+                ChevalCompanion.Instance.Send(message, reply =>
+                {
+                    aiBubble.SetText(reply);
+                    layoutDirty = true;
+                    AllowInput();
+                });
+                inputBubble.SetText("");
+                return;
+            }
 
             if (streamAudioSource != null)
                 streamAudioSource.Play();
