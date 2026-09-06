@@ -93,3 +93,17 @@ model behavior rather than missing capability delivery.
 ## Reproducible product settings
 
 Pass `--product-defaults` to test the product default perspective scene, scale and empty furniture layout instead of inheriting saved user preferences. The configured backend endpoint and requested character are retained. Both modes disable microphone capture and close the settings panel for the text fixture, record the effective initial settings and profile, and restore the complete original settings on exit. This changes the fixture environment only: scenario expectations are still never sent to the model, and every intent must originate from its real response. Existing saved-settings attempts remain valid evidence for their recorded environment.
+
+The trial also records `simultaneous_travel_playback_samples`: unique engine frames with voice playback, the same active native intent, and committed scene travel or nonzero legacy walking velocity. This is stricter than an active queued-command overlap count. It is a sampled observation, not an audio-synchronized duration or proof of full motion/garment quality.
+
+Each matching native terminal outcome now includes `native_diagnostics`, and each
+trial retains `native_diagnostics_finished` even if no intent was delivered.
+These are observation-time copies of furniture fit diagnostics, current object
+rows/interaction, support and scene navigation, global projected foot, window,
+workareas and actual camera/view. The terminal copy can precede native cleanup;
+the finished copy may therefore differ. They do not reconstruct unavailable
+past geometry or prove anatomical contact. Vectors/transforms are labeled string
+values; nonfinite numbers become strings so failures remain valid JSON. Snapshots
+are bounded to 16 object rows, 32 array items, 64 dictionary entries, eight nesting
+levels, 2,048-character values and 1,024 total nodes, with truncation markers.
+No snapshot is sent to the model or used as a new acceptance gate.

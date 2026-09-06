@@ -36,12 +36,71 @@ func sample() -> void:
 		active_trial["native_active_ms"] = elapsed()
 	if native_active and app.audio.is_voice_active():
 		active_trial["simultaneous_native_active_playback_samples"] += 1
+		var interaction: Dictionary = app.objects._interaction
+		var active_move: Dictionary = app.living.director._active
+		var direct_owner: bool = str(active_move.get("id","")) == id and str(active_move.get("kind","")) == "move_to"
+		var furniture_owner: bool = str(interaction.get("command_id","")) == id
+		var scene_owner: bool = direct_owner or (furniture_owner and str(interaction.get("stage","")) == "scene_approaching")
+		var legacy_owner: bool = direct_owner or (furniture_owner and str(interaction.get("stage","")) == "approaching" and str(active_move.get("id","")) == str(interaction.get("request_id","")))
+		var scene_delta: Vector3 = app.scene_navigation.diagnostics.get("committed_world_delta",Vector3.ZERO)
+		var moving_scene: bool = scene_owner and app.scene_navigation.navigation.active and scene_delta.length() > 0.00001
+		var moving_legacy: bool = legacy_owner and app.autonomy.state == "walk" and absf(app.autonomy.velocity.x) > 1.0
+		var frame_id := Engine.get_process_frames()
+		if (moving_scene or moving_legacy) and int(active_trial.get("last_travel_sample_frame",-1)) != frame_id:
+			active_trial["simultaneous_travel_playback_samples"] += 1
+			active_trial["last_travel_sample_frame"] = frame_id
 
 func record_terminal(id: String, outcome: String, reason: String, owner: String) -> void:
 	var row := {"id":id,"outcome":outcome,"reason":reason,"owner":owner,"ms":elapsed()}
+	if not active_trial.is_empty() and id == turn+":intent":
+		row["native_diagnostics"] = native_diagnostic_snapshot()
 	terminal_rows.append(row)
 	report["native_outcomes"].append(row)
 	write_report()
+
+func bounded_diagnostic(value: Variant, depth: int = 0, budget: Array = []) -> Variant:
+	if budget.is_empty(): budget.append(1024)
+	budget[0] -= 1
+	if budget[0] < 0: return "<node limit>"
+	if depth >= 8: return "<depth limit>"
+	if value is Dictionary:
+		var result := {}
+		for key in value:
+			if budget[0] <= 0: result["_truncated"] = true; break
+			if result.size() >= 64: result["_truncated"] = true; break
+			result[str(key).left(128)] = bounded_diagnostic(value[key],depth+1,budget)
+		return result
+	if value is Array:
+		var result: Array = []
+		for item in value.slice(0,32):
+			if budget[0] <= 0: result.append("<node limit>"); break
+			result.append(bounded_diagnostic(item,depth+1,budget))
+		if value.size()>32: result.append("<array truncated>")
+		return result
+	if value is float and not is_finite(value): return str(value)
+	if value == null or value is bool or value is int or value is float: return value
+	return str(value).left(2048)
+
+func native_diagnostic_snapshot() -> Dictionary:
+	if app == null: return {"available":false}
+	var camera: Camera3D = app.spatial_camera()
+	var role := "canonical_reference"
+	if camera == null: camera=app.camera; role="root_viewport"
+	var anchors: Dictionary = app._projected_anchors()
+	var nav = app.scene_navigation
+	var state := {"ms":elapsed(),"fit_diagnostics":app.objects.fit_diagnostics.duplicate(true),
+		"objects":app.objects.rows().slice(0,16).duplicate(true),"interaction":app.objects._interaction.duplicate(true),
+		"pending_command":app.objects._pending_command.duplicate(true),"last_status":app.objects.last_status,
+		"window":str(Rect2i(root.position,root.size)),"workareas":app.objects.screen_rects(),
+		"foot_global_px":Vector2(root.position)+Vector2(anchors.get("foot",Vector2.ZERO)),
+		"anchors_local_px":anchors,"support":app.autonomy.get_support_contact(),
+		"autonomy_state":app.autonomy.state,"pointer_interaction":app.autonomy._pointer_interaction,
+		"navigation":{"active":nav.navigation.active,"holding":nav.holding,"ground_latched":nav.ground_latched,
+			"foot_world_m":nav.foot_world,"diagnostics":nav.diagnostics.duplicate(true)},
+		"view":app._view_settings.duplicate(true),"camera_role":role,
+		"camera":{"projection":camera.projection,"transform":camera.global_transform,"fov_deg":camera.fov,
+			"near_m":camera.near,"far_m":camera.far,"size":camera.size}}
+	return bounded_diagnostic(state)
 
 func received(event: Dictionary) -> void:
 	super.received(event)
@@ -79,7 +138,7 @@ func fetch_raw() -> Dictionary:
 func trial(step: Dictionary, index: int) -> void:
 	done = {}; action = {}; feedback = {}; pcm_bytes = 0; played = false
 	max_envelope = 0.0; playback_intervals = []; playback_started = -1
-	active_trial = {"index":index,"text":step.text,"started_ms":elapsed(),"simultaneous_native_active_playback_samples":0,"failures":[]}
+	active_trial = {"index":index,"text":step.text,"started_ms":elapsed(),"simultaneous_native_active_playback_samples":0,"simultaneous_travel_playback_samples":0,"failures":[]}
 	report["trials"].append(active_trial)
 	active_trial["native_capabilities_before_publish"] = {"living_enabled":app.living.enabled,"furniture_native_available":app.objects.native_available(),"furniture_catalog":app.objects.furniture_catalog().duplicate(true)}
 	app.living.publish_world(true)
@@ -122,6 +181,7 @@ func trial(step: Dictionary, index: int) -> void:
 	active_trial["delivered_action_to_terminal_playback_overlap_ms"] = overlap
 	active_trial["overlap_required"] = false
 	active_trial["finished_ms"] = elapsed()
+	active_trial["native_diagnostics_finished"] = native_diagnostic_snapshot()
 	check(failures.is_empty(),"scenario step "+str(index)+" actual reply / playback / intent / native outcome")
 	if bool(scenario.get("captures",false)): await shot("scenario-"+str(index))
 	write_report()
