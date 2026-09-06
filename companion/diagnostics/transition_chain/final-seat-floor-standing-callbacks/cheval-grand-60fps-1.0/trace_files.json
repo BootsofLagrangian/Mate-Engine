@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/cheval-grand-60fps-1.0/joints.jsonl.gz",
+    "sha256": "ef6dd19af88777fa9c55038f54bcb4d065a5afcae68cd76fb31e3a2d5c0957b8",
+    "bytes": 12571600
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/cheval-grand-60fps-1.0/frames.csv.gz",
+    "sha256": "18ef5469167d7d0bdf8f64fd7ade99cd13e5c8bfab2014c9d8584b989e682d68",
+    "bytes": 746393
+  }
+]

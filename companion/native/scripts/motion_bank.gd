@@ -370,6 +370,11 @@ static func parse_asset_catalog(data: Variant, out_errors: Array[String]) -> Arr
 			"asset_url": str(item.get("asset_url", "/motion-assets/" + name)),
 			"sha256": str(item["sha256"]).to_lower(),
 			"loop": bool(item.get("loop", false)),
+			"ambient": bool(item.get("ambient", false)),
+			"locomotion": bool(item.get("locomotion", false)),
+			"locomotion_preserve_hips": bool(item.get("locomotion_preserve_hips", false)),
+			"locomotion_priority": int(item.get("locomotion_priority", 0)),
+			"contact_mode": str(item.get("contact_mode", "")),
 			# Description is the manifest's own wording (used for tooltips and LLM hints); the
 			# native side never relabels clips (a dance is a dance, not a greeting).
 			"description": str(item.get("description", "")).left(500),
@@ -396,6 +401,18 @@ static func validate_asset_entry(item: Variant) -> Array[String]:
 		problems.append("invalid sha256")
 	if item.has("loop") and typeof(item["loop"]) != TYPE_BOOL:
 		problems.append("loop is not a bool")
+	if item.has("ambient") and typeof(item["ambient"]) != TYPE_BOOL:
+		problems.append("ambient is not a bool")
+	if item.has("contact_mode") and (typeof(item["contact_mode"]) != TYPE_STRING or item["contact_mode"] not in ["", "foot"]):
+		problems.append("contact_mode must be empty or foot")
+	if item.has("locomotion") and typeof(item["locomotion"]) != TYPE_BOOL:
+		problems.append("locomotion is not a bool")
+	if item.has("locomotion_preserve_hips") and typeof(item["locomotion_preserve_hips"]) != TYPE_BOOL:
+		problems.append("locomotion_preserve_hips is not a bool")
+	# Godot JSON numbers decode as floats, including JSON integer tokens.
+	var priority: Variant = item.get("locomotion_priority", 0)
+	if typeof(priority) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(priority)) or float(priority) != floorf(float(priority)) or float(priority) < 0 or float(priority) > 100:
+		problems.append("locomotion_priority must be an integer in 0..100")
 	var url: Variant = item.get("asset_url", "/motion-assets/" + name)
 	if typeof(url) != TYPE_STRING or str(url).is_empty() or str(url).contains(" "):
 		problems.append("invalid asset_url")

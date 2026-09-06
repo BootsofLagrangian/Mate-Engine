@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/rice-shower-60fps-1.0/joints.jsonl.gz",
+    "sha256": "73932305b85137b78b265b12096da9f648d232b10e8a1c46bfd09b8ac157e80b",
+    "bytes": 12578529
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/rice-shower-60fps-1.0/frames.csv.gz",
+    "sha256": "93bf4373e7d034cbb13e99b992f7ddc5697302b17714380d1750d55870a12311",
+    "bytes": 745081
+  }
+]

@@ -1,0 +1,73 @@
+{
+  "scope": "Explicit furniture seating floor; final modifier mesh geometry and cleanup",
+  "source_sha256": {
+    "companion/native/scripts/seated_floor_constraint.gd": "10725a42779e3e2ac6a99b2463bd5ea54e4803a193b8f7d3256edd76846ff189",
+    "companion/native/scripts/seated_geometry_calibrator.gd": "0f7f1045469bfc8e4b3b3092ab81e1affc065b8fc8dfb8871132462e9c6d7a73",
+    "companion/native/scripts/vrm_avatar.gd": "768685848a866af3f3073be4dc7cabb8a9f232c8a59bf32706b486c96366e740",
+    "companion/native/scripts/motion_player.gd": "7bf2245f27c7cc977a53556fac2728a97ebd92f12a2ac51898ce7e22567379d9",
+    "companion/native/tools/probe_seated_floor.gd": "78edc44d52687c90f1d308e94b87cba118ecdf17e8ebf146116a0020b299ecba",
+    "companion/native/tools/probe_seated_floor_lifecycle.gd": "9f71bd32ed6314b9185b5b1d09a8083f3737c5c89bbe140462a42fc083035be1",
+    "companion/native/tools/probe_seated_geometry.gd": "59d025f2490c25abf6092d5a8a5d160daccf114d2b1df70c1d7cf200bc798586"
+  },
+  "logs": [
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-floor.log",
+      "sha256": "47fee802aea39ee0b5b33f4b23e43cc3c45d2e3e8dbfbad08db46e76adc42da7",
+      "final_line": "SEATED_FLOOR_FAILURES=12"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-floor-terminal2.log",
+      "sha256": "40ba110ddcdab2414d57eedfa360a8a00a16c9198efd0f064a9c9c04abd5d24d",
+      "final_line": "SEATED_FLOOR_FAILURES=8"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-floor-radius.log",
+      "sha256": "0064fc2fb5bf80613681b397c7c962399d7cd2cedcb308071cf7e7d4d0932f04",
+      "final_line": "SEATED_FLOOR_FAILURES=0"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-floor-cleanup06.log",
+      "sha256": "60287fb2a6c73be6035accf1c44b884209463ac6baaedb35b7302e720469b654",
+      "final_line": "SEATED_FLOOR_FAILURES=0"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-floor-chair10.log",
+      "sha256": "af03d62ad7a27a50296b63f43b600198c9837d658b3afcf20171e32f30e8cbe9",
+      "final_line": "SEATED_FLOOR_FAILURES=0"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-floor-lifecycle.log",
+      "sha256": "99d4db0ae5ff1278ab1b2850f3d783b809c3278272b342386456787db33ee6a0",
+      "final_line": "FLOOR_LIFECYCLE_FAILURES=0"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-geometry-final.log",
+      "sha256": "09f745ec5081b25687f08e2887c6435ffd37ed644c0c9c5708766e99c4350b43",
+      "final_line": "SEATED_FAILURES=0"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-secondary-cache.log",
+      "sha256": "cfce83eaf5a4b5c8b63699451deeae628b78776086b625e6021c99caa9ce6f11",
+      "final_line": "SEATED_CACHE_FAILURES=0"
+    },
+    {
+      "path": "companion/logs/diagnostic-traces/seated_floor/seated-floor-lifecycle-final.log",
+      "sha256": "99d4db0ae5ff1278ab1b2850f3d783b809c3278272b342386456787db33ee6a0",
+      "final_line": "FLOOR_LIFECYCLE_FAILURES=0"
+    }
+  ],
+  "failed_candidates_preserved": [
+    "seated-floor.log",
+    "seated-floor-terminal2.log"
+  ],
+  "final_runtime_checks": [
+    "seated-floor-cleanup06.log",
+    "seated-floor-chair10.log",
+    "seated-floor-lifecycle-final.log"
+  ],
+  "limitations": [
+    "Plane contact only, not furniture-volume cloth collision",
+    "Visible floor validation samples canonical sitting with imported spring simulation; host continuous Windows acceptance is separate"
+  ],
+  "late_cleanup_check": "Final lifecycle rerun also verifies clearing/changing floor invalidates cached secondary poses before later manual seating; contact physics unchanged."
+}

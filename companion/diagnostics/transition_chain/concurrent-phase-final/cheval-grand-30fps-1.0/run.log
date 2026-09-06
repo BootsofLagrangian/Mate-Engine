@@ -1,0 +1,31 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+LIVELINESS_CHECK matching authored behavior profile loaded true {}
+LIVELINESS_CHECK director uses matching authored profile true {"effective_style":{"curiosity":0.4,"gaze_hold_s":2.2,"idle_interval_s":14.0,"posture_strength":0.45,"response_delay_s":0.35}}
+LIVELINESS_CHECK authored home participates in sequence true {}
+LIVELINESS_CHECK initial surface support acquired true {}
+LIVELINESS_CHECK chain request accepted chain:0 true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK continuous journey arrived 0 true {"outcomes":[{"id":"chain:0","outcome":"arrived","time":25.1000000000004}]}
+LIVELINESS_CHECK chain request accepted chain:1 true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK continuous journey arrived 1 true {"outcomes":[{"id":"chain:0","outcome":"arrived","time":25.1000000000004},{"id":"chain:1","outcome":"arrived","time":35.4666666666672}]}
+LIVELINESS_CHECK chain request accepted chain:2 true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK continuous journey arrived 2 true {"outcomes":[{"id":"chain:0","outcome":"arrived","time":25.1000000000004},{"id":"chain:1","outcome":"arrived","time":35.4666666666672},{"id":"chain:2","outcome":"arrived","time":45.8333333333333}]}
+LIVELINESS_CHECK chain request accepted chain:before-reversal true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK moving reversal has actual preceding travel true {}
+LIVELINESS_CHECK chain request accepted chain:reversal true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK superseding opposite journey arrives true {}
+LIVELINESS_CHECK pair_wave_nod compatible pair accepted true {"accepted":true,"gated":false,"reason":"queued"}
+LIVELINESS_CHECK pair_wave_nod meaningful pre-end live overlap true {"incoming_start":3.53333333333313,"outgoing_duration":4.0,"overlap_seconds":0.5}
+LIVELINESS_CHECK pair_wave_nod both timelines advance with continuous masks and priority true {"active":true,"advancing_frames":15,"masks_ok":true}
+LIVELINESS_CHECK pair_wave_nod promotes then completes true {"active":false,"promoted":true}
+LIVELINESS_CHECK pair_nod_wave compatible pair accepted true {"accepted":true,"gated":false,"reason":"queued"}
+LIVELINESS_CHECK pair_nod_wave meaningful pre-end live overlap true {"incoming_start":2.53333333333319,"outgoing_duration":3.0,"overlap_seconds":0.5}
+LIVELINESS_CHECK pair_nod_wave both timelines advance with continuous masks and priority true {"active":true,"advancing_frames":15,"masks_ok":true}
+LIVELINESS_CHECK pair_nod_wave promotes then completes true {"active":false,"promoted":true}
+LIVELINESS_CHECK pair_wave_wave compatible pair accepted true {"accepted":true,"gated":false,"reason":"queued"}
+LIVELINESS_CHECK pair_wave_wave meaningful pre-end live overlap true {"incoming_start":3.53333333333313,"outgoing_duration":4.0,"overlap_seconds":0.5}
+LIVELINESS_CHECK pair_wave_wave both timelines advance with continuous masks and priority true {"active":true,"advancing_frames":15,"masks_ok":true}
+LIVELINESS_CHECK pair_wave_wave promotes then completes true {"active":false,"promoted":true}
+LIVELINESS_RESULT failures=0 frames=2733 report=/home/hard2251/workspace/mate-engine/Mate-Engine/companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-1.0/report.json
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2514)

@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/joints.jsonl.gz",
+    "sha256": "8708a93231723fa1daac82a7571f03d81079d3ffaaf5475600f84bb991dbaf28",
+    "bytes": 12578529
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/frames.csv.gz",
+    "sha256": "f1b50ec7e87b2ae1cc00dce0ee46ad017c852d8c98ae6921b6e491c40ca6c8d1",
+    "bytes": 745081
+  }
+]

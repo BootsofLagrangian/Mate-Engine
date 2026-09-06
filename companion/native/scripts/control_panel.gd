@@ -14,6 +14,10 @@ signal refresh_requested
 signal reload_avatar_requested
 signal preview_gesture(name: String, emotion: String, intensity: float, speed: float, repeat: int)
 signal preview_motion(motion: Dictionary)
+## "두 동작 이어보기": play two finite built-in bank gestures back to back; the second starts
+## `lead` seconds before the first ends (0..1). The host forwards to the motion owner's preview
+## sequence API; the panel never composes or plays anything itself.
+signal preview_sequence(first: String, second: String, lead: float)
 signal save_motion(motion: Dictionary)
 signal job_start(prompt: String)
 signal job_cancel
@@ -40,6 +44,9 @@ const PANEL_WIDTH := 340.0
 const SettingsScript := preload("res://scripts/settings.gd")
 const EMOTIONS := ["neutral", "happy", "relaxed", "sad", "surprised", "angry"]
 const KEYFRAME_MAX := 64
+## Bank names that are contact/support poses rather than one-shot gestures (never chained).
+const SEQUENCE_EXCLUDED_WORDS := ["sit", "seat", "prop", "support", "hold", "contact", "lean"]
+const SEQUENCE_LEAD_DEFAULT := 0.35
 
 var bank: MotionBank = MotionBank.new()
 ## Imported VRMA clips (GET /motion-assets) that MotionPlayer has loaded: name -> catalog entry.
@@ -68,6 +75,11 @@ var _intensity: HSlider
 var _speed: HSlider
 var _repeat: SpinBox
 var _sequence_list: ItemList
+var _chain_first: OptionButton
+var _chain_second: OptionButton
+var _chain_lead: HSlider
+var _chain_lead_value: Label
+var _chain_button: Button
 var _sequence_name: LineEdit
 var _kf_bone: OptionButton
 var _kf_time: SpinBox
@@ -102,6 +114,10 @@ var _surface_status: Label
 var _sit_button: Button
 var _sitting := false
 var _idle_clip_option: OptionButton
+## Saved/mirrored idle_clip value: "auto", "" (procedural breathing only) or an imported clip name.
+var _idle_choice := "auto"
+## Current character's profile ambient_loop (from the character catalogue) shown under "자동".
+var _idle_profile_loop := ""
 var _tabs: TabContainer
 # behavior tab
 var _behavior_check: CheckButton
@@ -117,6 +133,24 @@ var _markers_check: CheckButton
 var _point_hint: Label
 var _point_rows: Array[Dictionary] = [] # last set_interest_points() rows (id,label,status,...)
 var _points_manager: Node # InterestPoints bound via bind_interest_points(), or null
+# desktop living-space tab (experimental)
+var _obj_catalogue: OptionButton
+var _obj_add: Button
+var _obj_list: ItemList
+var _obj_name: LineEdit
+var _obj_rename: Button
+var _obj_scale: HSlider
+var _obj_scale_value: Label
+var _obj_visible: CheckButton
+var _obj_remove: Button
+var _obj_edit: CheckButton
+var _obj_verbs: HBoxContainer
+var _obj_cancel: Button
+var _obj_status: Label
+var _obj_hint: Label
+var _obj_rows: Array[Dictionary] = []
+var _obj_catalogue_data: Array = []
+var _objects: Node # desktop objects host bound via bind_desktop_objects(), or null
 
 
 func _ready() -> void:
@@ -233,6 +267,7 @@ func _build() -> void:
 	vbox.add_child(_tabs)
 	_build_chat_tab()
 	_build_behavior_tab()
+	_build_space_tab()
 	_build_motion_tab()
 	_build_work_tab()
 	_build_settings_tab()
@@ -397,6 +432,124 @@ func _build_behavior_tab() -> void:
 	_refresh_point_buttons()
 
 
+## "공간": experimental desktop living-space objects (chair / sofa / computer desk). The panel only
+## drives the objects host through bind_desktop_objects(); it never persists, moves or poses
+## anything itself. Interactions are geometry + pose only.
+func _build_space_tab() -> void:
+	var v := _tab("공간")
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	v.add_child(scroll)
+	var inner := VBoxContainer.new()
+	inner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	inner.add_theme_constant_override("separation", 6)
+	scroll.add_child(inner)
+	var beta := Label.new()
+	beta.text = "실험 기능 · 미리보기: 가구를 바탕화면에 놓고 펫이 앉거나 살펴봅니다. 접촉 동작은 Windows에서 확인 중입니다."
+	beta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	beta.add_theme_font_size_override("font_size", 11)
+	beta.modulate = Color(0.95, 0.8, 0.55)
+	inner.add_child(beta)
+
+	inner.add_child(_section("가구 놓기"))
+	var add_row := HBoxContainer.new()
+	inner.add_child(add_row)
+	_obj_catalogue = OptionButton.new()
+	_obj_catalogue.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_obj_catalogue.fit_to_longest_item = false
+	_obj_catalogue.clip_text = true
+	_obj_catalogue.tooltip_text = "놓을 가구 종류"
+	add_row.add_child(_obj_catalogue)
+	_obj_add = Button.new()
+	_obj_add.text = "추가"
+	_obj_add.tooltip_text = "선택한 가구를 펫 근처에 놓습니다. 배치 편집을 켜면 끌어서 옮길 수 있습니다."
+	_obj_add.pressed.connect(_request_add_object)
+	add_row.add_child(_obj_add)
+	_obj_list = ItemList.new()
+	_obj_list.custom_minimum_size = Vector2(0, 96)
+	_obj_list.select_mode = ItemList.SELECT_SINGLE
+	_obj_list.item_selected.connect(func(_i: int): _refresh_object_controls())
+	_obj_list.empty_clicked.connect(func(_p: Vector2, _b: int):
+		_obj_list.deselect_all()
+		_refresh_object_controls())
+	inner.add_child(_obj_list)
+	var name_row := HBoxContainer.new()
+	inner.add_child(name_row)
+	_obj_name = LineEdit.new()
+	_obj_name.placeholder_text = "이름 (예: 창가 의자)"
+	_obj_name.max_length = 40
+	_obj_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_obj_name.text_submitted.connect(func(_t: String): _request_rename_object())
+	name_row.add_child(_obj_name)
+	_obj_rename = Button.new()
+	_obj_rename.text = "이름 바꾸기"
+	_obj_rename.pressed.connect(_request_rename_object)
+	name_row.add_child(_obj_rename)
+	var scale_row := HBoxContainer.new()
+	inner.add_child(scale_row)
+	var scale_label := _label("크기")
+	scale_label.custom_minimum_size = Vector2(70, 0)
+	scale_row.add_child(scale_label)
+	_obj_scale = HSlider.new()
+	_obj_scale.min_value = 0.5
+	_obj_scale.max_value = 1.8
+	_obj_scale.step = 0.05
+	_obj_scale.value = 1.0
+	_obj_scale.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_obj_scale.value_changed.connect(_on_object_scale)
+	scale_row.add_child(_obj_scale)
+	_obj_scale_value = Label.new()
+	_obj_scale_value.text = "1.00"
+	_obj_scale_value.custom_minimum_size = Vector2(44, 0)
+	scale_row.add_child(_obj_scale_value)
+	var tog_row := HBoxContainer.new()
+	inner.add_child(tog_row)
+	_obj_visible = CheckButton.new()
+	_obj_visible.text = "보이기"
+	_obj_visible.tooltip_text = "끄면 이 가구를 바탕화면에서 숨깁니다 (삭제되지 않음)"
+	_obj_visible.toggled.connect(_on_object_visible)
+	tog_row.add_child(_obj_visible)
+	_obj_remove = Button.new()
+	_obj_remove.text = "삭제"
+	_obj_remove.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_obj_remove.pressed.connect(_request_remove_object)
+	tog_row.add_child(_obj_remove)
+	_obj_edit = CheckButton.new()
+	_obj_edit.text = "배치 편집 (가구 창을 끌어 이동)"
+	_obj_edit.tooltip_text = "켜져 있는 동안 바탕화면의 가구를 마우스로 끌어 옮길 수 있습니다. 배치가 끝나면 끄세요."
+	_obj_edit.toggled.connect(_on_object_edit)
+	inner.add_child(_obj_edit)
+
+	inner.add_child(_section("펫에게 시키기"))
+	_obj_verbs = HBoxContainer.new()
+	_obj_verbs.add_theme_constant_override("separation", 6)
+	inner.add_child(_obj_verbs)
+	_obj_cancel = Button.new()
+	_obj_cancel.text = "그만하기"
+	_obj_cancel.tooltip_text = "진행 중인 가구 동작을 멈춥니다"
+	_obj_cancel.pressed.connect(_request_cancel_interaction)
+	inner.add_child(_obj_cancel)
+	_obj_status = Label.new()
+	_obj_status.text = "상태: 준비 안 됨"
+	_obj_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_obj_status.add_theme_font_size_override("font_size", 11)
+	_obj_status.modulate = Color(0.7, 0.7, 0.78)
+	inner.add_child(_obj_status)
+	_obj_hint = Label.new()
+	_obj_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_obj_hint.add_theme_font_size_override("font_size", 11)
+	_obj_hint.modulate = Color(0.7, 0.7, 0.78)
+	inner.add_child(_obj_hint)
+	var future := Label.new()
+	future.text = "앞으로 (아직 없음): 물건 들기·도구 꽂이. 모든 가구 동작은 자세와 위치만 다룹니다. 화면·파일을 읽거나 다른 프로그램을 조작하지 않습니다."
+	future.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	future.add_theme_font_size_override("font_size", 10)
+	future.modulate = Color(0.6, 0.6, 0.66)
+	inner.add_child(future)
+	_refresh_objects()
+
+
 func _build_motion_tab() -> void:
 	var v := _tab("모션")
 	var scroll := ScrollContainer.new()
@@ -435,6 +588,48 @@ func _build_motion_tab() -> void:
 	preview.pressed.connect(func():
 		preview_gesture.emit(_selected_preset(), _emotion_option.get_item_text(_emotion_option.selected), _intensity.value, _speed.value, int(_repeat.value)))
 	rep_row.add_child(preview)
+
+	inner.add_child(_section("두 동작 이어보기"))
+	var chain_row := HBoxContainer.new()
+	inner.add_child(chain_row)
+	_chain_first = OptionButton.new()
+	_chain_first.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_chain_first.fit_to_longest_item = false
+	_chain_first.clip_text = true
+	_chain_first.tooltip_text = "먼저 할 동작 (내장 제스처만)"
+	chain_row.add_child(_chain_first)
+	chain_row.add_child(_label("→"))
+	_chain_second = OptionButton.new()
+	_chain_second.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_chain_second.fit_to_longest_item = false
+	_chain_second.clip_text = true
+	_chain_second.tooltip_text = "이어서 할 동작 (내장 제스처만)"
+	chain_row.add_child(_chain_second)
+	var lead_row := HBoxContainer.new()
+	inner.add_child(lead_row)
+	var lead_label := _label("겹침(초)")
+	lead_label.custom_minimum_size = Vector2(70, 0)
+	lead_label.tooltip_text = "첫 동작이 끝나기 몇 초 전에 두 번째 동작을 시작할지"
+	lead_row.add_child(lead_label)
+	_chain_lead = HSlider.new()
+	_chain_lead.min_value = 0.0
+	_chain_lead.max_value = 1.0
+	_chain_lead.step = 0.05
+	_chain_lead.value = SEQUENCE_LEAD_DEFAULT
+	_chain_lead.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lead_row.add_child(_chain_lead)
+	_chain_lead_value = Label.new()
+	_chain_lead_value.text = "%.2f" % SEQUENCE_LEAD_DEFAULT
+	_chain_lead_value.custom_minimum_size = Vector2(44, 0)
+	lead_row.add_child(_chain_lead_value)
+	_chain_lead.value_changed.connect(func(v: float): _chain_lead_value.text = "%.2f" % v)
+	_chain_button = Button.new()
+	_chain_button.text = "두 동작 이어보기"
+	_chain_button.tooltip_text = "두 내장 제스처를 이어서 미리 봅니다. 저장되지 않습니다."
+	_chain_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_chain_button.pressed.connect(_request_preview_sequence)
+	lead_row.add_child(_chain_button)
+	_refresh_sequence_options()
 
 	inner.add_child(_section("시퀀스 만들기 (프리셋 조합)"))
 	var seq_btns := HBoxContainer.new()
@@ -712,8 +907,13 @@ func _build_settings_tab() -> void:
 	idle_row.add_child(_label("대기 동작"))
 	_idle_clip_option = OptionButton.new()
 	_idle_clip_option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_idle_clip_option.tooltip_text = "기본 대기 동작을 사용합니다. 다른 동작은 모션 탭에서 미리 볼 수 있습니다."
-	_idle_clip_option.item_selected.connect(func(i: int): setting_changed.emit("idle_clip", str(_idle_clip_option.get_item_metadata(i))))
+	_idle_clip_option.fit_to_longest_item = false # long clip descriptions must not widen the panel
+	_idle_clip_option.clip_text = true
+	_idle_clip_option.tooltip_text = "가만히 있을 때 몸이 어떻게 숨 쉬고 움직일지 고릅니다. 자동은 캐릭터에 맞는 동작을 씁니다. 시선·제스처는 그 위에 겹쳐집니다. 모든 동작은 모션 탭에서 미리 볼 수 있습니다."
+	_idle_choice = str(_setting("idle_clip", "auto"))
+	_idle_clip_option.item_selected.connect(func(i: int):
+		_idle_choice = str(_idle_clip_option.get_item_metadata(i))
+		setting_changed.emit("idle_clip", _idle_choice))
 	idle_row.add_child(_idle_clip_option)
 	_refresh_idle_clip_option()
 	var btn_row := HBoxContainer.new()
@@ -918,17 +1118,102 @@ func set_status_message(text: String) -> void:
 
 func set_characters(characters: Array, current: String) -> void:
 	_character_option.clear()
+	var profile_loop := ""
 	for c in characters:
 		var id := str(c.get("id", ""))
 		_character_option.add_item(str(c.get("name", id)))
 		_character_option.set_item_metadata(_character_option.item_count - 1, id)
 		if id == current:
 			_character_option.select(_character_option.item_count - 1)
+			profile_loop = str(c.get("ambient_loop", "")) if typeof(c.get("ambient_loop", "")) == TYPE_STRING else ""
+	set_idle_profile(profile_loop)
 
 
 func set_bank(new_bank: MotionBank) -> void:
-	bank = new_bank
+	bank = new_bank if new_bank != null else MotionBank.new()
 	_refresh_preset_option()
+	_refresh_sequence_options()
+
+
+## Built-in bank gestures that can be chained: finite duration, real tracks, not the procedural
+## idle, not custom/saved motions, not contact/support poses (sit/seat/prop/...), never VRMA clips.
+func sequence_candidates() -> Array[String]:
+	var out: Array[String] = []
+	if bank == null:
+		return out
+	for n in bank.names():
+		var name := str(n)
+		var m := bank.get_motion(name)
+		if name == "idle" or bool(m.get("custom", false)) or bool(m.get("loop", false)):
+			continue
+		var d := float(m.get("duration", 0.0))
+		if not is_finite(d) or d <= 0.0:
+			continue
+		var tracks: Variant = m.get("tracks", [])
+		if typeof(tracks) != TYPE_ARRAY or tracks.is_empty():
+			continue
+		var lower := name.to_lower()
+		var excluded := false
+		for w in SEQUENCE_EXCLUDED_WORDS:
+			if lower.contains(w):
+				excluded = true
+		if excluded:
+			continue
+		out.append(name)
+	return out
+
+
+func _refresh_sequence_options() -> void:
+	if _chain_first == null:
+		return
+	var prev_first := _chain_selected(_chain_first)
+	var prev_second := _chain_selected(_chain_second)
+	var names := sequence_candidates()
+	for opt in [_chain_first, _chain_second]:
+		opt.clear()
+		for n in names:
+			opt.add_item(n)
+			opt.set_item_metadata(opt.item_count - 1, n)
+			opt.set_item_tooltip(opt.item_count - 1, "%.1f초" % float(bank.get_motion(n).get("duration", 0.0)))
+	_chain_select(_chain_first, prev_first, 0)
+	_chain_select(_chain_second, prev_second, mini(1, names.size() - 1))
+	var usable := names.size() >= 1
+	_chain_first.disabled = not usable
+	_chain_second.disabled = not usable
+	_chain_lead.editable = usable
+	_chain_button.disabled = not usable
+	_chain_button.tooltip_text = "두 내장 제스처를 이어서 미리 봅니다. 저장되지 않습니다." if usable else "이어볼 내장 제스처가 없습니다 (뱅크를 새로고침하세요)"
+
+
+static func _chain_selected(opt: OptionButton) -> String:
+	if opt == null or opt.item_count == 0 or opt.selected < 0:
+		return ""
+	return str(opt.get_item_metadata(opt.selected))
+
+
+static func _chain_select(opt: OptionButton, wanted: String, fallback_index: int) -> void:
+	for i in opt.item_count:
+		if str(opt.get_item_metadata(i)) == wanted:
+			opt.select(i)
+			return
+	if opt.item_count > 0:
+		opt.select(clampi(fallback_index, 0, opt.item_count - 1))
+
+
+func sequence_selection() -> Dictionary:
+	return {"first": _chain_selected(_chain_first), "second": _chain_selected(_chain_second), "lead": snappedf(clampf(_chain_lead.value, 0.0, 1.0), 0.01)}
+
+
+func _request_preview_sequence() -> void:
+	var sel := sequence_selection()
+	var first := str(sel["first"])
+	var second := str(sel["second"])
+	var allowed := sequence_candidates()
+	if first.is_empty() or second.is_empty() or not allowed.has(first) or not allowed.has(second):
+		set_motion_result("이어볼 두 동작을 고르세요 (내장 제스처만 가능)", false)
+		return
+	set_motion_result("이어보기: %s → %s (겹침 %.2f초)" % [first, second, float(sel["lead"])], true)
+	preview_sequence.emit(first, second, float(sel["lead"]))
 
 
 ## Imported VRMA clips that MotionPlayer accepted (name -> catalog entry with duration/loop/
@@ -968,14 +1253,92 @@ func _refresh_preset_option() -> void:
 			_preset_option.select(i)
 
 
+## Imported clips that may serve as a calm ambient idle: catalogue entries flagged ambient AND
+## loop, the legacy idle_natural clip, and the current character's declared ambient_loop. A walk,
+## dance or prop clip is never advertised as an idle just because it loops. Sorted by name.
+func idle_candidates() -> Array[String]:
+	var out: Array[String] = []
+	for n in vrma_clips.keys():
+		var name := str(n)
+		var e: Dictionary = vrma_clips[n] if typeof(vrma_clips[n]) == TYPE_DICTIONARY else {}
+		var flagged := bool(e.get("ambient", false)) and bool(e.get("loop", false))
+		if flagged or AutonomyBridge.AMBIENT_IDLE_CLIPS.has(name) or (not _idle_profile_loop.is_empty() and name == _idle_profile_loop):
+			out.append(name)
+	out.sort()
+	return out
+
+
+## Friendly label for a clip: manifest description (never relabelled) with the name for lookup.
+static func idle_clip_label(name: String, entry: Dictionary) -> String:
+	var desc := str(entry.get("description", "")).strip_edges()
+	if desc.is_empty():
+		return name
+	if desc.length() > 28:
+		desc = desc.left(27).strip_edges() + "…"
+	return "%s (%s)" % [desc, name]
+
+
+## Rebuild the "대기 동작" dropdown around the saved choice without emitting. Items: 자동, 기본 호흡만,
+## every eligible imported clip; a saved clip that is not loaded (yet / any more) stays selected as a
+## placeholder so a catalogue refresh or missing download never changes the user's setting.
 func _refresh_idle_clip_option() -> void:
 	if _idle_clip_option == null:
 		return
 	_idle_clip_option.clear()
-	_idle_clip_option.add_item("기본 대기 동작 사용")
-	_idle_clip_option.set_item_metadata(0, "")
-	_idle_clip_option.select(0)
-	_idle_clip_option.disabled = true
+	var auto_text := "자동 (캐릭터에 맞게)"
+	var profile_loaded := not _idle_profile_loop.is_empty() and vrma_clips.has(_idle_profile_loop)
+	if profile_loaded:
+		auto_text = "자동 · " + idle_clip_label(_idle_profile_loop, vrma_clips[_idle_profile_loop])
+	elif not _idle_profile_loop.is_empty():
+		auto_text = "자동 (캐릭터 동작 준비 중)"
+	_idle_clip_option.add_item(auto_text)
+	_idle_clip_option.set_item_metadata(0, "auto")
+	_idle_clip_option.set_item_tooltip(0, ("이 캐릭터의 기본 대기 동작 '%s' 을 씁니다" % _idle_profile_loop) if profile_loaded else "캐릭터 기본 동작이 준비되면 자동으로 씁니다. 그때까지는 기본 호흡만 합니다.")
+	_idle_clip_option.add_item("기본 호흡만 (클립 없음)")
+	_idle_clip_option.set_item_metadata(1, "")
+	_idle_clip_option.set_item_tooltip(1, "가져온 동작 없이 잔잔한 호흡·시선만 합니다")
+	var candidates := idle_candidates()
+	for name in candidates:
+		var i := _idle_clip_option.item_count
+		var e: Dictionary = vrma_clips[name]
+		_idle_clip_option.add_item(idle_clip_label(name, e))
+		_idle_clip_option.set_item_metadata(i, name)
+		_idle_clip_option.set_item_tooltip(i, "%s\n%.1f초 반복 · 시선/제스처와 겹쳐 재생" % [str(e.get("description", "")), float(e.get("duration", 0.0))])
+	var selected := -1
+	for i in _idle_clip_option.item_count:
+		if str(_idle_clip_option.get_item_metadata(i)) == _idle_choice:
+			selected = i
+	if selected < 0:
+		# Saved clip not loaded: keep the choice visible and selected, never silently switch.
+		selected = _idle_clip_option.item_count
+		_idle_clip_option.add_item("%s (아직 없음)" % _idle_choice)
+		_idle_clip_option.set_item_metadata(selected, _idle_choice)
+		_idle_clip_option.set_item_tooltip(selected, "저장된 대기 동작이 아직 내려받아지지 않았거나 목록에서 빠졌습니다. 준비되면 자동으로 쓰입니다.")
+	_idle_clip_option.select(selected)
+	_idle_clip_option.disabled = false
+
+
+## Mirror the idle_clip setting from the host (e.g. after a reset) without emitting.
+func set_idle_clip(value: String) -> void:
+	_idle_choice = value
+	_refresh_idle_clip_option()
+
+
+func idle_clip() -> String:
+	return _idle_choice
+
+
+## Current character's declared ambient_loop (character catalogue); "" when none. Drives the
+## "자동" label only; the host resolves the actual loop.
+func set_idle_profile(loop_name: String) -> void:
+	if loop_name == _idle_profile_loop:
+		return
+	_idle_profile_loop = loop_name
+	_refresh_idle_clip_option()
+
+
+func idle_profile() -> String:
+	return _idle_profile_loop
 
 
 ## Readable roaming state for the settings tab ("산책 중", "살펴보는 중", "쉬는 중", ...).
@@ -1267,6 +1630,309 @@ func _on_markers_toggled(on: bool) -> void:
 
 func markers_shown() -> bool:
 	return _markers_check.button_pressed
+
+
+# ------------------------------------------------------------- desktop living-space tab API
+
+const OBJECT_VERB_LABELS := {"inspect": "살펴보기", "sit": "앉기", "use": "사용하기"}
+const OBJECT_VERB_TIPS := {
+	"inspect": "가구 옆으로 가서 바라봅니다",
+	"sit": "가구 위에 앉는 자세를 취합니다",
+	"use": "책상 앞에 앉아 사용하는 자세만 취합니다. 화면이나 파일을 읽지 않고 다른 프로그램을 조작하지 않습니다.",
+}
+const OBJECT_TYPE_LABELS := {"chair": "의자", "sofa": "소파", "computer": "컴퓨터 책상"}
+const OBJECT_STATUS_TEXT := {
+	"ready": "준비됨", "ok": "준비됨", "offscreen": "화면 밖", "parked": "화면 밖", "unreachable": "갈 수 없음",
+	"unsupported": "아직 지원 안 함", "hidden": "숨김", "busy": "동작 중", "editing": "배치 편집 중",
+}
+const OBJECT_REASON_TEXT := {
+	"offscreen": "가구가 화면 밖에 있습니다", "unreachable": "지금 자리에서 갈 수 없습니다",
+	"unsupported": "이 가구에는 아직 지원되지 않는 동작입니다", "busy": "다른 동작이 진행 중입니다",
+	"unknown_object": "그 가구가 없습니다", "unknown_verb": "알 수 없는 동작입니다", "hidden": "숨긴 가구입니다",
+	"editing": "배치 편집 중에는 할 수 없습니다", "disabled": "스스로 행동이 꺼져 있습니다", "invalid": "요청이 올바르지 않습니다",
+}
+
+
+static func object_verb_label(verb: String) -> String:
+	return str(OBJECT_VERB_LABELS.get(verb, verb))
+
+
+static func object_type_label(type: String, catalogue: Array = []) -> String:
+	for c in catalogue:
+		if typeof(c) == TYPE_DICTIONARY and str(c.get("type", "")) == type and not str(c.get("label", "")).is_empty():
+			return str(c["label"])
+	return str(OBJECT_TYPE_LABELS.get(type, type))
+
+
+static func object_status_text(status: String, fallback: String = "") -> String:
+	if not fallback.is_empty():
+		return fallback
+	return str(OBJECT_STATUS_TEXT.get(status, status if not status.is_empty() else "준비됨"))
+
+
+static func object_reason_text(reason: String) -> String:
+	return str(OBJECT_REASON_TEXT.get(reason, reason))
+
+
+## Wire the desktop objects host (Astra's DesktopObjects node; any Node with the same methods and
+## `changed` / `status_changed` signals). The tab follows `changed`, and every control calls the
+## host directly; nothing is persisted or moved by the panel. null unbinds and disables the tab.
+func bind_desktop_objects(objects: Node) -> void:
+	if _objects != null and is_instance_valid(_objects):
+		if _objects.has_signal("changed") and _objects.changed.is_connected(_refresh_objects):
+			_objects.changed.disconnect(_refresh_objects)
+		if _objects.has_signal("status_changed") and _objects.status_changed.is_connected(set_desktop_object_status):
+			_objects.status_changed.disconnect(set_desktop_object_status)
+	_objects = objects
+	if objects != null:
+		if objects.has_signal("changed"):
+			objects.changed.connect(_refresh_objects)
+		if objects.has_signal("status_changed"):
+			objects.status_changed.connect(set_desktop_object_status)
+		set_desktop_object_status("준비됨")
+	else:
+		set_desktop_object_status("준비 안 됨")
+	_refresh_objects()
+
+
+func _objects_ok() -> bool:
+	return _objects != null and is_instance_valid(_objects)
+
+
+func desktop_object_rows() -> Array[Dictionary]:
+	return _obj_rows.duplicate()
+
+
+func desktop_object_catalogue() -> Array:
+	return _obj_catalogue_data.duplicate()
+
+
+func selected_object_id() -> String:
+	var sel := _obj_list.get_selected_items()
+	if sel.is_empty():
+		return ""
+	return str(_obj_list.get_item_metadata(sel[0]))
+
+
+func select_object(id: String) -> void:
+	for i in _obj_list.item_count:
+		if str(_obj_list.get_item_metadata(i)) == id:
+			_obj_list.select(i)
+	_refresh_object_controls()
+
+
+func selected_object_type() -> String:
+	if _obj_catalogue.item_count == 0 or _obj_catalogue.selected < 0:
+		return ""
+	return str(_obj_catalogue.get_item_metadata(_obj_catalogue.selected))
+
+
+## Concise host status ("status_changed" or an interaction result). Shown as "상태: …".
+func set_desktop_object_status(text: String) -> void:
+	_obj_status.text = "상태: " + text
+
+
+func _selected_object_row() -> Dictionary:
+	var id := selected_object_id()
+	for r in _obj_rows:
+		if str(r.get("id", "")) == id:
+			return r
+	return {}
+
+
+## Rebuild catalogue + list from the host, keeping the selection by id and never re-emitting.
+func _refresh_objects() -> void:
+	if _obj_list == null:
+		return
+	var prev := selected_object_id()
+	var prev_type := selected_object_type()
+	_obj_rows.clear()
+	_obj_catalogue_data.clear()
+	_obj_catalogue.clear()
+	_obj_list.clear()
+	if _objects_ok():
+		var cat: Variant = _objects.catalogue()
+		if typeof(cat) == TYPE_ARRAY:
+			for c in cat:
+				if typeof(c) != TYPE_DICTIONARY or str(c.get("type", "")).is_empty():
+					continue
+				_obj_catalogue_data.append(c)
+				var i := _obj_catalogue.item_count
+				_obj_catalogue.add_item(object_type_label(str(c["type"]), [c]))
+				_obj_catalogue.set_item_metadata(i, str(c["type"]))
+				_obj_catalogue.set_item_tooltip(i, str(c.get("description", "")))
+				if str(c["type"]) == prev_type:
+					_obj_catalogue.select(i)
+		var rows: Variant = _objects.rows()
+		if typeof(rows) == TYPE_ARRAY:
+			for r in rows:
+				if typeof(r) != TYPE_DICTIONARY or not r.has("id"):
+					continue
+				var row: Dictionary = r.duplicate()
+				_obj_rows.append(row)
+				var i := _obj_list.item_count
+				var status := str(row.get("status", ""))
+				var status_text := object_status_text(status, str(row.get("status_text", "")))
+				var shown := bool(row.get("visible", true))
+				_obj_list.add_item("%d. %s · %s · %s%s" % [i + 1, str(row.get("label", row["id"])), object_type_label(str(row.get("type", "")), _obj_catalogue_data), status_text, "" if shown else " · 숨김"])
+				_obj_list.set_item_metadata(i, str(row["id"]))
+				if not shown or (not status.is_empty() and status not in ["ready", "ok", "editing", "busy"]):
+					_obj_list.set_item_custom_fg_color(i, Color(0.8, 0.7, 0.5))
+				if str(row["id"]) == prev:
+					_obj_list.select(i)
+		if _objects.get("edit_enabled") != null:
+			_obj_edit.set_pressed_no_signal(bool(_objects.get("edit_enabled")))
+	_refresh_object_controls()
+
+
+func _refresh_object_controls() -> void:
+	var bound := _objects_ok()
+	var row := _selected_object_row()
+	var has := not row.is_empty()
+	_obj_catalogue.disabled = not bound or _obj_catalogue.item_count == 0
+	_obj_add.disabled = not bound or _obj_catalogue.item_count == 0
+	_obj_rename.disabled = not has
+	_obj_remove.disabled = not has
+	_obj_visible.disabled = not has
+	_obj_scale.editable = has
+	_obj_edit.disabled = not bound
+	_obj_cancel.disabled = not bound or not _objects.has_method("cancel_interaction")
+	if has:
+		var sc := clampf(float(row.get("scale", 1.0)), _obj_scale.min_value, _obj_scale.max_value)
+		_obj_scale.set_value_no_signal(sc)
+		_obj_scale_value.text = "%.2f" % sc
+		_obj_visible.set_pressed_no_signal(bool(row.get("visible", true)))
+	else:
+		_obj_scale.set_value_no_signal(1.0)
+		_obj_scale_value.text = "1.00"
+		_obj_visible.set_pressed_no_signal(false)
+	for c in _obj_verbs.get_children():
+		_obj_verbs.remove_child(c)
+		c.queue_free()
+	var verbs: Array = []
+	if has and typeof(row.get("verbs", null)) == TYPE_ARRAY:
+		verbs = row["verbs"]
+	elif has:
+		for c in _obj_catalogue_data:
+			if str(c.get("type", "")) == str(row.get("type", "")) and typeof(c.get("verbs", null)) == TYPE_ARRAY:
+				verbs = c["verbs"]
+	var status := str(row.get("status", "")) if has else ""
+	var actionable := has and bool(row.get("visible", true)) and status in ["", "ready", "ok", "busy"]
+	for v in verbs:
+		var verb := str(v)
+		var b := Button.new()
+		b.text = object_verb_label(verb)
+		b.tooltip_text = str(OBJECT_VERB_TIPS.get(verb, ""))
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b.disabled = not actionable
+		b.pressed.connect(func(): _request_interaction(verb))
+		_obj_verbs.add_child(b)
+	if not bound:
+		_obj_hint.text = "가구 기능이 아직 켜지지 않았습니다."
+	elif _obj_catalogue.item_count == 0:
+		_obj_hint.text = "놓을 수 있는 가구 목록이 비어 있습니다."
+	elif _obj_rows.is_empty():
+		_obj_hint.text = "가구가 없습니다. 종류를 고르고 추가한 뒤, 배치 편집을 켜고 끌어 놓으세요."
+	elif has and not bool(row.get("visible", true)):
+		_obj_hint.text = "'%s' 은(는) 숨겨져 있습니다. 보이기를 켜면 다시 쓸 수 있습니다." % str(row.get("label", ""))
+	elif has and not actionable:
+		_obj_hint.text = "'%s': %s" % [str(row.get("label", "")), object_status_text(status, str(row.get("status_text", "")))]
+	elif has and verbs.is_empty():
+		_obj_hint.text = "이 가구에는 아직 시킬 수 있는 동작이 없습니다."
+	elif _obj_edit.button_pressed:
+		_obj_hint.text = "배치 편집 중: 바탕화면의 가구를 끌어 옮기세요. 끝나면 배치 편집을 끄세요."
+	else:
+		_obj_hint.text = "%d개 놓임. 가구를 고르고 동작 버튼을 누르면 펫이 그 가구로 갑니다." % _obj_rows.size()
+
+
+func _request_add_object() -> void:
+	if not _objects_ok():
+		return
+	var type := selected_object_type()
+	if type.is_empty():
+		set_desktop_object_status("가구 종류를 먼저 고르세요")
+		return
+	var id: Variant = _objects.add_object(type)
+	if typeof(id) != TYPE_STRING or str(id).is_empty():
+		set_desktop_object_status("가구를 추가할 수 없습니다")
+		return
+	_refresh_objects()
+	select_object(str(id))
+	_obj_name.clear()
+
+
+func _request_rename_object() -> void:
+	var id := selected_object_id()
+	var label := _obj_name.text.strip_edges()
+	if not _objects_ok() or id.is_empty():
+		return
+	if label.is_empty():
+		set_desktop_object_status("바꿀 이름을 위 입력칸에 적은 뒤 누르세요")
+		return
+	if not bool(_objects.rename_object(id, label)):
+		set_desktop_object_status("이름을 바꿀 수 없습니다")
+		return
+	_obj_name.clear()
+	_refresh_objects()
+
+
+func _on_object_scale(value: float) -> void:
+	_obj_scale_value.text = "%.2f" % value
+	var id := selected_object_id()
+	if not _objects_ok() or id.is_empty():
+		return
+	if not bool(_objects.resize_object(id, value)):
+		set_desktop_object_status("크기를 바꿀 수 없습니다")
+		_refresh_object_controls()
+
+
+func _on_object_visible(on: bool) -> void:
+	var id := selected_object_id()
+	if not _objects_ok() or id.is_empty():
+		return
+	if not bool(_objects.set_object_visible(id, on)):
+		set_desktop_object_status("표시 상태를 바꿀 수 없습니다")
+		_refresh_object_controls()
+
+
+func _request_remove_object() -> void:
+	var id := selected_object_id()
+	if not _objects_ok() or id.is_empty():
+		return
+	if not bool(_objects.remove_object(id)):
+		set_desktop_object_status("삭제할 수 없습니다")
+		return
+	_refresh_objects()
+
+
+func _on_object_edit(on: bool) -> void:
+	if _objects_ok():
+		_objects.set_edit_enabled(on)
+	_refresh_objects()
+
+
+func _request_interaction(verb: String) -> void:
+	var id := selected_object_id()
+	if not _objects_ok() or id.is_empty():
+		return
+	var result: Variant = _objects.interact(id, verb)
+	var accepted := typeof(result) == TYPE_DICTIONARY and bool(result.get("accepted", false))
+	var reason := str(result.get("reason", "")) if typeof(result) == TYPE_DICTIONARY else ""
+	var label := str(_selected_object_row().get("label", id))
+	if accepted:
+		set_desktop_object_status("'%s' %s 요청됨" % [label, object_verb_label(verb)])
+	else:
+		set_desktop_object_status("%s 할 수 없음: %s" % [object_verb_label(verb), object_reason_text(reason) if not reason.is_empty() else "이유 없음"])
+
+
+func _request_cancel_interaction() -> void:
+	if _objects_ok() and _objects.has_method("cancel_interaction"):
+		_objects.cancel_interaction()
+		set_desktop_object_status("가구 동작을 멈췄습니다")
+
+
+func desktop_objects_edit_enabled() -> bool:
+	return _obj_edit.button_pressed
 
 
 func focus_input() -> void:

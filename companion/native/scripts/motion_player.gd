@@ -19,6 +19,7 @@ var ik_enabled := true
 var _hand_goals: Dictionary = {}
 var _avatar_id := 0
 var vrma_clips: Dictionary = {}
+var vrma_contact_modes: Dictionary = {}
 var _vrma_name := ""
 var _vrma_start := 0.0
 var _vrma_speed := 1.0
@@ -30,6 +31,22 @@ var _transition_velocity: Dictionary = {}
 var _previous_pose: Dictionary = {}
 var _pose_velocity: Dictionary = {}
 var _transition_start := 0.0
+var _transition_hips_from := Vector3.INF
+var _transition_hips_velocity := Vector3.ZERO
+var _previous_hips_position := Vector3.INF
+var _hips_velocity := Vector3.ZERO
+var _frame_reference_pose: Dictionary = {}
+var _frame_reference_hips := Vector3.INF
+var _process_sample_delta := 0.0
+var _posing_from_previous := false
+var locomotion_clips: Dictionary = {"walk":false,"walk_formal":false}
+var _locomotion_hip_centers: Dictionary = {}
+var action_overlap := ActionOverlap.new()
+var overlap_diagnostics: Dictionary = {}
+var _overlap_outgoing: Dictionary = {}
+var _overlap_incoming: Dictionary = {}
+var _overlap_incoming_signaled := false
+var _ambient_was_allowed := false
 const TRANSITION_SECONDS := 0.45
 var _facing_target := 0.0
 var _facing_velocity := 0.0
@@ -40,6 +57,8 @@ var contact_reachable := false
 var gait := DesktopGait.new()
 var turn := TurnStepper.new()
 var _heading_pending := false
+var _travel_intent := false
+var _travel_start_yaw := 0.0
 const HEADING_SPEED := deg_to_rad(70.0)
 const HEADING_ACCEL := deg_to_rad(100.0)
 var _ambient_name := "rest"
@@ -48,6 +67,9 @@ var _ambient_target := 0.0
 var _ambient_look := Vector2.INF
 var _ambient_pose: Dictionary = {}
 var _ambient_velocity: Dictionary = {}
+var authored_ambient := AmbientMotion.new()
+var _ambient_attention_override := false
+var _ambient_suspended := false
 var avatar: VrmAvatar
 var bank: MotionBank = MotionBank.new()
 var idle_enabled := true
@@ -94,6 +116,7 @@ func set_bank(new_bank: MotionBank) -> void:
 
 ## Play a gesture from the bank. Unknown names fall back to idle (contract: gesture IDs from the fetched bank).
 func play_gesture(name: String, emotion: String = "", intensity: float = 1.0, speed: float = 1.0, repeat: int = 1, preview: bool = false) -> bool:
+	_clear_overlap()
 	if not emotion.is_empty():
 		set_emotion(emotion)
 	if vrma_clips.has(name):
@@ -124,6 +147,7 @@ func play_gesture(name: String, emotion: String = "", intensity: float = 1.0, sp
 func play_motion_dict(motion: Dictionary, intensity: float = 1.0, speed: float = 1.0, repeat: int = 1) -> void:
 	if motion.is_empty():
 		return
+	_clear_overlap()
 	_begin_transition()
 	_vrma_name = ""
 	_gesture = motion
@@ -140,6 +164,7 @@ func play_motion_dict(motion: Dictionary, intensity: float = 1.0, speed: float =
 
 func stop_gesture() -> void:
 	_begin_transition()
+	_clear_overlap()
 	var finished := _vrma_name if not _vrma_name.is_empty() else (_gesture_name if _gesture_active else "")
 	_vrma_name = ""
 	_gesture_active = false
@@ -170,9 +195,100 @@ func set_emotion(emotion: String, weight: float = 0.5, hold: float = EMOTION_HOL
 func current_emotion() -> String:
 	return _emotion
 
+## Overlap two finite live bank actions. Locomotion/root/support-changing
+## channels remain boundary-gated; unsupported sources reject explicitly.
+func queue_gesture(name: String, lead_seconds: float = 0.35, channels: Array = [], intensity: float = 1.0, speed: float = 1.0, repeat: int = 1) -> Dictionary:
+	var incoming := bank.get_motion(name)
+	if incoming.is_empty() or name == "idle" or _custom_motion or not _vrma_name.is_empty():
+		return {"accepted":false,"reason":"unsupported_source"}
+	if not _gesture_active or elapsed-_gesture_start >= MotionBank.performed_duration(_gesture,_gesture_speed,_gesture_repeat):
+		return {"accepted":play_gesture(name,"",intensity,speed,repeat,_preview),"reason":"started"}
+	var selected := _motion_channels(incoming) if channels.is_empty() else channels
+	var descriptor := {"name":name,"motion":incoming,"intensity":clampf(intensity,MotionBank.INTENSITY_RANGE.x,MotionBank.INTENSITY_RANGE.y),"speed":clampf(speed,MotionBank.SPEED_RANGE.x,MotionBank.SPEED_RANGE.y),"repeat":clampi(repeat,MotionBank.REPEAT_RANGE.x,MotionBank.REPEAT_RANGE.y),"channels":selected}
+	if not action_overlap.is_active():
+		_overlap_outgoing = {"name":_gesture_name,"motion":_gesture,"intensity":_gesture_intensity,"speed":_gesture_speed,"repeat":_gesture_repeat,"channels":_motion_channels(_gesture)}
+		action_overlap.start(_gesture_name,MotionBank.performed_duration(_gesture,_gesture_speed,_gesture_repeat),_overlap_outgoing.channels,_contact_pose,_gesture_start)
+		action_overlap.advance(elapsed-_gesture_start)
+	var result := action_overlap.queue(name,MotionBank.performed_duration(incoming,descriptor.speed,descriptor.repeat),lead_seconds,selected,_contact_pose)
+	if bool(result.get("accepted",false)):
+		_overlap_incoming = descriptor
+		_overlap_incoming_signaled = false
+	return result
+
+## User-facing finite bank pair. Preview priority remains owned until both finish.
+func play_gesture_sequence(first: String, second: String, lead_seconds: float = 0.5, preview: bool = true) -> Dictionary:
+	if first == "idle" or second == "idle" or bank.get_motion(first).is_empty() or bank.get_motion(second).is_empty() or vrma_clips.has(first) or vrma_clips.has(second):
+		return {"accepted":false,"reason":"unsupported_source"}
+	play_gesture(first,"",1.0,1.0,1,preview)
+	return queue_gesture(second,lead_seconds)
+
+func _clear_overlap() -> void:
+	action_overlap.reset()
+	overlap_diagnostics.clear()
+	_overlap_outgoing.clear()
+	_overlap_incoming.clear()
+	_overlap_incoming_signaled = false
+
+func _motion_channels(motion: Dictionary) -> Array:
+	var channels := []
+	for track in motion.get("tracks",[]):
+		var channel := _bone_channel(str(track.get("bone","")))
+		if channel not in channels:
+			channels.append(channel)
+	return channels if not channels.is_empty() else ["torso"]
+
+func _bone_channel(bone: String) -> String:
+	if bone in ["head","neck"]:
+		return "head"
+	if "Leg" in bone or "Foot" in bone or "Toes" in bone:
+		return "legs"
+	if bone == "hips":
+		return "root"
+	if "Arm" in bone or "Hand" in bone or "Shoulder" in bone or bone.begins_with("left") or bone.begins_with("right"):
+		return "arms"
+	return "torso"
+
+func _sample_overlap(delta: float) -> Dictionary:
+	var state := action_overlap.advance(delta)
+	if bool(state.promoted):
+		_overlap_outgoing = _overlap_incoming
+		_overlap_incoming = {}
+		if not _overlap_outgoing.is_empty() and not state.outgoing.is_empty():
+			_gesture = _overlap_outgoing.motion
+			_gesture_name = _overlap_outgoing.name
+			_gesture_intensity = _overlap_outgoing.intensity
+			_gesture_speed = _overlap_outgoing.speed
+			_gesture_repeat = _overlap_outgoing.repeat
+			_gesture_start = state.outgoing.start_time
+			if not _overlap_incoming_signaled:
+				gesture_started.emit(_gesture_name,state.outgoing.duration)
+	if not state.incoming.is_empty() and not _overlap_incoming_signaled:
+		_overlap_incoming_signaled = true
+		gesture_started.emit(str(state.incoming.name),float(state.incoming.duration))
+	var pose := {}
+	for pair in [[state.outgoing,_overlap_outgoing],[state.incoming,_overlap_incoming]]:
+		var active: Dictionary = pair[0]
+		var descriptor: Dictionary = pair[1]
+		if active.is_empty() or descriptor.is_empty():
+			continue
+		var sampled := MotionBank.sample_performed(descriptor.motion,active.time,descriptor.intensity,descriptor.speed,descriptor.repeat)
+		for bone in sampled:
+			_add(pose,bone,sampled[bone]*float(active.weight_by_channel.get(_bone_channel(bone),0.0)))
+	overlap_diagnostics = state.duplicate(true)
+	for finished in state.finished:
+		gesture_finished.emit(str(finished))
+	if state.outgoing.is_empty():
+		_begin_transition()
+		_preview = false
+		_gesture_active = false
+		_gesture_name = "idle"
+		_gesture = {}
+	return pose
+
 
 ## Reset gesture, emotion and mouth (used on cancel/character switch).
 func reset_all() -> void:
+	clear_seated_floor()
 	stop_gesture()
 	_emotion = "neutral"
 	_emotion_target = 0.0
@@ -186,14 +302,25 @@ func reset_all() -> void:
 	_facing_target = 0.0
 	_facing_velocity = 0.0
 	_heading_pending = false
+	_travel_intent = false
 	_hand_goals.clear()
 	_applied.clear()
 	_transition_from.clear()
 	_transition_velocity.clear()
+	_transition_hips_from = Vector3.INF
+	_previous_hips_position = Vector3.INF
+	_hips_velocity = Vector3.ZERO
+	_transition_hips_velocity = Vector3.ZERO
+	_frame_reference_pose.clear()
+	_frame_reference_hips = Vector3.INF
+	_process_sample_delta = 0.0
+	_posing_from_previous = false
 	_previous_pose.clear()
 	_pose_velocity.clear()
 	_ambient_pose.clear()
 	_ambient_velocity.clear()
+	authored_ambient.reset()
+	_ambient_attention_override = false
 	_gaze_velocity = Vector2.ZERO
 	_gaze_current = Vector2(0.5,0.45)
 	_pet_until = 0.0
@@ -209,12 +336,24 @@ func _process(delta: float) -> void:
 	if avatar == null or not avatar.has_model():
 		return
 	_check_model_identity()
+	_process_sample_delta = delta
+	_frame_reference_pose = _previous_pose.duplicate()
+	_frame_reference_hips = _previous_hips_position
+	_posing_from_previous = true
 	_update_facing(delta)
+	gait.advance_phase(delta)
+	var ambient_allowed := idle_enabled and not _ambient_suspended and not is_gesture_active() and not _preview and not _custom_motion and not turn.active and not _heading_pending and not _travel_intent and _contact_pose == "foot" and _ambient_name not in ["anticipate","listening","thinking","working"]
+	if _ambient_was_allowed and not ambient_allowed and authored_ambient.weight > 0.0 and not is_gesture_active():
+		_begin_transition()
+	_ambient_was_allowed = ambient_allowed
+	authored_ambient.advance(delta,vrma_clips,ambient_allowed,avatar)
 	var k := 1.0 - exp(-SMOOTH_RATE * delta)
 	var target := {}
 
 	# 1. Bank gesture layer
-	if _gesture_active:
+	if action_overlap.is_active():
+		target = _sample_overlap(delta)
+	elif _gesture_active:
 		var sampled := MotionBank.sample_performed(_gesture, elapsed - _gesture_start, _gesture_intensity, _gesture_speed, _gesture_repeat)
 		if sampled.is_empty() and elapsed - _gesture_start >= MotionBank.performed_duration(_gesture, _gesture_speed, _gesture_repeat):
 			stop_gesture()
@@ -233,6 +372,9 @@ func _process(delta: float) -> void:
 		_add(target, "rightUpperArm", Vector3(0.0, 0.0, -0.8 * breath))
 
 	# 3. Gaze toward the pointer (head only; eye bones differ between rigs)
+	# Keep the underlying gaze trajectory alive. Authored head slerp owns the
+	# final rotation at full weight; dropping this base at the first nonzero
+	# ambient weight would create a head jump on resume/attention release.
 	if gaze_enabled:
 		var wanted := gaze_target if gaze_has_target else Vector2(0.5 + 0.12 * sin(elapsed * 0.23), 0.45 + 0.08 * sin(elapsed * 0.31 + 0.4))
 		_advance_gaze(wanted,delta)
@@ -268,15 +410,24 @@ func _process(delta: float) -> void:
 			for joint in ["UpperArm", "LowerArm", "Hand"]:
 				_applied.erase(side + joint)
 	avatar.apply_pose(_applied)
+	_posing_from_previous = false
 	_apply_seated_base()
 	if use_ik:
 		_update_hand_goals(delta)
 		avatar.apply_hand_goals(_hand_goals)
-		if _gesture_active and _gesture_name == "wave":
-			var phase := fmod((elapsed-_gesture_start)*_gesture_speed, maxf(float(_gesture.get("duration",4.0)),0.1))
-			var envelope := smoothstep(0.0,0.8,phase) * smoothstep(0.0,0.8,float(_gesture.get("duration",4.0))-phase)
-			avatar.add_wrist_rotation("right", Vector3(0,0,12.0*sin(phase*TAU*1.5)*envelope*minf(_gesture_intensity,1.25)))
+		var wrist := _wave_wrist(_gesture_name,_gesture,elapsed-_gesture_start,_gesture_speed,_gesture_intensity) if _gesture_active else 0.0
+		if action_overlap.is_active():
+			wrist = 0.0
+			for pair in [[overlap_diagnostics.outgoing,_overlap_outgoing],[overlap_diagnostics.incoming,_overlap_incoming]]:
+				var timeline: Dictionary = pair[0]
+				var descriptor: Dictionary = pair[1]
+				if not timeline.is_empty() and not descriptor.is_empty():
+					wrist += _wave_wrist(descriptor.name,descriptor.motion,timeline.time,descriptor.speed,descriptor.intensity)*float(timeline.weight_by_channel.get("arms",0.0))
+		avatar.add_wrist_rotation("right",Vector3(0,0,wrist))
 
+	authored_ambient.apply(avatar,vrma_clips)
+	var vrma_foot_contact := false
+	var vrma_contact_weight := 0.0
 	if not _vrma_name.is_empty():
 		var clip: VrmaClip = vrma_clips[_vrma_name]
 		var time := (elapsed - _vrma_start) * _vrma_speed
@@ -287,7 +438,7 @@ func _process(delta: float) -> void:
 			gesture_finished.emit(finished)
 		else:
 			var local_time := fmod(time, maxf(clip.duration,0.001))
-			if _vrma_loop and _vrma_name in ["walk","walk_formal"] and gait.has_sample() and _contact_pose == "foot":
+			if _vrma_loop and locomotion_clips.has(_vrma_name) and (gait.has_sample() or _travel_intent) and _contact_pose == "foot":
 				local_time = gait.phase*clip.duration
 			var blend := smoothstep(0.0, TRANSITION_SECONDS, elapsed-_vrma_start)
 			if not _vrma_loop:
@@ -300,13 +451,29 @@ func _process(delta: float) -> void:
 					if bone == "hips" or "Leg" in bone or "Foot" in bone or "Toes" in bone:
 						sampled_pose.erase(bone)
 			avatar.apply_normalized_rotations(sampled_pose, blend * _vrma_intensity)
+			if _vrma_loop and bool(locomotion_clips.get(_vrma_name,false)) and _contact_pose == "foot":
+				var height := avatar.skeleton.get_bone_global_rest(avatar.bone_index.hips).origin.y
+				var oscillation: Vector3 = clip.sample_hips_offset(local_time)-Vector3(_locomotion_hip_centers.get(_vrma_name,Vector3.ZERO))
+				avatar.set_hips_offset((oscillation*height).limit_length(height*0.035)*blend*_vrma_intensity)
+			if vrma_contact_modes.get(_vrma_name,"") == "foot" and _contact_pose == "foot":
+				var height := avatar.skeleton.get_bone_global_rest(avatar.bone_index.hips).origin.y
+				avatar.set_hips_offset((clip.sample_hips_offset(local_time)*height*blend*_vrma_intensity).limit_length(height*0.12))
+				vrma_foot_contact = true
+				vrma_contact_weight = smoothstep(0.0,TRANSITION_SECONDS,elapsed-_vrma_start)
 	_apply_ambient(delta)
 	var contact_solvable := false
 	if _contact_pose == "lean":
 		contact_solvable = avatar.apply_hand_contact(_contact_hand,_contact_target)
 	_apply_transition()
-	gait.apply(avatar,delta,_vrma_loop and _vrma_name in ["walk","walk_formal"] and _contact_pose == "foot" and not _custom_motion and not turn.active)
-	turn.apply(avatar,delta,_facing_target,_preview or _custom_motion or _contact_pose != "foot")
+	authored_ambient.solve_contacts(avatar,vrma_foot_contact,vrma_contact_weight)
+	gait.apply(avatar,delta,(_travel_intent or (_vrma_loop and locomotion_clips.has(_vrma_name))) and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active)
+	var turn_was_active := turn.active
+	var turn_blocked := _preview or _custom_motion or _contact_pose != "foot"
+	turn.apply(avatar,delta,_facing_target,turn_blocked)
+	if is_finite(avatar.seated_floor.clearance):
+		avatar.seated_floor.set_active(_contact_pose == "sit")
+		if _contact_pose == "sit": avatar.seated_floor.solve_legs(smoothstep(0.0,TRANSITION_SECONDS,elapsed-_transition_start))
+	var completed_turn := turn_was_active and not turn.active and not turn_blocked
 	# A geometrically solvable target is not yet attached while blending in.
 	# Report the rendered wrist's final world-space error (1.5 cm threshold).
 	contact_reachable = contact_solvable and avatar.bone_global_position(_contact_hand+"Hand").distance_to(_contact_target) < 0.015
@@ -324,6 +491,11 @@ func _process(delta: float) -> void:
 	avatar.set_expression("oh", minf(0.6 - clampf(_mouth_smooth * 0.55, 0.0, 0.55), clampf(_mouth_smooth * 0.10 * (0.5 + 0.5 * sin(elapsed * 9.0)), 0.0, 0.10)))
 	avatar.apply_expressions()
 	_record_pose_velocity(delta)
+	if completed_turn:
+		# Preserve the final solved turn pose through the host's one-frame
+		# readiness→walk handoff. Otherwise the next base-pose reset can expose
+		# the remaining foot yaw/knee motion before walk playback is requested.
+		_begin_transition()
 
 
 func _update_blink(delta: float) -> void:
@@ -349,52 +521,91 @@ static func _add(target: Dictionary, bone: String, v: Vector3) -> void:
 	target[bone] = target.get(bone, Vector3.ZERO) + v
 
 
+func _wave_wrist(name: String, motion: Dictionary, age: float, speed: float, intensity: float) -> float:
+	if name != "wave":
+		return 0.0
+	var duration := maxf(float(motion.get("duration",4.0)),0.1)
+	var phase := fmod(age*speed,duration)
+	var envelope := smoothstep(0.0,0.8,phase)*smoothstep(0.0,0.8,duration-phase)
+	return 12.0*sin(phase*TAU*1.5)*envelope*minf(intensity,1.25)
+
+func _action_hand_goal(side: String, name: String, motion: Dictionary, age_seconds: float, intensity: float, speed: float, active: bool = true) -> Vector3:
+	var duration := float(motion.get("duration",1.0))
+	var phase := fmod(age_seconds*speed,maxf(duration,0.1))
+	var fade := minf(clampf(phase/0.8,0,1),clampf((duration-phase)/0.8,0,1)) if active else 0.0
+	fade = fade*fade*fade*(fade*(fade*6.0-15.0)+10.0)*minf(intensity,1.25)
+	var sign_side := 1.0 if side == "left" else -1.0
+	var rest := Vector3(sign_side*0.20*float(motion_style.get("openness",1.0)),-0.94,0.08)
+	var goal := rest
+	var energy := float(motion_style.get("energy",1.0))
+	match name:
+		"wave":
+			if side == "right":
+				goal = Vector3(-0.57+sin(phase*TAU*1.5)*0.075*energy,0.32,0.32)
+		"stretch":
+			goal = Vector3(sign_side*0.42,0.85,0.06)
+		"think":
+			if side == "right":
+				goal = Vector3(0.08,0.04,0.42)
+		"shy":
+			goal = Vector3(-sign_side*0.12,-0.38,0.46)
+		"bow":
+			goal = Vector3(sign_side*0.14,-0.90,0.25)
+	return rest.lerp(goal,fade)
+
 func _update_hand_goals(delta: float) -> void:
-	var age := (elapsed - _gesture_start) * _gesture_speed
-	var duration := float(_gesture.get("duration", 1.0))
-	var phase := fmod(age, maxf(duration, 0.1))
-	# Quintic ease has zero velocity and acceleration at each end.
-	var fade := minf(clampf(phase / 0.8, 0, 1), clampf((duration - phase) / 0.8, 0, 1)) if _gesture_active else 0.0
-	fade = fade * fade * fade * (fade * (fade * 6.0 - 15.0) + 10.0)
-	fade *= minf(_gesture_intensity, 1.25)
-	for side in ["left", "right"]:
-		var sign_side := 1.0 if side == "left" else -1.0
-		var rest := Vector3(sign_side * 0.20 * float(motion_style.get("openness", 1.0)), -0.94, 0.08)
-		var goal := rest
-		var energy := float(motion_style.get("energy", 1.0))
-		match _gesture_name:
-			"wave":
-				if side == "right":
-					goal = Vector3(-0.57 + sin(phase * TAU * 1.5) * 0.075 * energy, 0.32, 0.32)
-			"stretch":
-				goal = Vector3(sign_side * 0.42, 0.85, 0.06)
-			"think":
-				if side == "right":
-					goal = Vector3(0.08, 0.04, 0.42)
-			"shy":
-				goal = Vector3(-sign_side * 0.12, -0.38, 0.46)
-			"bow":
-				goal = Vector3(sign_side * 0.14, -0.90, 0.25)
-		goal = rest.lerp(goal, fade)
+	for side in ["left","right"]:
+		var rest := _action_hand_goal(side,"",{},0,0,1,false)
+		var goal := _action_hand_goal(side,_gesture_name,_gesture,elapsed-_gesture_start,_gesture_intensity,_gesture_speed,_gesture_active)
+		if not overlap_diagnostics.is_empty() and action_overlap.is_active():
+			goal = rest
+			for pair in [[overlap_diagnostics.outgoing,_overlap_outgoing],[overlap_diagnostics.incoming,_overlap_incoming]]:
+				var timeline: Dictionary = pair[0]
+				var descriptor: Dictionary = pair[1]
+				if timeline.is_empty() or descriptor.is_empty():
+					continue
+				var weight := float(timeline.weight_by_channel.get("arms",0.0))
+				goal += (_action_hand_goal(side,descriptor.name,descriptor.motion,timeline.time,descriptor.intensity,descriptor.speed)-rest)*weight
 		if idle_enabled:
-			goal.z += 0.008 * sin(elapsed * TAU / 4.2)
-		var current: Vector3 = _hand_goals.get(side, rest)
-		var smooth := current.lerp(goal, 1.0 - exp(-float(motion_style.get("response", 7.0)) * delta))
-		_hand_goals[side] = current.move_toward(smooth, 2.0 * delta)
+			goal.z += 0.008*sin(elapsed*TAU/4.2)
+		var current: Vector3 = _hand_goals.get(side,rest)
+		var smooth := current.lerp(goal,1-exp(-float(motion_style.get("response",7.0))*delta))
+		_hand_goals[side] = current.move_toward(smooth,2.0*delta)
 
 
-func load_vrma(name: String, path: String) -> bool:
+## Register a reusable authored locomotion source. Centered hip oscillation
+## preserves its weight shift without importing world travel/root placement.
+func clear_locomotion_registrations() -> void:
+	locomotion_clips = {"walk":false,"walk_formal":false}
+	_locomotion_hip_centers.clear()
+
+func register_locomotion_clip(name: String, preserve_hips: bool = true) -> bool:
+	if not vrma_clips.has(name):
+		return false
+	locomotion_clips[name] = preserve_hips
+	var clip: VrmaClip = vrma_clips[name]
+	var center := Vector3.ZERO
+	for sample in 120:
+		center += clip.sample_hips_offset(clip.duration*sample/120.0)/120.0
+	_locomotion_hip_centers[name] = center
+	return true
+
+func load_vrma(name: String, path: String, contact_mode: String = "") -> bool:
 	var clip := VrmaClip.new()
 	if not clip.load_file(path):
 		push_warning("VRMA: " + clip.error)
 		return false
 	vrma_clips[name] = clip
+	vrma_contact_modes[name] = contact_mode if contact_mode in ["foot",""] else ""
 	return true
 
 ## loop=true plays until stop/supersession; otherwise repeat is a finite cycle count.
 func play_vrma(name: String, speed: float = 1.0, loop: bool = false, repeat: int = 1) -> bool:
 	if not vrma_clips.has(name):
 		return false
+	_clear_overlap()
+	if vrma_contact_modes.get(name,"") == "foot":
+		authored_ambient.capture_contact_origin(avatar)
 	stop_gesture()
 	_vrma_name = name
 	_vrma_start = elapsed
@@ -409,9 +620,15 @@ func play_vrma(name: String, speed: float = 1.0, loop: bool = false, repeat: int
 func _begin_transition() -> void:
 	_transition_velocity = _pose_velocity.duplicate()
 	_transition_from.clear()
-	_transition_start = elapsed
+	# An internal transition begins from the previous rendered pose, before
+	# this frame's pose pass. Advance it by this frame's dt instead of holding
+	# u=0 for one visible frame and overwriting its outgoing velocity with zero.
+	_transition_start = elapsed-_process_sample_delta if _posing_from_previous else elapsed
 	if avatar == null or not avatar.has_model():
 		return
+	if avatar.bone_index.has("hips"):
+		_transition_hips_from = avatar.skeleton.get_bone_pose_position(avatar.bone_index.hips)
+		_transition_hips_velocity = _hips_velocity
 	for idx in avatar.bone_index.values():
 		_transition_from[idx] = avatar.skeleton.get_bone_pose_rotation(idx)
 
@@ -423,6 +640,11 @@ func _apply_transition() -> void:
 		_transition_from.clear()
 		return
 	var weight := u*u*u*(u*(u*6.0-15.0)+10.0)
+	if _transition_hips_from.is_finite() and avatar.bone_index.has("hips"):
+		var hips: int = avatar.bone_index.hips
+		var travel := TRANSITION_SECONDS*(u-u*u+u*u*u/3.0)
+		var carried_hips := _transition_hips_from+_transition_hips_velocity*travel
+		avatar.skeleton.set_bone_pose_position(hips,carried_hips.lerp(avatar.skeleton.get_bone_pose_position(hips),weight))
 	for idx in _transition_from:
 		if idx >= avatar.skeleton.get_bone_count():
 			continue
@@ -444,6 +666,29 @@ func set_locomotion_direction(velocity: Vector2) -> void:
 	if absf(velocity.x) > 1.0:
 		set_heading_intent(velocity)
 
+func prepare_locomotion(direction_px: Vector2) -> bool:
+	if avatar == null or not avatar.has_model() or _contact_pose != "foot" or _preview or _custom_motion or absf(direction_px.x) < 0.001:
+		return false
+	if not _travel_intent:
+		_begin_transition()
+		_travel_start_yaw = avatar.rotation.y
+	_travel_intent = true
+	turn.cancel()
+	set_heading_intent(direction_px)
+	gait.begin_steering(avatar,_facing_target)
+	return true
+
+func locomotion_ready() -> bool:
+	if not _travel_intent or avatar == null or not avatar.has_model() or _preview or _custom_motion or _contact_pose != "foot":
+		return false
+	var error := absf(angle_difference(avatar.rotation.y,_facing_target))
+	var lead := absf(angle_difference(_travel_start_yaw,avatar.rotation.y))
+	return gait.steering and error <= deg_to_rad(72) and (lead >= deg_to_rad(10) or error <= deg_to_rad(20))
+
+func finish_locomotion() -> void:
+	_travel_intent = false
+	gait.end_steering()
+
 func set_heading_intent(direction_px: Vector2) -> void:
 	if absf(direction_px.x) <= 0.001:
 		return
@@ -451,8 +696,21 @@ func set_heading_intent(direction_px: Vector2) -> void:
 	if absf(angle_difference(_facing_target,wanted)) > 0.001:
 		_facing_target = wanted
 		_heading_pending = true
+		if _travel_intent:
+			gait.steering_heading = wanted
+
+## Orient a standing character for a seat/workspace before attachment.
+## The host waits for heading_ready(); seated feet never swivel in place.
+func set_contact_heading(yaw_radians: float) -> bool:
+	if not is_finite(yaw_radians) or avatar == null or not avatar.has_model() or _contact_pose != "foot" or _preview or _custom_motion:
+		return false
+	finish_locomotion()
+	_facing_target = wrapf(yaw_radians,-PI,PI)
+	_heading_pending = true
+	return true
 
 func face_front() -> void:
+	finish_locomotion()
 	_facing_target = 0.0
 	_heading_pending = true
 
@@ -460,6 +718,7 @@ func heading_ready() -> bool:
 	return avatar != null and absf(angle_difference(avatar.rotation.y,_facing_target)) < deg_to_rad(1.0) and absf(_facing_velocity) < deg_to_rad(2.0) and not turn.active
 
 func cancel_heading() -> void:
+	finish_locomotion()
 	if avatar == null:
 		return
 	# Preserve current velocity while braking; stopping the OS window does not
@@ -473,7 +732,7 @@ func _update_facing(delta: float) -> void:
 		turn.cancel()
 		cancel_heading()
 	var difference := angle_difference(avatar.rotation.y,_facing_target)
-	if _heading_pending and not blocked and _contact_pose == "foot" and absf(difference) > deg_to_rad(2) and not turn.active:
+	if _heading_pending and not _travel_intent and not blocked and _contact_pose == "foot" and absf(difference) > deg_to_rad(2) and not turn.active:
 		turn.begin(avatar,_facing_target)
 		_heading_pending = false
 	var steps := maxi(1,int(ceil(delta*120)))
@@ -491,6 +750,12 @@ func _update_facing(delta: float) -> void:
 
 ## A sit needs the imported sit_idle clip. Lean requires an explicit nearby
 ## surface point; the host must inspect contact_reachable before attaching it.
+func set_seated_floor(clearance_m: float) -> bool:
+	return avatar != null and avatar.set_seated_floor(clearance_m)
+
+func clear_seated_floor() -> void:
+	if avatar != null: avatar.clear_seated_floor()
+
 func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF) -> bool:
 	contact_reachable = false
 	if pose == "sit":
@@ -509,6 +774,7 @@ func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF) 
 	return false
 
 func stop_contact_pose() -> void:
+	clear_seated_floor()
 	_contact_pose = "foot"
 	_contact_target = Vector3.INF
 	contact_reachable = false
@@ -532,12 +798,22 @@ func _apply_seated_base() -> void:
 ## Host calls once after actual window movement, even when displacement is zero.
 ## Effective pixels/metre = orthographic camera ppm * user avatar scale.
 func set_locomotion_sample(velocity_px: Vector2, traveled_px: Vector2, pixels_per_metre: float, supported: bool = true) -> void:
-	var owns_legs := _vrma_loop and _vrma_name in ["walk","walk_formal"] and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active
+	var owns_legs := (_travel_intent or (_vrma_loop and locomotion_clips.has(_vrma_name))) and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active
 	if owns_legs:
 		set_locomotion_direction(velocity_px)
 	gait.sample(velocity_px,traveled_px,pixels_per_metre,supported and owns_legs)
 	if avatar != null and avatar.has_model():
 		gait.compensate_movement(avatar)
+		# Re-evaluate against the same previous FINAL-frame reference. A second
+		# naive sample would compare to this frame's pre-compensation pose and
+		# mistake only the compensation delta for the visible angular velocity.
+		_record_pose_velocity(_process_sample_delta)
+		if is_equal_approx(_transition_start,elapsed) and not _transition_from.is_empty():
+			_transition_velocity = _pose_velocity.duplicate()
+			_transition_hips_velocity = _hips_velocity
+			_transition_hips_from = avatar.skeleton.get_bone_pose_position(avatar.bone_index.hips)
+			for idx in avatar.bone_index.values():
+				_transition_from[idx] = avatar.skeleton.get_bone_pose_rotation(idx)
 
 ## Bounded low-rate behavior intent; speech/gestures retain expression ownership.
 ## Optional look point is normalized viewport coordinates. Explicit user gaze
@@ -547,7 +823,34 @@ func set_ambient_state(name: String, strength: float = 1.0, look: Vector2 = Vect
 	_ambient_target = clampf(strength,0.0,1.0)
 	_ambient_look = look.clamp(Vector2.ZERO,Vector2.ONE) if look.is_finite() else Vector2.INF
 
+func set_ambient_loop(name: String) -> bool:
+	if not name.is_empty() and not vrma_clips.has(name):
+		return false
+	if authored_ambient.loop_name != name:
+		_begin_transition()
+		authored_ambient.reset()
+		authored_ambient.loop_name = name
+		authored_ambient.attention_override = _ambient_attention_override
+		authored_ambient.head_weight = 0.0 if _ambient_attention_override else 1.0
+	return true
+
+func play_ambient_action(name: String) -> bool:
+	if not idle_enabled or not vrma_clips.has(authored_ambient.loop_name) or not vrma_clips.has(name) or _ambient_suspended or is_gesture_active() or _preview or _custom_motion or turn.active or _heading_pending or _contact_pose != "foot" or _ambient_attention_override or _ambient_name in ["anticipate","listening","thinking","working"]:
+		return false
+	authored_ambient.action_name = name
+	authored_ambient.action_time = 0.0
+	return true
+
+func set_ambient_attention_override(enabled: bool) -> void:
+	_ambient_attention_override = enabled
+	authored_ambient.attention_override = enabled
+
+func set_ambient_suspended(suspended: bool) -> void:
+	_ambient_suspended = suspended
+
 func _apply_ambient(delta: float) -> void:
+	if authored_ambient.owns_head():
+		return
 	if _custom_motion or _preview:
 		_ambient_pose.clear()
 		_ambient_velocity.clear()
@@ -635,12 +938,17 @@ func _advance_gaze(wanted: Vector2, delta: float) -> void:
 
 
 func _record_pose_velocity(delta: float) -> void:
+	if avatar.bone_index.has("hips") and delta > 0.000001:
+		var hips_position := avatar.skeleton.get_bone_pose_position(avatar.bone_index.hips)
+		if _frame_reference_hips.is_finite():
+			_hips_velocity = ((hips_position-_frame_reference_hips)/delta).limit_length(0.5)
+		_previous_hips_position = hips_position
 	if delta <= 0.00001:
 		return
 	for idx in avatar.bone_rest_local:
 		var current := avatar.skeleton.get_bone_pose_rotation(idx)
-		if _previous_pose.has(idx):
-			var change: Quaternion = (_previous_pose[idx].inverse()*current).normalized()
+		if _frame_reference_pose.has(idx):
+			var change: Quaternion = (_frame_reference_pose[idx].inverse()*current).normalized()
 			if change.w < 0:
 				change = Quaternion(-change.x,-change.y,-change.z,-change.w)
 			var vector := Vector3(change.x,change.y,change.z)
@@ -648,7 +956,11 @@ func _record_pose_velocity(delta: float) -> void:
 			# atan2 avoids acos(w) precision loss for sub-degree pose steps.
 			var angle := 2.0*atan2(sine,change.w)
 			var velocity := vector*(angle/(sine*delta)) if sine > 0.0000001 else Vector3.ZERO
-			_pose_velocity[idx] = velocity.limit_length(deg_to_rad(120.0))
+			# IK arm joints can counter-rotate faster than their composed world
+			# hand motion. A head-sized cap destroys that cancellation at release.
+			var humanoid := str(avatar.bone_index.find_key(idx))
+			var carry_limit := 360.0 if _bone_channel(humanoid) == "arms" else 120.0
+			_pose_velocity[idx] = velocity.limit_length(deg_to_rad(carry_limit))
 		_previous_pose[idx] = current
 
 
@@ -665,13 +977,21 @@ func _check_model_identity() -> void:
 	_transition_velocity.clear()
 	_previous_pose.clear()
 	_pose_velocity.clear()
+	_previous_hips_position = Vector3.INF
+	_hips_velocity = Vector3.ZERO
+	_transition_hips_velocity = Vector3.ZERO
 	_applied.clear()
 	if replacing:
+		authored_ambient.reset()
+		_ambient_attention_override = false
+		_transition_hips_from = Vector3.INF
+		_ambient_was_allowed = false
 		turn.cancel()
 		gait = DesktopGait.new()
 		_facing_target = avatar.rotation.y
 		_facing_velocity = 0.0
 		_heading_pending = false
+		_travel_intent = false
 		_contact_pose = "foot"
 		_contact_target = Vector3.INF
 		contact_reachable = false

@@ -109,7 +109,9 @@ func apply(avatar: VrmAvatar, delta: float, target_yaw: float, blocked: bool = f
 	var settled_support := Vector3(_feet[support_side].point).distance_to(orientation*(support_rest.origin-_pivot)) < 0.008
 	if absf(angle_difference(yaw,target_yaw)) < deg_to_rad(1.0) and settled_support:
 		_height *= 1.0-smoothstep(0.6,1.0,u)
-	avatar.set_hips_height_offset(-_height)
+	# Preserve the transition's authored lateral/depth pelvis offset while
+	# adding only the extra reach clearance required by this step.
+	avatar.set_hips_offset(avatar.get_hips_offset()-Vector3.UP*_height)
 	for side in goals:
 		var foot_basis: Basis = inverse*Basis(_feet[side].basis)
 		_ik.solve(avatar,side,goals[side],_weight,foot_basis,true)

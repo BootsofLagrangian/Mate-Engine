@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/joints.jsonl.gz",
+    "sha256": "14088c6b775ec981841380f1dd75e9901c7a90d5f1d8ffa18876575f993539c7",
+    "bytes": 12575823
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/frames.csv.gz",
+    "sha256": "999f862010f97f4c38e4654f2569c5b26b28354c192d97a2a7497b3b2f9f8109",
+    "bytes": 747480
+  }
+]

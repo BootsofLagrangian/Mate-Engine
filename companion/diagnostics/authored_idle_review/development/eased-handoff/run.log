@@ -1,0 +1,63 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+AUTHORED_REVIEW cheval-grand model loaded true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_home_idle true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_cheval_idle_action true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_rice_idle_action true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_eishin_idle_action true {}
+AUTHORED_REVIEW cheval-grand talking loaded true {}
+AUTHORED_REVIEW cheval-grand rare action accepted true {}
+AUTHORED_REVIEW cheval-grand rare action ends true {}
+AUTHORED_REVIEW cheval-grand speech preempts authored ownership true {}
+AUTHORED_REVIEW cheval-grand home resumes after speech true {}
+AUTHORED_REVIEW cheval-grand gaze fully masks authored head true {}
+AUTHORED_REVIEW cheval-grand heading completes true {}
+AUTHORED_REVIEW cheval-grand disabled idle rejects rare action true {}
+AUTHORED_REVIEW cheval-grand disabled idle relinquishes authored pose true {}
+AUTHORED_REVIEW cheval-grand replacement model loaded true {}
+AUTHORED_REVIEW cheval-grand model switch clears rare action true {}
+AUTHORED_REVIEW rice-shower model loaded true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_home_idle true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_cheval_idle_action true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_rice_idle_action true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_eishin_idle_action true {}
+AUTHORED_REVIEW rice-shower talking loaded true {}
+AUTHORED_REVIEW rice-shower rare action accepted true {}
+AUTHORED_REVIEW rice-shower rare action ends true {}
+AUTHORED_REVIEW rice-shower speech preempts authored ownership true {}
+AUTHORED_REVIEW rice-shower home resumes after speech true {}
+AUTHORED_REVIEW rice-shower gaze fully masks authored head true {}
+AUTHORED_REVIEW rice-shower heading completes true {}
+AUTHORED_REVIEW rice-shower disabled idle rejects rare action true {}
+AUTHORED_REVIEW rice-shower disabled idle relinquishes authored pose true {}
+AUTHORED_REVIEW rice-shower replacement model loaded true {}
+AUTHORED_REVIEW rice-shower model switch clears rare action true {}
+AUTHORED_REVIEW eishin-flash model loaded true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_home_idle true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_cheval_idle_action true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_rice_idle_action true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_eishin_idle_action true {}
+AUTHORED_REVIEW eishin-flash talking loaded true {}
+AUTHORED_REVIEW eishin-flash rare action accepted true {}
+AUTHORED_REVIEW eishin-flash rare action ends true {}
+AUTHORED_REVIEW eishin-flash speech preempts authored ownership true {}
+AUTHORED_REVIEW eishin-flash home resumes after speech true {}
+AUTHORED_REVIEW eishin-flash gaze fully masks authored head true {}
+AUTHORED_REVIEW eishin-flash heading completes true {}
+AUTHORED_REVIEW eishin-flash disabled idle rejects rare action true {}
+AUTHORED_REVIEW eishin-flash disabled idle relinquishes authored pose true {}
+AUTHORED_REVIEW eishin-flash replacement model loaded true {}
+AUTHORED_REVIEW eishin-flash model switch clears rare action true {}
+AUTHORED_REVIEW cheval-grand generic home quiet head bounds true {"acceleration":102.836244106293,"speed":5.33662939071655}
+AUTHORED_REVIEW cheval-grand authored standing actual world foot error true {"max_metres":0.000000256639793860813}
+AUTHORED_REVIEW cheval-grand purposeful gaze_override bounds false {"foot_error":0.000000217507192701305,"head_acceleration":226.875829696655,"head_speed":37.986759185791,"hips_step":0.000139753843541257}
+AUTHORED_REVIEW cheval-grand purposeful gaze_release bounds false {"foot_error":0.000000195497889876606,"head_acceleration":217.211408615112,"head_speed":34.176097869873,"hips_step":0.000139753843541257}
+AUTHORED_REVIEW rice-shower generic home quiet head bounds true {"acceleration":102.836244106293,"speed":5.33662939071655}
+AUTHORED_REVIEW rice-shower authored standing actual world foot error true {"max_metres":0.000000204619851729149}
+AUTHORED_REVIEW rice-shower purposeful gaze_override bounds false {"foot_error":0.000000203940501819488,"head_acceleration":226.875829696655,"head_speed":37.986759185791,"hips_step":0.000126652521430515}
+AUTHORED_REVIEW rice-shower purposeful gaze_release bounds false {"foot_error":0.000000165471675472872,"head_acceleration":217.211408615112,"head_speed":34.176097869873,"hips_step":0.000126652521430515}
+AUTHORED_REVIEW eishin-flash generic home quiet head bounds true {"acceleration":102.836244106293,"speed":5.33662939071655}
+AUTHORED_REVIEW eishin-flash authored standing actual world foot error true {"max_metres":0.000000195000353642172}
+AUTHORED_REVIEW eishin-flash purposeful gaze_override bounds false {"foot_error":0.000000180022510676281,"head_acceleration":226.875829696655,"head_speed":37.986759185791,"hips_step":0.000139757976285182}
+AUTHORED_REVIEW eishin-flash purposeful gaze_release bounds false {"foot_error":0.000000179443404135782,"head_acceleration":217.211408615112,"head_speed":34.176097869873,"hips_step":0.000139757976285182}
+AUTHORED_REVIEW_RESULT 6

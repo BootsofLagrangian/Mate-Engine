@@ -9,6 +9,8 @@ const MAX_HISTORY := 64
 const ATTENTION_COOLDOWN := 30.0
 const MOVE_COOLDOWN := 35.0
 const MAX_INTENT_TTL := 120.0
+# Native heading wait <=6s + travel watchdog <=35s, with a small frame margin.
+const NAVIGATION_COMPLETION_SECONDS := 45.0
 const STYLE_DEFAULTS := {"idle_interval_s": 12.0, "gaze_hold_s": 2.0,
 	"response_delay_s": 0.25, "curiosity": 0.5, "posture_strength": 0.5}
 
@@ -17,6 +19,7 @@ var interest_revision := 0
 var state := "rest"
 var style: Dictionary = STYLE_DEFAULTS.duplicate()
 var _time := 0.0
+var _handoff_queue_id := ""
 var _phase_until := 12.0
 var _next_dispatch := 0.0
 var _next_move := 20.0
@@ -50,6 +53,7 @@ func set_character(value: String) -> void:
 	if value == character_id:
 		return
 	cancel_all("character_changed")
+	_handoff_queue_id = ""
 	character_id = value
 	_interests.clear()
 	_history.clear()
@@ -139,12 +143,19 @@ func cancel_all(reason: String = "cancelled") -> void:
 	_queue.clear()
 
 func resolve_intent(id: String, outcome: String) -> bool:
+	_expire()
 	if _active.is_empty() or _active.id != id:
 		return false
 	if outcome == "started":
-		_active["started"] = true
+		if _active.kind != "move_to":
+			return false
+		if not bool(_active.get("started", false)):
+			_active["started"] = true
+			_active["navigation_deadline"] = _time + NAVIGATION_COMPLETION_SECONDS
 		return true
 	if outcome == "blocked":
+		if bool(_active.get("started", false)):
+			return false # accepted navigation cannot restart its freshness clock
 		var pending := _active.duplicate()
 		_active.clear()
 		_queue.push_front(pending)
@@ -170,8 +181,21 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 		set_character(str(context.character_id))
 	_expire()
 	_posture_allowed = not bool(context.get("preview_active", false)) and not bool(context.get("dialogue_gesture_active", false))
+	if not _handoff_queue_id.is_empty() and not _queue.any(func(entry): return entry.id == _handoff_queue_id):
+		_pending_cancel = {"type":"cancel_move", "id":_handoff_queue_id, "reason":"replacement_invalidated"}
+		_handoff_queue_id = ""
 	var action: Dictionary = _pending_cancel
 	_pending_cancel = {}
+	# Only a still-fresh queued replacement move can request the narrow native
+	# handoff. Derive it at emission, after expiry/removal and user arbitration.
+	if action.get("reason", "") == "superseded" and not _queue.is_empty():
+		var replacement: Dictionary = _queue[0]
+		for candidate in _queue:
+			if _source_priority(str(candidate.source)) > _source_priority(str(replacement.source)):
+				replacement = candidate
+		if replacement.kind == "move_to" and _interests.has(replacement.target_id):
+			action["replacement_point"] = _interests[replacement.target_id].point
+			_handoff_queue_id = str(replacement.id)
 	var priority := _priority_state(context)
 	if not priority.is_empty():
 		if not _preempted and not _active.is_empty():
@@ -203,6 +227,7 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 		var intent := _queue[0]
 		if intent.kind != "move_to" or bool(context.get("can_move", false)):
 			_queue.pop_front()
+			_handoff_queue_id = ""
 			_active = intent
 			if intent.kind == "move_to":
 				var interest: Dictionary = _interests[intent.target_id]
@@ -306,7 +331,7 @@ func _expire() -> void:
 		if float(intent.expires) <= _time or (intent.kind != "rest" and not _interests.has(intent.target_id)):
 			_record_outcome(str(intent.id), "expired")
 			_queue.remove_at(i)
-	if not _active.is_empty() and (float(_active.expires) <= _time or (_active.kind != "rest" and not _interests.has(_active.target_id))):
+	if not _active.is_empty() and (float(_active.get("navigation_deadline", _active.expires)) <= _time or (_active.kind != "rest" and not _interests.has(_active.target_id))):
 		cancel_intent(str(_active.id), "expired")
 	for id: String in _history.keys():
 		if float(_history[id]) <= _time:

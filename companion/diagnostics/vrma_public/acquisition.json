@@ -1,0 +1,336 @@
+{
+  "acquired": "2026-09-06",
+  "source_license_verified": "Official author BOOTH pages 6412084 and5527394 explicitly CC0; BOOTH download itself requireslogin; these bytes from authorized-public CC0 redistribution with exact sha verification, not author-direct download",
+  "assets": [
+    {
+      "path": "animations/airplane-02.vrma",
+      "role": "animation",
+      "creator": "sashii",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/6412084",
+      "attribution": "Sachi VRMA 1 by sashii (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "6a8dd04f6a0b4f071d881df1fce68e116dc4c5c1d651f5a5585a91cfa4037ccd",
+      "local_file": "airplane-02.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/airplane-02.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 235656,
+      "gltf_generator": "VRM Add-on for Blender v2.20.82",
+      "vrma_spec": "1.0",
+      "mapped_bones": 52,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        53
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/airplane-05.vrma",
+      "role": "animation",
+      "creator": "sashii",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/6412084",
+      "attribution": "Sachi VRMA 1 by sashii (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "efcb583b0548cdf76e4c4a623f10875204dcba8a2d06f978321b5b4d4a1221b8",
+      "local_file": "airplane-05.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/airplane-05.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 1155048,
+      "gltf_generator": "VRM Add-on for Blender v2.20.82",
+      "vrma_spec": "1.0",
+      "mapped_bones": 52,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        53
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/drink-water.vrma",
+      "role": "animation",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/5527394",
+      "attribution": "VRMA animation pack by へすい / rerofumi (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "ba56122fecb5014f019096dcd014c0c35f1d560dcb0f6b1d55d3d66e5d69740c",
+      "local_file": "drink-water.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/drink-water.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 613560,
+      "gltf_generator": "UniGLTF-2.53.0",
+      "vrma_spec": null,
+      "mapped_bones": 51,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        52
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/exercise-step.vrma",
+      "role": "animation",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/5527394",
+      "attribution": "VRMA animation pack by へすい / rerofumi (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "62c3f543c0386feadf475d81f5d6a77f7dd21cd638892d1e0fed811cd9dedd5f",
+      "local_file": "exercise-step.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/exercise-step.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 79256,
+      "gltf_generator": "UniGLTF-2.53.0",
+      "vrma_spec": null,
+      "mapped_bones": 51,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        52
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/failed-apology.vrma",
+      "role": "animation",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/5527394",
+      "attribution": "VRMA animation pack by へすい / rerofumi (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "fdc0cdeca81c8130c8fd4c257cae4392c58f48e3b016fe2db696b6d40823f504",
+      "local_file": "failed-apology.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/failed-apology.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 204992,
+      "gltf_generator": "UniGLTF-2.53.0",
+      "vrma_spec": null,
+      "mapped_bones": 51,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        52
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/idle-01.vrma",
+      "role": "animation",
+      "creator": "sashii",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/6412084",
+      "attribution": "Sachi VRMA 1 by sashii (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "5ed6c016df035b21daaefe64751e1356387c6a33693d31366b0912ac7566ea92",
+      "local_file": "idle-01.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/idle-01.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 95888,
+      "gltf_generator": "VRM Add-on for Blender v2.20.82",
+      "vrma_spec": "1.0",
+      "mapped_bones": 52,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        18
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/pose-motion.vrma",
+      "role": "animation",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/5527394",
+      "attribution": "VRMA animation pack by へすい / rerofumi (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "e3b06f78b21df2fe1f26d80dd1826fd47941a891d44b46a6197f8a87de05ff2c",
+      "local_file": "pose-motion.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/pose-motion.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 521156,
+      "gltf_generator": "UniGLTF-2.53.0",
+      "vrma_spec": null,
+      "mapped_bones": 51,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        52
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/reaction-startle.vrma",
+      "role": "animation",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/5527394",
+      "attribution": "VRMA animation pack by へすい / rerofumi (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "ad2a5118837bfa6789cb89383d4e0bd98bed7685158b692bbfb6662ee42ae6c9",
+      "local_file": "reaction-startle.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/reaction-startle.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 307340,
+      "gltf_generator": "UniGLTF-2.53.0",
+      "vrma_spec": null,
+      "mapped_bones": 51,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        52
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/review-phone.vrma",
+      "role": "animation",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/5527394",
+      "attribution": "VRMA animation pack by へすい / rerofumi (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "54a37ca48a1d4ffb60cfc539013f59fecd48d93375b2069c6c35b5e9f416b726",
+      "local_file": "review-phone.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/review-phone.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 281528,
+      "gltf_generator": "UniGLTF-2.53.0",
+      "vrma_spec": null,
+      "mapped_bones": 51,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        52
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/speaking-01.vrma",
+      "role": "animation",
+      "creator": "sashii",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/6412084",
+      "attribution": "Sachi VRMA 1 by sashii (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "ba0339d2d9755fc2e0dab06e96a0d91303d0a508c9f89f07dc17a07dc0e2535c",
+      "local_file": "speaking-01.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/speaking-01.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 37208,
+      "gltf_generator": "VRM Add-on for Blender v2.20.82",
+      "vrma_spec": "1.0",
+      "mapped_bones": 52,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        15
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    },
+    {
+      "path": "animations/success-cheer.vrma",
+      "role": "animation",
+      "creator": "へすい / rerofumi",
+      "license": "CC0 1.0 Universal",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://booth.pm/ja/items/5527394",
+      "attribution": "VRMA animation pack by へすい / rerofumi (credit not required; retained for provenance)",
+      "restrictions": "CC0 1.0; provided as-is without warranty.",
+      "sha256": "88123be97c20633b926b911c1904aae3cdc790c5416b39788b753749ba087afb",
+      "local_file": "success-cheer.vrma",
+      "download_url": "https://raw.githubusercontent.com/SanHsien/voxavatar/2a06be82d1b912c59a3e6d692105af88b162e71a/public/assets/animations/success-cheer.vrma",
+      "mirror_revision": "2a06be82d1b912c59a3e6d692105af88b162e71a",
+      "bytes": 559496,
+      "gltf_generator": "UniGLTF-2.53.0",
+      "vrma_spec": null,
+      "mapped_bones": 51,
+      "animation_names": [
+        null
+      ],
+      "channels": [
+        52
+      ],
+      "interpolation": [
+        "LINEAR"
+      ],
+      "extensions": [
+        "VRMC_vrm_animation"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,469 @@
+{
+  "scope": "Three rigs\u00d730/60Hz\u00d7scale0.6/1.0 actual-main wiring with rounded simulated desktop origins. Original Unity quaternion UMA walk selected through production manifest/capabilities. Windows visual acceptance and props outside scope.",
+  "cells": [
+    {
+      "cell": "cheval-grand-30fps-0.6",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.00017561133121819748,
+      "support_drift_px": 0.05805803815434917,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 677,
+        "min_pitch_deg": -0.968174315655837,
+        "max_pitch_deg": 1.99554278712385,
+        "mean_pitch_deg": 0.45064686162965356,
+        "hips_offset_ranges": [
+          [
+            -0.0086300540715456,
+            0.00907943863421679
+          ],
+          [
+            -0.02876877784729,
+            -0.00339287519454956
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435010194778
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "cheval-grand-30fps-1.0",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.00027858574337540797,
+      "support_drift_px": 0.09024466336267721,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 677,
+        "min_pitch_deg": -0.969550001572356,
+        "max_pitch_deg": 2.01327674228418,
+        "mean_pitch_deg": 0.5050729113723248,
+        "hips_offset_ranges": [
+          [
+            -0.0086300540715456,
+            0.00907729286700487
+          ],
+          [
+            -0.0165113210678101,
+            -0.00151723623275757
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435010194778
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "cheval-grand-60fps-0.6",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.00018062560634099454,
+      "support_drift_px": 0.05974344203279303,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 1356,
+        "min_pitch_deg": -0.969846596509602,
+        "max_pitch_deg": 1.99563752305185,
+        "mean_pitch_deg": 0.45630538213159777,
+        "hips_offset_ranges": [
+          [
+            -0.0086300540715456,
+            0.00908519420772791
+          ],
+          [
+            -0.027082085609436,
+            -0.00316423177719116
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435010194778
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "cheval-grand-60fps-1.0",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.0003140386542982992,
+      "support_drift_px": 0.1034337025480418,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 1356,
+        "min_pitch_deg": -0.969619787573703,
+        "max_pitch_deg": 2.01369680619793,
+        "mean_pitch_deg": 0.5081087151099882,
+        "hips_offset_ranges": [
+          [
+            -0.0086300540715456,
+            0.00908148847520351
+          ],
+          [
+            -0.0163850784301758,
+            -0.00157344341278076
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435010194778
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-30fps-0.6",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.00018045582235974537,
+      "support_drift_px": 0.05731847887042652,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 677,
+        "min_pitch_deg": -1.02022545555307,
+        "max_pitch_deg": 1.97490061579507,
+        "mean_pitch_deg": 0.4080696236927541,
+        "hips_offset_ranges": [
+          [
+            -0.0086300577968359,
+            0.009074741974473
+          ],
+          [
+            -0.0228390097618103,
+            -0.00534147024154663
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435382723808
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-30fps-1.0",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.0002967881644471497,
+      "support_drift_px": 0.09860261133676165,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 677,
+        "min_pitch_deg": -1.02020175218188,
+        "max_pitch_deg": 2.2273021429551,
+        "mean_pitch_deg": 0.46324303183251897,
+        "hips_offset_ranges": [
+          [
+            -0.0086300577968359,
+            0.00908068660646677
+          ],
+          [
+            -0.0144890546798706,
+            -0.00342088937759399
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435382723808
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-60fps-0.6",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.0001771071964430866,
+      "support_drift_px": 0.05787729292543798,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 1356,
+        "min_pitch_deg": -1.01875367741393,
+        "max_pitch_deg": 1.94561359346232,
+        "mean_pitch_deg": 0.4121449736899071,
+        "hips_offset_ranges": [
+          [
+            -0.0086300577968359,
+            0.00908576510846615
+          ],
+          [
+            -0.0222318172454834,
+            -0.00561535358428955
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435382723808
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-60fps-1.0",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.0002932747131149607,
+      "support_drift_px": 0.09623306843062793,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 1356,
+        "min_pitch_deg": -1.01835013626304,
+        "max_pitch_deg": 2.22779404756173,
+        "mean_pitch_deg": 0.46483146120406765,
+        "hips_offset_ranges": [
+          [
+            -0.0086300577968359,
+            0.00908440072089434
+          ],
+          [
+            -0.0144597291946411,
+            -0.00337338447570801
+          ],
+          [
+            -0.00378100201487541,
+            0.00390435382723808
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-30fps-0.6",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.00010226883387006991,
+      "support_drift_px": 0.03470104949612163,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 677,
+        "min_pitch_deg": -0.950272427642931,
+        "max_pitch_deg": 2.01565274068681,
+        "mean_pitch_deg": 0.4617467173368378,
+        "hips_offset_ranges": [
+          [
+            -0.00782098900526762,
+            0.00823369063436985
+          ],
+          [
+            -0.0265514850616455,
+            -0.0026431679725647
+          ],
+          [
+            -0.00342653319239616,
+            0.00353831984102726
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-30fps-1.0",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.00027991033283085844,
+      "support_drift_px": 0.09579937823532667,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 677,
+        "min_pitch_deg": -0.950323270255089,
+        "max_pitch_deg": 2.01561730408091,
+        "mean_pitch_deg": 0.5207388069166928,
+        "hips_offset_ranges": [
+          [
+            -0.00782098900526762,
+            0.0082289157435298
+          ],
+          [
+            -0.0157245993614197,
+            -0.00163149833679199
+          ],
+          [
+            -0.00342653319239616,
+            0.00353831984102726
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-60fps-0.6",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.00016028474490320968,
+      "support_drift_px": 0.054054548309026215,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 1356,
+        "min_pitch_deg": -0.949677045911324,
+        "max_pitch_deg": 2.01559627945485,
+        "mean_pitch_deg": 0.466189358818648,
+        "hips_offset_ranges": [
+          [
+            -0.00782098900526762,
+            0.00823406782001257
+          ],
+          [
+            -0.026292085647583,
+            -0.00346720218658447
+          ],
+          [
+            -0.00342653319239616,
+            0.00353831984102726
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-60fps-1.0",
+      "checks": 29,
+      "failures": 0,
+      "support_drift_m": 0.0002626848216525879,
+      "support_drift_px": 0.0907707489288654,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "head_posture": {
+        "scope": "Actual final world head forward pitch relative to humanoid rest; positive down. Statewalk+uma_walk, at least0.5s after clipstart; initial acquisition excluded explicitly.",
+        "frames": 1356,
+        "min_pitch_deg": -0.950491013685413,
+        "max_pitch_deg": 2.01567587150582,
+        "mean_pitch_deg": 0.5189288595280004,
+        "hips_offset_ranges": [
+          [
+            -0.00782098900526762,
+            0.00823224801570177
+          ],
+          [
+            -0.0155016779899597,
+            -0.00166207551956177
+          ],
+          [
+            -0.00342653319239616,
+            0.00353831984102726
+          ]
+        ]
+      },
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    }
+  ],
+  "concurrent_intervals": 60,
+  "concurrent_passes": 60,
+  "minimum_overlap_seconds": 0.8333333333333329,
+  "minimum_overlap_degrees": 39.56583786177981,
+  "pair_scenarios": 36,
+  "core_source_sha256": {
+    "action_overlap.gd": "d289c984d1be109ddf267768a686bf3ca26bcd3c14b168efd0ea787e21f0f359",
+    "ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+    "arm_ik.gd": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+    "autonomy_bridge.gd": "813035a78b15a8dfcfde4586616686888a74860b0fe027ec58599adab12b4e88",
+    "behavior_director.gd": "53e054d0e8b2b35a3c7558f760e98ce1629640b5e2b81011848b6f99b9af34c1",
+    "desktop_autonomy.gd": "3f3f4a03178aeaae6b43c7104bd2f56ba3d6b27d06049745f69c65ea8d579ad1",
+    "desktop_gait.gd": "7efe46b31ab03f32f5cb2ac530418edc126c696b1693cb2b7f782308f19f03b2",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "living_behavior.gd": "a8941d901b0ebbf7c37ff65384373c68ac31841a373adb97d06b974462e2144d",
+    "main.gd": "00d04dfa00150fd7bece801173b799e69550b8332a48de97518dda76a24f3960",
+    "motion_bank.gd": "583fa19d67ce82dcc884c303d074c81308416f4d5acd1792fc1a122eab0c809e",
+    "motion_player.gd": "81348626dfc249cc8c9610fbc5f460a3c5a5c71c553df132912e763b5ce0f81d",
+    "probe_transition_chain.gd": "a06c06785995c3392ca6202292112d3785336ba44c4242e8faf14238ccf5111a",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "vrm_avatar.gd": "9ff5eb960ca1a0d2a7fc8137850a3a8fe769c9db2535533eb72e506b9271c2fd",
+    "vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb"
+  },
+  "identical_core_all_cells": true,
+  "installed_walk_sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+  "manifest_sha256": "f00f931bd9c5ee9acdc9c28c04dbe77d04335335d9cf480fe5da239d38746b7b",
+  "analysis_sha256": "b24f5e85d1b9a3bc45a879e51baaf5b51143ca9900954f7bef9167c1a1c74266",
+  "largest_travel_boundary_velocity_changes": [
+    [
+      122.3793946005813,
+      "eishin-flash-30fps-1.0",
+      "midwalk_reversal",
+      54.4999999999995,
+      "rightFoot",
+      299.485412597656,
+      177.106018066406
+    ],
+    [
+      122.2029724638649,
+      "cheval-grand-30fps-1.0",
+      "midwalk_reversal",
+      54.4999999999995,
+      "rightFoot",
+      309.965484619141,
+      187.762512207031
+    ],
+    [
+      115.72654724490148,
+      "eishin-flash-30fps-1.0",
+      "journey_2",
+      40.2000000000003,
+      "rightFoot",
+      289.091186523438,
+      173.364639282227
+    ],
+    [
+      115.72636413647952,
+      "eishin-flash-30fps-1.0",
+      "before_midwalk_reversal",
+      50.5666666666664,
+      "leftFoot",
+      289.049621582031,
+      173.323257446289
+    ],
+    [
+      115.67260742325027,
+      "eishin-flash-30fps-1.0",
+      "journey_1",
+      29.833333333334,
+      "leftFoot",
+      293.843719482422,
+      178.171112060547
+    ]
+  ],
+  "verdict": "APPROVED for measured deterministic integration scope; Windows visual acceptance remains coordinator-owned.",
+  "assertions": 348,
+  "failures": 0,
+  "authored_regression_assertions": 132,
+  "authored_regression_diagnostic_records": 6,
+  "authored_regression_failures": 0
+}

@@ -1,0 +1,3235 @@
+{
+  "capture_scope": "own viewport, normal production processing, capture overhead included in elapsed timing",
+  "captures": [
+    {
+      "file": "frames/0000000018.png",
+      "ms": 18,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000000168.png",
+      "ms": 168,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000000318.png",
+      "ms": 318,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000000468.png",
+      "ms": 468,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000000618.png",
+      "ms": 618,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000000768.png",
+      "ms": 768,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000000915.png",
+      "ms": 915,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000001107.png",
+      "ms": 1107,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000001257.png",
+      "ms": 1257,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000001407.png",
+      "ms": 1407,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000001557.png",
+      "ms": 1557,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000001707.png",
+      "ms": 1707,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000001857.png",
+      "ms": 1857,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000002007.png",
+      "ms": 2007,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000002156.png",
+      "ms": 2156,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000002307.png",
+      "ms": 2307,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000002457.png",
+      "ms": 2457,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000002606.png",
+      "ms": 2606,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000002756.png",
+      "ms": 2756,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000002906.png",
+      "ms": 2906,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000003056.png",
+      "ms": 3056,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000003207.png",
+      "ms": 3207,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000003356.png",
+      "ms": 3356,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000003507.png",
+      "ms": 3507,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000003656.png",
+      "ms": 3656,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000003807.png",
+      "ms": 3807,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000003957.png",
+      "ms": 3957,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000004106.png",
+      "ms": 4106,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000004256.png",
+      "ms": 4256,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000004406.png",
+      "ms": 4406,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000004556.png",
+      "ms": 4556,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000004706.png",
+      "ms": 4706,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000004857.png",
+      "ms": 4857,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000005006.png",
+      "ms": 5006,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000005156.png",
+      "ms": 5156,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000005306.png",
+      "ms": 5306,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000005456.png",
+      "ms": 5456,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000005607.png",
+      "ms": 5607,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000005757.png",
+      "ms": 5757,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000005906.png",
+      "ms": 5906,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000006056.png",
+      "ms": 6056,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000006207.png",
+      "ms": 6207,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000006356.png",
+      "ms": 6356,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000006506.png",
+      "ms": 6506,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000006656.png",
+      "ms": 6656,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000006806.png",
+      "ms": 6806,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000006956.png",
+      "ms": 6956,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000007106.png",
+      "ms": 7106,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000007256.png",
+      "ms": 7256,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000007406.png",
+      "ms": 7406,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000007557.png",
+      "ms": 7557,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000007706.png",
+      "ms": 7706,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000007856.png",
+      "ms": 7856,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000008007.png",
+      "ms": 8007,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000008156.png",
+      "ms": 8156,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000008306.png",
+      "ms": 8306,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000008457.png",
+      "ms": 8457,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000008606.png",
+      "ms": 8606,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000008756.png",
+      "ms": 8756,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000008906.png",
+      "ms": 8906,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000009058.png",
+      "ms": 9058,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000009207.png",
+      "ms": 9207,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000009356.png",
+      "ms": 9356,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000009507.png",
+      "ms": 9507,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000009673.png",
+      "ms": 9673,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000009840.png",
+      "ms": 9840,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000010007.png",
+      "ms": 10007,
+      "save_error": 0,
+      "state": "paused",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000010173.png",
+      "ms": 10173,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000010340.png",
+      "ms": 10340,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000010507.png",
+      "ms": 10507,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000010674.png",
+      "ms": 10674,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000010840.png",
+      "ms": 10840,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000011007.png",
+      "ms": 11007,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000011173.png",
+      "ms": 11173,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000011340.png",
+      "ms": 11340,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000011507.png",
+      "ms": 11507,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000011673.png",
+      "ms": 11673,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000011840.png",
+      "ms": 11840,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000012007.png",
+      "ms": 12007,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000012174.png",
+      "ms": 12174,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000012340.png",
+      "ms": 12340,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000012507.png",
+      "ms": 12507,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(890, 672)",
+      "yaw": 0.0
+    },
+    {
+      "file": "frames/0000012739.png",
+      "ms": 12739,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -0.0172265730798244
+    },
+    {
+      "file": "frames/0000012966.png",
+      "ms": 12966,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -0.132070571184158
+    },
+    {
+      "file": "frames/0000013202.png",
+      "ms": 13202,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -0.338078409433365
+    },
+    {
+      "file": "frames/0000013432.png",
+      "ms": 13432,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -0.617829382419586
+    },
+    {
+      "file": "frames/0000013664.png",
+      "ms": 13664,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -0.898620903491974
+    },
+    {
+      "file": "frames/0000013990.png",
+      "ms": 13990,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -1.19973301887512
+    },
+    {
+      "file": "frames/0000014211.png",
+      "ms": 14211,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -1.37882614135742
+    },
+    {
+      "file": "frames/0000014441.png",
+      "ms": 14441,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -1.43067872524261
+    },
+    {
+      "file": "frames/0000014646.png",
+      "ms": 14646,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -1.43114709854126
+    },
+    {
+      "file": "frames/0000014810.png",
+      "ms": 14810,
+      "save_error": 0,
+      "state": "anticipate",
+      "window": "(890, 672)",
+      "yaw": -1.43114709854126
+    },
+    {
+      "file": "frames/0000014984.png",
+      "ms": 14984,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(890, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000015161.png",
+      "ms": 15161,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(888, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000015329.png",
+      "ms": 15329,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(884, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000015496.png",
+      "ms": 15496,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(876, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000015664.png",
+      "ms": 15664,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(865, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000015831.png",
+      "ms": 15831,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(853, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000015997.png",
+      "ms": 15997,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(841, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000016164.png",
+      "ms": 16164,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(828, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000016331.png",
+      "ms": 16331,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(816, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000016498.png",
+      "ms": 16498,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(803, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000016667.png",
+      "ms": 16667,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(790, 672)",
+      "yaw": -1.43115162849426
+    },
+    {
+      "file": "frames/0000016890.png",
+      "ms": 16890,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(774, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000017064.png",
+      "ms": 17064,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(761, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000017231.png",
+      "ms": 17231,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(748, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000017397.png",
+      "ms": 17397,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(736, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000017564.png",
+      "ms": 17564,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(723, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000017730.png",
+      "ms": 17730,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(711, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000017897.png",
+      "ms": 17897,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(698, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000018064.png",
+      "ms": 18064,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(685, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000018230.png",
+      "ms": 18230,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(672, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000018397.png",
+      "ms": 18397,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(660, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000018564.png",
+      "ms": 18564,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(647, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000018731.png",
+      "ms": 18731,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(635, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000018897.png",
+      "ms": 18897,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(622, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000019064.png",
+      "ms": 19064,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(610, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000019230.png",
+      "ms": 19230,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(597, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000019397.png",
+      "ms": 19397,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(585, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000019564.png",
+      "ms": 19564,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(572, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000019731.png",
+      "ms": 19731,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(560, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000019897.png",
+      "ms": 19897,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(547, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000020064.png",
+      "ms": 20064,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(535, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000020231.png",
+      "ms": 20231,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(522, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000020397.png",
+      "ms": 20397,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(510, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000020564.png",
+      "ms": 20564,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(497, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000020731.png",
+      "ms": 20731,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(485, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000020899.png",
+      "ms": 20899,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(472, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000021065.png",
+      "ms": 21065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(460, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000021232.png",
+      "ms": 21232,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(447, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000021399.png",
+      "ms": 21399,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(435, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000021565.png",
+      "ms": 21565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(422, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000021732.png",
+      "ms": 21732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(410, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000021898.png",
+      "ms": 21898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(397, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000022065.png",
+      "ms": 22065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(385, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000022232.png",
+      "ms": 22232,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(372, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000022398.png",
+      "ms": 22398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(360, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000022565.png",
+      "ms": 22565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(347, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000022731.png",
+      "ms": 22731,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(335, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000022898.png",
+      "ms": 22898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(322, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000023065.png",
+      "ms": 23065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(310, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000023231.png",
+      "ms": 23231,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(297, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000023399.png",
+      "ms": 23399,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(285, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000023565.png",
+      "ms": 23565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(272, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000023732.png",
+      "ms": 23732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(260, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000023898.png",
+      "ms": 23898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(247, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000024065.png",
+      "ms": 24065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(235, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000024231.png",
+      "ms": 24231,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(222, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000024398.png",
+      "ms": 24398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(210, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000024565.png",
+      "ms": 24565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(197, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000024732.png",
+      "ms": 24732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(185, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000024898.png",
+      "ms": 24898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(172, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000025065.png",
+      "ms": 25065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(160, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000025231.png",
+      "ms": 25231,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(147, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000025398.png",
+      "ms": 25398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(135, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000025565.png",
+      "ms": 25565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(122, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000025732.png",
+      "ms": 25732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(110, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000025898.png",
+      "ms": 25898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(97, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000026065.png",
+      "ms": 26065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(85, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000026232.png",
+      "ms": 26232,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(72, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000026398.png",
+      "ms": 26398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(60, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000026565.png",
+      "ms": 26565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(47, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000026732.png",
+      "ms": 26732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(35, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000026898.png",
+      "ms": 26898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(22, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000027065.png",
+      "ms": 27065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(10, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000027232.png",
+      "ms": 27232,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-3, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000027398.png",
+      "ms": 27398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-15, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000027565.png",
+      "ms": 27565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-28, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000027732.png",
+      "ms": 27732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-40, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000027899.png",
+      "ms": 27899,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-53, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000028065.png",
+      "ms": 28065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-65, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000028231.png",
+      "ms": 28231,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-78, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000028398.png",
+      "ms": 28398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-90, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000028565.png",
+      "ms": 28565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-103, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000028732.png",
+      "ms": 28732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-115, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000028898.png",
+      "ms": 28898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-128, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000029065.png",
+      "ms": 29065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-140, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000029232.png",
+      "ms": 29232,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-153, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000029398.png",
+      "ms": 29398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-165, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000029565.png",
+      "ms": 29565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-178, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000029732.png",
+      "ms": 29732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-190, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000029899.png",
+      "ms": 29899,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-203, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000030065.png",
+      "ms": 30065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-215, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000030232.png",
+      "ms": 30232,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-228, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000030398.png",
+      "ms": 30398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-240, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000030565.png",
+      "ms": 30565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-253, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000030732.png",
+      "ms": 30732,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-265, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000030898.png",
+      "ms": 30898,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-278, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000031065.png",
+      "ms": 31065,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-290, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000031232.png",
+      "ms": 31232,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-303, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000031398.png",
+      "ms": 31398,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-315, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000031565.png",
+      "ms": 31565,
+      "save_error": 0,
+      "state": "walk",
+      "window": "(-328, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000031731.png",
+      "ms": 31731,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000031898.png",
+      "ms": 31898,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000032065.png",
+      "ms": 32065,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000032232.png",
+      "ms": 32232,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000032399.png",
+      "ms": 32399,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000032565.png",
+      "ms": 32565,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000032731.png",
+      "ms": 32731,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000032898.png",
+      "ms": 32898,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000033065.png",
+      "ms": 33065,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000033232.png",
+      "ms": 33232,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000033398.png",
+      "ms": 33398,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000033565.png",
+      "ms": 33565,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000033731.png",
+      "ms": 33731,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000033899.png",
+      "ms": 33899,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000034065.png",
+      "ms": 34065,
+      "save_error": 0,
+      "state": "settle",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000034231.png",
+      "ms": 34231,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000034398.png",
+      "ms": 34398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000034565.png",
+      "ms": 34565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000034731.png",
+      "ms": 34731,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000034899.png",
+      "ms": 34899,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000035065.png",
+      "ms": 35065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000035232.png",
+      "ms": 35232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000035399.png",
+      "ms": 35399,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000035565.png",
+      "ms": 35565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000035732.png",
+      "ms": 35732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000035898.png",
+      "ms": 35898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000036065.png",
+      "ms": 36065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000036232.png",
+      "ms": 36232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000036399.png",
+      "ms": 36399,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000036565.png",
+      "ms": 36565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000036732.png",
+      "ms": 36732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000036898.png",
+      "ms": 36898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000037065.png",
+      "ms": 37065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000037232.png",
+      "ms": 37232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000037398.png",
+      "ms": 37398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000037565.png",
+      "ms": 37565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000037731.png",
+      "ms": 37731,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000037898.png",
+      "ms": 37898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000038065.png",
+      "ms": 38065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000038232.png",
+      "ms": 38232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000038398.png",
+      "ms": 38398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000038565.png",
+      "ms": 38565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000038732.png",
+      "ms": 38732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000038899.png",
+      "ms": 38899,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000039065.png",
+      "ms": 39065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000039232.png",
+      "ms": 39232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000039398.png",
+      "ms": 39398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000039565.png",
+      "ms": 39565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000039732.png",
+      "ms": 39732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000039899.png",
+      "ms": 39899,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000040066.png",
+      "ms": 40066,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000040232.png",
+      "ms": 40232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000040400.png",
+      "ms": 40400,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000040565.png",
+      "ms": 40565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000040731.png",
+      "ms": 40731,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000040898.png",
+      "ms": 40898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000041065.png",
+      "ms": 41065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000041231.png",
+      "ms": 41231,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000041398.png",
+      "ms": 41398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000041565.png",
+      "ms": 41565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000041731.png",
+      "ms": 41731,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000041898.png",
+      "ms": 41898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000042065.png",
+      "ms": 42065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000042232.png",
+      "ms": 42232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000042399.png",
+      "ms": 42399,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000042565.png",
+      "ms": 42565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000042731.png",
+      "ms": 42731,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000042899.png",
+      "ms": 42899,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000043065.png",
+      "ms": 43065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000043232.png",
+      "ms": 43232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000043398.png",
+      "ms": 43398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000043565.png",
+      "ms": 43565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000043732.png",
+      "ms": 43732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000043898.png",
+      "ms": 43898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000044065.png",
+      "ms": 44065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000044232.png",
+      "ms": 44232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000044399.png",
+      "ms": 44399,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000044565.png",
+      "ms": 44565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000044732.png",
+      "ms": 44732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000044898.png",
+      "ms": 44898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000045065.png",
+      "ms": 45065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000045232.png",
+      "ms": 45232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000045398.png",
+      "ms": 45398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000045565.png",
+      "ms": 45565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000045732.png",
+      "ms": 45732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000045898.png",
+      "ms": 45898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000046065.png",
+      "ms": 46065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000046231.png",
+      "ms": 46231,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000046398.png",
+      "ms": 46398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000046565.png",
+      "ms": 46565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000046732.png",
+      "ms": 46732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000046898.png",
+      "ms": 46898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000047065.png",
+      "ms": 47065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000047232.png",
+      "ms": 47232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000047398.png",
+      "ms": 47398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000047565.png",
+      "ms": 47565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000047732.png",
+      "ms": 47732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000047898.png",
+      "ms": 47898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000048065.png",
+      "ms": 48065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000048232.png",
+      "ms": 48232,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000048398.png",
+      "ms": 48398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000048565.png",
+      "ms": 48565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000048732.png",
+      "ms": 48732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000048898.png",
+      "ms": 48898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000049065.png",
+      "ms": 49065,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000049231.png",
+      "ms": 49231,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000049398.png",
+      "ms": 49398,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000049565.png",
+      "ms": 49565,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000049732.png",
+      "ms": 49732,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    },
+    {
+      "file": "frames/0000049898.png",
+      "ms": 49898,
+      "save_error": 0,
+      "state": "rest",
+      "window": "(-330, 672)",
+      "yaw": -1.43115544319153
+    }
+  ],
+  "checks": [
+    {
+      "label": "live native avatar and backend ready",
+      "ok": true
+    },
+    {
+      "label": "actual monitor floor ready for movement",
+      "ok": true
+    },
+    {
+      "label": "named left target available",
+      "ok": true
+    },
+    {
+      "label": "GPU reply completed and actual voice drained",
+      "ok": true
+    },
+    {
+      "label": "GPU returned valid Japanese dialogue",
+      "ok": true
+    },
+    {
+      "label": "streamed dedicated voice received without dropped frames",
+      "ok": true
+    },
+    {
+      "label": "real model requests the listed left target",
+      "ok": true
+    },
+    {
+      "label": "action and done carry identical intent",
+      "ok": true
+    },
+    {
+      "label": "pet stays in place during actual spoken acknowledgement",
+      "ok": true
+    },
+    {
+      "label": "native controller reports actual arrival",
+      "ok": false
+    },
+    {
+      "label": "actual Windows window moved left by over 120 pixels",
+      "ok": true
+    },
+    {
+      "label": "action/done duplicates produce one arrival",
+      "ok": false
+    }
+  ],
+  "done": {
+    "audio_url": null,
+    "character": "cheval-grand",
+    "elapsed_ms": 3977.1,
+    "emotion": "neutral",
+    "gesture": "idle",
+    "intensity": 0.8,
+    "intent": {
+      "kind": "move_to",
+      "target_id": "support:left"
+    },
+    "ms": 4039,
+    "ok": true,
+    "speed": 0.92,
+    "text": "お手伝いします。",
+    "timings": {
+      "first_audio_ms": 3694.2,
+      "first_text_ms": 751.5,
+      "first_token_ms": 750.9,
+      "llm_done_ms": 1550.0,
+      "total_ms": 3977.1
+    },
+    "turn_id": "t1-5715",
+    "type": "done",
+    "voice_error": null
+  },
+  "events": [
+    {
+      "accepted": 2.0,
+      "character_id": "cheval-grand",
+      "ms": 51,
+      "revision": 3.0,
+      "type": "world_context"
+    },
+    {
+      "character": "cheval-grand",
+      "ms": 51,
+      "state": "thinking",
+      "turn_id": "t1-5715",
+      "type": "state"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 0.0,
+      "ms": 67,
+      "turn_id": "t1-5715",
+      "type": "start"
+    },
+    {
+      "character": "cheval-grand",
+      "delta": "お",
+      "elapsed_ms": 751.5,
+      "ms": 818,
+      "text": "お",
+      "turn_id": "t1-5715",
+      "type": "text"
+    },
+    {
+      "character": "cheval-grand",
+      "delta": "手",
+      "elapsed_ms": 833.9,
+      "ms": 897,
+      "text": "お手",
+      "turn_id": "t1-5715",
+      "type": "text"
+    },
+    {
+      "character": "cheval-grand",
+      "delta": "伝",
+      "elapsed_ms": 857.6,
+      "ms": 913,
+      "text": "お手伝",
+      "turn_id": "t1-5715",
+      "type": "text"
+    },
+    {
+      "character": "cheval-grand",
+      "delta": "い",
+      "elapsed_ms": 913.9,
+      "ms": 973,
+      "text": "お手伝い",
+      "turn_id": "t1-5715",
+      "type": "text"
+    },
+    {
+      "character": "cheval-grand",
+      "delta": "します",
+      "elapsed_ms": 949.6,
+      "ms": 1006,
+      "text": "お手伝いします",
+      "turn_id": "t1-5715",
+      "type": "text"
+    },
+    {
+      "character": "cheval-grand",
+      "delta": "。",
+      "elapsed_ms": 967.3,
+      "ms": 1023,
+      "text": "お手伝いします。",
+      "turn_id": "t1-5715",
+      "type": "text"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 967.4,
+      "index": 0.0,
+      "ms": 1023,
+      "text": "お手伝いします。",
+      "turn_id": "t1-5715",
+      "type": "phrase"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 967.6,
+      "index": 0.0,
+      "ms": 1023,
+      "text": "お手伝いします。",
+      "turn_id": "t1-5715",
+      "type": "tts_start"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 1550.0,
+      "emotion": "neutral",
+      "gesture": "idle",
+      "intensity": 0.8,
+      "intent": {
+        "kind": "move_to",
+        "target_id": "support:left"
+      },
+      "ms": 1606,
+      "speed": 0.92,
+      "turn_id": "t1-5715",
+      "type": "action"
+    },
+    {
+      "character": "cheval-grand",
+      "ms": 3756,
+      "state": "speaking",
+      "turn_id": "t1-5715",
+      "type": "state"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.2,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 0.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.2,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 1.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.2,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 2.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 3.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 4.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 5.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 6.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 7.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 8.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 9.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 10.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 11.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3756,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 12.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 13.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 14.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 15.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 16.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 17.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 18.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 19.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 20.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 21.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 22.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 23.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 24.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.3,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 25.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 26.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 27.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 28.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 29.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3757,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 30.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 31.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 32.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 33.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 34.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 35.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 36.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 37.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 38.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 39.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 40.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 41.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 42.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 43.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 44.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 45.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 46.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3758,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 47.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3759,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 48.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3759,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 49.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.4,
+      "ms": 3759,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 50.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.6,
+      "ms": 3759,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 51.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.6,
+      "ms": 3759,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 52.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.6,
+      "ms": 3759,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 53.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3694.6,
+      "ms": 3759,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 54.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3976.7,
+      "ms": 4039,
+      "phrase": 0.0,
+      "sample_rate": 32000.0,
+      "sequence": 55.0,
+      "turn_id": "t1-5715",
+      "type": "audio"
+    },
+    {
+      "character": "cheval-grand",
+      "elapsed_ms": 3976.7,
+      "index": 0.0,
+      "ms": 4039,
+      "turn_id": "t1-5715",
+      "type": "tts_end"
+    },
+    {
+      "audio_url": null,
+      "character": "cheval-grand",
+      "elapsed_ms": 3977.1,
+      "emotion": "neutral",
+      "gesture": "idle",
+      "intensity": 0.8,
+      "intent": {
+        "kind": "move_to",
+        "target_id": "support:left"
+      },
+      "ms": 4039,
+      "ok": true,
+      "speed": 0.92,
+      "text": "お手伝いします。",
+      "timings": {
+        "first_audio_ms": 3694.2,
+        "first_text_ms": 751.5,
+        "first_token_ms": 750.9,
+        "llm_done_ms": 1550.0,
+        "total_ms": 3977.1
+      },
+      "turn_id": "t1-5715",
+      "type": "done",
+      "voice_error": null
+    },
+    {
+      "accepted": 2.0,
+      "character_id": "cheval-grand",
+      "ms": 19995,
+      "revision": 3.0,
+      "type": "world_context"
+    },
+    {
+      "accepted": 2.0,
+      "character_id": "cheval-grand",
+      "ms": 40064,
+      "revision": 3.0,
+      "type": "world_context"
+    }
+  ],
+  "failures": 2,
+  "first_pcm_ms": 3756,
+  "outcomes": [
+    {
+      "id": "t1-5715:intent",
+      "outcome": "expired",
+      "time": 34.3463949999994
+    }
+  ],
+  "renderer": "NVIDIA GeForce RTX 4090",
+  "speech_drift_px": 0.0,
+  "window_end": "(-330, 672)",
+  "window_start": "(890, 672)"
+}

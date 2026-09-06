@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/eishin-flash-60fps-1.0/joints.jsonl.gz",
+    "sha256": "8452dce0bdcad8ba410c06ddd9f65c9e0c00d99afe7cffe1a1dd9af3755a344d",
+    "bytes": 12575823
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/eishin-flash-60fps-1.0/frames.csv.gz",
+    "sha256": "7930e7a5c7a05d979234caf1de67a3596b7ac9cbacbd0756bb81274473d94f38",
+    "bytes": 747480
+  }
+]

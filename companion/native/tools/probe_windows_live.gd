@@ -80,7 +80,7 @@ func run() -> void:
 	report["input_devices"] = AudioServer.get_input_device_list()
 	report["output_device"] = AudioServer.output_device
 	check(root.transparent and root.always_on_top, "transparent always-on-top")
-	check(await wait_for(func(): return app.motion.vrma_clips.size() == 8, 30), "eight downloaded verified VRMA clips")
+	check(await wait_for(func(): return app.motion.vrma_clips.has("walk") and app.motion.vrma_clips.has("sit_idle") and app._vrma_pending == 0, 30), "downloaded verified VRMA catalog ready")
 	# Driver capture lifecycle only: no claim of recognizing physical speech.
 	var mic_started := Time.get_ticks_msec()
 	var mic_events: Array = []

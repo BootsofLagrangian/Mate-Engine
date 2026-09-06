@@ -1,0 +1,7 @@
+# Independent yaw-envelope review
+
+2026-09-06 — **APPROVED for stable horizontal pivot/support correction.** Reviewed current `main._keep_pet_in_window()`, `_navigation_rect()`, the deterministic `probe_turn_support.gd`, and preserved before/after/floor logs. No main edits or new execution performed.
+
+The navigation envelope uses the maximum horizontal radius of the rest model AABB around the stable foot pivot. Its projected width is independent of yaw under the current orthographic camera and uniform avatar scale. Fitting this envelope prevents successive shoulder-width changes from moving the window-local foot anchor. When the envelope exceeds viewport width, centering it consistently prevents alternating edge corrections; this cannot promise that an oversized avatar never clips. Vertical fitting still uses the current body rectangle and is not claimed invariant here.
+
+The evidence is appropriately targeted: 54 checks across three rigs, three scales, and two deterministic frame rates; before 24 failures, after zero. The after trace reports negligible pivot drift and no support detachment/unsafe origin through the tested +82 to -82 degree sweep. Separate floor regression records 135 checks and zero failures. The probe uses actual imported VRMs and main projection methods with a simulated floor and manually assigned yaw; it does not establish actual Windows frame timing, gait continuity, arbitrary camera projections, or all desktop layouts.

@@ -54,6 +54,8 @@ var _surfaces = SurfaceGeometry.new()
 var _anchors: Dictionary = {}
 var _anchors_callback := Callable()
 var _support: Dictionary = {}
+var _seat_surfaces: Dictionary = {}
+var _seat_contact_owner := "" # explicit narrow object seats, never walking destinations
 var _pending_support: Dictionary = {}
 var _locked_anchor := Vector2.ZERO
 var _world_received_at := -INF
@@ -64,7 +66,9 @@ var _preferred_surface_id := ""
 var external_decisions := false
 var _active_target_id := ""
 var _anticipate_until := 0.0
+var _departure_delay := ANTICIPATION_SECONDS
 var _walk_elapsed := 0.0
+var _handoff_braking := false
 var _heading_ready_provider := Callable()
 var _heading_deadline := 0.0
 var _waiting_for_heading := false
@@ -141,7 +145,7 @@ func observe_interest(id: String, screen_point: Vector2, confidence: float = 0.5
 func move_to_interest(id: String) -> bool:
 	_expire_interests()
 	last_request_outcome = "blocked"
-	if not enabled or _blocked or _pointer_interaction or _time < _settle_until:
+	if not enabled or _blocked or _pointer_interaction or _time < _settle_until or _handoff_braking:
 		return false
 	if not _interests.has(id):
 		last_request_outcome = "unknown_target"
@@ -179,7 +183,7 @@ func move_to_interest(id: String) -> bool:
 	_walk_elapsed = 0.0
 	_waiting_for_heading = false
 	_heading_deadline = _time + HEADING_TIMEOUT_SECONDS
-	_anticipate_until = _time + ANTICIPATION_SECONDS
+	_anticipate_until = _time + _departure_delay
 	_travel_until = _time + TRAVEL_TIMEOUT
 	_next_decision = _time + DECISION_SECONDS
 	_interests.erase(id)
@@ -286,6 +290,9 @@ func _advance_state(delta: float) -> void:
 		_set_state("no_space")
 		return
 	if surface_mode and _support.is_empty() and _pending_support.is_empty():
+		if not _seat_contact_owner.is_empty():
+			_set_state("no_surface")
+			return
 		if _time >= _next_decision:
 			_begin_surface_attach()
 		return
@@ -342,6 +349,9 @@ func _advance_state(delta: float) -> void:
 
 
 func _integrate(dt: float) -> void:
+	if _handoff_braking:
+		_integrate_handoff_braking(dt)
+		return
 	var offset := target - position
 	var distance := offset.length()
 	if distance < 0.8 and velocity.length() < acceleration * dt + 0.01:
@@ -501,6 +511,7 @@ func _interrupt() -> void:
 
 
 func _stop_motion() -> void:
+	_handoff_braking = false
 	velocity = Vector2.ZERO
 	if _moving:
 		_moving = false
@@ -570,6 +581,7 @@ func set_contact_pose(pose: String) -> void:
 	if not _support.is_empty():
 		_preferred_surface_id = str(_support.id)
 	contact_pose = pose
+	if pose != "sit": _seat_contact_owner = ""
 	if surface_mode:
 		_detach_support()
 
@@ -589,6 +601,9 @@ func _anchor() -> Vector2:
 
 
 func _surface_origin_span(surface: Dictionary, _anchor_point: Vector2) -> Vector2:
+	if bool(surface.get("anchor_only", false)):
+		var inset := minf(MARGIN, (float(surface.x2)-float(surface.x1))*0.25)
+		return Vector2(float(surface.x1)+inset-_anchor_point.x, float(surface.x2)-inset-_anchor_point.x)
 	return Vector2(float(surface.x1) - visible_bounds.position.x + MARGIN,
 		float(surface.x2) - visible_bounds.end.x - MARGIN)
 
@@ -664,6 +679,16 @@ func _validate_support() -> void:
 	var current := _support if not _support.is_empty() else _pending_support
 	if current.is_empty():
 		return
+	if bool(current.get("anchor_only", false)):
+		var seat: Dictionary = _seat_surfaces.get(str(current.id), {})
+		if seat.is_empty() or contact_pose != "sit" or absf(float(seat.y)-float(current.y)) > 0.1 or absf(float(seat.x1)-float(current.x1)) > 0.1 or absf(float(seat.x2)-float(current.x2)) > 0.1:
+			_detach_support()
+			return
+		var point := position if not _support.is_empty() else target
+		var span := _surface_origin_span(seat, _locked_anchor)
+		if not is_origin_safe(point) or point.x < span.x or point.x > span.y:
+			_detach_support()
+		return
 	for surface: Dictionary in _surfaces.get_surfaces(visible_bounds.size.x + MARGIN * 2.0):
 		if str(surface.id) != str(current.id):
 			continue
@@ -704,9 +729,60 @@ func set_external_decisions(value: bool) -> void:
 	external_decisions = value
 
 
-func cancel_target(reason: String = "cancelled") -> void:
+func cancel_target(reason: String = "cancelled", replacement_point: Vector2 = Vector2.INF) -> void:
+	_seat_contact_owner = ""
+	# A validated same-support replacement already has its own anticipation and
+	# heading gate. Avoid adding the ordinary cancellation settle in front of it.
+	var handoff := reason == "superseded" and _can_handoff_to(replacement_point)
 	_finish_target(reason)
-	_interrupt()
+	if handoff and velocity.length() > 0.01:
+		_handoff_braking = true
+		_travel_until = _time + velocity.length() / maxf(acceleration, 0.1) + 0.5
+		return # nonurgent replacement preserves actual-distance walking while braking
+	_interrupt() # ordinary cancellation remains an immediate OS stop
+	if handoff:
+		_settle_until = _time
+		_next_decision = _time + DECISION_SECONDS
+		_state_until = _next_decision
+		_set_state("rest")
+
+
+func _can_handoff_to(point: Vector2) -> bool:
+	if _active_target_id.is_empty() or state not in ["walk", "anticipate"] or not point.is_finite():
+		return false
+	if not surface_mode or _support.is_empty() or contact_pose != "foot" or not can_request_move():
+		return false
+	var span := _surface_origin_span(_support, _locked_anchor)
+	var x := point.x - _locked_anchor.x
+	if absf(point.y - float(_support.y)) > 8.0 or x < span.x or x > span.y:
+		return false
+	var destination := Vector2(x, float(_support.y) - _locked_anchor.y)
+	var brake := position + velocity.normalized() * velocity.length_squared() / (2.0 * maxf(acceleration, 0.1))
+	return absf(velocity.y) < 0.001 and brake.x >= span.x and brake.x <= span.y and is_origin_safe(brake) and _path_safe(position, brake) and is_origin_safe(destination) and _path_safe(position, destination)
+
+
+func is_handoff_braking() -> bool:
+	return _handoff_braking
+
+
+func _integrate_handoff_braking(dt: float) -> void:
+	var step := minf(dt, velocity.length() / maxf(acceleration, 0.1))
+	var next_velocity := velocity.move_toward(Vector2.ZERO, acceleration * step)
+	var next := position + (velocity + next_velocity) * 0.5 * step
+	if not is_origin_safe(next):
+		_interrupt()
+		return
+	position = next
+	velocity = next_velocity
+	if velocity.length() <= 0.01:
+		_stop_motion()
+		_settle_until = _time
+		_next_decision = _time + DECISION_SECONDS
+		_state_until = _next_decision
+		_set_state("rest")
+	else:
+		_moving = true
+		locomotion_changed.emit(true, velocity)
 
 
 func _finish_target(outcome: String) -> void:
@@ -730,10 +806,67 @@ func available_surface_targets() -> Array[Dictionary]:
 
 
 func can_request_move() -> bool:
-	return enabled and not _blocked and not _pointer_interaction and _time >= _settle_until and is_origin_safe(position) and (not surface_mode or (not _support.is_empty() and contact_pose == "foot"))
+	return enabled and not _blocked and not _pointer_interaction and not _handoff_braking and _time >= _settle_until and is_origin_safe(position) and (not surface_mode or (not _support.is_empty() and contact_pose == "foot"))
 
 
 ## Optional presentation gate. Heading owns only the 3D body; native travel remains
 ## on its safe desktop surface. Empty provider preserves standalone behavior.
-func set_heading_ready_provider(provider: Callable = Callable()) -> void:
+func set_heading_ready_provider(provider: Callable = Callable(), minimum_anticipation: float = ANTICIPATION_SECONDS) -> void:
 	_heading_ready_provider = provider
+	_departure_delay = clampf(minimum_anticipation, 0.0, 2.0) if is_finite(minimum_anticipation) else ANTICIPATION_SECONDS
+
+
+## Registered object seats are actual narrow horizontal contact lines. They are
+## intentionally separate from walkable surfaces: pelvis support permits overhang,
+## while the full avatar still must fit a safe desktop workarea throughout approach.
+func set_seat_surfaces(lines: Array) -> void:
+	var fresh := {}
+	for value in lines:
+		if not value is Dictionary or not value.has("id"): continue
+		var id := str(value.id)
+		var x1 := float(value.get("x1", NAN))
+		var x2 := float(value.get("x2", NAN))
+		var y := float(value.get("y", NAN))
+		if id.is_empty() or not is_finite(x1) or not is_finite(x2) or not is_finite(y) or x2-x1 < 4: continue
+		if fresh.size() >= 16: break
+		fresh[id] = {"id":id,"kind":"object_seat","x1":x1,"x2":x2,"y":y,"anchor_only":true}
+	_seat_surfaces = fresh
+	_validate_support()
+
+
+func can_request_seat_contact(id: String, point: Vector2, seat_anchor: Vector2) -> bool:
+	if not enabled or not surface_mode or _blocked or _pointer_interaction or _handoff_braking or not point.is_finite() or not seat_anchor.is_finite(): return false
+	var seat: Dictionary = _seat_surfaces.get(id,{})
+	if seat.is_empty() or absf(point.y-float(seat.y)) > 0.1: return false
+	var destination := point-seat_anchor
+	var span := _surface_origin_span(seat,seat_anchor)
+	# Reach the seat horizontally while standing first; this API only performs
+	# the nearby sit/stand contact transition, not navigation between platforms.
+	if absf(destination.x-position.x) > 48 or destination.x < span.x or destination.x > span.y: return false
+	return is_origin_safe(destination) and _path_safe(position,destination)
+
+
+func request_seat_contact(id: String, point: Vector2) -> bool:
+	if contact_pose != "sit" or not can_request_seat_contact(id,point,_anchor()): return false
+	_seat_contact_owner = id
+	_finish_target("superseded")
+	_stop_motion()
+	_support.clear()
+	_pending_support = _seat_surfaces[id].duplicate()
+	_locked_anchor = _anchor()
+	target = point-_locked_anchor
+	_settle_until = _time # explicit pose transition was already admitted by host policy
+	_travel_until = _time+TRAVEL_TIMEOUT
+	_set_state("approach")
+	if position.distance_to(target) < 0.01:
+		position = target
+		_support = _pending_support.duplicate()
+		_pending_support.clear()
+		_set_state("inspect")
+		_state_until = _time+3.0
+	_emit_support()
+	return true
+
+
+func is_seat_contact_pending(id: String) -> bool:
+	return not _pending_support.is_empty() and bool(_pending_support.get("anchor_only",false)) and str(_pending_support.id) == id

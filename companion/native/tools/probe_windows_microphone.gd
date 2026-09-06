@@ -25,7 +25,7 @@ func run() -> void:
 		root.add_child(app)
 		mic = app.mic
 		var deadline := Time.get_ticks_msec() + 20000
-		while Time.get_ticks_msec() < deadline and (not app.session.hello_received or app.motion.vrma_clips.size() != 8):
+		while Time.get_ticks_msec() < deadline and (not app.session.hello_received or not app.motion.vrma_clips.has("walk") or app._vrma_pending != 0):
 			await process_frame
 	else:
 		root.position = Vector2i(-10000, -10000)

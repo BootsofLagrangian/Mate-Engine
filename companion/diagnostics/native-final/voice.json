@@ -1,0 +1,145 @@
+{
+  "selection": "All three final-package attempts are retained: original leftward run, instrumented same-placement repeat, cursor-aware rightward corridor. No failures discarded.",
+  "runs": [
+    {
+      "directory": "companion/logs/windows-intent-shared-floor-final",
+      "raw_sha256": {
+        "report.json": "3f523e94b2b7044cbf094596b3b2f80428479620894ae541d7e7ce13f636687a",
+        "build.json": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e",
+        "process.log": "4a8b8c3bc3021f792e278887dfe3b6f751438b13dbb121759c3a7d2f34b0485a"
+      },
+      "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+      "checks": 12,
+      "failed_checks": [
+        "native controller reports actual arrival",
+        "action/done duplicates produce one arrival"
+      ],
+      "first_pcm_received_ms": 1156,
+      "server_timings_ms": {
+        "first_audio_ms": 1102.0,
+        "first_text_ms": 368.0,
+        "first_token_ms": 367.8,
+        "llm_done_ms": 1363.5,
+        "total_ms": 1842.5
+      },
+      "speech_drift_px": 0.0,
+      "window_start": "(890, 672)",
+      "window_end": "(-108, 672)",
+      "intent": {
+        "kind": "move_to",
+        "target_id": "support:left"
+      },
+      "action_done_intent_equal": true,
+      "outcomes": [
+        "interrupted"
+      ],
+      "japanese_acknowledgement": "はい、トレーナーさん。左側の場所へ向かいます。",
+      "character": "cheval-grand",
+      "model_sha256": null,
+      "navigation_relative_ms": []
+    },
+    {
+      "directory": "companion/logs/windows-intent-shared-floor-diagnostic",
+      "raw_sha256": {
+        "report.json": "bb017eb5eeb9912083d4ab3f5f830c34a89b9a381a5fa89ac397132aef0c02e2",
+        "build.json": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e",
+        "process.log": "4a8b8c3bc3021f792e278887dfe3b6f751438b13dbb121759c3a7d2f34b0485a"
+      },
+      "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+      "checks": 12,
+      "failed_checks": [
+        "native controller reports actual arrival",
+        "action/done duplicates produce one arrival"
+      ],
+      "first_pcm_received_ms": 1371,
+      "server_timings_ms": {
+        "first_audio_ms": 1309.3,
+        "first_text_ms": 316.6,
+        "first_token_ms": 316.4,
+        "llm_done_ms": 1403.3,
+        "total_ms": 2126.9
+      },
+      "speech_drift_px": 0.0,
+      "window_start": "(890, 672)",
+      "window_end": "(-108, 672)",
+      "intent": {
+        "kind": "move_to",
+        "target_id": "support:left"
+      },
+      "action_done_intent_equal": true,
+      "outcomes": [
+        "interrupted"
+      ],
+      "japanese_acknowledgement": "はい、トレーナーさん。左側の場所へ向かいます。",
+      "character": "cheval-grand",
+      "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+      "navigation_relative_ms": [
+        24995
+      ],
+      "terminal_state": {
+        "pointer_interaction": true,
+        "blocked": false,
+        "speaking": false,
+        "foreground_busy": false,
+        "world_available": true,
+        "world_error": ""
+      },
+      "terminal_support_attached": true
+    },
+    {
+      "directory": "companion/logs/windows-intent-shared-floor-corridor",
+      "raw_sha256": {
+        "report.json": "29370e7494990329092e103870414925c14578118e07cb064d0394c71fefc4fa",
+        "build.json": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e",
+        "process.log": "842b666b723f35abef33181bde450190d0c49d3a2d5ea937a6213766ffd4b138"
+      },
+      "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+      "checks": 12,
+      "failed_checks": [],
+      "first_pcm_received_ms": 920,
+      "server_timings_ms": {
+        "first_audio_ms": 858.5,
+        "first_text_ms": 304.8,
+        "first_token_ms": 304.7,
+        "llm_done_ms": 1641.8,
+        "total_ms": 1773.7
+      },
+      "speech_drift_px": 0.0,
+      "window_start": "(634, 672)",
+      "window_end": "(1878, 672)",
+      "intent": {
+        "kind": "move_to",
+        "target_id": "support:right"
+      },
+      "action_done_intent_equal": true,
+      "outcomes": [
+        "arrived"
+      ],
+      "japanese_acknowledgement": "おっ、トレーナーさん。右側の場所へ向かいます。",
+      "character": "cheval-grand",
+      "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+      "navigation_relative_ms": [
+        28272
+      ],
+      "terminal_state": {
+        "pointer_interaction": false,
+        "blocked": false,
+        "speaking": false,
+        "foreground_busy": false,
+        "world_available": true,
+        "world_error": ""
+      },
+      "terminal_support_attached": true,
+      "corridor_choice": {
+        "expected_target": "support:right",
+        "start_foot_fraction": 0.45,
+        "travel_sign": 1,
+        "rationale": "Walk away from the cursor's monitor half; preserve normal hover cancellation if the cursor subsequently enters the path."
+      }
+    }
+  ],
+  "total_checks": 36,
+  "failed_checks": 4,
+  "same_executable": true,
+  "scope": "Real Korean text request to GPU model, dedicated streamed TTS, native speech hold and desktop intent execution; not microphone-input latency. Compact record excludes PCM, raw contexts, filesystem username and desktop window geometry."
+}

@@ -33,6 +33,12 @@ var spec_version: String = ""
 var arm_ik := ArmIK.new()
 var _sole_points_rest: Array[Vector3] = []
 var sole_calibration: Dictionary = {}
+var seated_geometry: Dictionary = {}
+var seated_floor := SeatedFloorConstraint.new()
+var _secondary_pose_cache: Dictionary = {}
+var _secondary_pose_samples := 0
+var _seated_canonical_rotations: Dictionary = {}
+var _seated_refresh_pending := false
 var _posed_bones: Dictionary = {}
 var _blend_targets: Dictionary = {} # "mesh_id:idx" -> [mesh, idx]
 
@@ -60,6 +66,7 @@ static func load_vrm(path: String) -> Node3D:
 
 
 func clear_model() -> void:
+	seated_floor.clear()
 	if model:
 		model.queue_free()
 	model = null
@@ -73,6 +80,11 @@ func clear_model() -> void:
 	_posed_bones.clear()
 	_sole_points_rest.clear()
 	sole_calibration.clear()
+	seated_geometry.clear()
+	_secondary_pose_cache.clear()
+	_secondary_pose_samples = 0
+	_seated_canonical_rotations.clear()
+	_seated_refresh_pending = false
 	_blend_targets.clear()
 	model_path = ""
 
@@ -106,6 +118,10 @@ func set_model(scene: Node3D) -> void:
 	_resolve_expressions()
 	_calibrate_soles()
 	apply_pose({})
+	if skeleton:
+		for child in skeleton.get_children(true):
+			if child.name == "VRM_internal_skeleton_modifier":
+				child.modification_processed.connect(_capture_secondary_pose.bind(skeleton))
 
 
 func has_model() -> bool:
@@ -360,6 +376,45 @@ func add_wrist_rotation(side: String, degrees: Vector3) -> void:
 ## Global-space points for host camera projection. Stable foot/seat anchors are
 ## rooted in the rest skeleton so the OS window never chases a swing foot.
 ## All points naturally follow avatar.scale and facing yaw.
+func _exit_tree() -> void:
+	seated_floor.clear()
+
+func _capture_secondary_pose(expected_skeleton: Skeleton3D) -> void:
+	if skeleton != expected_skeleton or not has_model(): return
+	if not _seated_refresh_pending and not seated_floor.active and _secondary_pose_samples>=30: return
+	# SkeletonModifier3D restores base poses after rendering. Capture here,
+	# after the VRM spring callback, while helper poses match the visible mesh.
+	for idx in skeleton.get_bone_count():
+		if not bone_rest_local.has(idx):
+			_secondary_pose_cache[idx] = [skeleton.get_bone_pose_position(idx),skeleton.get_bone_pose_rotation(idx),skeleton.get_bone_pose_scale(idx)]
+	_secondary_pose_samples += 1
+	if _seated_refresh_pending and _secondary_pose_samples >= 30:
+		_seated_refresh_pending = false
+		seated_geometry = SeatedGeometryCalibrator.measure(self,_seated_canonical_rotations)
+
+func set_seated_floor(clearance_m: float) -> bool:
+	if not has_model() or not is_finite(clearance_m) or clearance_m<0.25 or clearance_m>1.2: return false
+	if not is_equal_approx(seated_floor.clearance,clearance_m):
+		clear_seated_floor()
+		seated_floor.configure(self,clearance_m)
+		seated_geometry.clear()
+	return true
+
+func clear_seated_floor() -> void:
+	if is_finite(seated_floor.clearance):
+		seated_geometry.clear()
+		_secondary_pose_cache.clear()
+		_secondary_pose_samples=0
+		_seated_canonical_rotations.clear()
+		_seated_refresh_pending=false
+	seated_floor.clear()
+
+func calibrate_seated_pose(rotations: Dictionary) -> Dictionary:
+	_seated_canonical_rotations = rotations.duplicate(true)
+	_seated_refresh_pending = _secondary_pose_samples < 30
+	seated_geometry = SeatedGeometryCalibrator.measure(self,rotations)
+	return seated_geometry
+
 func contact_anchors() -> Dictionary:
 	if not has_model() or not bone_index.has("hips"):
 		return {}
@@ -393,7 +448,7 @@ func contact_anchors() -> Dictionary:
 	var xf := skeleton.global_transform
 	return {"foot": xf*Vector3(hip_rest.x,floor_y,hip_rest.z),
 		"foot_current": xf*live,
-		"sit": xf*(hip_rest-Vector3(0,height*0.06,0)),
+		"sit": global_transform*Vector3(seated_geometry.anchor) if seated_geometry.has("anchor") else xf*(hip_rest-Vector3(0,height*0.06,0)),
 		"hips_current": bone_global_position("hips"),
 		"lean": bone_global_position("rightHand"),
 		"left_hand": bone_global_position("leftHand"),
@@ -451,6 +506,15 @@ func _calibrate_soles() -> void:
 	for name in ["leftFoot","rightFoot","leftToes","rightToes"]:
 		if bone_index.has(name):
 			foot_bones[bone_index[name]] = true
+	# Imported rigs may skin shoes to helper descendants of the humanoid
+	# ankle/toe (for example Ankle_offset), not the mapped joint itself.
+	for candidate in skeleton.get_bone_count():
+		var ancestor := candidate
+		while ancestor >= 0:
+			if foot_bones.has(ancestor):
+				foot_bones[candidate] = true
+				break
+			ancestor = skeleton.get_bone_parent(ancestor)
 	var weighted: Array[Vector3] = []
 	var all_points: Array[Vector3] = []
 	var meshes: Array = []
@@ -518,13 +582,24 @@ func _calibrate_soles() -> void:
 
 ## Small gait crouch without accumulating root translation across frames.
 func set_hips_height_offset(height: float) -> void:
+	set_hips_offset(Vector3(0,height,0))
+
+func set_hips_offset(offset: Vector3) -> void:
 	if skeleton == null or not bone_index.has("hips"):
 		return
 	var idx: int = bone_index["hips"]
 	var parent := skeleton.get_bone_parent(idx)
 	var parent_basis := skeleton.get_bone_global_pose(parent).basis.orthonormalized() if parent >= 0 else Basis.IDENTITY
 	var rest := skeleton.get_bone_rest(idx).origin
-	skeleton.set_bone_pose_position(idx,rest+parent_basis.inverse()*Vector3(0,height,0))
+	skeleton.set_bone_pose_position(idx,rest+parent_basis.inverse()*offset)
+
+func get_hips_offset() -> Vector3:
+	if skeleton == null or not bone_index.has("hips"):
+		return Vector3.ZERO
+	var idx: int = bone_index.hips
+	var parent := skeleton.get_bone_parent(idx)
+	var basis := skeleton.get_bone_global_pose(parent).basis.orthonormalized() if parent >= 0 else Basis.IDENTITY
+	return basis*(skeleton.get_bone_pose_position(idx)-skeleton.get_bone_rest(idx).origin)
 
 ## A bounded additive layer over the final authored rotation. Intended for
 ## subtle attention/posture only, not replacement animation tracks.

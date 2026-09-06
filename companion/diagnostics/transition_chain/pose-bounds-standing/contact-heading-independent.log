@@ -1,0 +1,12 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+TURN cheval-grand direction=215.0 ready_seconds=3.3 held_frames=182 held_drift_m=0.00005815503391 speed_deg_s=70.0006963504931 accel_deg_s2=100.002165675991 actual_foot_depth_span_m=0.14520914852619
+TURN cheval-grand direction=0.0 ready_seconds=3.3 held_frames=182 held_drift_m=0.00005798278653 speed_deg_s=70.0006963504931 accel_deg_s2=100.026754357003 actual_foot_depth_span_m=0.14521782845259
+TURN cheval-grand direction=35.0 ready_seconds=1.65 held_frames=86 held_drift_m=0.00000714339467 speed_deg_s=58.3290641911002 accel_deg_s2=100.002165675991 actual_foot_depth_span_m=0.07637554220855
+TURN rice-shower direction=215.0 ready_seconds=3.3 held_frames=182 held_drift_m=0.00005269523535 speed_deg_s=70.0006963504931 accel_deg_s2=100.002165675991 actual_foot_depth_span_m=0.13159684836864
+TURN rice-shower direction=0.0 ready_seconds=3.3 held_frames=182 held_drift_m=0.00005253923882 speed_deg_s=70.0006963504931 accel_deg_s2=100.026754357003 actual_foot_depth_span_m=0.13160470873117
+TURN rice-shower direction=35.0 ready_seconds=1.65 held_frames=86 held_drift_m=0.00000953395465 speed_deg_s=58.3290641911002 accel_deg_s2=100.002165675991 actual_foot_depth_span_m=0.06921641156077
+TURN eishin-flash direction=215.0 ready_seconds=3.3 held_frames=182 held_drift_m=0.000064432621 speed_deg_s=70.0006963504931 accel_deg_s2=100.002165675991 actual_foot_depth_span_m=0.13395971804857
+TURN eishin-flash direction=0.0 ready_seconds=3.3 held_frames=182 held_drift_m=0.000064432621 speed_deg_s=70.0006963504931 accel_deg_s2=100.026754357003 actual_foot_depth_span_m=0.13396298140287
+TURN eishin-flash direction=35.0 ready_seconds=1.65 held_frames=86 held_drift_m=0.00006464125181 speed_deg_s=58.3290641911002 accel_deg_s2=100.002165675991 actual_foot_depth_span_m=0.07647940516472
+CONTACT_HEADING_FAILURES=0

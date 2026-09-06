@@ -1,0 +1,269 @@
+[
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 10.8260931599594,
+        "peak_keyframe_speed_deg_s": 93.8503759483235
+      },
+      "hips": {
+        "loop_seam_deg": 18.885512328673,
+        "peak_keyframe_speed_deg_s": 65.6319114862865
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 4.4957082051042,
+        "peak_keyframe_speed_deg_s": 132.833567633129
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 6.27473001217699,
+        "peak_keyframe_speed_deg_s": 100.507201022457
+      }
+    },
+    "duration": 7.45833349227905,
+    "error": "",
+    "file": "airplane-02.vrma",
+    "loaded": true,
+    "tracks": 52
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 5.46457651528603,
+        "peak_keyframe_speed_deg_s": 98.9154209650761
+      },
+      "hips": {
+        "loop_seam_deg": 14.4128876016425,
+        "peak_keyframe_speed_deg_s": 83.3980193398145
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 17.0735433965913,
+        "peak_keyframe_speed_deg_s": 153.384172843773
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 9.26641348657146,
+        "peak_keyframe_speed_deg_s": 95.5726205054655
+      }
+    },
+    "duration": 43.7083320617676,
+    "error": "",
+    "file": "airplane-05.vrma",
+    "loaded": true,
+    "tracks": 52
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 3.90384670031321,
+        "peak_keyframe_speed_deg_s": 90.7812596389871
+      },
+      "hips": {
+        "loop_seam_deg": 2.01401980155236,
+        "peak_keyframe_speed_deg_s": 168.218178218209
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 5.44323345479021,
+        "peak_keyframe_speed_deg_s": 118.255839939356
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 0.474777548264988,
+        "peak_keyframe_speed_deg_s": 300.865556013288
+      }
+    },
+    "duration": 23.6669998168945,
+    "error": "",
+    "file": "drink-water.vrma",
+    "loaded": true,
+    "tracks": 51
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 0.293419857462723,
+        "peak_keyframe_speed_deg_s": 66.846915478887
+      },
+      "hips": {
+        "loop_seam_deg": 0.703321600948285,
+        "peak_keyframe_speed_deg_s": 93.0731400908475
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 5.69842597076799,
+        "peak_keyframe_speed_deg_s": 269.344260325287
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 7.35668747199401,
+        "peak_keyframe_speed_deg_s": 404.291669756736
+      }
+    },
+    "duration": 2.26699995994568,
+    "error": "",
+    "file": "exercise-step.vrma",
+    "loaded": true,
+    "tracks": 51
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 5.49618705765168,
+        "peak_keyframe_speed_deg_s": 161.330838913608
+      },
+      "hips": {
+        "loop_seam_deg": 3.90484945746073,
+        "peak_keyframe_speed_deg_s": 146.009983713216
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 5.0468651975365,
+        "peak_keyframe_speed_deg_s": 165.771394290177
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 5.05415855890961,
+        "peak_keyframe_speed_deg_s": 217.244048110623
+      }
+    },
+    "duration": 7.30000019073486,
+    "error": "",
+    "file": "failed-apology.vrma",
+    "loaded": true,
+    "tracks": 51
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 0.0,
+        "peak_keyframe_speed_deg_s": 0.0
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 0.0559529096807445,
+        "peak_keyframe_speed_deg_s": 1.67858889124945
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 0.0,
+        "peak_keyframe_speed_deg_s": 0.0
+      }
+    },
+    "duration": 7.96666669845581,
+    "error": "",
+    "file": "idle-01.vrma",
+    "loaded": true,
+    "tracks": 4
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 6.92101403738782,
+        "peak_keyframe_speed_deg_s": 215.134204775416
+      },
+      "hips": {
+        "loop_seam_deg": 6.06262104882318,
+        "peak_keyframe_speed_deg_s": 300.452603942625
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 3.11696643268884,
+        "peak_keyframe_speed_deg_s": 376.719248382984
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 1.73189659672917,
+        "peak_keyframe_speed_deg_s": 367.275533025124
+      }
+    },
+    "duration": 19.9669990539551,
+    "error": "",
+    "file": "pose-motion.vrma",
+    "loaded": true,
+    "tracks": 51
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 0.680700548025732,
+        "peak_keyframe_speed_deg_s": 205.488966432221
+      },
+      "hips": {
+        "loop_seam_deg": 0.512818607012491,
+        "peak_keyframe_speed_deg_s": 184.998898687616
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 0.59610470645201,
+        "peak_keyframe_speed_deg_s": 253.558645879498
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 0.473126136589725,
+        "peak_keyframe_speed_deg_s": 271.482566977373
+      }
+    },
+    "duration": 11.3999996185303,
+    "error": "",
+    "file": "reaction-startle.vrma",
+    "loaded": true,
+    "tracks": 51
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 0.41116911710257,
+        "peak_keyframe_speed_deg_s": 11.5620835138541
+      },
+      "hips": {
+        "loop_seam_deg": 0.181308225291635,
+        "peak_keyframe_speed_deg_s": 8.39251845866739
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 0.268340976975597,
+        "peak_keyframe_speed_deg_s": 17.062762836163
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 0.216704813551366,
+        "peak_keyframe_speed_deg_s": 43.1669004004659
+      }
+    },
+    "duration": 10.3669996261597,
+    "error": "",
+    "file": "review-phone.vrma",
+    "loaded": true,
+    "tracks": 51
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 0.0,
+        "peak_keyframe_speed_deg_s": 0.0
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 0.0,
+        "peak_keyframe_speed_deg_s": 4.44112983751715
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 0.0,
+        "peak_keyframe_speed_deg_s": 3.35717818270567
+      }
+    },
+    "duration": 1.96666669845581,
+    "error": "",
+    "file": "speaking-01.vrma",
+    "loaded": true,
+    "tracks": 4
+  },
+  {
+    "bones": {
+      "head": {
+        "loop_seam_deg": 0.471468908581498,
+        "peak_keyframe_speed_deg_s": 147.605415371663
+      },
+      "hips": {
+        "loop_seam_deg": 0.148037520070856,
+        "peak_keyframe_speed_deg_s": 105.889469124876
+      },
+      "leftUpperArm": {
+        "loop_seam_deg": 0.158258778101861,
+        "peak_keyframe_speed_deg_s": 338.421101127924
+      },
+      "rightUpperArm": {
+        "loop_seam_deg": 6.50776752892136,
+        "peak_keyframe_speed_deg_s": 668.2556693507
+      }
+    },
+    "duration": 21.5,
+    "error": "",
+    "file": "success-cheer.vrma",
+    "loaded": true,
+    "tracks": 51
+  }
+]

@@ -131,6 +131,7 @@ def main():
         relative = f'assets/motions/{name}.vrma'
         (ROOT / relative).write_bytes(blob)
         entries.append({'name': name, 'path': relative, 'kind': 'vrma', 'duration': round(duration, 5), 'loop': loop,
+                        'contact_mode': 'foot' if name == 'idle_talking' else '',
                         'description': description, 'sha256': hashlib.sha256(blob).hexdigest(), 'source_clip': original,
                         'source': 'https://quaternius.itch.io/universal-animation-library', 'license': 'CC0-1.0'})
         print(name, round(duration, 2), len(blob))

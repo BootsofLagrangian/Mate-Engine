@@ -26,6 +26,7 @@ var autonomy: DesktopAutonomy # window roaming (Astra-owned module); policy in A
 var world_source: DesktopWorldSource # Windows window/monitor rectangles at 1 Hz (Astra-owned; geometry only)
 var bridge := AutonomyBridge.new()
 var living: Node # local behavior/attention and user/LLM intention coordinator
+var objects: Node # native desktop props and their approach/contact lifecycle
 var panel: ControlPanel
 var camera: Camera3D
 var ui_layer: CanvasLayer
@@ -109,7 +110,7 @@ func _ready() -> void:
 	# it starts blocked and only moves in collapsed pet mode once update_context() (per frame,
 	# below) clears every block.
 	autonomy.configure(get_window(), _navigation_rect, _projected_anchors)
-	autonomy.set_heading_ready_provider(func(): return motion.heading_ready())
+	autonomy.set_heading_ready_provider(func(): return motion.locomotion_ready(), 0.25)
 	autonomy.set_enabled(bool(Settings.get_value("autonomy_enabled", true)))
 	autonomy.set_speed(float(Settings.get_value("autonomy_speed", 75.0)))
 	_apply_surface_mode()
@@ -119,6 +120,10 @@ func _ready() -> void:
 	living.name = "LivingBehavior"
 	add_child(living)
 	living.configure(self)
+	objects = load("res://scripts/desktop_objects_host.gd").new()
+	objects.name = "DesktopObjects"
+	add_child(objects)
+	objects.configure(self)
 	client.connect_ws()
 	client.fetch_characters()
 	client.fetch_motions()
@@ -316,6 +321,7 @@ func _wire() -> void:
 	autonomy.state_changed.connect(func(s: String):
 		_autonomy_state = s
 		if s in ["paused", "settle", "no_surface", "no_space"]:
+			motion.finish_locomotion()
 			motion.cancel_heading()
 		if s == "no_surface" and _sit_active and not _sit_attached:
 			# The seated pose fits no safe support (would clip the work area): stand back up.
@@ -330,7 +336,7 @@ func _wire() -> void:
 		# A replacement target can arrive while already anticipating; state_changed
 		# would not fire again. Every accepted destination must update heading.
 		if autonomy.state == "anticipate":
-			motion.set_heading_intent(autonomy.target - autonomy.position))
+			motion.prepare_locomotion(autonomy.target - autonomy.position))
 
 	session.event_accepted.connect(_on_event)
 	session.event_discarded.connect(func(ev: Dictionary, reason: String):
@@ -394,6 +400,10 @@ func _wire() -> void:
 		if not motion.play_gesture(name, emotion, intensity, speed, repeat, true):
 			motion.set_emotion(emotion))
 	panel.preview_motion.connect(func(m: Dictionary): motion.play_motion_dict(m, 1.0, 1.0, 1))
+	panel.preview_sequence.connect(func(first: String, second: String, lead: float):
+		var result := motion.play_gesture_sequence(first, second, lead, true)
+		if not bool(result.get("accepted", false)):
+			panel.set_motion_result("이어보기 실패: " + str(result.get("reason", "동작을 시작할 수 없습니다")), false))
 	panel.save_motion.connect(func(m: Dictionary): client.save_motion(m))
 	panel.job_start.connect(_start_job)
 	panel.job_cancel.connect(_cancel_job)
@@ -440,6 +450,15 @@ func _on_motion_assets_loaded(ok: bool, entries: Array[Dictionary], message: Str
 		print("[motion-assets] " + message)
 		panel.set_motion_result("VRMA 카탈로그 없음 · 내장 프리셋만 사용 (%s)" % message, true)
 		return
+	# A successful catalogue replacement revokes removed capabilities immediately.
+	# Re-admit cached clips only through the normal checksum-verified callback.
+	if not _walk_started.is_empty() and motion.current_gesture() == _walk_started:
+		autonomy.cancel_target("motion_catalog_refresh")
+		motion.stop_gesture()
+		_walk_started = ""
+	_vrma_loaded.clear()
+	motion.clear_locomotion_registrations()
+	panel.set_vrma_clips(_vrma_loaded)
 	_vrma_catalog.clear()
 	_vrma_pending = 0
 	for e in entries:
@@ -448,6 +467,8 @@ func _on_motion_assets_loaded(ok: bool, entries: Array[Dictionary], message: Str
 		client.fetch_motion_asset(e)
 	if entries.is_empty():
 		panel.set_motion_result("VRMA 카탈로그 비어 있음 · 내장 프리셋만 사용", true)
+		_apply_ambient_idle()
+		_refresh_sit_button()
 	else:
 		panel.set_motion_result("VRMA 클립 %d개 받는 중… (%s)" % [entries.size(), message], true)
 
@@ -456,8 +477,10 @@ func _on_motion_assets_loaded(ok: bool, entries: Array[Dictionary], message: Str
 func _on_motion_asset_ready(ok: bool, name: String, path: String, message: String) -> void:
 	_vrma_pending = maxi(_vrma_pending - 1, 0)
 	if ok and _vrma_catalog.has(name):
-		if motion.load_vrma(name, path):
+		if motion.load_vrma(name, path, str(_vrma_catalog[name].get("contact_mode", ""))):
 			_vrma_loaded[name] = _vrma_catalog[name]
+			if bool(_vrma_catalog[name].get("locomotion", false)):
+				motion.register_locomotion_clip(name, bool(_vrma_catalog[name].get("locomotion_preserve_hips", false)))
 		else:
 			print("[motion-assets] %s: clip rejected by MotionPlayer (%s)" % [name, path])
 	elif not ok:
@@ -483,6 +506,9 @@ func _apply_ambient_idle() -> void:
 	var setting := str(Settings.get_value("idle_clip", "auto"))
 	var has_api := motion.has_method("set_ambient_loop")
 	var choice := AutonomyBridge.ambient_idle_choice(setting, _vrma_loaded, has_api)
+	var profile_loop := str(session.character_by_id(session.character_id).get("ambient_loop", ""))
+	if setting == "auto" and has_api and _vrma_loaded.has(profile_loop):
+		choice = profile_loop
 	if choice != _ambient_clip or (has_api and choice.is_empty() and not _ambient_clip.is_empty()):
 		_ambient_clip = choice
 		if has_api:
@@ -684,7 +710,9 @@ func _dialogue_gesture_name(event: Dictionary) -> String:
 	var requested := str(event.get("gesture", "idle"))
 	# Travel and seated clips need verified geometry and contact ownership.
 	# A spoken suggestion cannot start marching in place or drop the seat anchor.
-	if requested in AutonomyBridge.WALK_CLIPS or requested == AutonomyBridge.SIT_CLIP:
+	var entry: Dictionary = _vrma_catalog.get(requested, {})
+	if requested in AutonomyBridge.WALK_CLIPS or requested == AutonomyBridge.SIT_CLIP \
+			or bool(entry.get("locomotion", false)):
 		return "idle"
 	return requested
 
@@ -718,6 +746,8 @@ func _on_utterance(wav: PackedByteArray, seconds: float, source: String) -> void
 
 
 func _cancel_current() -> void:
+	if objects != null:
+		objects.cancel_interaction("cancelled")
 	if living != null:
 		living.cancel("cancelled")
 	var id := session.cancel_turn()
@@ -944,6 +974,8 @@ func _process(delta: float) -> void:
 	_push_autonomy_context()
 	if living != null:
 		living.tick(delta)
+	if objects != null:
+		objects.tick(delta)
 	_update_gaze()
 	_advance_pending_sit()
 	_update_float(delta)
@@ -964,7 +996,15 @@ func _process(delta: float) -> void:
 func _keep_pet_in_window() -> void:
 	if not avatar.has_model():
 		return
-	var shift := AutonomyBridge.fit_shift(_unclipped_pet_rect, Vector2(WINDOW_SIZE))
+	# Reserve all-heading horizontal clearance before a turn, just as desktop
+	# navigation does. Fitting the current yaw alone moves the stable foot pivot
+	# while shoulders widen, eventually invalidating its latched support anchor.
+	var fit_rect := _navigation_rect() if _pivot_local.has("foot") else _unclipped_pet_rect
+	var shift := AutonomyBridge.fit_shift(fit_rect, Vector2(WINDOW_SIZE))
+	if fit_rect.size.x > WINDOW_SIZE.x:
+		# A conservative AABB radius can exceed the viewport at the largest scale.
+		# Centre that envelope consistently; never chase its left/right yaw edges.
+		shift.x = float(WINDOW_SIZE.x) * 0.5 - fit_rect.get_center().x
 	if shift != Vector2.ZERO:
 		# Correct the current pivot, not the already-easing target: accumulating
 		# overflow every frame overshoots and can clip the opposite edge.
@@ -987,6 +1027,8 @@ func _update_pet_rect() -> void:
 	if not avatar.has_model():
 		return
 	var box := _model_aabb
+	var seated: Dictionary = avatar.get("seated_geometry") if avatar.get("seated_geometry") is Dictionary else {}
+	if _sit_active and not seated.is_empty(): box = seated.bounds
 	var xf := avatar.global_transform
 	var min_p := Vector2(INF, INF)
 	var max_p := Vector2(-INF, -INF)
@@ -1030,6 +1072,8 @@ func _update_gaze() -> void:
 ## The hit area still follows the visible projection; navigation uses a yaw-invariant
 ## envelope so widening shoulders during a reversal cannot invalidate its support.
 func _navigation_rect() -> Rect2:
+	var seated: Dictionary = avatar.get("seated_geometry") if avatar != null and avatar.get("seated_geometry") is Dictionary else {}
+	if _sit_active and not seated.is_empty(): return _seated_navigation_rect()
 	if not avatar.has_model() or not _pivot_local.has("foot"):
 		return pet_rect
 	var pivot: Vector3 = _pivot_local.foot
@@ -1105,9 +1149,11 @@ func _push_autonomy_context() -> void:
 		return
 	# Seated on a support: hold the module (it keeps the contact) so it never walks off until stood up.
 	var marker_dragging: bool = living != null and living.is_marker_dragging()
-	var ctx := bridge.context(panel_open, mic.is_recording(), audio.voice_active, _drag_active or marker_dragging,
+	var object_dragging: bool = objects != null and objects.is_dragging()
+	var object_hold: bool = objects != null and objects.blocks_roaming()
+	var ctx := bridge.context(panel_open, mic.is_recording(), audio.voice_active, _drag_active or marker_dragging or object_dragging,
 		session.activity, session.is_foreground_busy(), session.is_foreground_playing(), _now(),
-		(_sit_active and _sit_attached) or _dialogue_gesture_active())
+		(_sit_active and _sit_attached) or _dialogue_gesture_active() or object_hold)
 	autonomy.update_context(bool(ctx["panel_open"]), bool(ctx["listening"]), bool(ctx["speaking"]),
 		bool(ctx["dragging"]), bool(ctx["foreground_busy"]))
 	# Passthrough hides pointer events outside the pet region, so use the global pointer.
@@ -1157,6 +1203,7 @@ func _on_locomotion(moving: bool, velocity: Vector2) -> void:
 		"float":
 			_floating = not autonomy.surface_mode
 		"stop":
+			motion.finish_locomotion()
 			if not _walk_started.is_empty() and motion.current_gesture() == _walk_started:
 				motion.stop_gesture()
 			_walk_started = ""
@@ -1244,6 +1291,42 @@ func _on_support_changed(contact: Dictionary) -> void:
 ## Manual sit: seated pose from the motion owner (loops sit_idle, lower body stays seated under
 ## later gestures), pivot moves to the seat pixel so scaling keeps the seat still, and the module
 ## re-seats the window so the seat anchor rests on the current support (legs hang below its top).
+func _seated_navigation_rect() -> Rect2:
+	var geometry: Dictionary = avatar.get("seated_geometry") if avatar.get("seated_geometry") is Dictionary else {}
+	if geometry.is_empty(): return _navigation_rect()
+	var low := Vector2(INF,INF)
+	var high := Vector2(-INF,-INF)
+	var bounds: AABB = geometry.bounds
+	for i in 8:
+		var point := camera.unproject_position(avatar.global_transform*bounds.get_endpoint(i))
+		low = low.min(point)
+		high = high.max(point)
+	# Keep the existing full-turn horizontal reserve for upper-body gestures;
+	# only the vertical envelope changes to measured seated geometry.
+	var pivot: Vector3 = _pivot_local.get("foot",Vector3.ZERO)
+	var radius := 0.0
+	for i in 8:
+		var corner := _model_aabb.get_endpoint(i)-pivot
+		radius = maxf(radius,Vector2(corner.x,corner.z).length())
+	var foot: Vector2 = _projected_anchors().get("foot",pet_rect.get_center())
+	low.x = minf(low.x,foot.x-radius*_px_per_m*_pet_scale)
+	high.x = maxf(high.x,foot.x+radius*_px_per_m*_pet_scale)
+	return Rect2(low,high-low)
+
+func _ensure_seated_geometry() -> bool:
+	if not avatar.has_model() or not motion.vrma_clips.has("sit_idle"): return false
+	var geometry: Dictionary = avatar.get("seated_geometry") if avatar.get("seated_geometry") is Dictionary else {}
+	var clip = motion.vrma_clips["sit_idle"]
+	if geometry.is_empty() or geometry.get("clip_instance",0) != clip.get_instance_id():
+		geometry = avatar.call("calibrate_seated_pose",clip.sample(0.0))
+		if not geometry.get("anchor") is Vector3 or not geometry.get("bounds") is AABB:
+			avatar.seated_geometry.clear()
+			return false
+		geometry["clip_instance"] = clip.get_instance_id()
+	if not geometry.get("anchor") is Vector3 or not geometry.get("bounds") is AABB: return false
+	_pivot_local["sit"] = geometry.anchor
+	return true
+
 func _request_sit() -> void:
 	if _sit_active or _sit_pending or not AutonomyBridge.can_sit(autonomy.surface_mode, _support, motion.vrma_clips.has(AutonomyBridge.SIT_CLIP), false):
 		panel.set_status_message("지지면에 서 있을 때 앉을 수 있습니다")
@@ -1266,6 +1349,7 @@ func _advance_pending_sit() -> void:
 		_refresh_autonomy_label()
 		return
 	_sit_pending = false
+	if avatar.has_model() and not _ensure_seated_geometry(): return
 	if not motion.start_contact_pose("sit"):
 		panel.set_status_message("앉기 실패: 모션 플레이어가 sit_idle 을 시작하지 못했습니다")
 		return
@@ -1338,6 +1422,8 @@ func _notification(what: int) -> void:
 		if autonomy != null and panel != null and handle_button != null:
 			_push_autonomy_context()
 	elif what == NOTIFICATION_WM_CLOSE_REQUEST:
+		if objects != null:
+			objects.shutdown()
 		world_source.stop() # terminate only our own geometry helper
 		_save_window_position()
 		Settings.save_now()
@@ -1345,3 +1431,8 @@ func _notification(what: int) -> void:
 		if not id.is_empty():
 			client.send(session.make_cancel(id))
 		_cancel_job()
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(objects):
+		objects.shutdown()

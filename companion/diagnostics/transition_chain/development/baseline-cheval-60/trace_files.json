@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/baseline-cheval-60/frames.csv.gz",
+    "sha256": "4ffad07fab90fc5cbaf86b4eeef6cfc44d699eaa0c5ca2478b3c27a57f7fe43c",
+    "bytes": 666703
+  },
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/baseline-cheval-60/joints.jsonl.gz",
+    "sha256": "4173b3d6aba1f4dff1f5f87b557d1f208031b8f853f9216887f36673706a6e86",
+    "bytes": 5434491
+  }
+]

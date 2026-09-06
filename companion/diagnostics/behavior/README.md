@@ -8,7 +8,7 @@ companion/tools/Godot_v4.5.2-stable_linux.x86_64 --headless --path companion/nat
 companion/tools/Godot_v4.5.2-stable_linux.x86_64 --headless --path companion/native --script ../diagnostics/autonomy/test_surfaces.gd
 ```
 
-2026-09-06 results: director 9,708 checks, autonomy 3,636, surfaces 769; zero failures.
+2026-09-06 results: director 9,746 checks, autonomy 3,636, surfaces 769; zero failures.
 The 16-minute simulated idle run at 10Hz produced 7,589 rest, 809 curious, and
 1,202 sleepy samples. Identical context streams produced identical outputs; repeated
 attention targets obeyed their cooldown. This distribution uses the default style,
@@ -50,3 +50,45 @@ drag cancellation, and timeout cancellation. The new-target case caught an actua
 state_changed alone did not update heading for a replacement target; root changed heading
 ownership to target_chosen. This validates control ordering, not physical foot planting or
 rendered turning quality, which still require the actual-rig acceptance artifacts.
+
+Authored-idle host integration:
+
+```sh
+XDG_DATA_HOME=/tmp/mate-idle-review-data companion/tools/Godot_v4.5.2-stable_linux.x86_64 --headless --path companion/native --script ../diagnostics/behavior/test_host_idle.gd
+```
+
+21 checks, zero failures. Actual LivingBehavior, main idle-selection handler, MotionPlayer
+ambient APIs, and ControlPanel selector methods run with lightweight host/avatar doubles.
+Checks cover profile loop application and same-ID refresh, finite action scheduling and
+cooldown, auto-only actions, behavior-disabled foreground suspension and stale attention
+clearing, UI candidate filtering and saved choices, and explicit breathing-only selection.
+This probe writes only isolated test settings under the supplied XDG_DATA_HOME. It does
+not validate rendered body/foot motion. Godot reports the existing ObjectDB exit warning
+in the shared host fixture; no script errors occur.
+
+Navigation execution budget regression adds11checks (total9,719): a command dispatched
+at28.1s of a30s freshness TTL can complete25s later; duplicated started acknowledgments
+do not renew its45s execution deadline; accepted navigation cannot requeue itself;
+missing completion expires with cancel_move; target expiry and never-dispatched queue
+expiry remain authoritative. This addresses the observed Windows cold-reply case that
+expired shortly before arrival. Windows replay remains the root's separate validation.
+
+Supersession handoff adds13checks (total9,732): safe supported replacement removes
+only redundant settle, stops OS motion immediately and retains anticipation/readiness.
+Ordinary cancel, different height, outside surface, pointer/voice block and no active
+navigation retain settle. Director emits a current replacement point but drops it after
+a newer rest request or command expiry. Original autonomy3636/surfaces769 still pass.
+
+Smooth nonurgent supersession refinement: previous instant-stop expectation is now
+explicitly replaced by bounded deceleration. Added tests check preserved initial velocity,
+acceleration/safe-position bounds, replacement gating until rest, urgent stop/voice/
+pointer/drag during braking, unsafe stopping-distance fallback, and pending replacement
+expiry cancellation. Total9,744checks pass; original autonomy3636 and surfaces769 pass.
+This is trajectory-policy evidence; real Windows chain footage remains root-owned.
+
+Character switch explicitly clears handoff queue tracking; the first new-character tick
+cannot emit an old replacement_invalidated cancellation (two focused regression checks).
+Current limitation: another queued move issued during the short braking interval invalidates
+the prior replacement and takes the immediate-stop fallback. Smooth braking is guaranteed
+for a single validated same-support replacement; rapid retargeting would require a new
+native geometry validation and is deliberately not generalized here.

@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-1.0/joints.jsonl.gz",
+    "sha256": "3bdf9c39ce4eb912486f861d675e89e483036f64fb040d545d186dded75e8ba9",
+    "bytes": 11594432
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-1.0/frames.csv.gz",
+    "sha256": "8820f43984df332ade090ef5201243cb33a5ff0eb516a4ec32f029a0aede4f93",
+    "bytes": 754415
+  }
+]

@@ -1,0 +1,244 @@
+{
+  "scope": "Final packaged Windows standing-chain run; immutable embedded runtime identified by recorded build manifest; external probe and downloaded character/motion assets remain separate inputs.",
+  "thresholds": {
+    "actual_speed_px_s_strictly_above": 20,
+    "speed_window_s": 0.1,
+    "absolute_yawrate_deg_s_strictly_above": 10,
+    "minimum_contiguous_s": 0.25,
+    "minimum_heading_change_deg": 5
+  },
+  "formula": "speed=Euclidean displacement of actual window position over trailing100ms with linear timestamp interpolation / .1; yawrate=absolute unwrapped yaw delta / actual adjacent sample dt. Runs require every sample above both thresholds; duration=t_last-t_first; net heading change=abs(yaw_last-yaw_first). First100ms of each phase excluded.",
+  "input_sha256": {
+    "report.json": "a7e071a5d7614085e690993a66cac20dfad9f4b8e7d629a7a5b819ed889fc39b",
+    "frames.csv": "992616dcaabf00dfcb84ade72b7aa4fe087067e6ed9c398e13eac10344360aba",
+    "build.json": "4a2c3e18e5712766d04b7eab134fb0ec025e70aa44ff40f75e96dd04db6f9ab5"
+  },
+  "checks": 28,
+  "failures": 0,
+  "renderer": "NVIDIA GeForce RTX 4090",
+  "stop_drift_px": 0.0,
+  "csv_samples": 2383,
+  "capture_count": 322,
+  "source_snapshot_pair_present": false,
+  "source_hash_changes": {},
+  "trips": [
+    {
+      "phase": "idle_to_right",
+      "samples": 64,
+      "raw_adjacent_moving_and_turning_samples": 17,
+      "trailing_window_moving_and_turning_samples": 16,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 5690,
+          "end_ms": 6576,
+          "duration_s": 0.886,
+          "heading_change_deg": 42.6672,
+          "window_displacement_px": 57.0,
+          "samples": 16,
+          "passes": true,
+          "maximum_sample_gap_ms": 72
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 5690,
+        "end_ms": 6576,
+        "duration_s": 0.886,
+        "heading_change_deg": 42.6672,
+        "window_displacement_px": 57.0,
+        "samples": 16,
+        "passes": true,
+        "maximum_sample_gap_ms": 72
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "moving_reversal",
+      "samples": 372,
+      "raw_adjacent_moving_and_turning_samples": 20,
+      "trailing_window_moving_and_turning_samples": 19,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 10040,
+          "end_ms": 10918,
+          "duration_s": 0.878,
+          "heading_change_deg": 43.2735,
+          "window_displacement_px": 53.0,
+          "samples": 19,
+          "passes": true,
+          "maximum_sample_gap_ms": 61
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 10040,
+        "end_ms": 10918,
+        "duration_s": 0.878,
+        "heading_change_deg": 43.2735,
+        "window_displacement_px": 53.0,
+        "samples": 19,
+        "passes": true,
+        "maximum_sample_gap_ms": 61
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "left_to_right",
+      "samples": 428,
+      "raw_adjacent_moving_and_turning_samples": 19,
+      "trailing_window_moving_and_turning_samples": 17,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 18090,
+          "end_ms": 18909,
+          "duration_s": 0.819,
+          "heading_change_deg": 38.0024,
+          "window_displacement_px": 51.0,
+          "samples": 17,
+          "passes": true,
+          "maximum_sample_gap_ms": 64
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 18090,
+        "end_ms": 18909,
+        "duration_s": 0.819,
+        "heading_change_deg": 38.0024,
+        "window_displacement_px": 51.0,
+        "samples": 17,
+        "passes": true,
+        "maximum_sample_gap_ms": 64
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "stop_and_settle",
+      "samples": 216,
+      "raw_adjacent_moving_and_turning_samples": 18,
+      "trailing_window_moving_and_turning_samples": 17,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 27370,
+          "end_ms": 28264,
+          "duration_s": 0.894,
+          "heading_change_deg": 42.3747,
+          "window_displacement_px": 55.0,
+          "samples": 17,
+          "passes": true,
+          "maximum_sample_gap_ms": 69
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 27370,
+        "end_ms": 28264,
+        "duration_s": 0.894,
+        "heading_change_deg": 42.3747,
+        "window_displacement_px": 55.0,
+        "samples": 17,
+        "passes": true,
+        "maximum_sample_gap_ms": 69
+      },
+      "all_interval_count": 1
+    }
+  ],
+  "stationary_pair_phases": [
+    "pair:wave->nod",
+    "pair:nod->wave",
+    "pair:wave->wave"
+  ],
+  "phase_selection": "Exclude loading and explicitly stationary pair: phases; include all other phases irrespective of outcome.",
+  "capture_alignment": {
+    "exact_same_timestamp_metadata_matches": 321,
+    "total": 322,
+    "missing_csv_timestamps": [
+      623
+    ],
+    "unmatched_metadata_timestamps": [
+      623
+    ],
+    "save_errors": 0,
+    "files_present": 322
+  },
+  "stop_csv_check": {
+    "start_ms": 28509,
+    "samples": 134,
+    "unique_window_positions": [
+      [
+        1564.0,
+        672.0
+      ]
+    ],
+    "maximum_drift_px": 0.0
+  },
+  "build": {
+    "sha256": "e15e395292144d0cde9eae00f246ff5adf99f46bd701e1363b41d7f228fc61ff",
+    "bytes": 99642712,
+    "godot": "4.5.2-stable",
+    "source_stable_during_build": true,
+    "character_assets_bundled": false
+  },
+  "pairs": [
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "wave",
+      "incoming_duration": 3.0,
+      "maximum_incoming_progress": 2.99279788888866,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "nod",
+      "overlap_samples": 30,
+      "observed_overlap_ms": [
+        34221,
+        34705
+      ],
+      "both_timelines_strictly_increase": true,
+      "incoming_progress_fraction": 0.99759929629622
+    },
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "nod",
+      "incoming_duration": 4.0,
+      "maximum_incoming_progress": 3.99216899999963,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "wave",
+      "overlap_samples": 30,
+      "observed_overlap_ms": [
+        39738,
+        40221
+      ],
+      "both_timelines_strictly_increase": true,
+      "incoming_progress_fraction": 0.9980422499999075
+    },
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "wave",
+      "incoming_duration": 4.0,
+      "maximum_incoming_progress": 3.99999999999957,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "wave",
+      "overlap_samples": 30,
+      "observed_overlap_ms": [
+        47249,
+        47725
+      ],
+      "both_timelines_strictly_increase": true,
+      "incoming_progress_fraction": 0.9999999999998925
+    }
+  ],
+  "previous_attempt": {
+    "directory": "companion/logs/windows-uma-chain",
+    "passed": 20,
+    "total": 28,
+    "pause_cause": "unproven; corridor rerun is a separate attempt, not a causal isolation experiment"
+  }
+}

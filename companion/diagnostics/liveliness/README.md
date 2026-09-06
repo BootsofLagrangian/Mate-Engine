@@ -4,7 +4,7 @@ The probe instantiates the real main script and inherits its `_ready` and signal
 
 Final measurements use each character's authored behavior style, scale 0.6, 30/60 Hz and a consistent 90-second idle observation followed by directed travel, explicit failure cases and three context preemptions. Headless cells use the rounded simulated desktop origin and are not Windows rendering evidence. The coordinator runs actual Windows separately.
 
-`results/` contains final authored-profile reports, per-frame `frames.csv.gz` traces and logs. `default-style-results/` contains six earlier passing fallback-style controls. `development-results/` preserves earlier failures and measurements, including two important integration defects that the runtime owners fixed:
+`results/` contains final authored-profile reports and `trace_files.json` indexes pointing to complete per-frame traces and logs in ignored local storage. `default-style-results/` contains six earlier passing fallback-style controls. `development-results/` preserves earlier failures and measurements, including two important integration defects that the runtime owners fixed:
 
 - Yaw changed instantaneous safety bounds at a platform edge and interrupted a valid reversing journey. The main host now supplies a conservative turning envelope through `_navigation_rect()`.
 - Gaze pursuit was bounded in normalized coordinates but its angular output hit a hard yaw limit before the pursuit reached its target. The motion owner now clamps the desired target to the reachable angular envelope before calculating pursuit/braking; ambient posture changes are also acceleration limited.
@@ -59,7 +59,7 @@ Optional Windows visual evidence: append `--capture-fps 8 --capture-seconds 90`.
 
 ## Final stepping-turn results
 
-The lifecycle-fixed runtime passed six authored-profile cells at 30/60 Hz,40 checks each (240 total). `turn-results/` preserves compressed full traces, logs and reports; `turn-summary.json` aggregates them. Every recorded runtime/probe hash matches across the six cases and matches the final source at test completion. The earlier baseline and intermediate lifecycle-unfixed matrix remain separate.
+The lifecycle-fixed runtime passed six authored-profile cells at 30/60 Hz,40 checks each (240 total). `turn-results/` preserves compact reports and `trace_files.json` indexes for the complete local traces and logs; `turn-summary.json` aggregates them. Every recorded runtime/probe hash matches across the six cases and matches the final source at test completion. The earlier baseline and intermediate lifecycle-unfixed matrix remain separate.
 
 | Model / Hz | Turn support max drift px | Support coverage | Peak heading °/s | Peak heading acceleration °/s² | Interrupted skeleton-head acceleration °/s² |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -73,3 +73,8 @@ The lifecycle-fixed runtime passed six authored-profile cells at 30/60 Hz,40 che
 All cells measured24 fully weighted turn-support epochs. Initial turn blending accounts for 1.0 second of explicitly unsupported time aggregated across turns; this is not covered by the tiny fully weighted drift values. Actual departure heading error stayed below 0.004 degrees. Foot swing arcs include approximately 0.048–0.055 m of actual world-Z excursion at scale 0.6. These demonstrate a supported geometric stepping mechanism, not complete foot physics or whole-desktop depth navigation.
 
 The interrupted-pose implementation now carries outgoing local joint velocity into a quintic transition instead of freezing a static pose snapshot. The remaining global/skeleton vector acceleration peaks above are deliberately retained; no post-observation absolute acceleration gate was invented. Quiet-head and purposeful-glance gates remain unchanged. Visual naturalness and absence of visible pops still require the coordinator's Windows sequence. Use `--capture-seconds 180` to include the explicit mid-turn interruption and later walking preemptions; this version runs approximately 164 seconds.
+
+
+## Raw trace storage
+
+Complete raw CSV/JSONL attempts are now stored under ignored `companion/logs/diagnostic-traces/`, so bulk debug traces are not added to Git. Each result directory has `trace_files.json` with the exact repository-relative local path, byte count and SHA256. `diagnostics/TRACE_STORAGE.json` indexes this relocation. No failed attempt was discarded. Earlier artifact descriptions refer to capture-time filenames; use these indexes to find the preserved files. Reports, checks and selected boundary evidence remain in diagnostics.

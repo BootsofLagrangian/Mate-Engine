@@ -96,3 +96,11 @@ The host now uses a measured rest-mesh sole and orthographic camera. A real-rig 
 three VRMs × three scales × three yaws, preserving floor attachment and usable-workarea safety.
 Decorative camera bob is suppressed in surface mode; approach remains a smooth unsupported glide.
 See `logs/collaboration/floor-projection-results.txt` for the recorded result.
+
+## Turn support projection regression
+
+`probe_turn_support.gd` runs actual main framing with all3VRMs, scales.6/1/1.25 and30/60Hz.
+It reproduces the prior large-scale yaw-induced viewport-pivot shift and asserts fixed
+window-local foot position plus uninterrupted safe desktop support. After the fix54checks
+pass; before/after traces are in turn-support-evidence. This is headless geometry evidence,
+not rendered gait or OS movement evidence.

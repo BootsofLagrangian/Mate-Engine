@@ -1,0 +1,1818 @@
+{
+  "scope": "Complete raw attempts preserved in ignored local logs; no failures discarded. Reports and content hashes remain reviewable in diagnostics.",
+  "files": [
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/chain-regression-30fps/frames.csv.gz",
+      "sha256": "00c2880060d1e83bcf5c8baad089404552c217cdd2baca8945a75e6be08fd764",
+      "bytes": 218472
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/chain-regression-60fps/frames.csv.gz",
+      "sha256": "4a88284658d741d8fb2dab3f4427abacd838f628679d457cdc7f4b4bc1e55fd2",
+      "bytes": 435415
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/concurrent-phase-regression-30fps/frames.csv.gz",
+      "sha256": "b3477d47ae46fdae273f8e9d3f611b29ef7bc0110e6598463c99d295bc89973a",
+      "bytes": 218472
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/concurrent-phase-regression-60fps/frames.csv.gz",
+      "sha256": "f0828f8fbe6e00bcc4d8f5b22e8a7f717a944a78629543e3f7218748b805cfd9",
+      "bytes": 435415
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/concurrent-regression-30fps/frames.csv.gz",
+      "sha256": "4c3d69710d9a065bb2f1e20be6782d407b0363f64eda5388238fda7ec7e7aeaf",
+      "bytes": 218472
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/concurrent-regression-60fps/frames.csv.gz",
+      "sha256": "4f945ccb58bc9168fdef42118472322f597d64155ed26ac5223323fe87315db3",
+      "bytes": 435415
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/development/bounded-30/frames.csv.gz",
+      "sha256": "a2adf1150af726e10f74f72a9eb2ded6e4cad21f8164985a6afc3aae4718c7d9",
+      "bytes": 193162
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/development/bounded-60/frames.csv.gz",
+      "sha256": "939cfc0e7f56da4d6d4e4b6089c8407071c30e670cdda32bb933399dacd3e92e",
+      "bytes": 388074
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/development/contact-handoff/frames.csv.gz",
+      "sha256": "4a04867056c11d3f9d48e89ad273b19fd220f3a19d9d4c34f3f0a47a63f38e5f",
+      "bytes": 435570
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/development/development/frames.csv.gz",
+      "sha256": "0ce6419b39fab41eaaaaaf87baf8ba91cc9410e183856a21ed60f474536fc32c",
+      "bytes": 333739
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/development/eased-handoff/frames.csv.gz",
+      "sha256": "f4244681026a4850439b3e04cd547c0d6cf3e152ccd927bce9ceee7fcb66b6bf",
+      "bytes": 343347
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/development/handoff-fixed/frames.csv.gz",
+      "sha256": "92cc82402534d376c6c3fb585d5a772c61c7bdd895da685ccbc246a45d11ffbf",
+      "bytes": 333159
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/development/turnoffset-fixed/frames.csv.gz",
+      "sha256": "d37003c37760e375e9888b456f7238449b3f33d281c55f2f6e0082c3c0d3d04a",
+      "bytes": 429574
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/final-30fps/frames.csv.gz",
+      "sha256": "4b5472b800689438006eb8e4dddb2512f824afd9ea87a9dae412b5bccbd160fb",
+      "bytes": 221262
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/final-60fps/frames.csv.gz",
+      "sha256": "b302c970d0ccba968c453de7164245984eabb265a2ed94446dc2a6cdb94b6ba3",
+      "bytes": 441307
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/uma-walk-regression-30fps/frames.csv.gz",
+      "sha256": "2c409ea9f5a9da0d2ba7127f3a50817aa833de49c4f9640c5bf948c1c272a264",
+      "bytes": 218472
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/authored_idle_review/uma-walk-regression-60fps/frames.csv.gz",
+      "sha256": "cacd7856924ea81a4bcc79e71003dd066e4ea9c3352f07635d79305df5b6cb6f",
+      "bytes": 435415
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/default-style-results/cheval-grand-30fps/frames.csv.gz",
+      "sha256": "dbf4faed3d18346e93402de0c471d736b24f3936ad17c53f54a33581b2255677",
+      "bytes": 430092
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/default-style-results/cheval-grand-60fps/frames.csv.gz",
+      "sha256": "71488d8468e83c8c8e12fda18ce1f737c5e8e5724e6b9e9a15e275aac89f5064",
+      "bytes": 858870
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/default-style-results/eishin-flash-30fps/frames.csv.gz",
+      "sha256": "94b2247e08dbaf17c7f4d568d26cb5b0996d3c7925814df2f84ec8bf86fa601c",
+      "bytes": 427857
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/default-style-results/eishin-flash-60fps/frames.csv.gz",
+      "sha256": "062cc200e2c221dc0de23a95e4aeb591aa81fffec8ec4dec523aeb680ee4aad1",
+      "bytes": 850329
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/default-style-results/rice-shower-30fps/frames.csv.gz",
+      "sha256": "731380e3747799d79493e0b5af56d5914353da705d9b59fbdcc1b33df61f0785",
+      "bytes": 429487
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/default-style-results/rice-shower-60fps/frames.csv.gz",
+      "sha256": "aa554f12407aebcd113038ff3a7aeb8d9ca3d55f01dcd2716e99db20a0289f3f",
+      "bytes": 858720
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/classified/frames.csv.gz",
+      "sha256": "781572e3c3fb6d7c94d41ac4099b5e954c8332e2837f5668ada4336d3f5f69c8",
+      "bytes": 653237
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/first/frames.csv.gz",
+      "sha256": "7db14f3d48a641a8be94f28dfbb42b6ccfce167e4493211ae648051e52b32951",
+      "bytes": 335701
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/gaze-fixed/frames.csv.gz",
+      "sha256": "9e04a40826382c77a714973a092859feb7ae40b6681ddbe066a3838e4ca5639e",
+      "bytes": 678760
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/navigation-fixed/frames.csv.gz",
+      "sha256": "f6b00eb928ee5901a7445f2819882b08ddc0393b859774aa34103b93a0bb5f6f",
+      "bytes": 678874
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/review-fixed/frames.csv.gz",
+      "sha256": "bb7293a3364ae57a8dd12f0a00957416176ed07823d61bf9d2a89184a3e91e60",
+      "bytes": 829650
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-before-lifecycle-matrix/cheval-grand-30fps/frames.csv.gz",
+      "sha256": "efe222a4c619e6c87c8fba09c275a96b80a71a38edf79f9944eba33f9807588e",
+      "bytes": 638765
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-before-lifecycle-matrix/cheval-grand-60fps/frames.csv.gz",
+      "sha256": "ec48c1858542fcb539b76271df6b967b236e724318b5fe09f94c9bbbb1938863",
+      "bytes": 1261135
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-before-lifecycle-matrix/eishin-flash-30fps/frames.csv.gz",
+      "sha256": "af6ec920020d739e7f66b7e31d4a59ad4f439e7c73dc4d7723e8c34756ecc7b4",
+      "bytes": 633288
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-before-lifecycle-matrix/eishin-flash-60fps/frames.csv.gz",
+      "sha256": "a800baae5da4fe0789f3951d7ce8f78c51ac70d5eb751bcbaf9498baae1d42f5",
+      "bytes": 1249569
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-before-lifecycle-matrix/rice-shower-30fps/frames.csv.gz",
+      "sha256": "f410f47841c19c38e66882c6ebe5d3ae2229cc6ad6a6a220124ac99a92d863ce",
+      "bytes": 638356
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-before-lifecycle-matrix/rice-shower-60fps/frames.csv.gz",
+      "sha256": "036fa022f8cb18ef45f8e2dc15b9a3995d0c7a855fe95d2ed715152a78911783",
+      "bytes": 1257482
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-development/frames.csv.gz",
+      "sha256": "8c9231ee29c606323766fc5e52bd64b8bc752cd0bb9fee25f7b59eabd8a4c7c3",
+      "bytes": 1144464
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-inertial-development/frames.csv.gz",
+      "sha256": "2a08da5998ced1a78cddf8b908747e0d03390a3a8f9387abe80e2a7ac8e53741",
+      "bytes": 1260711
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/development-results/turn-interrupt-development/frames.csv.gz",
+      "sha256": "66bc78e07a801a0894b1358352feff542021e77c68d864f993959e6f4b14a929",
+      "bytes": 638852
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/results/cheval-grand-30fps/frames.csv.gz",
+      "sha256": "a346d036f969720246c92ff121042720ee8be7b729261c71dab71894b1636d44",
+      "bytes": 512399
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/results/cheval-grand-60fps/frames.csv.gz",
+      "sha256": "665a0716abc24c7f308aec984fe4ed88802c594e84f094ee060ab009b111bec7",
+      "bytes": 1033799
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/results/eishin-flash-30fps/frames.csv.gz",
+      "sha256": "817702c5125c45ca83ef0f28ad363f5346563cc52b2889fb0e57574da21365c3",
+      "bytes": 510319
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/results/eishin-flash-60fps/frames.csv.gz",
+      "sha256": "5aaba59506a5c65acde6f7856c83621f52228d5e0e7cec19f4e43990410fb9ea",
+      "bytes": 1024445
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/results/rice-shower-30fps/frames.csv.gz",
+      "sha256": "f6001bc831a38ee64acadd0d27ea5f6b7ed2016322ac6b54a881e5c4497bfedf",
+      "bytes": 512721
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/results/rice-shower-60fps/frames.csv.gz",
+      "sha256": "daa484748e312feafb47cd0bc91ae0883b6acf5a65f2f2fd3a62b6fdc1239ce4",
+      "bytes": 1032350
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/turn-results/cheval-grand-30fps/frames.csv.gz",
+      "sha256": "0cf9c3109bc9adffc1b377d2cb24acb44efea278e2839063ebebc5de6e9567fa",
+      "bytes": 638765
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/turn-results/cheval-grand-60fps/frames.csv.gz",
+      "sha256": "112acaa172f3c9b3dec67f2b27b514492271e0f86a50d5c7b9d71acd83020b6a",
+      "bytes": 1261135
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/turn-results/eishin-flash-30fps/frames.csv.gz",
+      "sha256": "06abecf280590f1f8ef8d190e2cf08801e27d31f14d53d8c378f98502bbf73c4",
+      "bytes": 633288
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/turn-results/eishin-flash-60fps/frames.csv.gz",
+      "sha256": "b4e8ebfd1c29c6c61038d753bc3a0af2c9647511305e750157277acd4bdff6d5",
+      "bytes": 1249569
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/turn-results/rice-shower-30fps/frames.csv.gz",
+      "sha256": "45b4abe28468ca56750eb827138b64cde3a30f9d4d4d3880912c330d80bbcd42",
+      "bytes": 638356
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/liveliness/turn-results/rice-shower-60fps/frames.csv.gz",
+      "sha256": "ebc3d1b6903f4bf021ca5798aef45d724dcac640142a9225f45503bd9d2e4573",
+      "bytes": 1257482
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-0.6/frames.csv.gz",
+      "sha256": "53be86ba2c4f75e65ae75649052e957cff136318b4c77b36991dce4afbd2140f",
+      "bytes": 390074
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-0.6/joints.jsonl.gz",
+      "sha256": "f2b8fb62fe25f558212a010fb0ee708680a4d85a614c4ce33b1fb3b2d6c1f63e",
+      "bytes": 5824588
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-0.6/report.full.0468e98d2f87.json.gz",
+      "sha256": "b4b5c162eb6e671b9bb1c1591d5c2409f8acb4c78e019f1b4ae9c1f618010af3",
+      "uncompressed_sha256": "0468e98d2f875e6b45e4dea817a679cbbef5e3ff8a519d2828ba8c1ac87463d0",
+      "uncompressed_bytes": 726551
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-0.6/transition-analysis.full.f8aba3f9b056.json.gz",
+      "sha256": "975c9ee16006be1ecdc0688109332f4bd530f5edee7028aff3cc822fefcb9ba8",
+      "uncompressed_sha256": "f8aba3f9b056c759d9e3a5b7807dc5e04213f2d8064ef029099c38a99f6d999f",
+      "uncompressed_bytes": 393838
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-1.0/frames.csv.gz",
+      "sha256": "c1bcabbcb48e0f8889782b973cbfd89ac54fc98201bafd72c3f44805cecf7352",
+      "bytes": 380554
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-1.0/joints.jsonl.gz",
+      "sha256": "d1dc84111ca86cc8de8236aea40f325c251b786746f0e87e397f81227b4a5428",
+      "bytes": 5831076
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-1.0/report.full.53143409c202.json.gz",
+      "sha256": "f76d1c59c124fab5d09cae9ed1e9ee25dc0ffd9d24eb7a1bb31b131da89645af",
+      "uncompressed_sha256": "53143409c202bb63ed1e5276959c1d24d33a2405a3c9015148d3fa1f8132af80",
+      "uncompressed_bytes": 723590
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-30fps-1.0/transition-analysis.full.fc4532855283.json.gz",
+      "sha256": "964dbccddbb6b46eab5149c1264081f35c5a648fe69f38c87ea4b4c33ad611de",
+      "uncompressed_sha256": "fc4532855283e8657f76d06db82b4a4959a189d26e406e442e8922017b29eae8",
+      "uncompressed_bytes": 393798
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-0.6/frames.csv.gz",
+      "sha256": "5d0e0b20e04efd32aabf3263378565063797b3f7495a4708459cb237b929db5c",
+      "bytes": 761373
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-0.6/joints.jsonl.gz",
+      "sha256": "1a42c5060eea9b49f58756afed4493f28eb120aa500813780ee4add1852e8ceb",
+      "bytes": 11433857
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-0.6/report.full.1663a9c78413.json.gz",
+      "sha256": "ce8227fa4c0557fca20b8d1a52aecf0e05b4d72412cdc206b03a9505c93b90ab",
+      "uncompressed_sha256": "1663a9c784138f04b60050f7f5ed198f3bca78e4ff3a393184736c05768eb8ef",
+      "uncompressed_bytes": 746945
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-0.6/transition-analysis.full.e83b0fd3dc0c.json.gz",
+      "sha256": "66a18dddb56a3d24b9289ba10bbf15ddf32e1909572959f021d22ea6307d4604",
+      "uncompressed_sha256": "e83b0fd3dc0cf82801e33c9d427fd85cb7ce0aba517aa217a3011f676497c28b",
+      "uncompressed_bytes": 435875
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-1.0/frames.csv.gz",
+      "sha256": "8851ea96167e45c76baef086f9cbea4bd822c4002b676c159fcc6b4eacd75cd7",
+      "bytes": 744061
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-1.0/joints.jsonl.gz",
+      "sha256": "ac4b4a4233841fb657620440ba80de97fd45440b0db545ced2153b5ea77508f6",
+      "bytes": 11458719
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-1.0/report.full.cd744d2e7f40.json.gz",
+      "sha256": "261e9585917535a95693c1fff473cfe2bad2071d076c6b68458341af8fd58503",
+      "uncompressed_sha256": "cd744d2e7f40cbb521fd8f99071a667a1f983c35f2389765861f13e895da193f",
+      "uncompressed_bytes": 752035
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/cheval-grand-60fps-1.0/transition-analysis.full.8972e5fb6056.json.gz",
+      "sha256": "2ec3c6ff2c7aeb79895c62c853265888caf7a19e9f6364a8bdfd27bcccb59c6a",
+      "uncompressed_sha256": "8972e5fb6056afc9d0246a65973e6d5129d7d16b22b18e2ea68655fca394eaca",
+      "uncompressed_bytes": 394058
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-0.6/frames.csv.gz",
+      "sha256": "8f644565b073b2019d80e650333822fd7572b329f2a3fc46d68f9cadbd4cd2a6",
+      "bytes": 389816
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-0.6/joints.jsonl.gz",
+      "sha256": "785d2db8946a373efea3e19da15134deecbc6941b152091341720b0b6d0d7c4c",
+      "bytes": 5824989
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-0.6/report.full.8ea1fc620486.json.gz",
+      "sha256": "6d575d7c37d90c91501c0a0d2ddefe27b132e6085283a00e0c684f6abf58e800",
+      "uncompressed_sha256": "8ea1fc6204864231d0596df64b7d94513c50500c8dffb02da8ba67f532f9fe6a",
+      "uncompressed_bytes": 725618
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-0.6/transition-analysis.full.b47101a6e4f4.json.gz",
+      "sha256": "7f9a41b88e68a6dea6b223f4ab39fc360a5844b1bc39b2b8ae6f83b7b1cbb722",
+      "uncompressed_sha256": "b47101a6e4f42cad5f4ff00ced8ec0e279a5d94854bce6bbe692241816a4f6bd",
+      "uncompressed_bytes": 393402
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-1.0/frames.csv.gz",
+      "sha256": "f399fdf4a80d55b21fc5a107a54368937f95bdd59ae3087bc540702570756101",
+      "bytes": 379604
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-1.0/joints.jsonl.gz",
+      "sha256": "5da9551e000c1f81211bad7db4e97884c7cb0435af34d2d783b7fc7d393100ec",
+      "bytes": 5828578
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-1.0/report.full.1f9ccee0a05f.json.gz",
+      "sha256": "e2bb114998e85e8a875dff64fa2360a7998201734dc4216b6f5bc6ad962ab31a",
+      "uncompressed_sha256": "1f9ccee0a05fa00eb3edf614d5e6ed8a1da103f6ebcf806c2dc8e97e98df0462",
+      "uncompressed_bytes": 722986
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-30fps-1.0/transition-analysis.full.407a68fddd9f.json.gz",
+      "sha256": "7f0f15261efa21fa3635213bfe5c705dae8c7d6ed4cf046a0cb709801571c941",
+      "uncompressed_sha256": "407a68fddd9f31117f9419360ea1ab264627dbdd019d7549b1a8134b81e21e8e",
+      "uncompressed_bytes": 393621
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-0.6/frames.csv.gz",
+      "sha256": "4d77290bf47dcd976f84a51b50f45abd4193b974df06c6c36b19f0f79fc27ad4",
+      "bytes": 759738
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-0.6/joints.jsonl.gz",
+      "sha256": "b473790df54fd80e4fca587848bec56cfdc6b0dd8a58d4323a933f402c8541ad",
+      "bytes": 11429577
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-0.6/report.full.df0b49a8fd07.json.gz",
+      "sha256": "8226b68627a7276df4d5e170483166a0f67b878260a483e305e2680cc3868040",
+      "uncompressed_sha256": "df0b49a8fd077d2d031ca9ff23faab546b7c35b706760e00c2cde2204e50eeb3",
+      "uncompressed_bytes": 744018
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-0.6/transition-analysis.full.0dd5e8d136ec.json.gz",
+      "sha256": "9a4dd6d2d7ae87f2cfa60d2fb04582b2f024645888e0ff8ec72d48e767d9041e",
+      "uncompressed_sha256": "0dd5e8d136ec9c0ba10562506de78379c5fc2996f5858360dd0cf7f670122106",
+      "uncompressed_bytes": 391743
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-1.0/frames.csv.gz",
+      "sha256": "de760e543b4df5d440ddc92473b408c29d8bc14bffd80a3eec5609fa94440de0",
+      "bytes": 741309
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-1.0/joints.jsonl.gz",
+      "sha256": "e812b4e227738b0a19327fcdc6dd4dc67ec30e8593bb9551408ef90011dc743a",
+      "bytes": 11447322
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-1.0/report.full.337d2de3a43e.json.gz",
+      "sha256": "b0e0e5108c5bf74c0e62f1efe3e4d485860f52a082376894ab18995104659ad8",
+      "uncompressed_sha256": "337d2de3a43e659219bb5c3a41741190d7166019b1816f85af2ff28ba744baaa",
+      "uncompressed_bytes": 750266
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/eishin-flash-60fps-1.0/transition-analysis.full.ba105b4dd984.json.gz",
+      "sha256": "9ceed6e5c7d18e0c8562001b2790ab16304f5505eb0bd68da1a5c8765a86fc42",
+      "uncompressed_sha256": "ba105b4dd9842ce0dfae48f7f6bf430314c5a9f464f9062810fa91d732934aba",
+      "uncompressed_bytes": 393932
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-0.6/frames.csv.gz",
+      "sha256": "5560bf52972404efc06d07c55bb0cf03541af3e5ea0d84f0aa5bed8dfa86334b",
+      "bytes": 389163
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-0.6/joints.jsonl.gz",
+      "sha256": "463edcf2c521553eb1f653a6c800ad3705f70b59fa621474f23b6729cffe7a9b",
+      "bytes": 5829632
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-0.6/report.full.4c1f34e4569d.json.gz",
+      "sha256": "c5be7e32558cfa675909249a5ad83e4169261d5b4ce192735af5826a8161b658",
+      "uncompressed_sha256": "4c1f34e4569d1ea3569c47fa227f47528048a21deaa3910937df24dcd401e24f",
+      "uncompressed_bytes": 724186
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-0.6/transition-analysis.full.caeff78920ba.json.gz",
+      "sha256": "199b45cf807c95b6f933d96cb283f306a5c7819b21c8cfee970438622927b6e2",
+      "uncompressed_sha256": "caeff78920bab53e3a2aabd55791ac14411ef5859f7a55af60055a7d48140970",
+      "uncompressed_bytes": 393193
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-1.0/frames.csv.gz",
+      "sha256": "c6da77c6de15a54402e9ec758098bf23eb8c1fb282510f785f66f28d4c2c4b1b",
+      "bytes": 379131
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-1.0/joints.jsonl.gz",
+      "sha256": "4db3e73e9f83b583a3451c6559fbb328f46d4ff56a285fbab1f376467b9a98cf",
+      "bytes": 5835778
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-1.0/report.full.c73b8fb40d39.json.gz",
+      "sha256": "77c28c4913e591f1c683edfeaf3bec4db719c09196c6c001b6e72a2bfd72e28f",
+      "uncompressed_sha256": "c73b8fb40d393ca4b793322bce80fc3f12327b38c0ceb172326c210195f8d8c8",
+      "uncompressed_bytes": 722608
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-30fps-1.0/transition-analysis.full.17c1f593cb74.json.gz",
+      "sha256": "00a924da5f0a72f66bcc3ee048b4f0864f6c775ca13874a46aa2b8a91368f40a",
+      "uncompressed_sha256": "17c1f593cb7419866db1665e65a76586f46140aa65e6c366f9615d398521ca03",
+      "uncompressed_bytes": 394961
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-0.6/frames.csv.gz",
+      "sha256": "a88d4979edf1441a8b1f8e041d6098ebd0fd10ef755c16206e0634fc9c4c5990",
+      "bytes": 759133
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-0.6/joints.jsonl.gz",
+      "sha256": "69239e640704e2220ac5728cd2c581453f80a24d9a91a1eb83ba0dc67412c5dd",
+      "bytes": 11436087
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-0.6/report.full.cbecdd35c8b0.json.gz",
+      "sha256": "d3c1ec08f0bed485900133921d82d893171ed512909eb9181f0bdfa5224c5796",
+      "uncompressed_sha256": "cbecdd35c8b026b2a95fdde8eb780274c965cdfdde4543515eb5dd5b831bc2dd",
+      "uncompressed_bytes": 741898
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-0.6/transition-analysis.full.c5ee9945e16a.json.gz",
+      "sha256": "4c186f8fd75de06e0c6eddd3b75104b2173e5c38204a6261b36e44298cf847be",
+      "uncompressed_sha256": "c5ee9945e16a5103dc70c4b55ef2cb4532577f61a15c79f398994cf22883f920",
+      "uncompressed_bytes": 391516
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-1.0/frames.csv.gz",
+      "sha256": "7b5d3935e5aa1eb891a36145c6da48978c5e30442185aac160f3ad8fb0b8ec69",
+      "bytes": 742355
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-1.0/joints.jsonl.gz",
+      "sha256": "d6a24e7e29f909ff8325e29f950a0a6deb69dcd1f4d4f2c178a4201469753967",
+      "bytes": 11465927
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-1.0/report.full.9fad805e81e0.json.gz",
+      "sha256": "156e0f5aac72c653cd1a42be37eab0518bcb49798a876cf537ff610e123947f1",
+      "uncompressed_sha256": "9fad805e81e0a53a449ef020d19ec80f7130abc11a00551bd637f8f9434f39a0",
+      "uncompressed_bytes": 751392
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-final/rice-shower-60fps-1.0/transition-analysis.full.04c54d5ba879.json.gz",
+      "sha256": "7d1d9ef800d840d18e4b52a1c87926b4f4e100b07d98fe0bd73bf8ac01092a8b",
+      "uncompressed_sha256": "04c54d5ba87951bf6146b40f2bfee09283386ed7dc87002f780da309d44d5ecd",
+      "uncompressed_bytes": 395179
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-0.6/frames.csv.gz",
+      "sha256": "9212f1dde7d0fa2245aaf28f7c5c0c0a93d0bff1022e44abb21956c05ff126df",
+      "bytes": 392990
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-0.6/joints.jsonl.gz",
+      "sha256": "7ec372268ef4e1131f5d797fb7df467f84466cd70f1d11d1c2c822082984a953",
+      "bytes": 5862434
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-0.6/report.full.587d85c85973.json.gz",
+      "sha256": "268eec52f7ec4baded01c5144ab892cb9f1a7ada9ab842cc11fa546b67cb4dfa",
+      "uncompressed_sha256": "587d85c859736809ad774bde5db7ffedb1ff395fbf62558e3f52ed160ee45e04",
+      "uncompressed_bytes": 731939
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-0.6/transition-analysis.full.57c56b577a7c.json.gz",
+      "sha256": "fb67501545eab85f29469ff6cfe721a9f6a547d040db9f1acce0f4b49d6189a9",
+      "uncompressed_sha256": "57c56b577a7c142bd8652aa9c04b72010dffc5543ce3ac1a07040170534cee79",
+      "uncompressed_bytes": 396041
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-1.0/frames.csv.gz",
+      "sha256": "70ef4be0ee90cfa62b87bf3154b8fd190bd154e40e3ef493bdc5464e04932b21",
+      "bytes": 384160
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-1.0/joints.jsonl.gz",
+      "sha256": "288f3d73b0129c0272ee9008b1964ba7ad0a33a99c78fe320b30fcbbb1a20214",
+      "bytes": 5869414
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-1.0/report.full.70f04a64adfb.json.gz",
+      "sha256": "01f919848c072172e780221d272095755b98a59d95aeb06bc55f655c7e26dc1f",
+      "uncompressed_sha256": "70f04a64adfb8631a467f3e68d73dd4360a310c3405f2d2188223f7b1abb6676",
+      "uncompressed_bytes": 732364
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-30fps-1.0/transition-analysis.full.ca6f6c731ded.json.gz",
+      "sha256": "c741506e3d9ca4a20e7a757506a74d4e7f6380b6f376556398bb33c66f7a99bc",
+      "uncompressed_sha256": "ca6f6c731dedfec3d4f7910cab7ef475ff0a42160b90e8c65866557b661f35e7",
+      "uncompressed_bytes": 397391
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-0.6/frames.csv.gz",
+      "sha256": "4f928d5ab74383da250d76c00a25c5529ff37682461755c6975a25b9d991a846",
+      "bytes": 773102
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-0.6/joints.jsonl.gz",
+      "sha256": "4adc7730ebefbbfed149aacc781455b81a1fa6ca5213843e1820eeef8014da2f",
+      "bytes": 11558622
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-0.6/report.full.fbde99e384d2.json.gz",
+      "sha256": "78dbe91eb9e61c757b524017251aee716cbf18aa5fbb5cd214d3ecfa62824b43",
+      "uncompressed_sha256": "fbde99e384d26c57c199584b4d6734d4b5c3809657e6692a81bcd805931d33f6",
+      "uncompressed_bytes": 756991
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-0.6/transition-analysis.full.ae648cec5fe6.json.gz",
+      "sha256": "48cc162176d9822460dd405e2be024a8cdf5049b772f43fc504e82a30b73d567",
+      "uncompressed_sha256": "ae648cec5fe6f99e3ef7e5dcc6df069a883128200c0d7b1482c69447c3678d95",
+      "uncompressed_bytes": 396486
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-1.0/frames.csv.gz",
+      "sha256": "fcc96f244ba751cc12e52c78f389b869d113068dcf7c304763817ac9a84ae839",
+      "bytes": 756522
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-1.0/joints.jsonl.gz",
+      "sha256": "08e5c551d2baf29db979e7e317bfaf8cc07597b702b476ba3ab4c8f25baa9963",
+      "bytes": 11592315
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-1.0/report.full.34c2716a0180.json.gz",
+      "sha256": "49c162f866c3c6c102536a60d5801bacbe4dc96fa3c8f70781eed5410efb2d76",
+      "uncompressed_sha256": "34c2716a0180dce01c7a23e84ba4b085e48148755a0865aa7af818cc30f02dea",
+      "uncompressed_bytes": 759705
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-1.0/transition-analysis.full.128e2fffcd6b.json.gz",
+      "sha256": "52287b39be9286671913b4e2fb9b77d152928897532db59790cc6da326ec2d11",
+      "uncompressed_sha256": "128e2fffcd6badfdc5c2bc393da258f2b68b38cbac666161f7ad3c58825bf3c1",
+      "uncompressed_bytes": 398052
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-0.6/frames.csv.gz",
+      "sha256": "9623703424f5044c0438ba6e4dd432812082aa94ef80a45dcc9f63d6ccf53959",
+      "bytes": 393256
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-0.6/joints.jsonl.gz",
+      "sha256": "b78b5403be996559d01c524e47ef6ccc19b2691e5a237837ca5eadd43d45c040",
+      "bytes": 5863147
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-0.6/report.full.b27f6e5b2b7d.json.gz",
+      "sha256": "d5ee8d3fd044a8b21ddb364cf8e7a816925b1f56d7095c407855f42bebfefdd6",
+      "uncompressed_sha256": "b27f6e5b2b7dc3c449c37e0e101e036af84e370c34d0c872e757587ce4334fa9",
+      "uncompressed_bytes": 732724
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-0.6/transition-analysis.full.db16286f15bb.json.gz",
+      "sha256": "bcdb75666ff084c29e0bf955f441c1294f887e084d4691c458fe48e20cc26ef5",
+      "uncompressed_sha256": "db16286f15bb67d7fa16916e0b30fa4b8d48df08f6476f355616eefbed7bba67",
+      "uncompressed_bytes": 395915
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-1.0/frames.csv.gz",
+      "sha256": "0d95923daf1ffe9c3028c45c1fa60373b12b8d7c0f132b5f84c13f06ef50c287",
+      "bytes": 383172
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-1.0/joints.jsonl.gz",
+      "sha256": "d127ca0608c4fd9ad29813fd009408be2fc4b71cd4c5f72475a2623f1f0fcc86",
+      "bytes": 5868595
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-1.0/report.full.1365b7b8eace.json.gz",
+      "sha256": "ad501122c25470f5090fbde97b6d6edf2e2b7753a27377af50378799371647b3",
+      "uncompressed_sha256": "1365b7b8eace81ccc27408379cc5949abe23c8c00a63d093c2939d25f03f2497",
+      "uncompressed_bytes": 731920
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-30fps-1.0/transition-analysis.full.4468e6f8db5a.json.gz",
+      "sha256": "8bcb7bd2f91405015c5aa3f67f31c83e57642a750d9ecab1a4540c4f50fa915f",
+      "uncompressed_sha256": "4468e6f8db5a5fec6f837977f14cfcca0a95f58ae90a6d606107efb852ad7aa6",
+      "uncompressed_bytes": 397496
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-0.6/frames.csv.gz",
+      "sha256": "b0d810f079a4b4ed771f3a17e2e4380d4b42b564bb1bebc9b60aee3e523b0a8d",
+      "bytes": 773044
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-0.6/joints.jsonl.gz",
+      "sha256": "01cab905e897bcd4521f340e07271ddace9d34eac2cfd6b45dc3eb786b1aacc1",
+      "bytes": 11561289
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-0.6/report.full.e5f6d4fc1f13.json.gz",
+      "sha256": "acea3b37545f023a6554f97cc5ab46477634d885f28b6912a1f268fec9f955dc",
+      "uncompressed_sha256": "e5f6d4fc1f13f7b30a57a4786538a09afb1d0499a3281f3e2f55d487aca68db7",
+      "uncompressed_bytes": 752957
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-0.6/transition-analysis.full.20b76b5a8a59.json.gz",
+      "sha256": "86e59d747f6c211bb4f0500ff6545f920d83cdce3b5b3235bced21c1a6428a46",
+      "uncompressed_sha256": "20b76b5a8a593804c0d359e21d4087b954fa9a22007fd0008bb071bc00ee2639",
+      "uncompressed_bytes": 396103
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-1.0/frames.csv.gz",
+      "sha256": "170116afba8161dc7231b7b6862e11e13f1ba599d5eb7da1fd0eee40e33530c9",
+      "bytes": 752505
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-1.0/joints.jsonl.gz",
+      "sha256": "58a150f14223c8a2e8bfc35307bf6bb84c5c0aeccb5b777b287d03b5cfddcb07",
+      "bytes": 11579236
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-1.0/report.full.ebaf910dd2cf.json.gz",
+      "sha256": "48bdff4891a76ef839d329366d28260573443059bc21383d3af1eabe2b126d25",
+      "uncompressed_sha256": "ebaf910dd2cf2eed2b3356ffec466d0d48cf61772402709cb43a675525398840",
+      "uncompressed_bytes": 756842
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-1.0/transition-analysis.full.773eed482f05.json.gz",
+      "sha256": "19abc8f15b17f8742e8b849361e3d8c02f094ff6aeaf8bd2dba0e56c711d0b6d",
+      "uncompressed_sha256": "773eed482f05613dc1ce408e58a1c3d96424b62a85243f7ed253ff928c40e606",
+      "uncompressed_bytes": 398060
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-0.6/frames.csv.gz",
+      "sha256": "5f7bb5dec7cf4063ad8fbf2bd945f0949a36ba77df41d0694e18c5df7062de17",
+      "bytes": 391917
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-0.6/joints.jsonl.gz",
+      "sha256": "485afad59a038d8c08e5d0420dceb1b074c240a4586103f75391867f258d473f",
+      "bytes": 5867052
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-0.6/report.full.6980e691c50f.json.gz",
+      "sha256": "7a3624b5bd0902c521b4be587457cf46d6aa9264731edc595773a1fb0e81f9f4",
+      "uncompressed_sha256": "6980e691c50f306ee9fb9e6e9212c0114a2aa4d3b9763d592a517d0689941f82",
+      "uncompressed_bytes": 729939
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-0.6/transition-analysis.full.aabded8c2ddf.json.gz",
+      "sha256": "636a44b9fb869a58e690bf430131b793cd8bc412b21688e0303687d5eba9b5fa",
+      "uncompressed_sha256": "aabded8c2ddf5a1e5836f2b4a86cd9c9e8fe21a3c0e00b393460bcbba1a661cf",
+      "uncompressed_bytes": 395497
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-1.0/frames.csv.gz",
+      "sha256": "d05b0884199a842d82464708a11a606242916b8cfc5a97cc428f4d49b896e641",
+      "bytes": 383057
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-1.0/joints.jsonl.gz",
+      "sha256": "1bddaaa40d90c7c194d09d127dffd6f89f42232c31cef94dd3365807ba9298c8",
+      "bytes": 5874359
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-1.0/report.full.4dfffb51783a.json.gz",
+      "sha256": "f46ac319805328e640803319607a83464df239db28bde183ef86ae8f4e7ec9da",
+      "uncompressed_sha256": "4dfffb51783add8cc2c6483c47b8c7f34af9a335b77cb758be435bc6deb81218",
+      "uncompressed_bytes": 733121
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-30fps-1.0/transition-analysis.full.6d6c4f6d0e12.json.gz",
+      "sha256": "ea7f7877800c6dfaefa0cdfda0707c10b57c16509f5a2459c7495fcf4baadcd2",
+      "uncompressed_sha256": "6d6c4f6d0e12bf43fbd6447cc2c6675eefc422906dfd4d67cc8e0d0e8b1d0177",
+      "uncompressed_bytes": 398574
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-0.6/frames.csv.gz",
+      "sha256": "2eb9e67cc93ae94ff212bc8bb44031e448d5cd3f0e9c26d325f4e9068f77774f",
+      "bytes": 770831
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-0.6/joints.jsonl.gz",
+      "sha256": "fd058a112493efd04c54b4466404b7c615578d909c99d8bf205a61ddb0d99fb3",
+      "bytes": 11565303
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-0.6/report.full.9de9c2372edd.json.gz",
+      "sha256": "c7566f8b13b21f2b7f7c7e0030cfd9aa6c3e50064490de3281457632b6c35391",
+      "uncompressed_sha256": "9de9c2372edd01a84a99c76806072be2d6068734d1ed4845640554388d34bf61",
+      "uncompressed_bytes": 753213
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-0.6/transition-analysis.full.c2355faa7aae.json.gz",
+      "sha256": "1bf8abb4831f90b5f99e431438f1cf2e3693bb209447228106d4438c87a068d4",
+      "uncompressed_sha256": "c2355faa7aae55f3479a37b4e7767d32b97182761fdd4b990a2f4bf1ee23a7f6",
+      "uncompressed_bytes": 396084
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-1.0/frames.csv.gz",
+      "sha256": "8820f43984df332ade090ef5201243cb33a5ff0eb516a4ec32f029a0aede4f93",
+      "bytes": 754415
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-1.0/joints.jsonl.gz",
+      "sha256": "3bdf9c39ce4eb912486f861d675e89e483036f64fb040d545d186dded75e8ba9",
+      "bytes": 11594432
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-1.0/report.full.9de233cde845.json.gz",
+      "sha256": "7d30fb3089606cf91b10db03655178ac0a20811eaa490f65addface1dc8d16a2",
+      "uncompressed_sha256": "9de233cde84558a356137cf87883261d6eb09d7b4e81b79e8d64d7e6bdfd371b",
+      "uncompressed_bytes": 757958
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/rice-shower-60fps-1.0/transition-analysis.full.be999c7f249e.json.gz",
+      "sha256": "4bae7759214d3f4816f5a3068c68e532ac5ff3b5ba17c084ab9bdc48d598bc84",
+      "uncompressed_sha256": "be999c7f249ef8718ff56758f67084d3404c86743623f2793652375d7d294f16",
+      "uncompressed_bytes": 399599
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/baseline-cheval-60/frames.csv.gz",
+      "sha256": "4ffad07fab90fc5cbaf86b4eeef6cfc44d699eaa0c5ca2478b3c27a57f7fe43c",
+      "bytes": 666703
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/baseline-cheval-60/joints.jsonl.gz",
+      "sha256": "4173b3d6aba1f4dff1f5f87b557d1f208031b8f853f9216887f36673706a6e86",
+      "bytes": 5434491
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/baseline-cheval-60/report.full.e707276e1041.json.gz",
+      "sha256": "8e4fff7ee7b8405cd02a2ef3bdd5534237386abe36e157103e9a63c880c6c7cd",
+      "uncompressed_sha256": "e707276e1041e632042cd14ff036f1ff54fe770dac16f4cca0b84bd386dc9684",
+      "uncompressed_bytes": 364936
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/cache-fixed/frames.csv.gz",
+      "sha256": "3edb1b46fe034286de5b79c39c8d9aef4e99db6a8ebc2264e0ff994ba23d55f6",
+      "bytes": 645730
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/cache-fixed/joints.jsonl.gz",
+      "sha256": "0f78a95964999b4ff53b13b58b7a72bdad127a9766ca5d1c3815757bdd88fcb2",
+      "bytes": 8783052
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/cache-fixed/report.full.878e59f43d53.json.gz",
+      "sha256": "449f9cc38ecc50de5b6686acac9140b52f64aa22509955b030a63c9964b83f9c",
+      "uncompressed_sha256": "878e59f43d532706750eab45b1bd16ca53dcf5eb0fcc17d717d23d6be9843171",
+      "uncompressed_bytes": 533383
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-armcarry/frames.csv.gz",
+      "sha256": "faef2c1361e7a3c7b9d426146c5ca812d9432bd4bbe637ec1bd4574403deca9b",
+      "bytes": 761373
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-armcarry/joints.jsonl.gz",
+      "sha256": "1a59c95f7df0ffba62d61d7fea52e59eb930fbd7a9e53c3003782202e1718929",
+      "bytes": 11433857
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-armcarry/report.full.00b01e6563ed.json.gz",
+      "sha256": "7a38a8bb14232b4804001af395f8604fc2592e345c62f710c01df70db649dfd9",
+      "uncompressed_sha256": "00b01e6563edb793ceb782bd69957baee56fef19195ec06b51ce8ed4d7fa9482",
+      "uncompressed_bytes": 746431
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-armcarry/transition-analysis.full.b28010a0af68.json.gz",
+      "sha256": "c0d8ec51a663712264380f088a86a8f39816410c395ad119030889044d9a774a",
+      "uncompressed_sha256": "b28010a0af6860b9170e9afee02bf1a7261dde934bb65068265a07db6724911e",
+      "uncompressed_bytes": 392170
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-cheval30-scale1/frames.csv.gz",
+      "sha256": "2ccd38d9e27325701f3ff2586c324a4e3ce955ed5e16a0d7b2a072cfc41e8198",
+      "bytes": 380554
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-cheval30-scale1/joints.jsonl.gz",
+      "sha256": "4c1c4e4e56516c2d544329c7435000049d7f1e2fa4cce5417c8b552e35a4132a",
+      "bytes": 5831114
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-cheval30-scale1/report.full.dbbd1cefdc93.json.gz",
+      "sha256": "647c5fe5476d33e73f6d67f8cdcc593bd196f8339cfb88240cc9944e185b4582",
+      "uncompressed_sha256": "dbbd1cefdc9329ae2e253e71afa1a48b95a287289940cc7b493edec4f5ff8d61",
+      "uncompressed_bytes": 723072
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-cheval30-scale1/transition-analysis.full.182ce224208d.json.gz",
+      "sha256": "94fe91e8e8ac9b09675941561ed20cd4c41ed40b869f47e55ac31904b64931a8",
+      "uncompressed_sha256": "182ce224208d25c4cf61526e84a444d0a53be57fa59dc34d125baa2ba3e595f0",
+      "uncompressed_bytes": 392930
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-first/frames.csv.gz",
+      "sha256": "30c585ef25e651afc3e1c51416754b17e67190eacd122003bdf03884476a511c",
+      "bytes": 570744
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-first/joints.jsonl.gz",
+      "sha256": "f11a7cb99563cfc9c833db2c4b2a5f657ff21a7ad3d18006e72158188fe25b96",
+      "bytes": 8578413
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-first/report.full.c6c0fe4f1ec7.json.gz",
+      "sha256": "1058ccb0b42f816f4a018099aa004dc314bab9c1fde86ebba7d6ca4b286d6279",
+      "uncompressed_sha256": "c6c0fe4f1ec71763ebbca0522daf6741ba03f6bd49ec61ad34c804ec0a117e2e",
+      "uncompressed_bytes": 582928
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-first/transition-analysis.full.37070e5192bc.json.gz",
+      "sha256": "c2fa9ab5a41e86ca8a7d5c1e8da630628f75cb46cc03f41abb0851b28d9eab52",
+      "uncompressed_sha256": "37070e5192bcfa0c11260d7ec9fbda73ad8ddcb01d34f45f83e8b883b3b4ae35",
+      "uncompressed_bytes": 304719
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-pairs-first/frames.csv.gz",
+      "sha256": "1dd9f8c9d3b82833b1a73b271d5b2695152be033099fbc1bc7ca089bff34ff90",
+      "bytes": 761373
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-pairs-first/joints.jsonl.gz",
+      "sha256": "f83e839a82a80596006189ce43fba324225a0c88178e4ef5030db583786c0631",
+      "bytes": 11433981
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-pairs-first/report.full.6bb78953f43d.json.gz",
+      "sha256": "b5918c171e3ef159ad59db32662e0a5bad9a7ffe2ccd918f2d5bdecad0e85b1b",
+      "uncompressed_sha256": "6bb78953f43d44ff3a776a8f506c2da88b760538e6c0b69ddd42d583fcff189a",
+      "uncompressed_bytes": 746438
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/concurrent-pairs-first/transition-analysis.full.55a7cbbd959f.json.gz",
+      "sha256": "ca576202589df0b04f28c05390b8090f0613a64aceeb476458c77ad3fc341a8b",
+      "uncompressed_sha256": "55a7cbbd959f3a08b68e0b8454f323d9dc4b26e32fe0117647ed143f1ce8ebd1",
+      "uncompressed_bytes": 391314
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/phase-pursuit/frames.csv.gz",
+      "sha256": "839b2fdcbe594979672a55a6acc5d44059b2891fb698a7074deaf3cec1c80594",
+      "bytes": 773102
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/phase-pursuit/joints.jsonl.gz",
+      "sha256": "31f7cd34ab60fde9c250f0ef5a8595498c5a1913cf58c8a87477c43b72dd12b9",
+      "bytes": 11558622
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/phase-pursuit/report.full.fbde99e384d2.json.gz",
+      "sha256": "66d1aa001a7546ab85014c150fec4d4e5e7f87f96089c0dec14560b4bf527c03",
+      "uncompressed_sha256": "fbde99e384d26c57c199584b4d6734d4b5c3809657e6692a81bcd805931d33f6",
+      "uncompressed_bytes": 756991
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/phase-pursuit/transition-analysis.full.ae648cec5fe6.json.gz",
+      "sha256": "ec4b445d71027320dca0fce896c03d729c7a92d426f667f2f314fdff0d4936e1",
+      "uncompressed_sha256": "ae648cec5fe6f99e3ef7e5dcc6df069a883128200c0d7b1482c69447c3678d95",
+      "uncompressed_bytes": 396486
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/release-fixed/frames.csv.gz",
+      "sha256": "27cea54b49c2ddc8ce5502e57304fc7396e819c27285524a56c43c94ed36a956",
+      "bytes": 645814
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/release-fixed/joints.jsonl.gz",
+      "sha256": "78a166433b07ecf37312abaec84c950382b72fd60b02a50f4794ad48e9fc6145",
+      "bytes": 8783355
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/release-fixed/report.full.ba97e2e19f2d.json.gz",
+      "sha256": "d4b4f2795f804726c9f83d74c7a57374441a2b936791925ad14bfbbc0f58b542",
+      "uncompressed_sha256": "ba97e2e19f2d1abdf1704ea0ecae327f07a7c237e23229663a6bba686a25837d",
+      "uncompressed_bytes": 533680
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-30fps-0.6/frames.csv.gz",
+      "sha256": "f30b74a9a37e509d29176ae42fb26fccb35b23cbb8cfa158f4c8701a1a9e6975",
+      "bytes": 336676
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-30fps-0.6/joints.jsonl.gz",
+      "sha256": "dd8d4d570ece9cb688a6d4e48d5d355e91249499949342a258f51d5fe0867ee5",
+      "bytes": 4535929
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-30fps-0.6/report.full.4dba8c943a00.json.gz",
+      "sha256": "040091f01f69ab4a9b69f0ebc89b818f76991a2ad05a1e872bf636db18c00e82",
+      "uncompressed_sha256": "4dba8c943a005b2d5d77ff94afeb9c0ee6197597db9ad9fe39ba0a1a8d9883df",
+      "uncompressed_bytes": 529989
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-30fps-1.0/frames.csv.gz",
+      "sha256": "24137008b29014eba69563836a1d0f6af9a7d84696af228cacc587e22ad7e5e8",
+      "bytes": 366971
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-30fps-1.0/joints.jsonl.gz",
+      "sha256": "0911d36bbb610a9ace2c3aacc03486bec0db0edb078363c35c8da3da8152ff5b",
+      "bytes": 4905988
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-30fps-1.0/report.full.c6132304b8db.json.gz",
+      "sha256": "678ed1c32f468241dd404a8805a5d799503fa2a9e556434094bc48ef62f49adc",
+      "uncompressed_sha256": "c6132304b8db69a41891a57f1316bf2d6b559d5ee4789473f24ce564c3be8dd4",
+      "uncompressed_bytes": 497463
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-0.6/frames.csv.gz",
+      "sha256": "8201af8a29ccd096cd1a6363de3cf3e7fd0c4584e7237c157aeb8cf8dcb12287",
+      "bytes": 651588
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-0.6/joints.jsonl.gz",
+      "sha256": "6c573cd205ab62ca1cf6028978c6b951f70f5686f4bf073c5e0fc853b1e40750",
+      "bytes": 8850911
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-0.6/report.full.18cf4a991baa.json.gz",
+      "sha256": "e3f4c735e84e3d36ed28898c62f30afa2ee41f59bede192e09c6df542fafd48e",
+      "uncompressed_sha256": "18cf4a991baa36f9fe541ba6c018e1314dce5bcf1e1b3a567eaeb2947438e59f",
+      "uncompressed_bytes": 550298
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-0.6/transition-analysis.full.f43a6b9f8fa8.json.gz",
+      "sha256": "6c43284e92c2768fffc62870a2bee9639d337e3fa911486e8d34cce91672407e",
+      "uncompressed_sha256": "f43a6b9f8fa8406a7d5a7bc1c5f0c962bb14725591fb7f6ed693fbd7e7c35a54",
+      "uncompressed_bytes": 333015
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-1.0/frames.csv.gz",
+      "sha256": "33e8b478b54882aea7e2f7ab43b2032197e3022724cdc0219ac4c2fd6c17d77d",
+      "bytes": 718071
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-1.0/joints.jsonl.gz",
+      "sha256": "d5f60a856bbe657ccdcc4778474c86fda2f6bae6542cbdbf70027e2bddf76f9d",
+      "bytes": 9666310
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-1.0/report.full.11d44b48b3d8.json.gz",
+      "sha256": "5e79d2b2b36e50371a717d1b25e4798fca11c22221473051379b7ed8f14c7ba4",
+      "uncompressed_sha256": "11d44b48b3d8a127ddb6d91ade111dd32013652fbfd20f6c41bab27a67893e3f",
+      "uncompressed_bytes": 518077
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-30fps-0.6/frames.csv.gz",
+      "sha256": "81112cfa7f7aacb90fea0fc1b6bc99f496d2cb08f8dca95d57d2c7c27d4cd32a",
+      "bytes": 335869
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-30fps-0.6/joints.jsonl.gz",
+      "sha256": "c99e85ece37392c2c58750d2573bf69e59d767b91c738f13f75eaaa5581bda29",
+      "bytes": 4535783
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-30fps-0.6/report.full.7cd00813e978.json.gz",
+      "sha256": "1f62631de60606be7a669119461d7f5a641ff8ed6648e49063071c9f2163b50e",
+      "uncompressed_sha256": "7cd00813e978adb7bff4b25e074ccd45d06060ad55a11761e35288480abaf417",
+      "uncompressed_bytes": 529408
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-30fps-1.0/frames.csv.gz",
+      "sha256": "0efcbdbf17dbd8e527d09448a428d7f6f0daab92545d1ba9241b6d7fd07ab61d",
+      "bytes": 366952
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-30fps-1.0/joints.jsonl.gz",
+      "sha256": "7ff3e8cc8b3bba36c9c025ec4d49c043cf9b09e83a320f84742ebce5c633fad9",
+      "bytes": 4908676
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-30fps-1.0/report.full.7d1a48a20498.json.gz",
+      "sha256": "91380c957d3daa72e37318dbe7560733722015bdaac8dcd2671b0e367ceb8e2c",
+      "uncompressed_sha256": "7d1a48a20498ed2a9e4262badd8e8a2afb2f4151721446cabd6b787359a8ec83",
+      "uncompressed_bytes": 498229
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-60fps-0.6/frames.csv.gz",
+      "sha256": "788d7f67c4c2ed59fc88922dc7051ecf729a186bfd8063666daaf90b4fdb5e09",
+      "bytes": 650677
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-60fps-0.6/joints.jsonl.gz",
+      "sha256": "812b359d056ecc2cd4e53c85b5817a969d11d9776e5b0b2d8de8bdd72f5d5f2d",
+      "bytes": 8851458
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-60fps-0.6/report.full.099e36894eb8.json.gz",
+      "sha256": "f7f732e942b27eab3dacead6548c859fb4f720d69ddad36c386f51839b0a7467",
+      "uncompressed_sha256": "099e36894eb8bf51b664f53c309564dca2532183621eedaff35c271d3127ac81",
+      "uncompressed_bytes": 545172
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-60fps-1.0/frames.csv.gz",
+      "sha256": "a0517a42485746765c52247fbd5338092efd64dd9a32cd2d91ee25c3620d77ae",
+      "bytes": 717554
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-60fps-1.0/joints.jsonl.gz",
+      "sha256": "f065f28a0eddded6da25b6972018fb66846546e71c2c56fccd25e039cad01334",
+      "bytes": 9672725
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-60fps-1.0/report.full.ec5416c716a1.json.gz",
+      "sha256": "87eb1f88b7a46cb6886e5e70b0605bb0bbb3cc0f7a1567f80a331f52c5fd2130",
+      "uncompressed_sha256": "ec5416c716a1d07da0d326a97687607283c882d13ffc69595253dd683c813492",
+      "uncompressed_bytes": 516537
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-30fps-0.6/frames.csv.gz",
+      "sha256": "d498dff8008a9db42205ddc37b1099d5ae0b84fe79fad76d09ddeb80981cd8c0",
+      "bytes": 335965
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-30fps-0.6/joints.jsonl.gz",
+      "sha256": "f6f3dc87ec9ca71c9af4a65134ae893a4252f957fea8e03e67d5a970601ea5aa",
+      "bytes": 4536338
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-30fps-0.6/report.full.b3e2e981b84d.json.gz",
+      "sha256": "f054690c7ac17e2e5518296abcf48558dd5dcb23318e3ff8b16bfc6c1179f6c2",
+      "uncompressed_sha256": "b3e2e981b84d8bb62155c20f262e8fa7bcfff4e606455025529499924e360160",
+      "uncompressed_bytes": 528583
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-30fps-1.0/frames.csv.gz",
+      "sha256": "02c5b4430467389a7fffb4c8e84dd46486ea07c12c7d1f3ba5a1aafecf54eed9",
+      "bytes": 369019
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-30fps-1.0/joints.jsonl.gz",
+      "sha256": "8c44014319596402e6aa6054f4ba61446a34fe456301940e5b39ca80369ae221",
+      "bytes": 4951097
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-30fps-1.0/report.full.440a2ee2ef74.json.gz",
+      "sha256": "7dc7052f9e8315bc28d36456f0c40823949d19ed74bddc65155ee94987698d57",
+      "uncompressed_sha256": "440a2ee2ef745a26c1c4170eefced0b9cc505a3cef9f41157248926f31422973",
+      "uncompressed_bytes": 496474
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-0.6/frames.csv.gz",
+      "sha256": "54d437ab2b09015ec7ce13364b810400083bd1860c35a2e38e028799fdddc82c",
+      "bytes": 649598
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-0.6/joints.jsonl.gz",
+      "sha256": "bb5a1737328e48b495e0b93f4fb37aa4f61d6af3111e0eb05c897f9479fcf871",
+      "bytes": 8842317
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-0.6/report.full.4e9382a3de54.json.gz",
+      "sha256": "0b5ace7640c3c121e8d6028e0ea46fe234f6dac1f1887722940cc87ba424a012",
+      "uncompressed_sha256": "4e9382a3de5483f90fae2da1ad066d23dcb1a281f7c127e5c5e14c329fb65a6e",
+      "uncompressed_bytes": 543788
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-1.0/frames.csv.gz",
+      "sha256": "19c304a9321636dd3230ca592037f5e3fc5affea5ce8b0a10fc4867affb810ae",
+      "bytes": 717666
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-1.0/joints.jsonl.gz",
+      "sha256": "d29e4fe6ef025ac01e31a04c23bbd915fd062a27d023face5165792e7803ceb6",
+      "bytes": 9684105
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-1.0/report.full.9e7edc62c6da.json.gz",
+      "sha256": "3b01b7956a49a09da5fc2fa0ba8d51c0bd0285f5f722842cf4094ba7c456a03a",
+      "uncompressed_sha256": "9e7edc62c6da71ab34801143d4889b89e3f8c04ac5898cbc4f7b86a7e832c551",
+      "uncompressed_bytes": 517306
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/uma-walk-first/frames.csv.gz",
+      "sha256": "3ebbff8e90948b23906ce088e8cf9e65ae3086c0f6a5b1b1957db27d1e315ef5",
+      "bytes": 762456
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/uma-walk-first/joints.jsonl.gz",
+      "sha256": "0a73d72bbf0845defcc3306100ff39306fb2990ec6d75598bf0fa5a4bbe6fc0a",
+      "bytes": 12554657
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/uma-walk-first/report.full.accd5dd1cc25.json.gz",
+      "sha256": "261e820f3030511a89bfcf275ebeaf6d5e32f960bb9a377cc6a2bbd6517cbc41",
+      "uncompressed_sha256": "accd5dd1cc259269c9b40a305913990b1ce3785f3f84a207456412d37edb16f6",
+      "uncompressed_bytes": 821450
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/uma-walk-first/transition-analysis.full.b7d218d09fd9.json.gz",
+      "sha256": "49cbd5b0b6023b9ea3473197e739a8d3063756a6947f627de377e241a59a4bb6",
+      "uncompressed_sha256": "b7d218d09fd91bcd160a316d9634edea5fad0fbf2fb4e0d9263a3de9f0f4a599",
+      "uncompressed_bytes": 396542
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/cheval-grand-60fps-1.0/frames.csv.gz",
+      "sha256": "18ef5469167d7d0bdf8f64fd7ade99cd13e5c8bfab2014c9d8584b989e682d68",
+      "bytes": 746393
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/cheval-grand-60fps-1.0/joints.jsonl.gz",
+      "sha256": "ef6dd19af88777fa9c55038f54bcb4d065a5afcae68cd76fb31e3a2d5c0957b8",
+      "bytes": 12571600
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/cheval-grand-60fps-1.0/report.full.c263c148c098.json.gz",
+      "sha256": "2452169699ba9948340561dbe44271a8fdfe7beb13a64330b4bf5d621460d0eb",
+      "uncompressed_sha256": "c263c148c0984d4b72b09bb9e5e33e7a7a7d931891d72563b1e96876892409a0",
+      "uncompressed_bytes": 823791
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/cheval-grand-60fps-1.0/transition-analysis.full.dfb9ab6714e9.json.gz",
+      "sha256": "8013c192072e4aca34569226db6e964d992c9ec940eec53f22ea92c2202a3f2a",
+      "uncompressed_sha256": "dfb9ab6714e922b8874a4358ab756586db6c359ebcfb8a0d3fcab110964b0ffc",
+      "uncompressed_bytes": 398596
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/eishin-flash-60fps-1.0/frames.csv.gz",
+      "sha256": "7930e7a5c7a05d979234caf1de67a3596b7ac9cbacbd0756bb81274473d94f38",
+      "bytes": 747480
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/eishin-flash-60fps-1.0/joints.jsonl.gz",
+      "sha256": "8452dce0bdcad8ba410c06ddd9f65c9e0c00d99afe7cffe1a1dd9af3755a344d",
+      "bytes": 12575823
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/eishin-flash-60fps-1.0/report.full.4fb1973b24fa.json.gz",
+      "sha256": "1b28f5c504bd0036e62f3de166aa545167c7a520042089a2235b8fa8b7fecf21",
+      "uncompressed_sha256": "4fb1973b24fac3bf32d469afd2e7ce42a6724cd04165c45eb3dc363ceed69610",
+      "uncompressed_bytes": 823925
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/eishin-flash-60fps-1.0/transition-analysis.full.9ee4afdbdaa1.json.gz",
+      "sha256": "c5e69fd0bcee4763ccdb5c0b2e2811dc8e7f3b319de17143bc604e6e74df97cc",
+      "uncompressed_sha256": "9ee4afdbdaa12e13bf43c615818ebc64980cf84a9c40741ec2415add8781d3c1",
+      "uncompressed_bytes": 398688
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/rice-shower-60fps-1.0/frames.csv.gz",
+      "sha256": "93bf4373e7d034cbb13e99b992f7ddc5697302b17714380d1750d55870a12311",
+      "bytes": 745081
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/rice-shower-60fps-1.0/joints.jsonl.gz",
+      "sha256": "73932305b85137b78b265b12096da9f648d232b10e8a1c46bfd09b8ac157e80b",
+      "bytes": 12578529
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/rice-shower-60fps-1.0/report.full.087a65e56aa1.json.gz",
+      "sha256": "752d21f4e068b63fc2301a0dfeb34b1b5cc0c6d4f43a0ab439f576e790dc109b",
+      "uncompressed_sha256": "087a65e56aa1e229a0d21e254ff181fce5c5f16d3872db243897bd1235a3a99e",
+      "uncompressed_bytes": 822702
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/rice-shower-60fps-1.0/transition-analysis.full.309aaba32a50.json.gz",
+      "sha256": "4f8103582bcba9c81e4dd371777e8dce3fa997ecb5c35b4bdfd6ec4080a9b957",
+      "uncompressed_sha256": "309aaba32a504d15d0802fec7483b03ca715b426fdc7eec32caee1cc38881cd7",
+      "uncompressed_bytes": 400139
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/cheval-grand-60fps-1.0/frames.csv.gz",
+      "sha256": "48ad73db503c1a1978cf6c82d7844092fb8d6545ace98d0b6aeece13bd1459af",
+      "bytes": 746393
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/cheval-grand-60fps-1.0/joints.jsonl.gz",
+      "sha256": "f9c8485b08bc897c1bc418462991082fe1b86787227de29cf08cd2f4fb4e2291",
+      "bytes": 12571600
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/cheval-grand-60fps-1.0/report.full.c6a705bef7d1.json.gz",
+      "sha256": "8d44ca6967509bdb8ad1978ec4cfd42cc02de1534ad23016cb606f66a6fefd50",
+      "uncompressed_sha256": "c6a705bef7d162afc98c96e99fd5f0f1ab526c04f8936457822a64426680c8e3",
+      "uncompressed_bytes": 823597
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/cheval-grand-60fps-1.0/transition-analysis.full.dfb9ab6714e9.json.gz",
+      "sha256": "5658d083deb66d7362702adf3716861a8f4f6dcf29a363f765faab63e6a4874f",
+      "uncompressed_sha256": "dfb9ab6714e922b8874a4358ab756586db6c359ebcfb8a0d3fcab110964b0ffc",
+      "uncompressed_bytes": 398596
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/eishin-flash-60fps-1.0/frames.csv.gz",
+      "sha256": "9e9ab7ec46e607b10215dac25e8463053b8e407ce1e308eb46a231c8b48fb60e",
+      "bytes": 747480
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/eishin-flash-60fps-1.0/joints.jsonl.gz",
+      "sha256": "9406a0a1caae0b3388b4805c26aebcf078e554e82e9ce15df4e6c7368bd69bd4",
+      "bytes": 12575823
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/eishin-flash-60fps-1.0/report.full.58dfe80894ac.json.gz",
+      "sha256": "78a16ef90b657108768b5be397956e0db1376cfed46deda52f199ba649cfcfda",
+      "uncompressed_sha256": "58dfe80894acd597e63a1c3b412c8a5d55f02434e73c8966394ed53b1901535e",
+      "uncompressed_bytes": 823731
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/eishin-flash-60fps-1.0/transition-analysis.full.9ee4afdbdaa1.json.gz",
+      "sha256": "3ca493705b6739300a0eb45f91f9667c9a1f48b45addfc1a8e3c24a35d30d846",
+      "uncompressed_sha256": "9ee4afdbdaa12e13bf43c615818ebc64980cf84a9c40741ec2415add8781d3c1",
+      "uncompressed_bytes": 398688
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/rice-shower-60fps-1.0/frames.csv.gz",
+      "sha256": "2f63805915d183268bab47bc1b900291975eaab0e69e828f9ec390b3d9760744",
+      "bytes": 745081
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/rice-shower-60fps-1.0/joints.jsonl.gz",
+      "sha256": "b2650b8aeab5ae5453d3ef95e2edf6b8bf5454aa8fe97f67a1e94e93079d8368",
+      "bytes": 12578529
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/rice-shower-60fps-1.0/report.full.64433cda75d7.json.gz",
+      "sha256": "cce7d5b013969a637a1903cb185719a611f5cc59602622ed9f6072e20537157d",
+      "uncompressed_sha256": "64433cda75d7f82aafa4723c17f89b1261ff0767fc08cc304b9b262edb305cd9",
+      "uncompressed_bytes": 822508
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing/rice-shower-60fps-1.0/transition-analysis.full.309aaba32a50.json.gz",
+      "sha256": "b88987a64679f1b2de89b6a83801e3b7d8e6a086eed77fd8d7f2d0a72ed6c18c",
+      "uncompressed_sha256": "309aaba32a504d15d0802fec7483b03ca715b426fdc7eec32caee1cc38881cd7",
+      "uncompressed_bytes": 400139
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/frames.csv.gz",
+      "sha256": "2dc32371fed87f902d53f48e08b124666b351fe01fa97ba1e24d3cb3928a2cf4",
+      "bytes": 746393
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/joints.jsonl.gz",
+      "sha256": "2f564f79a13b37b5b30e0641f42708f2674caea7a081d9e635b02303a663705e",
+      "bytes": 12571600
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/report.full.64d4077c02ae.json.gz",
+      "sha256": "e13f8220d0a86da71587edea4d7149acd1b0704d96ca6d4a961831712546ef4b",
+      "uncompressed_sha256": "64d4077c02aed7eba0ac814e328ad247e58577de9b2b5248c8a57d141581c5a5",
+      "uncompressed_bytes": 822227
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/transition-analysis.full.dfb9ab6714e9.json.gz",
+      "sha256": "78522fe9d94ad18884e75fb6051aab82dbfc8d760c1c2750a8f0eb4b198fc4ab",
+      "uncompressed_sha256": "dfb9ab6714e922b8874a4358ab756586db6c359ebcfb8a0d3fcab110964b0ffc",
+      "uncompressed_bytes": 398596
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/frames.csv.gz",
+      "sha256": "999f862010f97f4c38e4654f2569c5b26b28354c192d97a2a7497b3b2f9f8109",
+      "bytes": 747480
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/joints.jsonl.gz",
+      "sha256": "14088c6b775ec981841380f1dd75e9901c7a90d5f1d8ffa18876575f993539c7",
+      "bytes": 12575823
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/report.full.faa7ef55793e.json.gz",
+      "sha256": "d3483c92e9b2bfa5bf8ea18d1ca39c056b8c828c3a84b6eaa601fd429b30f8a4",
+      "uncompressed_sha256": "faa7ef55793ea42c3b54266cdf62466d12480775cd7e62af467b61a7a79a8c8c",
+      "uncompressed_bytes": 822361
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/transition-analysis.full.9ee4afdbdaa1.json.gz",
+      "sha256": "9aeed25b617a5c74d3bf8480b783fb7d403bdf9d0a11f9084c973b5d5e8c4c06",
+      "uncompressed_sha256": "9ee4afdbdaa12e13bf43c615818ebc64980cf84a9c40741ec2415add8781d3c1",
+      "uncompressed_bytes": 398688
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/frames.csv.gz",
+      "sha256": "f1b50ec7e87b2ae1cc00dce0ee46ad017c852d8c98ae6921b6e491c40ca6c8d1",
+      "bytes": 745081
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/joints.jsonl.gz",
+      "sha256": "8708a93231723fa1daac82a7571f03d81079d3ffaaf5475600f84bb991dbaf28",
+      "bytes": 12578529
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/report.full.6586dbb47fe1.json.gz",
+      "sha256": "3c2fa4c706d075be97bba251821aa038ff545ba8f08e97db689c767a8d7849e1",
+      "uncompressed_sha256": "6586dbb47fe1a3ac045c603aba0d5d68738c177e484327d981dc55156f234fb0",
+      "uncompressed_bytes": 821138
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/transition-analysis.full.309aaba32a50.json.gz",
+      "sha256": "ff063d954239842eb9ef1dff26b90790ab1c985781d42bedbb83de880a77011a",
+      "uncompressed_sha256": "309aaba32a504d15d0802fec7483b03ca715b426fdc7eec32caee1cc38881cd7",
+      "uncompressed_bytes": 400139
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-0.6/frames.csv.gz",
+      "sha256": "84b3d3f8bf16a5d94bbf07b8d07e43fa1e2d8103b6aca40bf7e17ca8444c67d4",
+      "bytes": 388088
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-0.6/joints.jsonl.gz",
+      "sha256": "5d2f93c940ef1d89a67d47f2d3c7ba6f982995bbc3ee177ce50a25eef4b2bcd9",
+      "bytes": 6367146
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-0.6/report.full.29b1cce79452.json.gz",
+      "sha256": "a287ff3fe0187f5905455454659426f74189d6b851cfdcf16bb97e194c7c5829",
+      "uncompressed_sha256": "29b1cce794528bf1bd6f050b8830667cc07d343f6e930df3d616fe417120aba2",
+      "uncompressed_bytes": 796789
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-0.6/transition-analysis.full.5a75dd7b54f5.json.gz",
+      "sha256": "12cbedcec5038104524860d2e7b76df9778ab314ad52117e5641d9ba1a24f2f7",
+      "uncompressed_sha256": "5a75dd7b54f56c01bf7687d3a802cc90ad935a29566fc7bafe4c445b5ecca442",
+      "uncompressed_bytes": 396341
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-1.0/frames.csv.gz",
+      "sha256": "6d209c19eeb4c9d4720d09669da3fba657bc1bdc1f66a667c9967e6ba270e676",
+      "bytes": 380133
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-1.0/joints.jsonl.gz",
+      "sha256": "2ed83393ee0f80440b90085bdb81f84011a07d35a153d86dbea488465384225a",
+      "bytes": 6371281
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-1.0/report.full.75ff8089b914.json.gz",
+      "sha256": "6ee55cb77760be86935fbf9d4ee1a23579d817048aefb62a13cf9620b6f32b86",
+      "uncompressed_sha256": "75ff8089b9147843ea6d81dd04183f3bb68f021ed3652947ea280d01997f024f",
+      "uncompressed_bytes": 796531
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-1.0/transition-analysis.full.4700487e0a0e.json.gz",
+      "sha256": "9b1e93529b7180772c7fdf47f60415b94aa3a435d6c2969c490ce9068ebaa79f",
+      "uncompressed_sha256": "4700487e0a0e2f66406a41d0eb178d73346ba1ee429b1b128b66f40a1083b2e5",
+      "uncompressed_bytes": 397962
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-0.6/frames.csv.gz",
+      "sha256": "fd1a3bf8662395d6a572f5d5d3d16b044a828a8a1bb36e04aa6e522a6b1e5ed8",
+      "bytes": 762456
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-0.6/joints.jsonl.gz",
+      "sha256": "8ff91c4950517d4effe79ebf0c1015e6c1b6e69ad03712a25e5edbc61260f584",
+      "bytes": 12554657
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-0.6/report.full.4fce67747474.json.gz",
+      "sha256": "d04e58a9fe6c9c1bf96a2da6e32154d14dc0553a47ed378511112f582f7d807b",
+      "uncompressed_sha256": "4fce677474749b9dcc0672668d7c8d3f15dd4f8c68cdffc5dcff50f025378d64",
+      "uncompressed_bytes": 821450
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-0.6/transition-analysis.full.fcea8e05c5ae.json.gz",
+      "sha256": "c4500640558f3be062c50c62f609e06bca085ffafa825cc77d55efec570d4a51",
+      "uncompressed_sha256": "fcea8e05c5ae75e376263d9601f61ada3b3dd0994947b621c85785e1377f8f9c",
+      "uncompressed_bytes": 397156
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-1.0/frames.csv.gz",
+      "sha256": "e7b29bc8ee55efbf6a61b2dd798f02f9c7987483c6d39a827c287d8126e608e6",
+      "bytes": 746393
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-1.0/joints.jsonl.gz",
+      "sha256": "c90fb9efdef8375d5716dc739fe1d673d062f1401df0674e4cbf46ccf0379461",
+      "bytes": 12571600
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-1.0/report.full.a857b7a62c07.json.gz",
+      "sha256": "25d8be3c8ecdb59b01730fa293188c66d8605db5cdeb16d1ef05d6b96509d6a8",
+      "uncompressed_sha256": "a857b7a62c07139331ba9e35202dbe80f9662e6b537225a3ef2ad4b053d0bc96",
+      "uncompressed_bytes": 821449
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-1.0/transition-analysis.full.71259601a586.json.gz",
+      "sha256": "de48830734a6766a0d315d99c6f413864cdfda6079feece066a8fd5ef76ff73b",
+      "uncompressed_sha256": "71259601a58616f41e6d962fdf490f8fc95541c7fb072d86291189b051ddbc20",
+      "uncompressed_bytes": 398566
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-0.6/frames.csv.gz",
+      "sha256": "02b3e9309fd5620d4d3dc367a201f310fea97547064f493c1e9d5cb3bd624a43",
+      "bytes": 389035
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-0.6/joints.jsonl.gz",
+      "sha256": "5c4ef4ecd76b77805d91cf09e0a9c456fe35b6f4ac998481d83b620beacdd2fc",
+      "bytes": 6369924
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-0.6/report.full.9cfd089e8004.json.gz",
+      "sha256": "6b9667763542a54554bf726378cc70600b9325ab3ba3e1f3c7f9d6bc28d47a00",
+      "uncompressed_sha256": "9cfd089e8004358ccc528e75063c14a32040bc6fb64bfb56fd13762295f6ec48",
+      "uncompressed_bytes": 797880
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-0.6/transition-analysis.full.7f12e26a4828.json.gz",
+      "sha256": "eb2ce282c757f1f12759d4f86f20069c4515dcb707b24b833615916d97c425a4",
+      "uncompressed_sha256": "7f12e26a4828f6fa058f5ba12b6b5305fa98318efd3996226e55b0f90037cd31",
+      "uncompressed_bytes": 396413
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-1.0/frames.csv.gz",
+      "sha256": "ce3645a33bdfeb23bf87e1e148037ae544d6ff0e73bb4061e1e8f592e7b38703",
+      "bytes": 380129
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-1.0/joints.jsonl.gz",
+      "sha256": "6f2b137838d07acb89be801f4b97e2bde883d04cbe280dd33d8a4a0c4881df97",
+      "bytes": 6374603
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-1.0/report.full.d19193e2f80c.json.gz",
+      "sha256": "15504b7b7fa99d810be6b85c383b4999995d53e3753e75424075a91c5b5a476b",
+      "uncompressed_sha256": "d19193e2f80ce3a9bcd647df984814be2427461f3fc82fd11b72b1974ca78d5b",
+      "uncompressed_bytes": 797227
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-1.0/transition-analysis.full.29c00d1b6acb.json.gz",
+      "sha256": "3e7bc8bf8add55261957ec8b90e66744401c7f20be807bf2ef17aea5a428921f",
+      "uncompressed_sha256": "29c00d1b6acb01a0dc871dd040ad046662e86791cbbfa9c0783d6accbbbca061",
+      "uncompressed_bytes": 398362
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-0.6/frames.csv.gz",
+      "sha256": "7cd3288920bd06376c3f9414df0096ceb27f06a7d3b326413afafe1c985b6439",
+      "bytes": 764172
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-0.6/joints.jsonl.gz",
+      "sha256": "1fe84fc2db25c982a4b5b4d29c3508c241d989b0cbeaee9e88f2ad331999573a",
+      "bytes": 12560650
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-0.6/report.full.edec58a4a86a.json.gz",
+      "sha256": "af2a791690c785a14298b3e2985bc11c7d46f5c66a391fd05984816033b891d8",
+      "uncompressed_sha256": "edec58a4a86a09282fbcf719ea417526fe92dd9964b304c8f80ac0f6a146b813",
+      "uncompressed_bytes": 817970
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-0.6/transition-analysis.full.8c17b60a7274.json.gz",
+      "sha256": "1b0d596b7ac8822a815e2bcfd55474530f0d4d7baf83d1df0dab0b63ae71b6d1",
+      "uncompressed_sha256": "8c17b60a727459b50983c27c37f15e02e176291d80519733f968a4167809f555",
+      "uncompressed_bytes": 396871
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-1.0/frames.csv.gz",
+      "sha256": "614dd00ea9bccd99f8de03ea9d095d03f8081b6ddad169c2ef05097a5f87b374",
+      "bytes": 747480
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-1.0/joints.jsonl.gz",
+      "sha256": "02ac82dcba1e303a52da98a4b6a49001d539f64fa5fedfd5becb71cbb77b184b",
+      "bytes": 12575823
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-1.0/report.full.9cbd07748833.json.gz",
+      "sha256": "ff3bad5c3abeda755f5ee58941178cce362bc2f5232de12b30d23fb982daf7d3",
+      "uncompressed_sha256": "9cbd07748833325e54739472c4ea6b30b87306f41045396380c144a7ebf96ebe",
+      "uncompressed_bytes": 821583
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-1.0/transition-analysis.full.e7a249633fcd.json.gz",
+      "sha256": "c17ed87c6d651915540845ebbb6fc1449e003c5087c17d84f758b13ffb20b1b9",
+      "uncompressed_sha256": "e7a249633fcd80d4e3b84846b14eab910b77304eedcd4f5849bb5cdff26dfd67",
+      "uncompressed_bytes": 398658
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-0.6/frames.csv.gz",
+      "sha256": "f8c53cc9745fb5503442bccff4cef311275487cb566a4405cd5ce9cf198bf4bf",
+      "bytes": 386835
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-0.6/joints.jsonl.gz",
+      "sha256": "1cf0da2ecd8844325edbfc27339ebb028771391bc99b95f2991abfa3faa19e12",
+      "bytes": 6373948
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-0.6/report.full.3e3406b9eef3.json.gz",
+      "sha256": "ffaff1ad29d3196b7ea2c26b62eacb058d6ad8d09f5d0ea2fbae995dccfaee02",
+      "uncompressed_sha256": "3e3406b9eef31433d0e8d8b2636ae8559c5043a96513e6cd6ca592e27a90ecca",
+      "uncompressed_bytes": 795290
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-0.6/transition-analysis.full.00fcf21d28bc.json.gz",
+      "sha256": "7c339a285bfbd6978e08eac7474b524faa2f5a1f2004ff4ac88db0c5e28ccdfa",
+      "uncompressed_sha256": "00fcf21d28bc939b43a6b7d195817d449a5ef37df7107f762e7130474ccdb4e6",
+      "uncompressed_bytes": 396275
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-1.0/frames.csv.gz",
+      "sha256": "d1262d80c26a1619f2152baa26817f07f88638261a95b40bad2e504e58b41841",
+      "bytes": 379203
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-1.0/joints.jsonl.gz",
+      "sha256": "854ca5e1c5daf8d502910030d33495a827e402dbd195b6a0b9cb1770b5ab9fe5",
+      "bytes": 6375345
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-1.0/report.full.f7fa719b7a21.json.gz",
+      "sha256": "f92ef36d46554d5ed53a19ac36c3ca32507f673cadf6e1b4dbda1119da3bbdab",
+      "uncompressed_sha256": "f7fa719b7a21dec9138087ca3d6a56e07315e07c0835fb2a75082c015d46feee",
+      "uncompressed_bytes": 796913
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-30fps-1.0/transition-analysis.full.8368b9931214.json.gz",
+      "sha256": "3e4324edd8a7ca3f32a3f63d15d3dd0d3978601316469f1ce31d801e5192da32",
+      "uncompressed_sha256": "8368b993121428b425c1b9d2b9e3bafad16668028f98b9076e133aa6d1857954",
+      "uncompressed_bytes": 399303
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-0.6/frames.csv.gz",
+      "sha256": "9c85f6e736f671c2393598cf01a92645de1e477888dc1b7c9b3f5166077e73d9",
+      "bytes": 760049
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-0.6/joints.jsonl.gz",
+      "sha256": "507affb013c6c84615341941b42b85c4a991b0fe99b24a3ffc56c901adfa08a6",
+      "bytes": 12561076
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-0.6/report.full.233b4347ad2d.json.gz",
+      "sha256": "91e666d06551458f38ab6669419d37288cb2dab6d64d83bf3e8f1441c08e9194",
+      "uncompressed_sha256": "233b4347ad2d2eff045fa6cf82f4bb78ffbd97bf751dbf317e2df079ebfbe54f",
+      "uncompressed_bytes": 817446
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-0.6/transition-analysis.full.7ed8fa72211a.json.gz",
+      "sha256": "53fe289171285c88e87ce5db3dc7dac2ce089ba40c1fcbe1cb87415919046968",
+      "uncompressed_sha256": "7ed8fa72211a69ad293cc0d0af5eeca96b32b855a56b9858ec2f2c003fb8268a",
+      "uncompressed_bytes": 396914
+    },
+    {
+      "original_name": "frames.csv.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-1.0/frames.csv.gz",
+      "sha256": "bdddab8c108875bc4e27c566fc665c1137cb582cd43432eb7271a7786c0871bb",
+      "bytes": 745081
+    },
+    {
+      "original_name": "joints.jsonl.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-1.0/joints.jsonl.gz",
+      "sha256": "101c3d769cc918dd154c017efb3f78528bc8b909d1adc4261320c755a4a02593",
+      "bytes": 12578529
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-1.0/report.full.e7d35665a243.json.gz",
+      "sha256": "4067954e758526e05f4a7d8343aa7b126edb292eaea559f9e7e628b13dfa0196",
+      "uncompressed_sha256": "e7d35665a243bf8e344383232e270998a92460dba8205e4c2f32d24c5014eb08",
+      "uncompressed_bytes": 820360
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-1.0/transition-analysis.full.6b490cf76023.json.gz",
+      "sha256": "42de168b1114c7e3dd97065168c180fc7d166a49fe8a2dd1574cac349a6e6073",
+      "uncompressed_sha256": "6b490cf76023fb768c17d5ec6b5b2ebf18b615199ac6e27fb68b335d78b90460",
+      "uncompressed_bytes": 400109
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/walking_posture/candidate-v1/source-ablation.json.gz",
+      "sha256": "de18af570d4d1650e4f943bc0c184cc8747dfaf8aa2b3405acaa7d53725037a0"
+    },
+    {
+      "original_name": "source-ablation.json.gz",
+      "repo_relative_path": "companion/logs/diagnostic-traces/walking_posture/direct-unity-source/source-ablation.json.gz",
+      "sha256": "e4c026cab3f59039588626cfec5a936c1d366d416809358e411b00cd3d665f96",
+      "bytes": 330470
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/walking_posture/filtered-source/source-ablation.json.gz",
+      "sha256": "a108917c33ae8e0ed9ebf77c55d9c5331a0375d21af1533eb8aaa114b0f5026a"
+    },
+    {
+      "repo_relative_path": "companion/logs/diagnostic-traces/walking_posture/source-ablation.json.gz",
+      "sha256": "125bb03d18b64de63f595c9fdf1b8787ff7da093ca6f9d4e2a80415d51935f54",
+      "uncompressed_sha256": "63686b85ea951176f9ee04107a1d898bfe012d3c27d10ec74ee4f051af979212"
+    }
+  ]
+}

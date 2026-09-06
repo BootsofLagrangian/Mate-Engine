@@ -1,0 +1,24 @@
+# Host locomotion capability review
+
+Current disposition: **APPROVED after root's refresh revision.** The original findings below are retained as review history; the follow-up regression and acceptance scope are recorded afterward. Independent read-only review of root-authored `main.gd` catalog registration, `AutonomyBridge.pick_walk_clip`, and `diagnostics/walking_posture/test_selection.gd`. No runtime files were changed for this review.
+
+Successful VRMA import precedes registration, and the host passes the explicit `locomotion_preserve_hips` flag with a false default. Selection considers declared looping locomotion entries, chooses the highest priority, and resolves equal priorities by sorted name. Legacy known-walk fallback remains compatible; unclassified arbitrary loops do not become locomotion. Metadata types and bounds are validated upstream by MotionBank, rather than redundantly coerced at this internal selection boundary.
+
+The dedicated selection probe was independently run with Linux Godot 4.5.2: **6 checks, 0 failures**. It covers legacy fallback, generic declared priority, rejection of nonloops/unclassified clips, stable ties, removal from the selection dictionary, and no invented fallback. These are pure selection checks; they do not establish actual Windows travel, imported clip quality or the registry's hips/contact implementation. The separately reported 18 contact cases belong to the Motion implementation owner's validation.
+
+A refresh wiring gap remains: `_on_motion_assets_loaded` replaces `_vrma_catalog` but retains `_vrma_loaded`. Removing a previously loaded high-priority clip from a successful catalog response therefore leaves it eligible in `walk_clip()` and locomotion selection. The removal test mutates its input dictionary directly, so it does not cover this host path. Similarly, changing a registered clip's locomotion flag to false does not undo its Motion registry capability. This predates some selection logic but becomes material when the catalog controls preferred locomotion. A successful catalog replacement should reconcile loaded/registered capabilities, including removed or changed declarations, with a regression through the host refresh path. Initial process startup with one stable catalog is not affected.
+
+The new authored asset was still pending installation at review time; this report does not assert it was selected or rendered.
+
+
+## Follow-up: refresh revision
+
+Root's successful-catalog handler now immediately removes loaded selection/UI entries, resets custom locomotion registrations and cached hips centers, and stops an owned active walk with an explicit navigation-cancellation outcome. Clips return through the normal asset-ready path. Failed refreshes preserve the last successful catalog. Known legacy `walk` / `walk_formal` registry defaults are retained intentionally; neither can be selected merely by registry presence without a loaded catalog entry.
+
+Added and independently ran `diagnostics/locomotion/test_host_refresh.gd`, extending the existing host lifecycle harness and invoking the actual `main.gd` handlers: **12 checks, 0 failures** on Linux Godot 4.5.2 with isolated `XDG_DATA_HOME`. Coverage includes announcement-before-import, registration/hips flag, center cache creation, removal from selection/UI/registry, active navigation cancellation and gesture stop, legacy defaults, rejection of a late callback for a removed name, true-to-false capability revocation with preview availability retained, and failed-refresh preservation. The revision resolves the two reported refresh defects within this scope.
+
+The harness substitutes asset loading and client/UI operations; it does not revalidate checksums, perform real network requests, import a real animation, or establish Windows behavior. It uses the actual registration/reset methods with an empty valid-duration clip and real simulated autonomy cancellation. Godot emitted an ObjectDB exit-leak warning from this isolated harness; there were no script errors or failed assertions. This warning is disclosed rather than counted as a runtime leak diagnosis. No main, bridge or Motion runtime source was modified during this follow-up review.
+
+## Follow-up: dialogue ownership guard
+
+Root extended `_dialogue_gesture_name` to reject catalog-declared locomotion in addition to legacy walk and sit names. Both action and done-only handlers use that helper. Independently approved: the focused host probe now passes **17 checks, 0 failures**, adding actual action-handler rejection of a generic newly declared gait, action/done deduplication, legacy done-only rejection, preservation of ordinary wave/intensity/speed, and retained legacy walk/sit exclusions. The same isolated-harness ObjectDB exit warning remains. This source correction is subsequent to packaged executable `e15e395…` and is not validated by that package's earlier Windows run.

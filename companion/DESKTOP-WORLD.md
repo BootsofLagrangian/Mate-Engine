@@ -77,10 +77,39 @@ See [native behavior controls](native/README.md)
 and the component evidence in `diagnostics/behavior/` and
 `diagnostics/liveliness/`.
 
-## Planned: props and tools
+## Placed furniture
 
-These are extension requirements, **not implemented capabilities**. Start with a
-magnifying glass and a laptop once contact motion and desktop movement are stable.
+The native **공간** tab manages chairs, sofas and computer desks. Each object has
+a stable ID, persistent position/scale/visibility, its own transparent desktop
+window, and projected interaction sockets. The default curved upholstered
+furniture and oak workstation are original meshes made against downloaded
+professional product-photo references, with fabric, wood, piping, castors and
+individual keyboard keys. Reference images remain local and are not embedded in
+the assets. See [visual design and provenance](diagnostics/desktop_objects/visual-redesign.md).
+The initial CC0 [Kenney Furniture Kit](https://kenney.nl/assets/furniture-kit)
+is retained as a fallback; its separate acquisition record is
+[`asset-research.md`](diagnostics/desktop_objects/asset-research.md).
+
+`DesktopObjectStore` owns bounded placement/persistence, `DesktopObjectWindow`
+renders a reusable definition and projects sockets, and `DesktopObjectsHost`
+coordinates approach, contact and release with the existing behavior and motion
+controllers. Visible objects become short-lived inspect targets, including for
+local idle attention. The object catalogue exposes supported `inspect`, `sit`
+and `use` verbs without character-specific branches.
+
+Seating uses a dedicated narrow seat contact; it does not turn a chair into a
+wide walking platform. Approach still requires a reachable current support,
+and the projected avatar must remain inside the usable desktop. Seat placement
+and a finite computer work posture are contact previews. Independent transparent
+windows do not share a depth buffer, so this is not full 3D furniture collision
+or automatic body/prop occlusion. Computer presentation does not send input to
+another application. Validation and remaining restrictions live in
+[`diagnostics/desktop_objects`](diagnostics/desktop_objects/).
+
+## Planned: handheld tools
+
+The following extend placed furniture; they are **not implemented capabilities**.
+A magnifying glass and a portable laptop are useful first attachment tests.
 
 - A prop package declares a local visual asset, grip transforms, optional hinge
   joints, supported actions, and contact points. Character overrides adjust the

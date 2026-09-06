@@ -1,0 +1,17 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+LIVELINESS_CHECK matching authored behavior profile loaded true {}
+LIVELINESS_CHECK director uses matching authored profile true {"effective_style":{"curiosity":0.4,"gaze_hold_s":2.2,"idle_interval_s":14.0,"posture_strength":0.45,"response_delay_s":0.35}}
+LIVELINESS_CHECK authored home participates in sequence true {}
+LIVELINESS_CHECK initial surface support acquired true {}
+LIVELINESS_CHECK chain request accepted chain:0 true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK continuous journey arrived 0 true {"outcomes":[{"id":"chain:0","outcome":"arrived","time":26.7999999999998}]}
+LIVELINESS_CHECK chain request accepted chain:1 true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK continuous journey arrived 1 false {"outcomes":[{"id":"chain:0","outcome":"arrived","time":26.7999999999998},{"id":"chain:1","outcome":"interrupted","time":31.6666666666661}]}
+LIVELINESS_CHECK chain request accepted chain:2 true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK continuous journey arrived 2 true {"outcomes":[{"id":"chain:0","outcome":"arrived","time":26.7999999999998},{"id":"chain:1","outcome":"interrupted","time":31.6666666666661},{"id":"chain:2","outcome":"arrived","time":66.7833333333308}]}
+LIVELINESS_CHECK chain request accepted chain:before-reversal true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK moving reversal has actual preceding travel true {}
+LIVELINESS_CHECK chain request accepted chain:reversal true {"accepted":true,"reason":"queued"}
+LIVELINESS_CHECK superseding opposite journey arrives true {}
+LIVELINESS_RESULT failures=1 frames=5318 report=/home/hard2251/workspace/mate-engine/Mate-Engine/companion/diagnostics/transition_chain/final/cheval-grand-60fps-1.0/report.json

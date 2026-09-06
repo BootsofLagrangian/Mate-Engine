@@ -1,0 +1,938 @@
+{
+	"checks": [
+		{
+			"details": {
+
+			},
+			"label": "model loaded",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_home_idle",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_cheval_idle_action",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_rice_idle_action",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_eishin_idle_action",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "talking loaded",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "rare action accepted",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "rare action ends",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "speech preempts authored ownership",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "home resumes after speech",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "gaze fully masks authored head",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "heading completes",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "disabled idle rejects rare action",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "disabled idle relinquishes authored pose",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "replacement model loaded",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model switch clears rare action",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model switch clears stale head mask",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "reset clears stale head mask",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model loaded",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_home_idle",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_cheval_idle_action",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_rice_idle_action",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_eishin_idle_action",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "talking loaded",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "rare action accepted",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "rare action ends",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "speech preempts authored ownership",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "home resumes after speech",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "gaze fully masks authored head",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "heading completes",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "disabled idle rejects rare action",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "disabled idle relinquishes authored pose",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "replacement model loaded",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model switch clears rare action",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model switch clears stale head mask",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "reset clears stale head mask",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model loaded",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_home_idle",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_cheval_idle_action",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_rice_idle_action",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "clip loaded uma_eishin_idle_action",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "talking loaded",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "rare action accepted",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "rare action ends",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "speech preempts authored ownership",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "home resumes after speech",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "gaze fully masks authored head",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "heading completes",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "disabled idle rejects rare action",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "disabled idle relinquishes authored pose",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "replacement model loaded",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model switch clears rare action",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "model switch clears stale head mask",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+
+			},
+			"label": "reset clears stale head mask",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+				"acceleration": 65.4048657417297,
+				"speed": 5.26829481124878
+			},
+			"label": "generic home quiet head bounds",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+				"acquisition_frames": 70,
+				"fully_acquired_frames": 1040,
+				"max_metres": 0.000000270195982920995
+			},
+			"label": "authored standing actual world foot error",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+				"foot_error": 0.000000165974114452183,
+				"foot_step": 0.000000219254772559907,
+				"head_acceleration": 67.285144329071,
+				"head_speed": 19.0574073791504,
+				"hips_step": 0.000275773229077458,
+				"sole_error": 0.000000181393545517494
+			},
+			"label": "purposeful gaze_override bounds",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+				"foot_error": 0.000000195497889876606,
+				"foot_step": 0.000000231448183285465,
+				"head_acceleration": 86.6986441612244,
+				"head_speed": 18.1585884094238,
+				"hips_step": 0.000275773665634915,
+				"sole_error": 0.000000210255308275009
+			},
+			"label": "purposeful gaze_release bounds",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+				"before_speech": {
+					"foot_error": 0.000000105958150697916,
+					"foot_step": 0.00000019729975520022,
+					"head_acceleration": 749.751319885254,
+					"head_speed": 82.0149154663086,
+					"hips_step": 0.0024973985273391,
+					"sole_error": 0.000000121692849575084
+				},
+				"before_switch": {
+					"foot_error": 0.0000001689574133934,
+					"foot_step": 0.000000273979850362593,
+					"head_acceleration": 660.138816833496,
+					"head_speed": 77.7177200317383,
+					"hips_step": 0.00251037511043251,
+					"sole_error": 0.000000178555694674287
+				},
+				"disabled_idle": {
+					"foot_error": 0.00181100785266608,
+					"foot_step": 0.000477961613796651,
+					"head_acceleration": 501.943016052246,
+					"head_speed": 74.5181655883789,
+					"hips_step": 0.00207897648215294,
+					"sole_error": 0.00232317624613643
+				},
+				"gaze_override": {
+					"foot_error": 0.000000165974114452183,
+					"foot_step": 0.000000219254772559907,
+					"head_acceleration": 67.285144329071,
+					"head_speed": 19.0574073791504,
+					"hips_step": 0.000275773229077458,
+					"sole_error": 0.000000181393545517494
+				},
+				"gaze_release": {
+					"foot_error": 0.000000195497889876606,
+					"foot_step": 0.000000231448183285465,
+					"head_acceleration": 86.6986441612244,
+					"head_speed": 18.1585884094238,
+					"hips_step": 0.000275773665634915,
+					"sole_error": 0.000000210255308275009
+				},
+				"heading": {
+					"foot_error": 0.0337367728352547,
+					"foot_step": 0.00617814669385552,
+					"head_acceleration": 599.239711761475,
+					"head_speed": 70.0605697631836,
+					"hips_step": 0.00185324205085635,
+					"sole_error": 0.0337367840111256
+				},
+				"heading_return": {
+					"foot_error": 0.0337365418672562,
+					"foot_step": 0.00598650751635432,
+					"head_acceleration": 569.38419342041,
+					"head_speed": 92.7755737304688,
+					"hips_step": 0.002079265890643,
+					"sole_error": 0.0337365455925465
+				},
+				"home": {
+					"foot_error": 0.000000256639793860813,
+					"foot_step": 0.000000346672237583334,
+					"head_acceleration": 67.8079605102539,
+					"head_speed": 10.0854320526123,
+					"hips_step": 0.000879198603797704,
+					"sole_error": 0.000000270195982920995
+				},
+				"idle_resume": {
+					"foot_error": 0.000000202985589226046,
+					"foot_step": 0.000000270308248673246,
+					"head_acceleration": 505.993480682373,
+					"head_speed": 21.0522689819336,
+					"hips_step": 0.000879129860550165,
+					"sole_error": 0.000000212778246577727
+				},
+				"model_switch": {
+					"foot_error": 0.000000150217445593626,
+					"foot_step": 0.000000234574997648451,
+					"head_acceleration": 2894.57565307617,
+					"head_speed": 96.4858551025391,
+					"hips_step": 0.000553361547645181,
+					"sole_error": 0.000000157510356757484
+				},
+				"rare_action": {
+					"foot_error": 0.000000218144293739897,
+					"foot_step": 0.000000294203601924892,
+					"head_acceleration": 752.721977233887,
+					"head_speed": 81.8965225219727,
+					"hips_step": 0.00305232941173017,
+					"sole_error": 0.000000244948637373454
+				},
+				"speech": {
+					"foot_error": 0.0000380455639970023,
+					"foot_step": 0.000038031765143387,
+					"head_acceleration": 954.266624450684,
+					"head_speed": 90.6606674194336,
+					"hips_step": 0.0032804177608341,
+					"sole_error": 0.0000380616984330118
+				},
+				"speech_end": {
+					"foot_error": 0.0000492378312628716,
+					"foot_step": 0.0000519899513165001,
+					"head_acceleration": 417.805252075195,
+					"head_speed": 60.5742301940918,
+					"hips_step": 0.000667068350594491,
+					"sole_error": 0.0000492488325107843
+				}
+			},
+			"diagnostic_only": true,
+			"label": "raw continuity by stage",
+			"model": "cheval-grand",
+			"ok": true
+		},
+		{
+			"details": {
+				"acceleration": 65.4048657417297,
+				"speed": 5.26829481124878
+			},
+			"label": "generic home quiet head bounds",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+				"acquisition_frames": 70,
+				"fully_acquired_frames": 1040,
+				"max_metres": 0.000000188460518302236
+			},
+			"label": "authored standing actual world foot error",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+				"foot_error": 0.000000150171246104946,
+				"foot_step": 0.000000241570063508334,
+				"head_acceleration": 67.285144329071,
+				"head_speed": 19.0574073791504,
+				"hips_step": 0.00024992015096359,
+				"sole_error": 0.000000151123913383344
+			},
+			"label": "purposeful gaze_override bounds",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+				"foot_error": 0.000000165471675472872,
+				"foot_step": 0.000000233418504080873,
+				"head_acceleration": 86.6986441612244,
+				"head_speed": 18.1585884094238,
+				"hips_step": 0.000249920267378911,
+				"sole_error": 0.000000188460518302236
+			},
+			"label": "purposeful gaze_release bounds",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+				"before_speech": {
+					"foot_error": 0.000000142975451922212,
+					"foot_step": 0.000000196312555544864,
+					"head_acceleration": 1241.35757446289,
+					"head_speed": 38.9889717102051,
+					"hips_step": 0.00236994051374495,
+					"sole_error": 0.000000151067297338159
+				},
+				"before_switch": {
+					"foot_error": 0.000000165471675472872,
+					"foot_step": 0.000000201751205963774,
+					"head_acceleration": 1203.7467956543,
+					"head_speed": 57.108943939209,
+					"hips_step": 0.00237541180104017,
+					"sole_error": 0.000000170769411056426
+				},
+				"disabled_idle": {
+					"foot_error": 0.00163091078866273,
+					"foot_step": 0.000430531421443447,
+					"head_acceleration": 501.943016052246,
+					"head_speed": 74.5181655883789,
+					"hips_step": 0.00188589782919735,
+					"sole_error": 0.00209235260263085
+				},
+				"gaze_override": {
+					"foot_error": 0.000000150171246104946,
+					"foot_step": 0.000000241570063508334,
+					"head_acceleration": 67.285144329071,
+					"head_speed": 19.0574073791504,
+					"hips_step": 0.00024992015096359,
+					"sole_error": 0.000000151123913383344
+				},
+				"gaze_release": {
+					"foot_error": 0.000000165471675472872,
+					"foot_step": 0.000000233418504080873,
+					"head_acceleration": 86.6986441612244,
+					"head_speed": 18.1585884094238,
+					"hips_step": 0.000249920267378911,
+					"sole_error": 0.000000188460518302236
+				},
+				"heading": {
+					"foot_error": 0.0311425384134054,
+					"foot_step": 0.00618455745279789,
+					"head_acceleration": 599.239711761475,
+					"head_speed": 70.0605697631836,
+					"hips_step": 0.00168154761195183,
+					"sole_error": 0.031142545863986
+				},
+				"heading_return": {
+					"foot_error": 0.031142795458436,
+					"foot_step": 0.0059948293492198,
+					"head_acceleration": 569.38419342041,
+					"head_speed": 92.7755737304688,
+					"hips_step": 0.00188613473437726,
+					"sole_error": 0.0311427973210812
+				},
+				"home": {
+					"foot_error": 0.000000166641697774139,
+					"foot_step": 0.000000247668765496201,
+					"head_acceleration": 67.8079605102539,
+					"head_speed": 10.0854320526123,
+					"hips_step": 0.000853123958222568,
+					"sole_error": 0.000000172507782281173
+				},
+				"idle_resume": {
+					"foot_error": 0.000000165009751640355,
+					"foot_step": 0.000000202163505491626,
+					"head_acceleration": 505.993480682373,
+					"head_speed": 21.0522689819336,
+					"hips_step": 0.000853047415148467,
+					"sole_error": 0.000000173806867564963
+				},
+				"model_switch": {
+					"foot_error": 0.000000179288662138788,
+					"foot_step": 0.000000270410907887708,
+					"head_acceleration": 2894.57565307617,
+					"head_speed": 96.4858551025391,
+					"hips_step": 0.000605760200414807,
+					"sole_error": 0.000000195314939333002
+				},
+				"rare_action": {
+					"foot_error": 0.000000158445317310907,
+					"foot_step": 0.000000255555988815104,
+					"head_acceleration": 1242.7486038208,
+					"head_speed": 39.2944755554199,
+					"hips_step": 0.002547571901232,
+					"sole_error": 0.000000172225995243025
+				},
+				"speech": {
+					"foot_error": 0.0000610333372605965,
+					"foot_step": 0.0000610924034845084,
+					"head_acceleration": 954.266624450684,
+					"head_speed": 69.4494323730469,
+					"hips_step": 0.00462240679189563,
+					"sole_error": 0.0000610325441812165
+				},
+				"speech_end": {
+					"foot_error": 0.000045428558223648,
+					"foot_step": 0.0000485234995721839,
+					"head_acceleration": 417.805252075195,
+					"head_speed": 60.5742301940918,
+					"hips_step": 0.000604519562330097,
+					"sole_error": 0.000045425389544107
+				}
+			},
+			"diagnostic_only": true,
+			"label": "raw continuity by stage",
+			"model": "rice-shower",
+			"ok": true
+		},
+		{
+			"details": {
+				"acceleration": 65.4048657417297,
+				"speed": 5.26829481124878
+			},
+			"label": "generic home quiet head bounds",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+				"acquisition_frames": 70,
+				"fully_acquired_frames": 1040,
+				"max_metres": 0.000000215856516661006
+			},
+			"label": "authored standing actual world foot error",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+				"foot_error": 0.000000141610044579465,
+				"foot_step": 0.000000203130824161235,
+				"head_acceleration": 67.285144329071,
+				"head_speed": 19.0574073791504,
+				"hips_step": 0.000275782920653,
+				"sole_error": 0.000000155637536636277
+			},
+			"label": "purposeful gaze_override bounds",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+				"foot_error": 0.000000164293325610743,
+				"foot_step": 0.000000268892677013355,
+				"head_acceleration": 86.6986441612244,
+				"head_speed": 18.1585884094238,
+				"hips_step": 0.000275783677352592,
+				"sole_error": 0.00000016307792805037
+			},
+			"label": "purposeful gaze_release bounds",
+			"model": "eishin-flash",
+			"ok": true
+		},
+		{
+			"details": {
+				"before_speech": {
+					"foot_error": 0.000000164430531413018,
+					"foot_step": 0.000000232047014492309,
+					"head_acceleration": 308.818073272705,
+					"head_speed": 20.8906135559082,
+					"hips_step": 0.00124954816419631,
+					"sole_error": 0.00000017994845791236
+				},
+				"before_switch": {
+					"foot_error": 0.000000164430531413018,
+					"foot_step": 0.00000020141560241882,
+					"head_acceleration": 303.06206703186,
+					"head_speed": 19.5512981414795,
+					"hips_step": 0.00123663048725575,
+					"sole_error": 0.00000017994845791236
+				},
+				"disabled_idle": {
+					"foot_error": 0.00242878473363817,
+					"foot_step": 0.000634793657809496,
+					"head_acceleration": 501.943016052246,
+					"head_speed": 74.5181655883789,
+					"hips_step": 0.00206628907471895,
+					"sole_error": 0.00319116772152483
+				},
+				"gaze_override": {
+					"foot_error": 0.000000141610044579465,
+					"foot_step": 0.000000203130824161235,
+					"head_acceleration": 67.285144329071,
+					"head_speed": 19.0574073791504,
+					"hips_step": 0.000275782920653,
+					"sole_error": 0.000000155637536636277
+				},
+				"gaze_release": {
+					"foot_error": 0.000000164293325610743,
+					"foot_step": 0.000000268892677013355,
+					"head_acceleration": 86.6986441612244,
+					"head_speed": 18.1585884094238,
+					"hips_step": 0.000275783677352592,
+					"sole_error": 0.00000016307792805037
+				},
+				"heading": {
+					"foot_error": 0.0315812602639198,
+					"foot_step": 0.00620220135897398,
+					"head_acceleration": 599.239711761475,
+					"head_speed": 70.0605697631836,
+					"hips_step": 0.00183922750875354,
+					"sole_error": 0.0315812565386295
+				},
+				"heading_return": {
+					"foot_error": 0.0315811485052109,
+					"foot_step": 0.00605023093521595,
+					"head_acceleration": 569.38419342041,
+					"head_speed": 92.7755737304688,
+					"hips_step": 0.00205346150323749,
+					"sole_error": 0.0315811447799206
+				},
+				"home": {
+					"foot_error": 0.000000193750906873902,
+					"foot_step": 0.00000027079553888143,
+					"head_acceleration": 67.8079605102539,
+					"head_speed": 10.0854320526123,
+					"hips_step": 0.00122224306687713,
+					"sole_error": 0.000000209672265327754
+				},
+				"idle_resume": {
+					"foot_error": 0.000000164599242680197,
+					"foot_step": 0.000000247360389948881,
+					"head_acceleration": 505.993480682373,
+					"head_speed": 21.0522689819336,
+					"hips_step": 0.00122210057452321,
+					"sole_error": 0.000000179900240482311
+				},
+				"model_switch": {
+					"foot_error": 0.000000150217445593626,
+					"foot_step": 0.000000234574997648451,
+					"head_acceleration": 2894.57565307617,
+					"head_speed": 96.4858551025391,
+					"hips_step": 0.000553361547645181,
+					"sole_error": 0.000000157510356757484
+				},
+				"rare_action": {
+					"foot_error": 0.000000194831258681916,
+					"foot_step": 0.000000254146982570091,
+					"head_acceleration": 343.258295059204,
+					"head_speed": 20.6596736907959,
+					"hips_step": 0.00148275052197278,
+					"sole_error": 0.000000215856516661006
+				},
+				"speech": {
+					"foot_error": 0.0000362383143510669,
+					"foot_step": 0.0000362384525942616,
+					"head_acceleration": 954.266624450684,
+					"head_speed": 69.4494323730469,
+					"hips_step": 0.00326867867261171,
+					"sole_error": 0.0000362348000635393
+				},
+				"speech_end": {
+					"foot_error": 0.0000620400533080101,
+					"foot_step": 0.0000620400533080101,
+					"head_acceleration": 417.805252075195,
+					"head_speed": 60.5742301940918,
+					"hips_step": 0.000665806990582496,
+					"sole_error": 0.0000620388527750038
+				}
+			},
+			"diagnostic_only": true,
+			"label": "raw continuity by stage",
+			"model": "eishin-flash",
+			"ok": true
+		}
+	],
+	"failures": 0,
+	"fps": 30.0,
+	"scope": "real VRM MotionPlayer integration; actual scaled world feet; no OS origin or rendered naturalness claim",
+	"source_after_sha256": {
+		"action_overlap.gd": "d289c984d1be109ddf267768a686bf3ca26bcd3c14b168efd0ea787e21f0f359",
+		"ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+		"arm_ik.gd": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+		"desktop_gait.gd": "67b86435b75333d5cbc196f3fe1b269c3949794f679470e4cdb1c1f9cd57cc1d",
+		"leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+		"motion_player.gd": "3069c4ba5fdd3845b29730dac7c809f77b6267bd5df9bbf5938517c37d7b787f",
+		"turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+		"vrm_avatar.gd": "9ff5eb960ca1a0d2a7fc8137850a3a8fe769c9db2535533eb72e506b9271c2fd",
+		"vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb"
+	},
+	"source_sha256": {
+		"action_overlap.gd": "d289c984d1be109ddf267768a686bf3ca26bcd3c14b168efd0ea787e21f0f359",
+		"ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+		"arm_ik.gd": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+		"desktop_gait.gd": "67b86435b75333d5cbc196f3fe1b269c3949794f679470e4cdb1c1f9cd57cc1d",
+		"leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+		"motion-assets.json": "2e4f91be124ed79907bad673f75f22a670cae253a8a200928956e3b0f3eb2a0a",
+		"motion_player.gd": "3069c4ba5fdd3845b29730dac7c809f77b6267bd5df9bbf5938517c37d7b787f",
+		"probe": "444fd2429ffe228072490331b5d6742b53652b11fedd47bdf75c17b2102b6440",
+		"turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+		"uma_cheval_idle_action": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+		"uma_eishin_idle_action": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+		"uma_home_idle": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+		"uma_rice_idle_action": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+		"vrm_avatar.gd": "9ff5eb960ca1a0d2a7fc8137850a3a8fe769c9db2535533eb72e506b9271c2fd",
+		"vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb"
+	}
+}

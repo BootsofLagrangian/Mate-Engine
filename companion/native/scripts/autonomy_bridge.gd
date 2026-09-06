@@ -122,8 +122,23 @@ static func surface_status(surface_roam: bool, os_name: String, source_available
 	return "표면 걷기: 창 위치 없음 · 바닥만 (%s)" % why
 
 
-## First available walk clip name, or "" when none was imported.
+## Highest-priority declared locomotion clip, with stable name ordering on ties.
+## Older catalogues retain their known walk fallbacks.
 static func pick_walk_clip(loaded_clips: Dictionary) -> String:
+	var selected := ""
+	var priority := -1
+	var names := loaded_clips.keys()
+	names.sort()
+	for name in names:
+		var entry: Variant = loaded_clips[name]
+		if not entry is Dictionary or not bool(entry.get("locomotion", false)) or not bool(entry.get("loop", false)):
+			continue
+		var candidate := int(entry.get("locomotion_priority", 0))
+		if candidate > priority:
+			selected = str(name)
+			priority = candidate
+	if not selected.is_empty():
+		return selected
 	for name in WALK_CLIPS:
 		if loaded_clips.has(name):
 			return name

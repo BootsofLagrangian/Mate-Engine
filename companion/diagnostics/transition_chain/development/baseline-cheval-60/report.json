@@ -1,0 +1,284 @@
+{
+  "behavior_style": {
+    "curiosity": 0.4,
+    "gaze_hold_s": 2.2,
+    "idle_interval_s": 14.0,
+    "posture_strength": 0.45,
+    "response_delay_s": 0.35
+  },
+  "checks": [
+    {
+      "details": {},
+      "label": "matching authored behavior profile loaded",
+      "ok": true
+    },
+    {
+      "details": {
+        "effective_style": {
+          "curiosity": 0.4,
+          "gaze_hold_s": 2.2,
+          "idle_interval_s": 14.0,
+          "posture_strength": 0.45,
+          "response_delay_s": 0.35
+        }
+      },
+      "label": "director uses matching authored profile",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "authored home participates in sequence",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "initial surface support acquired",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:0",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 26.7999999999998
+          },
+          {
+            "id": "chain:1",
+            "outcome": "arrived",
+            "time": 38.7666666666657
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 50.7333333333317
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 58.6166666666646
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 70.0833333333306
+          }
+        ]
+      },
+      "label": "continuous journey arrived 0",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:1",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 26.7999999999998
+          },
+          {
+            "id": "chain:1",
+            "outcome": "arrived",
+            "time": 38.7666666666657
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 50.7333333333317
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 58.6166666666646
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 70.0833333333306
+          }
+        ]
+      },
+      "label": "continuous journey arrived 1",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:2",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 26.7999999999998
+          },
+          {
+            "id": "chain:1",
+            "outcome": "arrived",
+            "time": 38.7666666666657
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 50.7333333333317
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 58.6166666666646
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 70.0833333333306
+          }
+        ]
+      },
+      "label": "continuous journey arrived 2",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:before-reversal",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "moving reversal has actual preceding travel",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:reversal",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "superseding opposite journey arrives",
+      "ok": true
+    }
+  ],
+  "controlled_run_valid": true,
+  "effective_behavior_style": {
+    "curiosity": 0.4,
+    "gaze_hold_s": 2.2,
+    "idle_interval_s": 14.0,
+    "posture_strength": 0.45,
+    "response_delay_s": 0.35
+  },
+  "events": [
+    {
+      "id": "chain:0",
+      "kind": "chain_request",
+      "origin": "(818.0, 1400.0)",
+      "point": "(1178.0, 1400.0)",
+      "time": 18.9333333333335
+    },
+    {
+      "id": "chain:1",
+      "kind": "chain_request",
+      "origin": "(1178.0, 1400.0)",
+      "point": "(818.0, 1400.0)",
+      "time": 29.7999999999996
+    },
+    {
+      "id": "chain:2",
+      "kind": "chain_request",
+      "origin": "(818.0, 1400.0)",
+      "point": "(1178.0, 1400.0)",
+      "time": 41.7666666666656
+    },
+    {
+      "id": "chain:before-reversal",
+      "kind": "chain_request",
+      "origin": "(1178.0, 1400.0)",
+      "point": "(818.0, 1400.0)",
+      "time": 53.7333333333316
+    },
+    {
+      "id": "chain:reversal",
+      "kind": "chain_request",
+      "origin": "(1097.0, 1400.0)",
+      "point": "(1457.0, 1400.0)",
+      "time": 58.6166666666646
+    },
+    {
+      "kind": "chain_boundaries",
+      "boundary_count": 45
+    }
+  ],
+  "failures": 0,
+  "fps": 60,
+  "frame_dt_p50": 0.0166666666666667,
+  "frame_dt_p95": 0.0166666666666667,
+  "frames": 4445,
+  "missing_cells": [
+    "additional scales: main-scene matrix uses default 0.6; standalone gait scale matrix separate",
+    "actual Windows run: coordinator-owned"
+  ],
+  "model": "cheval-grand",
+  "scale": 0.6,
+  "scope": "actual main wiring; deterministic fixed-delta",
+  "seed": 2251,
+  "source_sha256": {
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/Assets/StreamingAssets/cheval-motions.json": "81e1e2a00d9d5619d68e4f6e08d21512cb7aec33fa5f64f0229883a6ac412c2a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/dance.vrma": "273031789e8152f0915af686e9039970d4eebe7fd2eff87357c8c682b0acd666",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_natural.vrma": "4ba99dc711238707b3cbb77c29457f21beec08be927dfb7617558a48f7995313",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_talking.vrma": "02a57732d6fe2283e1f4618518a4ef49d0b2ccced359b9f73d99da32b975ec41",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/interact.vrma": "cff1b7dbd5e2118904d8ef858b51168ea7cee78f3d00980f8e80cfdc104738f6",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/pick_up.vrma": "4a273e65619eadb66c5e3c7c6ca0e47a3dfcbdd65783fdbdcc04d1c7e522225e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/sit_idle.vrma": "1f618806f57d1a4b86802e82575224514514ce7492aad0eb7d034b1f1dea5bc5",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk.vrma": "c3d1faec4df73673cd5a37eb40a30f8111a619198f5b5bf290d16cea657d1bb0",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk_formal.vrma": "aadbb2f8cf1db1d4672f9fef325c949c7d15ce7090e4c915d23b368671919664",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/characters/cheval-grand.json": "9ee6d3c405cd70acda9e3d57c2fb17d0fa699a701b58f467c630ecd30731c8c1",
+    "ambient_motion.gd": "71de05a5179fe417fd096887576890f6baf930a554f98278034263513f672291",
+    "autonomy_bridge.gd": "94e2f3dafdbba98487779b378020c0c79631cd2afe777d225123679818967b29",
+    "behavior_director.gd": "0ea9033185b87acdece3d423750f611a8eb1110100cfcee462fd299bc2c5f42c",
+    "desktop_autonomy.gd": "7f4280d569f3dbbc0709cd6590b4fa88f1732b034bf6931537e4dbbc9980ebfc",
+    "desktop_gait.gd": "62c71702f2670e649c4875c506a572a65da3b2055282af65d4fa27bb1b08f310",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "living_behavior.gd": "210665e2e97ca0979d6f8ae4c489ce94b908e8fa8f938b8361b91f49309e59df",
+    "main.gd": "8c7dffc3b91f463c161fd8c98514638626c0f6a7bc104ab093c35923c3190e27",
+    "motion_player.gd": "c8da80243da33929755f29dba0b82c210440c2cc29a1b8d5b87f8f5597481ce0",
+    "probe_liveliness.gd": "833ec0521af3d8c4b00dfc7cc9e43a83bea40baefefa53cd2ade4ca2728ffe88",
+    "res://tools/probe_liveliness.gd": "d3121312eb514d67ea1a2a119136129db77418e73de2cd6ce385c3d8ef0958e0",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "vrm_avatar.gd": "d8b80a508d36f37faae31ae27814562871b76a8e6fbc4480429d89dbf594e26c"
+  },
+  "uncontrolled_pointer_frames": 0,
+  "full_evidence": {
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/baseline-cheval-60/report.full.e707276e1041.json.gz",
+    "sha256": "8e4fff7ee7b8405cd02a2ef3bdd5534237386abe36e157103e9a63c880c6c7cd",
+    "uncompressed_sha256": "e707276e1041e632042cd14ff036f1ff54fe770dac16f4cca0b84bd386dc9684",
+    "uncompressed_bytes": 364936
+  },
+  "epoch_count": 38
+}

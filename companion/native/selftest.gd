@@ -38,6 +38,8 @@ func _process(_delta: float) -> bool:
 	_test_pet_scale()
 	_test_surface_wiring()
 	_test_panel_vrma_and_autonomy()
+	_test_panel_preview_sequence()
+	_test_panel_idle_selection()
 	_test_interest_points()
 	_test_interest_markers()
 	_test_panel_behavior_tab()
@@ -500,10 +502,21 @@ func _test_asset_catalog() -> void:
 		{"name": "fbx_clip", "kind": "fbx", "duration": 1.0, "sha256": "c".repeat(64)},
 		{"name": "ok_clip", "kind": "vrma", "duration": 2.0, "sha256": "d".repeat(64)},
 		{"name": "loopy", "kind": "vrma", "duration": 1.0, "sha256": "e".repeat(64), "loop": "yes"},
+		{"name": "ambi", "kind": "vrma", "duration": 1.0, "sha256": "f".repeat(64), "loop": true, "ambient": "true"},
 		"not an object",
 	]}, errs2)
-	check(mixed.size() == 1 and mixed[0]["name"] == "ok_clip" and mixed[0]["loop"] == false, "invalid entries skipped, first valid kept, loop defaults false (%d kept)" % mixed.size())
-	check(errs2.size() == 6, "six problems reported (%s)" % ", ".join(errs2))
+	check(mixed.size() == 1 and mixed[0]["name"] == "ok_clip" and mixed[0]["loop"] == false and mixed[0]["ambient"] == false, "invalid entries skipped, first valid kept, loop/ambient default false (%d kept)" % mixed.size())
+	check(errs2.size() == 7 and ", ".join(errs2).contains("ambient is not a bool"), "seven problems reported incl. non-bool ambient (%s)" % ", ".join(errs2))
+	var errs_amb: Array[String] = []
+	var amb := MotionBank.parse_asset_catalog({"motions": [{"name": "calm", "kind": "vrma", "duration": 4.0, "sha256": "1".repeat(64), "loop": true, "ambient": true}]}, errs_amb)
+	check(errs_amb.is_empty() and amb.size() == 1 and amb[0]["ambient"] == true and amb[0]["loop"] == true, "boolean ambient flag carried through the catalogue")
+	var contact_entry := {"name":"contact_idle","kind":"vrma","duration":4.0,"sha256":"1".repeat(64),"contact_mode":"foot"}
+	var contact_errors: Array[String] = []
+	var contact := MotionBank.parse_asset_catalog({"motions":[contact_entry]},contact_errors)
+	check(contact_errors.is_empty() and contact.size() == 1 and contact[0].contact_mode == "foot", "authored foot contact capability survives catalogue parsing")
+	for invalid_contact in [true,"sit",[],{}]:
+		contact_entry.contact_mode = invalid_contact
+		check(not MotionBank.validate_asset_entry(contact_entry).is_empty(), "invalid contact capability rejected: %s" % str(invalid_contact))
 	check(mixed[0]["sha256"] == "a".repeat(64) and mixed[0]["description"] == "", "sha lower-cased, description defaults empty")
 	var errs3: Array[String] = []
 	check(MotionBank.parse_asset_catalog([], errs3).is_empty() and not errs3.is_empty(), "non-object catalog rejected")
@@ -950,8 +963,8 @@ func _test_panel_vrma_and_autonomy() -> void:
 	var idle_choices: Array = []
 	for i in idle_opt.item_count:
 		idle_choices.append(str(idle_opt.get_item_metadata(i)))
-	check(idle_choices == [""] and idle_opt.disabled, "unsupported ambient selector offers only the disabled built-in idle (%s)" % str(idle_choices))
-	check(idle_opt.get_item_text(idle_opt.selected) == "기본 대기 동작 사용", "idle setting uses plain product language")
+	check(idle_choices == ["auto", ""] and not idle_opt.disabled and idle_opt.get_item_metadata(idle_opt.selected) == "auto", "idle selector: auto + breathing only when no eligible clip (walk/dance/nod never listed) (%s)" % str(idle_choices))
+	check(idle_opt.get_item_text(0).begins_with("자동") and idle_opt.get_item_text(1).contains("호흡"), "idle setting uses plain product language")
 	panel.set_autonomy_state("산책 중")
 	check(panel._autonomy_state.text == "상태: 산책 중", "roaming state label")
 	var got: Array = []
@@ -991,6 +1004,157 @@ func _test_panel_vrma_and_autonomy() -> void:
 	check(panel._surface_status.text == "표면 걷기: 창 3개", "surface status label")
 	var budget := ControlPanel.PANEL_WIDTH - 30.0
 	check(panel.widest_child()["width"] <= budget, "new roaming/surface section keeps the panel within the CJK budget (%s)" % str(panel.widest_child()))
+	panel.queue_free()
+
+
+## "두 동작 이어보기": two selectors over finite built-in bank gestures only (no idle, custom, VRMA,
+## loop or contact/support entries), lead 0..1 default 0.35, one signal per press, selection kept
+## through a bank refresh, disabled with null/empty bank.
+func _test_panel_preview_sequence() -> void:
+	print("[panel: preview sequence]")
+	_ensure_settings_singleton()
+	var panel := ControlPanel.new()
+	root.add_child(panel)
+	var got: Array = []
+	panel.preview_sequence.connect(func(a: String, b: String, l: float): got.append([a, b, l]))
+	check(panel._chain_button.disabled and panel._chain_first.item_count == 0 and not panel._chain_lead.editable, "empty default bank: chain controls disabled")
+	check(is_equal_approx(panel._chain_lead.value, 0.35) and panel._chain_lead_value.text == "0.35" and is_zero_approx(panel._chain_lead.min_value) and is_equal_approx(panel._chain_lead.max_value, 1.0), "lead slider 0..1, default 0.35")
+	panel._chain_button.pressed.emit()
+	check(got.is_empty() and panel._motion_result.text.contains("고르세요"), "press with nothing selectable emits nothing, explains")
+	var bank := MotionBank.parse_json_text(FileAccess.get_file_as_string(_bank_path()))
+	# Extra bank entries that must be filtered out.
+	bank.motions["my_combo"] = {"name": "my_combo", "duration": 2.0, "tracks": [{"bone": "head", "keys": []}], "custom": true}
+	bank.order.append("my_combo")
+	bank.motions["sit_pose"] = {"name": "sit_pose", "duration": 2.0, "tracks": [{"bone": "hips", "keys": []}]}
+	bank.order.append("sit_pose")
+	bank.motions["prop_hold"] = {"name": "prop_hold", "duration": 2.0, "tracks": [{"bone": "hand", "keys": []}]}
+	bank.order.append("prop_hold")
+	bank.motions["sway_loop"] = {"name": "sway_loop", "duration": 2.0, "tracks": [{"bone": "spine", "keys": []}], "loop": true}
+	bank.order.append("sway_loop")
+	bank.motions["ghost"] = {"name": "ghost", "duration": 2.0, "tracks": []}
+	bank.order.append("ghost")
+	bank.motions["forever"] = {"name": "forever", "duration": INF, "tracks": [{"bone": "spine", "keys": []}]}
+	bank.order.append("forever")
+	panel.set_bank(bank)
+	panel.set_vrma_clips({"dance": {"duration": 1.0, "loop": false}, "walk": {"duration": 1.3, "loop": true}})
+	var cands := panel.sequence_candidates()
+	check(cands == ["nod", "shake_head", "shy", "wave", "think", "bow", "stretch"], "candidates = finite built-in gestures only, bank order (%s)" % str(cands))
+	for bad in ["idle", "my_combo", "sit_pose", "prop_hold", "sway_loop", "ghost", "forever", "dance", "walk"]:
+		check(not cands.has(bad), "excluded: " + bad)
+	var first_items: Array = []
+	for i in panel._chain_first.item_count:
+		first_items.append(str(panel._chain_first.get_item_metadata(i)))
+	check(first_items == cands and panel._chain_second.item_count == cands.size(), "both selectors list the candidates")
+	check(not panel._chain_button.disabled and panel._chain_lead.editable, "controls enabled with a usable bank")
+	var sel := panel.sequence_selection()
+	check(sel["first"] == "nod" and sel["second"] == "shake_head", "defaults: first two distinct gestures (%s)" % str(sel))
+	panel._chain_first.select(3) # wave
+	panel._chain_second.select(5) # bow
+	panel._chain_lead.value = 0.6
+	check(panel._chain_lead_value.text == "0.60", "lead label follows the slider")
+	panel._chain_button.pressed.emit()
+	check(got == [["wave", "bow", 0.6]], "button emits preview_sequence(first, second, lead) once (%s)" % str(got))
+	check(panel._motion_result.text.contains("wave → bow") and panel._motion_result.text.contains("0.60"), "result line reports the request")
+	# Same gesture twice is allowed (the motion owner decides); bank refresh keeps the selection.
+	panel._chain_second.select(3)
+	panel.set_bank(MotionBank.parse_json_text(FileAccess.get_file_as_string(_bank_path())))
+	sel = panel.sequence_selection()
+	check(sel["first"] == "wave" and sel["second"] == "wave" and is_equal_approx(float(sel["lead"]), 0.6), "bank refresh keeps first/second/lead (%s)" % str(sel))
+	panel._chain_button.pressed.emit()
+	check(got.size() == 2 and got[1] == ["wave", "wave", 0.6], "same gesture twice is emitted as chosen")
+	# A refresh that drops the selected gesture falls back to a valid one instead of emitting a stale name.
+	var small := MotionBank.parse_json_text(FileAccess.get_file_as_string(_bank_path()))
+	small.motions.erase("wave")
+	small.order.erase("wave")
+	panel.set_bank(small)
+	sel = panel.sequence_selection()
+	check(sel["first"] == "nod" and sel["second"] == "shake_head" and panel.sequence_candidates().size() == 6, "dropped gesture -> fallback selection, never a stale name (%s)" % str(sel))
+	panel.set_bank(null)
+	check(panel._chain_button.disabled and panel._chain_first.item_count == 0 and panel.sequence_candidates().is_empty() and panel.bank != null, "null bank -> chain disabled, panel keeps an empty bank object")
+	got.clear()
+	panel._chain_button.pressed.emit()
+	check(got.is_empty(), "disabled state never emits")
+	check(panel.widest_child()["width"] <= ControlPanel.PANEL_WIDTH - 30.0, "chain row keeps the panel within the CJK budget (%s)" % str(panel.widest_child()))
+	panel.queue_free()
+
+
+## "대기 동작" dropdown: eligible clips only (ambient+loop, legacy idle_natural, the character's
+## declared ambient_loop), friendly labels from manifest descriptions, saved choice preserved across
+## catalogue refresh / missing download / character change, and no setting emitted by mirroring.
+func _test_panel_idle_selection() -> void:
+	print("[panel: idle selection]")
+	_ensure_settings_singleton()
+	var settings := root.get_node("Settings")
+	var saved_before: Variant = settings.get_value("idle_clip", "auto")
+	settings.data["idle_clip"] = "uma_idle" # saved choice from a previous session
+	var panel := ControlPanel.new()
+	root.add_child(panel)
+	var got: Array = []
+	panel.setting_changed.connect(func(k: String, v: Variant): got.append([k, v]))
+	var opt: OptionButton = panel._idle_clip_option
+	var metas := func() -> Array:
+		var m: Array = []
+		for i in opt.item_count:
+			m.append(str(opt.get_item_metadata(i)))
+		return m
+	check(panel.idle_clip() == "uma_idle" and metas.call() == ["auto", "", "uma_idle"] and str(opt.get_item_metadata(opt.selected)) == "uma_idle" and opt.get_item_text(opt.selected).contains("아직 없음"), "saved clip not loaded yet: kept selected as a placeholder (%s)" % str(metas.call()))
+	check(not opt.disabled and not opt.fit_to_longest_item, "selector enabled; long labels do not widen the panel")
+	var clips := {
+		"walk": {"duration": 1.333, "loop": true, "ambient": false, "description": "Walking"},
+		"dance": {"duration": 1.0, "loop": false, "ambient": false, "description": "Celebratory dance"},
+		"prop_spin": {"duration": 2.0, "loop": true, "description": "Spinning a prop"},
+		"idle_natural": {"duration": 3.0, "loop": true, "description": "Natural idle"},
+		"uma_idle": {"duration": 6.0, "loop": true, "ambient": true, "description": "Calm breathing idle with slight weight shifts and occasional looks"},
+		"zz_calm": {"duration": 5.0, "loop": true, "ambient": true},
+		"one_shot_ambient": {"duration": 1.0, "loop": false, "ambient": true, "description": "Stretch"},
+	}
+	panel.set_vrma_clips(clips)
+	check(panel.idle_candidates() == ["idle_natural", "uma_idle", "zz_calm"], "eligible = ambient+loop or legacy idle_natural; walk/prop/dance/one-shot excluded (%s)" % str(panel.idle_candidates()))
+	check(metas.call() == ["auto", "", "idle_natural", "uma_idle", "zz_calm"] and str(opt.get_item_metadata(opt.selected)) == "uma_idle" and not opt.get_item_text(opt.selected).contains("아직 없음"), "catalogue arrival resolves the placeholder into the real item, still selected")
+	var uma_text := opt.get_item_text(opt.selected)
+	check(uma_text.begins_with("Calm breathing idle") and uma_text.ends_with("(uma_idle)") and uma_text.contains("…"), "label = truncated manifest description + name (%s)" % uma_text)
+	check(opt.get_item_text(4) == "zz_calm", "clip without description shows its name")
+	check(opt.get_item_text(0) == "자동 (캐릭터에 맞게)", "auto label without a character profile")
+	check(got.is_empty(), "refresh/mirroring never emits idle_clip")
+	# Character catalogue drives the auto label; its ambient_loop counts as eligible even unflagged.
+	panel.set_characters([{"id": "a", "name": "A", "ambient_loop": "uma_idle"}, {"id": "b", "name": "B", "ambient_loop": "b_idle"}], "a")
+	check(panel.idle_profile() == "uma_idle" and opt.get_item_text(0).begins_with("자동 · Calm breathing idle"), "auto shows the current character's loaded loop (%s)" % opt.get_item_text(0))
+	panel.set_characters([{"id": "a", "name": "A", "ambient_loop": "uma_idle"}, {"id": "b", "name": "B", "ambient_loop": "b_idle"}], "b")
+	check(opt.get_item_text(0) == "자동 (캐릭터 동작 준비 중)" and not panel.idle_candidates().has("b_idle"), "unloaded profile loop: auto says it is pending, nothing fake listed")
+	panel.set_vrma_clips(clips.merged({"b_idle": {"duration": 4.0, "loop": true, "description": "B idle"}}))
+	check(panel.idle_candidates().has("b_idle") and opt.get_item_text(0) == "자동 · B idle (b_idle)", "declared profile loop becomes eligible once loaded")
+	check(str(opt.get_item_metadata(opt.selected)) == "uma_idle" and got.is_empty(), "character change keeps the saved explicit choice, no emit")
+	# Refresh that drops the saved clip (download failed / removed from catalogue).
+	var without := clips.duplicate()
+	without.erase("uma_idle")
+	panel.set_vrma_clips(without)
+	check(str(opt.get_item_metadata(opt.selected)) == "uma_idle" and opt.get_item_text(opt.selected).contains("아직 없음") and panel.idle_clip() == "uma_idle" and got.is_empty(), "missing saved clip after refresh: placeholder, setting untouched")
+	panel.set_vrma_clips(clips)
+	check(not opt.get_item_text(opt.selected).contains("아직 없음") and str(opt.get_item_metadata(opt.selected)) == "uma_idle", "round trip restores the real item")
+	# User selection emits exactly once with the clip name / "" / "auto".
+	opt.select(1)
+	opt.item_selected.emit(1)
+	check(got == [["idle_clip", ""]] and panel.idle_clip() == "", "choosing breathing-only emits idle_clip \"\"")
+	opt.select(2)
+	opt.item_selected.emit(2)
+	check(got[-1] == ["idle_clip", "idle_natural"], "choosing a clip emits its name")
+	opt.select(0)
+	opt.item_selected.emit(0)
+	check(got[-1] == ["idle_clip", "auto"] and got.size() == 3, "choosing auto emits auto")
+	got.clear()
+	panel.set_idle_clip("zz_calm")
+	check(str(opt.get_item_metadata(opt.selected)) == "zz_calm" and got.is_empty(), "host mirror selects without emitting")
+	panel.set_vrma_clips({})
+	check(metas.call() == ["auto", "", "zz_calm"] and str(opt.get_item_metadata(opt.selected)) == "zz_calm", "empty catalogue keeps the saved clip as placeholder")
+	panel.set_idle_clip("auto")
+	panel.set_vrma_clips({})
+	check(metas.call() == ["auto", ""] and opt.selected == 0, "auto with nothing loaded: two items, auto selected")
+	# Preview path unchanged: every imported clip (eligible or not) stays in the motion tab presets.
+	panel.set_vrma_clips(clips)
+	var presets := panel.preset_names()
+	check(presets.has("walk") and presets.has("uma_idle") and presets.has("one_shot_ambient") and presets.has("prop_spin"), "motion tab preview still lists every imported clip")
+	check(panel.widest_child()["width"] <= ControlPanel.PANEL_WIDTH - 30.0, "idle selector keeps the panel within the CJK budget (%s)" % str(panel.widest_child()))
+	settings.data["idle_clip"] = saved_before
 	panel.queue_free()
 
 

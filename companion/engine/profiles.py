@@ -10,6 +10,7 @@ from pathlib import Path
 from . import COMPANION_ROOT
 from . import config
 from .intent import normalize_intent
+from .motions import MOTION_ID
 
 ID_PATTERN = re.compile(r'^[a-z0-9][a-z0-9-]{0,63}$')
 EMOTIONS = ('neutral', 'happy', 'sad', 'relaxed', 'surprised')
@@ -65,6 +66,15 @@ class Profile:
             raise ProfileError(f'Profile {self.id}: motion_style must be an object')
         if not isinstance(data.get('behavior_style', {}), dict):
             raise ProfileError(f'Profile {self.id}: behavior_style must be an object')
+        ambient_loop = data.get('ambient_loop', '')
+        idle_actions = data.get('idle_actions', [])
+        if not isinstance(ambient_loop, str) or (ambient_loop and not MOTION_ID.fullmatch(ambient_loop)):
+            raise ProfileError(f'Profile {self.id}: ambient_loop must be a motion ID or empty')
+        if not isinstance(idle_actions, list) or len(idle_actions) > 8 or any(
+                not isinstance(name, str) or not MOTION_ID.fullmatch(name) for name in idle_actions):
+            raise ProfileError(f'Profile {self.id}: idle_actions must contain at most eight motion IDs')
+        self.ambient_loop = ambient_loop
+        self.idle_actions = list(dict.fromkeys(idle_actions))
 
     @property
     def name(self):
@@ -133,6 +143,8 @@ class Profile:
             'voice_available': reference is not None,
             'motion_style': self.motion_style,
             'behavior_style': self.behavior_style,
+            'ambient_loop': self.ambient_loop,
+            'idle_actions': self.idle_actions,
             'source': self.data.get('source'),
             'examples': len(self.data.get('examples', [])),
         }

@@ -1,0 +1,320 @@
+{
+  "behavior_style": {
+    "curiosity": 0.55,
+    "gaze_hold_s": 1.8,
+    "idle_interval_s": 18.0,
+    "posture_strength": 0.7,
+    "response_delay_s": 0.15
+  },
+  "checks": [
+    {
+      "details": {},
+      "label": "matching authored behavior profile loaded",
+      "ok": true
+    },
+    {
+      "details": {
+        "effective_style": {
+          "curiosity": 0.55,
+          "gaze_hold_s": 1.8,
+          "idle_interval_s": 18.0,
+          "posture_strength": 0.7,
+          "response_delay_s": 0.15
+        }
+      },
+      "label": "director uses matching authored profile",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "authored home participates in sequence",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "initial surface support acquired",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:0",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 26.9000000000005
+          },
+          {
+            "id": "chain:1",
+            "outcome": "interrupted",
+            "time": 31.7666666666674
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 66.4666666666655
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 74.466666666665
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 84.5666666666644
+          }
+        ]
+      },
+      "label": "continuous journey arrived 0",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:1",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 26.9000000000005
+          },
+          {
+            "id": "chain:1",
+            "outcome": "interrupted",
+            "time": 31.7666666666674
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 66.4666666666655
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 74.466666666665
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 84.5666666666644
+          }
+        ]
+      },
+      "label": "continuous journey arrived 1",
+      "ok": false
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:2",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 26.9000000000005
+          },
+          {
+            "id": "chain:1",
+            "outcome": "interrupted",
+            "time": 31.7666666666674
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 66.4666666666655
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 74.466666666665
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 84.5666666666644
+          }
+        ]
+      },
+      "label": "continuous journey arrived 2",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:before-reversal",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "moving reversal has actual preceding travel",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:reversal",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "superseding opposite journey arrives",
+      "ok": true
+    }
+  ],
+  "controlled_run_valid": true,
+  "effective_behavior_style": {
+    "curiosity": 0.55,
+    "gaze_hold_s": 1.8,
+    "idle_interval_s": 18.0,
+    "posture_strength": 0.7,
+    "response_delay_s": 0.15
+  },
+  "events": [
+    {
+      "id": "chain:0",
+      "kind": "chain_request",
+      "origin": "(817.5952, 1400.0)",
+      "point": "(1177.595, 1400.0)",
+      "time": 18.9333333333334
+    },
+    {
+      "id": "chain:1",
+      "kind": "chain_request",
+      "origin": "(1172.037, 1400.0)",
+      "point": "(812.0366, 1400.0)",
+      "time": 29.9000000000006
+    },
+    {
+      "id": "chain:2",
+      "kind": "chain_request",
+      "origin": "(1124.508, 1400.0)",
+      "point": "(1484.508, 1400.0)",
+      "time": 57.9333333333326
+    },
+    {
+      "id": "chain:before-reversal",
+      "kind": "chain_request",
+      "origin": "(1483.685, 1400.0)",
+      "point": "(1123.685, 1400.0)",
+      "time": 69.4666666666653
+    },
+    {
+      "id": "chain:reversal",
+      "kind": "chain_request",
+      "origin": "(1402.609, 1400.0)",
+      "point": "(1762.609, 1400.0)",
+      "time": 74.466666666665
+    },
+    {
+      "kind": "chain_boundaries",
+      "boundary_count": 43
+    }
+  ],
+  "failures": 1,
+  "fps": 30,
+  "frame_dt_p50": 0.0333333333333333,
+  "frame_dt_p95": 0.0333333333333333,
+  "frames": 2657,
+  "missing_cells": [
+    "additional scales: main-scene matrix uses default 0.6; standalone gait scale matrix separate",
+    "actual Windows run: coordinator-owned"
+  ],
+  "model": "eishin-flash",
+  "scale": 1.0,
+  "scope": "actual main wiring; deterministic fixed-delta",
+  "seed": 2251,
+  "source_after_sha256": {
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/Assets/StreamingAssets/cheval-motions.json": "81e1e2a00d9d5619d68e4f6e08d21512cb7aec33fa5f64f0229883a6ac412c2a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/eishin-flash.vrm": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/dance.vrma": "273031789e8152f0915af686e9039970d4eebe7fd2eff87357c8c682b0acd666",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_natural.vrma": "4ba99dc711238707b3cbb77c29457f21beec08be927dfb7617558a48f7995313",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_talking.vrma": "02a57732d6fe2283e1f4618518a4ef49d0b2ccced359b9f73d99da32b975ec41",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/interact.vrma": "cff1b7dbd5e2118904d8ef858b51168ea7cee78f3d00980f8e80cfdc104738f6",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/pick_up.vrma": "4a273e65619eadb66c5e3c7c6ca0e47a3dfcbdd65783fdbdcc04d1c7e522225e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/sit_idle.vrma": "1f618806f57d1a4b86802e82575224514514ce7492aad0eb7d034b1f1dea5bc5",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk.vrma": "c3d1faec4df73673cd5a37eb40a30f8111a619198f5b5bf290d16cea657d1bb0",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk_formal.vrma": "aadbb2f8cf1db1d4672f9fef325c949c7d15ce7090e4c915d23b368671919664",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_cheval_idle_action.vrma": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_eishin_idle_action.vrma": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_rice_idle_action.vrma": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/characters/eishin-flash.json": "bdccd5171703268767c0eb00fb60e9f5ff7107d07a199e8d082b70bfec579ef5",
+    "ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+    "autonomy_bridge.gd": "94e2f3dafdbba98487779b378020c0c79631cd2afe777d225123679818967b29",
+    "behavior_director.gd": "53e054d0e8b2b35a3c7558f760e98ce1629640b5e2b81011848b6f99b9af34c1",
+    "desktop_autonomy.gd": "0bd14090b3ac393ce8cc9c746263a5badfb189463cdacce293c2dfc13e2abb42",
+    "desktop_gait.gd": "8f5d85584f1b7fbe969386a2e4a426e4006f383cbbc1db6d8cc0b9add1f08943",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "living_behavior.gd": "49d1f7510baec5216d9ce8c8b03c0e132d72bbc27753bddfb03b636984d02ecc",
+    "main.gd": "8c7dffc3b91f463c161fd8c98514638626c0f6a7bc104ab093c35923c3190e27",
+    "motion-assets.json": "2e4f91be124ed79907bad673f75f22a670cae253a8a200928956e3b0f3eb2a0a",
+    "motion_player.gd": "50c3495188955a7f52343067e448f12d59957a0b1845f1b605189acad9dcc6a2",
+    "probe_transition_chain.gd": "dff2299b59a59a9acf5db37458294e0ff60c8c87731619b0624826f2ceb31e77",
+    "res://tools/probe_liveliness.gd": "d3121312eb514d67ea1a2a119136129db77418e73de2cd6ce385c3d8ef0958e0",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "vrm_avatar.gd": "d8b80a508d36f37faae31ae27814562871b76a8e6fbc4480429d89dbf594e26c"
+  },
+  "source_sha256": {
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/Assets/StreamingAssets/cheval-motions.json": "81e1e2a00d9d5619d68e4f6e08d21512cb7aec33fa5f64f0229883a6ac412c2a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/eishin-flash.vrm": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/dance.vrma": "273031789e8152f0915af686e9039970d4eebe7fd2eff87357c8c682b0acd666",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_natural.vrma": "4ba99dc711238707b3cbb77c29457f21beec08be927dfb7617558a48f7995313",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_talking.vrma": "02a57732d6fe2283e1f4618518a4ef49d0b2ccced359b9f73d99da32b975ec41",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/interact.vrma": "cff1b7dbd5e2118904d8ef858b51168ea7cee78f3d00980f8e80cfdc104738f6",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/pick_up.vrma": "4a273e65619eadb66c5e3c7c6ca0e47a3dfcbdd65783fdbdcc04d1c7e522225e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/sit_idle.vrma": "1f618806f57d1a4b86802e82575224514514ce7492aad0eb7d034b1f1dea5bc5",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk.vrma": "c3d1faec4df73673cd5a37eb40a30f8111a619198f5b5bf290d16cea657d1bb0",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk_formal.vrma": "aadbb2f8cf1db1d4672f9fef325c949c7d15ce7090e4c915d23b368671919664",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_cheval_idle_action.vrma": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_eishin_idle_action.vrma": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_rice_idle_action.vrma": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/characters/eishin-flash.json": "bdccd5171703268767c0eb00fb60e9f5ff7107d07a199e8d082b70bfec579ef5",
+    "ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+    "autonomy_bridge.gd": "94e2f3dafdbba98487779b378020c0c79631cd2afe777d225123679818967b29",
+    "behavior_director.gd": "53e054d0e8b2b35a3c7558f760e98ce1629640b5e2b81011848b6f99b9af34c1",
+    "desktop_autonomy.gd": "0bd14090b3ac393ce8cc9c746263a5badfb189463cdacce293c2dfc13e2abb42",
+    "desktop_gait.gd": "8f5d85584f1b7fbe969386a2e4a426e4006f383cbbc1db6d8cc0b9add1f08943",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "living_behavior.gd": "49d1f7510baec5216d9ce8c8b03c0e132d72bbc27753bddfb03b636984d02ecc",
+    "main.gd": "8c7dffc3b91f463c161fd8c98514638626c0f6a7bc104ab093c35923c3190e27",
+    "motion-assets.json": "2e4f91be124ed79907bad673f75f22a670cae253a8a200928956e3b0f3eb2a0a",
+    "motion_player.gd": "50c3495188955a7f52343067e448f12d59957a0b1845f1b605189acad9dcc6a2",
+    "probe_transition_chain.gd": "dff2299b59a59a9acf5db37458294e0ff60c8c87731619b0624826f2ceb31e77",
+    "res://tools/probe_liveliness.gd": "d3121312eb514d67ea1a2a119136129db77418e73de2cd6ce385c3d8ef0958e0",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "vrm_avatar.gd": "d8b80a508d36f37faae31ae27814562871b76a8e6fbc4480429d89dbf594e26c"
+  },
+  "uncontrolled_pointer_frames": 0,
+  "full_evidence": {
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/eishin-flash-30fps-1.0/report.full.7d1a48a20498.json.gz",
+    "sha256": "91380c957d3daa72e37318dbe7560733722015bdaac8dcd2671b0e367ceb8e2c",
+    "uncompressed_sha256": "7d1a48a20498ed2a9e4262badd8e8a2afb2f4151721446cabd6b787359a8ec83",
+    "uncompressed_bytes": 498229
+  },
+  "epoch_count": 28
+}

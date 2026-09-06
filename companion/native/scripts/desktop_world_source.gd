@@ -105,21 +105,39 @@ func _poll() -> void:
 		last_error = "Desktop geometry helper exited."
 		stop()
 		return
-	if not FileAccess.file_exists(_snapshot_path):
-		return # Add-Type compilation can take a few seconds on first launch.
-	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(_snapshot_path))
-	if not is_valid_snapshot(parsed):
-		last_error = "Invalid desktop geometry snapshot."
+	_read_snapshot(int(Time.get_unix_time_from_system() * 1000.0))
+
+
+func _retain_or_expire(now_msec: int, reason: String) -> void:
+	last_error = reason
+	# A failed transport/parse is not evidence that desktop surfaces disappeared.
+	# Retention never refreshes the last accepted geometry's freshness deadline.
+	if _last_timestamp <= 0 or now_msec - _last_timestamp > STALE_MSEC:
 		available = false
 		_clear_snapshot()
+
+
+func _read_snapshot(now_msec: int) -> void:
+	var file := FileAccess.open(_snapshot_path, FileAccess.READ)
+	if file == null:
+		_retain_or_expire(now_msec, "Desktop geometry snapshot is temporarily unreadable.")
 		return
+	var payload := file.get_as_text()
+	file.close()
+	var decoder := JSON.new()
+	if decoder.parse(payload) != OK or not is_valid_snapshot(decoder.data):
+		_retain_or_expire(now_msec, "Invalid desktop geometry snapshot; waiting for next publication.")
+		return
+	var parsed: Dictionary = decoder.data
 	var stamp := int(parsed["timestamp_msec"])
-	if int(Time.get_unix_time_from_system() * 1000.0) - stamp > STALE_MSEC:
+	if now_msec - stamp > STALE_MSEC:
 		last_error = "Desktop geometry snapshot is stale."
 		available = false
 		_clear_snapshot()
 		return
-	if stamp == _last_timestamp:
+	if stamp == _last_timestamp and not snapshot.is_empty():
+		last_error = ""
+		available = true
 		return
 	_last_timestamp = stamp
 	last_error = ""

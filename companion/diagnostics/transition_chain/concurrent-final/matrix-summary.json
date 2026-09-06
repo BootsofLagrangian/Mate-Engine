@@ -1,0 +1,122 @@
+[
+  {
+    "name": "cheval-grand-30fps-0.6",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.052031745788774494,
+    "support_drift_m": 0.00015731335542319935
+  },
+  {
+    "name": "cheval-grand-30fps-1.0",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.09975803725624525,
+    "support_drift_m": 0.0003044205275618274
+  },
+  {
+    "name": "cheval-grand-60fps-0.6",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.0564654370491284,
+    "support_drift_m": 0.0001711701617812438
+  },
+  {
+    "name": "cheval-grand-60fps-1.0",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.11056659643943988,
+    "support_drift_m": 0.0003379218183669409
+  },
+  {
+    "name": "rice-shower-30fps-0.6",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.05553810189701236,
+    "support_drift_m": 0.0001635744270917781
+  },
+  {
+    "name": "rice-shower-30fps-1.0",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.09188157090053871,
+    "support_drift_m": 0.00026848984106143226
+  },
+  {
+    "name": "rice-shower-60fps-0.6",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.05555527078351929,
+    "support_drift_m": 0.0001638371722671495
+  },
+  {
+    "name": "rice-shower-60fps-1.0",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.09730543064828938,
+    "support_drift_m": 0.0002821698662067398
+  },
+  {
+    "name": "eishin-flash-30fps-0.6",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.06311542778424156,
+    "support_drift_m": 0.0001896275067498853
+  },
+  {
+    "name": "eishin-flash-30fps-1.0",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.1074143840596519,
+    "support_drift_m": 0.0003255878283049552
+  },
+  {
+    "name": "eishin-flash-60fps-0.6",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.059396458813211525,
+    "support_drift_m": 0.0001795896219243547
+  },
+  {
+    "name": "eishin-flash-60fps-1.0",
+    "exit_code": 0,
+    "checks": 26,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.09504818146243728,
+    "support_drift_m": 0.0002875226126358025
+  }
+]

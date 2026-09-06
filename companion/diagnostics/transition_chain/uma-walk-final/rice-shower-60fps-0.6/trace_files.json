@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-0.6/joints.jsonl.gz",
+    "sha256": "507affb013c6c84615341941b42b85c4a991b0fe99b24a3ffc56c901adfa08a6",
+    "bytes": 12561076
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-0.6/frames.csv.gz",
+    "sha256": "9c85f6e736f671c2393598cf01a92645de1e477888dc1b7c9b3f5166077e73d9",
+    "bytes": 760049
+  }
+]

@@ -1,0 +1,1881 @@
+{
+  "selection": "All explicitly named final-package runs. Development failures are separately retained and described in README.md.",
+  "runs": [
+    {
+      "raw_directory": "logs/windows-objects-floor-v2-cheval-full",
+      "report_sha256": "3574f3821dbb5614b44ee48eec7987b5ccd21cb533627f5bb774ae528c2fb0e8",
+      "build_record_sha256": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e",
+      "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+      "executable_bytes": 99674664,
+      "source_stable_during_build": true,
+      "probe_sha256": "6f25bed39319cfbdfafe609ba4bfea6bbbcda5f2bf3bbf1d9fcfde295b6fef35",
+      "renderer": "NVIDIA GeForce RTX 4090",
+      "character": "cheval-grand",
+      "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+      "scale": 0.6,
+      "mode": "full-lifecycle",
+      "checks": [
+        {
+          "label": "real avatar backend and required motions ready",
+          "ok": true
+        },
+        {
+          "label": "requested character exists in backend catalogue",
+          "ok": true
+        },
+        {
+          "label": "explicit character selection matches actual loaded rig filename and session",
+          "ok": true
+        },
+        {
+          "label": "actual pet scale matches requested 0.600",
+          "ok": true
+        },
+        {
+          "label": "native furniture subwindows supported",
+          "ok": true
+        },
+        {
+          "label": "actual usable monitor floor at requested pet scale 0.600",
+          "ok": true
+        },
+        {
+          "label": "chair object created",
+          "ok": true
+        },
+        {
+          "label": "chair GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "chair separate native window",
+          "ok": true
+        },
+        {
+          "label": "chair placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport chair-loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa object created",
+          "ok": true
+        },
+        {
+          "label": "sofa GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "sofa separate native window",
+          "ok": true
+        },
+        {
+          "label": "sofa placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport sofa-loaded",
+          "ok": true
+        },
+        {
+          "label": "computer object created",
+          "ok": true
+        },
+        {
+          "label": "computer GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "computer separate native window",
+          "ok": true
+        },
+        {
+          "label": "computer placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport computer-loaded",
+          "ok": true
+        },
+        {
+          "label": "object data survives JSON serialization with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "object data persisted through Settings with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "chair target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair",
+          "ok": true
+        },
+        {
+          "label": "explicit user stop releases occupied chair",
+          "ok": true
+        },
+        {
+          "label": "sofa target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "sofa real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "sofa sit accepted",
+          "ok": true
+        },
+        {
+          "label": "sofa reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "sofa uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "sofa calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "sofa visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture sofa",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair-before-move visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair-before-move",
+          "ok": true
+        },
+        {
+          "label": "occupied object move accepted",
+          "ok": true
+        },
+        {
+          "label": "occupied object move releases seat",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair-before-resize visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair-before-resize",
+          "ok": true
+        },
+        {
+          "label": "occupied object resize accepted",
+          "ok": true
+        },
+        {
+          "label": "occupied object resize releases seat",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair-before-hide visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair-before-hide",
+          "ok": true
+        },
+        {
+          "label": "occupied object hide accepted",
+          "ok": true
+        },
+        {
+          "label": "occupied object hide releases seat",
+          "ok": true
+        },
+        {
+          "label": "hidden chair can be restored",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair-before-remove visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair-before-remove",
+          "ok": true
+        },
+        {
+          "label": "occupied object remove accepted",
+          "ok": true
+        },
+        {
+          "label": "occupied object remove releases seat",
+          "ok": true
+        },
+        {
+          "label": "computer target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "computer target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "computer approach real floor precondition",
+          "ok": true
+        },
+        {
+          "label": "computer use accepted",
+          "ok": true
+        },
+        {
+          "label": "computer reaches finite work-pose stage",
+          "ok": true
+        },
+        {
+          "label": "computer uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene left wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene right wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "computer use remains seated at shared-scene socket",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture computer-use",
+          "ok": true
+        },
+        {
+          "label": "finite computer work pose ends with completed outcome, not cancellation",
+          "ok": true
+        },
+        {
+          "label": "idempotent shutdown removes own furniture windows",
+          "ok": true
+        },
+        {
+          "label": "original settings restored",
+          "ok": true
+        }
+      ],
+      "failures": 0,
+      "contacts": [
+        {
+          "error_px": 0.919012904167175,
+          "global_foot_displacement_x": 692.0,
+          "global_foot_end": "(1588.0, 1452.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "chair",
+          "rendered_seat_px": "(1587.02, 1294.984)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.5, 1295.768)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(339.0204, 562.9842)",
+            "pose": "sit",
+            "screen_point": "(1587.5, 1295.768)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1248, 732)",
+          "window_start": "(378, 672)"
+        },
+        {
+          "error_px": 0.422760218381882,
+          "global_foot_displacement_x": 697.0,
+          "global_foot_end": "(1593.0, 1464.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "sofa",
+          "rendered_seat_px": "(1587.359, 1306.827)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.0, 1307.05)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(334.3594, 562.8268)",
+            "pose": "sit",
+            "screen_point": "(1587.0, 1307.05)",
+            "surface_id": "object:obj_2:seat"
+          },
+          "window_end": "(1253, 744)",
+          "window_start": "(378, 672)"
+        },
+        {
+          "error_px": 0.918949246406555,
+          "global_foot_displacement_x": 692.0,
+          "global_foot_end": "(1588.0, 1452.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "chair-before-move",
+          "rendered_seat_px": "(1587.021, 1294.984)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.5, 1295.768)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(339.0204, 562.9842)",
+            "pose": "sit",
+            "screen_point": "(1587.5, 1295.768)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1248, 732)",
+          "window_start": "(378, 672)"
+        },
+        {
+          "error_px": 0.919012904167175,
+          "global_foot_displacement_x": 692.0,
+          "global_foot_end": "(1588.0, 1452.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "chair-before-resize",
+          "rendered_seat_px": "(1587.02, 1294.984)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.5, 1295.768)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(339.0204, 562.9842)",
+            "pose": "sit",
+            "screen_point": "(1587.5, 1295.768)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1248, 732)",
+          "window_start": "(378, 672)"
+        },
+        {
+          "error_px": 0.919012904167175,
+          "global_foot_displacement_x": 692.0,
+          "global_foot_end": "(1588.0, 1452.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "chair-before-hide",
+          "rendered_seat_px": "(1587.02, 1294.984)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.5, 1295.768)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(339.0204, 562.9842)",
+            "pose": "sit",
+            "screen_point": "(1587.5, 1295.768)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1248, 732)",
+          "window_start": "(378, 672)"
+        },
+        {
+          "error_px": 0.919012904167175,
+          "global_foot_displacement_x": 692.0,
+          "global_foot_end": "(1588.0, 1452.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "chair-before-remove",
+          "rendered_seat_px": "(1587.02, 1294.984)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.5, 1295.768)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(339.0204, 562.9842)",
+            "pose": "sit",
+            "screen_point": "(1587.5, 1295.768)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1248, 732)",
+          "window_start": "(378, 672)"
+        }
+      ],
+      "computer_contact": {
+        "hand_reachable": true,
+        "hands": {
+          "left": {
+            "error_px": 0.0001220703125,
+            "error_world_m": 1.79433740754575e-07,
+            "hand_reachable": true,
+            "keyboard_px": "(1582.052, 1238.304)",
+            "keyboard_world": "(-0.728173, 0.648837, -0.10946)",
+            "rendered_wrist_px": "(1582.052, 1238.304)",
+            "wrist_world": "(-0.728173, 0.648837, -0.109459)"
+          },
+          "right": {
+            "error_px": 0.0001220703125,
+            "error_world_m": 1.36571401299079e-07,
+            "hand_reachable": true,
+            "keyboard_px": "(1621.038, 1238.304)",
+            "keyboard_world": "(-0.610352, 0.648837, -0.191959)",
+            "rendered_wrist_px": "(1621.038, 1238.304)",
+            "wrist_world": "(-0.610352, 0.648837, -0.191959)"
+          }
+        },
+        "seat_attached": true,
+        "seat_error_px": 0.4083072245121,
+        "seated": true,
+        "shared_depth_buffer": true
+      },
+      "outcomes": [
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "cancelled",
+          "ms": 25770
+        },
+        {
+          "id": "obj_2",
+          "verb": "sit",
+          "outcome": "probe_next",
+          "ms": 46194
+        },
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "object_moved",
+          "ms": 66416
+        },
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "object_resized",
+          "ms": 86642
+        },
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "object_hidden",
+          "ms": 106909
+        },
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "object_removed",
+          "ms": 127188
+        },
+        {
+          "id": "obj_3",
+          "verb": "use",
+          "outcome": "completed",
+          "ms": 158876
+        }
+      ],
+      "captures": [
+        {
+          "file": "chair-loaded.png",
+          "ms": 4995,
+          "position": "(401, 1135)",
+          "save_error": 0,
+          "window_id": 1,
+          "sha256": "41b270b12041383570729c68bb67d7bc75554b78e16f986708ac90d5e5e80f51"
+        },
+        {
+          "file": "sofa-loaded.png",
+          "ms": 5265,
+          "position": "(1074, 1112)",
+          "save_error": 0,
+          "window_id": 2,
+          "sha256": "0d7198cd5076d63226dfe435e57f7f6ee5c28cf24d1781c0fd42075ea44dd5ef"
+        },
+        {
+          "file": "computer-loaded.png",
+          "ms": 5502,
+          "position": "(1873, 1101)",
+          "save_error": 0,
+          "window_id": 3,
+          "sha256": "4284c1476eb94f0ae50b9fb63181d3ddbdb269664c27503a77c342358aa5ff91"
+        },
+        {
+          "actual_character": "cheval-grand",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+          "file": "chair-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 25757,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1248, 732)",
+          "sha256": "5450501a876d8ea72f172b59355547fde6b33bca143a4fecab710edf4cadb9b2"
+        },
+        {
+          "actual_character": "cheval-grand",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+          "file": "sofa-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 46179,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1253, 744)",
+          "sha256": "09308366985c0efbc4b93a92ae8d4dd266e460831473e67a5fb93e3c38774a6a"
+        },
+        {
+          "actual_character": "cheval-grand",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+          "file": "chair-before-move-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 66400,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1248, 732)",
+          "sha256": "f2fd1167c93d42b30444db3559e832da66b6781c6f51d952695238145b60bf57"
+        },
+        {
+          "actual_character": "cheval-grand",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+          "file": "chair-before-resize-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 86625,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1248, 732)",
+          "sha256": "b1fb635dc89e8fdd75eec331a93b79b2201d8c24628b748dfdc0f3b3f8c385f6"
+        },
+        {
+          "actual_character": "cheval-grand",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+          "file": "chair-before-hide-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 106889,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1248, 732)",
+          "sha256": "a113f22e415343c2709a760e5a25f75216122ab7d4ed52cfdb5081189c3ba912"
+        },
+        {
+          "actual_character": "cheval-grand",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+          "file": "chair-before-remove-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 127167,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1248, 732)",
+          "sha256": "5511d8168574edf7cf2e01f8560be9b312e18557706da0a112ab91ea7b3d3000"
+        },
+        {
+          "actual_character": "cheval-grand",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+          "file": "computer-use-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 149535,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1305, 733)",
+          "sha256": "97182feb2810a4d3a7bd1d9926df860f240b9b647cc6a0c1d0fa6e9f9fb656fc"
+        }
+      ],
+      "capture_scope": "Own root viewport, shared 3D depth buffer while occupied; no external desktop-content capture."
+    },
+    {
+      "raw_directory": "logs/windows-objects-floor-v2-rice",
+      "report_sha256": "3381c413846c8f87bc198ba012b9f5cfed950414a14423364ba615309ca8295c",
+      "build_record_sha256": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e",
+      "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+      "executable_bytes": 99674664,
+      "source_stable_during_build": true,
+      "probe_sha256": "6f25bed39319cfbdfafe609ba4bfea6bbbcda5f2bf3bbf1d9fcfde295b6fef35",
+      "renderer": "NVIDIA GeForce RTX 4090",
+      "character": "rice-shower",
+      "model_sha256": "50ede37cd75029d8d00d17472588b4820408557243b6b2ee058570c7c451035a",
+      "scale": 0.6,
+      "mode": "contact-only",
+      "checks": [
+        {
+          "label": "real avatar backend and required motions ready",
+          "ok": true
+        },
+        {
+          "label": "requested character exists in backend catalogue",
+          "ok": true
+        },
+        {
+          "label": "explicit character selection matches actual loaded rig filename and session",
+          "ok": true
+        },
+        {
+          "label": "actual pet scale matches requested 0.600",
+          "ok": true
+        },
+        {
+          "label": "native furniture subwindows supported",
+          "ok": true
+        },
+        {
+          "label": "actual usable monitor floor at requested pet scale 0.600",
+          "ok": true
+        },
+        {
+          "label": "chair object created",
+          "ok": true
+        },
+        {
+          "label": "chair GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "chair separate native window",
+          "ok": true
+        },
+        {
+          "label": "chair placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport chair-loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa object created",
+          "ok": true
+        },
+        {
+          "label": "sofa GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "sofa separate native window",
+          "ok": true
+        },
+        {
+          "label": "sofa placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport sofa-loaded",
+          "ok": true
+        },
+        {
+          "label": "computer object created",
+          "ok": true
+        },
+        {
+          "label": "computer GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "computer separate native window",
+          "ok": true
+        },
+        {
+          "label": "computer placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport computer-loaded",
+          "ok": true
+        },
+        {
+          "label": "object data survives JSON serialization with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "object data persisted through Settings with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "chair target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair",
+          "ok": true
+        },
+        {
+          "label": "explicit user stop releases occupied chair",
+          "ok": true
+        },
+        {
+          "label": "sofa target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "sofa real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "sofa sit accepted",
+          "ok": true
+        },
+        {
+          "label": "sofa reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "sofa uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "sofa calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "sofa visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture sofa",
+          "ok": true
+        },
+        {
+          "label": "computer target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "computer target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "computer approach real floor precondition",
+          "ok": true
+        },
+        {
+          "label": "computer use accepted",
+          "ok": true
+        },
+        {
+          "label": "computer reaches finite work-pose stage",
+          "ok": true
+        },
+        {
+          "label": "computer uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene left wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene right wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "computer use remains seated at shared-scene socket",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture computer-use",
+          "ok": true
+        },
+        {
+          "label": "finite computer work pose ends with completed outcome, not cancellation",
+          "ok": true
+        },
+        {
+          "label": "idempotent shutdown removes own furniture windows",
+          "ok": true
+        },
+        {
+          "label": "original settings restored",
+          "ok": true
+        }
+      ],
+      "failures": 0,
+      "contacts": [
+        {
+          "error_px": 0.686223208904266,
+          "global_foot_displacement_x": 691.0,
+          "global_foot_end": "(1587.0, 1439.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "chair",
+          "rendered_seat_px": "(1587.469, 1290.45)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.0, 1290.951)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(340.4695, 571.4504)",
+            "pose": "sit",
+            "screen_point": "(1587.0, 1290.951)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1247, 719)",
+          "window_start": "(378, 672)"
+        },
+        {
+          "error_px": 0.28072926402092,
+          "global_foot_displacement_x": 693.0,
+          "global_foot_end": "(1589.0, 1452.0)",
+          "global_foot_start": "(896.0, 1392.0)",
+          "label": "sofa",
+          "rendered_seat_px": "(1586.747, 1302.852)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.0, 1302.974)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(337.7475, 570.8518)",
+            "pose": "sit",
+            "screen_point": "(1587.0, 1302.974)",
+            "surface_id": "object:obj_2:seat"
+          },
+          "window_end": "(1249, 732)",
+          "window_start": "(378, 672)"
+        }
+      ],
+      "computer_contact": {
+        "hand_reachable": true,
+        "hands": {
+          "left": {
+            "error_px": 0.0,
+            "error_world_m": 2.98023223876953e-08,
+            "hand_reachable": true,
+            "keyboard_px": "(1582.314, 1230.958)",
+            "keyboard_world": "(-0.702356, 0.599623, -0.109415)",
+            "rendered_wrist_px": "(1582.314, 1230.958)",
+            "wrist_world": "(-0.702356, 0.599623, -0.109415)"
+          },
+          "right": {
+            "error_px": 0.0,
+            "error_world_m": 4.4703483581543e-08,
+            "hand_reachable": true,
+            "keyboard_px": "(1623.176, 1230.958)",
+            "keyboard_world": "(-0.584583, 0.599623, -0.19188)",
+            "rendered_wrist_px": "(1623.176, 1230.958)",
+            "wrist_world": "(-0.584583, 0.599623, -0.19188)"
+          }
+        },
+        "seat_attached": true,
+        "seat_error_px": 0.85041356086731,
+        "seated": true,
+        "shared_depth_buffer": true
+      },
+      "outcomes": [
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "cancelled",
+          "ms": 25421
+        },
+        {
+          "id": "obj_2",
+          "verb": "sit",
+          "outcome": "probe_next",
+          "ms": 45637
+        },
+        {
+          "id": "obj_3",
+          "verb": "use",
+          "outcome": "completed",
+          "ms": 77072
+        }
+      ],
+      "captures": [
+        {
+          "file": "chair-loaded.png",
+          "ms": 4898,
+          "position": "(395, 1122)",
+          "save_error": 0,
+          "window_id": 1,
+          "sha256": "6bf5cd2809999c4e890ba7edc5c52c5cbdfe613461a388cf6f33174e2a975af5"
+        },
+        {
+          "file": "sofa-loaded.png",
+          "ms": 5136,
+          "position": "(1064, 1098)",
+          "save_error": 0,
+          "window_id": 2,
+          "sha256": "58b82fccd9ea573df1b97ce9bb1eabd477ba303ee59185fea158f65da9927a1d"
+        },
+        {
+          "file": "computer-loaded.png",
+          "ms": 5338,
+          "position": "(1865, 1087)",
+          "save_error": 0,
+          "window_id": 3,
+          "sha256": "65ee4a26653e1763a278cfde9d1afa7fa3ef3123ca6f489960595a92bb114df5"
+        },
+        {
+          "actual_character": "rice-shower",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/rice-shower.vrm",
+          "file": "chair-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 25408,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1247, 719)",
+          "sha256": "8e14249fc0cc56be9d588b773373f9602263e35df0b1b12b36d39953eaf35d84"
+        },
+        {
+          "actual_character": "rice-shower",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/rice-shower.vrm",
+          "file": "sofa-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 45623,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1249, 732)",
+          "sha256": "c1876bf9fdac7b58333371d9b5d5526161d9dafc701f783e443a58c135c067ac"
+        },
+        {
+          "actual_character": "rice-shower",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/rice-shower.vrm",
+          "file": "computer-use-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 67705,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1308, 719)",
+          "sha256": "7d5d932d5286c007fe2ae8bf6ac54f6159ee9884da41b4b28df6c96af013e504"
+        }
+      ],
+      "capture_scope": "Own root viewport, shared 3D depth buffer while occupied; no external desktop-content capture."
+    },
+    {
+      "raw_directory": "logs/windows-objects-floor-v2-eishin",
+      "report_sha256": "7b6cf26bb72541b954b7b234ea54f820a06ed20d2c451d3dcc096ff97100683e",
+      "build_record_sha256": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e",
+      "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+      "executable_bytes": 99674664,
+      "source_stable_during_build": true,
+      "probe_sha256": "6f25bed39319cfbdfafe609ba4bfea6bbbcda5f2bf3bbf1d9fcfde295b6fef35",
+      "renderer": "NVIDIA GeForce RTX 4090",
+      "character": "eishin-flash",
+      "model_sha256": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+      "scale": 0.6,
+      "mode": "contact-only",
+      "checks": [
+        {
+          "label": "real avatar backend and required motions ready",
+          "ok": true
+        },
+        {
+          "label": "requested character exists in backend catalogue",
+          "ok": true
+        },
+        {
+          "label": "explicit character selection matches actual loaded rig filename and session",
+          "ok": true
+        },
+        {
+          "label": "actual pet scale matches requested 0.600",
+          "ok": true
+        },
+        {
+          "label": "native furniture subwindows supported",
+          "ok": true
+        },
+        {
+          "label": "actual usable monitor floor at requested pet scale 0.600",
+          "ok": true
+        },
+        {
+          "label": "chair object created",
+          "ok": true
+        },
+        {
+          "label": "chair GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "chair separate native window",
+          "ok": true
+        },
+        {
+          "label": "chair placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport chair-loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa object created",
+          "ok": true
+        },
+        {
+          "label": "sofa GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "sofa separate native window",
+          "ok": true
+        },
+        {
+          "label": "sofa placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport sofa-loaded",
+          "ok": true
+        },
+        {
+          "label": "computer object created",
+          "ok": true
+        },
+        {
+          "label": "computer GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "computer separate native window",
+          "ok": true
+        },
+        {
+          "label": "computer placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport computer-loaded",
+          "ok": true
+        },
+        {
+          "label": "object data survives JSON serialization with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "object data persisted through Settings with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "chair target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair",
+          "ok": true
+        },
+        {
+          "label": "explicit user stop releases occupied chair",
+          "ok": true
+        },
+        {
+          "label": "sofa target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "sofa real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "sofa sit accepted",
+          "ok": true
+        },
+        {
+          "label": "sofa reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "sofa uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "sofa calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "sofa visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture sofa",
+          "ok": true
+        },
+        {
+          "label": "computer target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "computer target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "computer approach real floor precondition",
+          "ok": true
+        },
+        {
+          "label": "computer use accepted",
+          "ok": true
+        },
+        {
+          "label": "computer reaches finite work-pose stage",
+          "ok": true
+        },
+        {
+          "label": "computer uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene left wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene right wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "computer use remains seated at shared-scene socket",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture computer-use",
+          "ok": true
+        },
+        {
+          "label": "finite computer work pose ends with completed outcome, not cancellation",
+          "ok": true
+        },
+        {
+          "label": "idempotent shutdown removes own furniture windows",
+          "ok": true
+        },
+        {
+          "label": "original settings restored",
+          "ok": true
+        }
+      ],
+      "failures": 0,
+      "contacts": [
+        {
+          "error_px": 0.163935020565987,
+          "global_foot_displacement_x": 690.999938964844,
+          "global_foot_end": "(1586.642, 1457.0)",
+          "global_foot_start": "(895.6417, 1392.0)",
+          "label": "chair",
+          "rendered_seat_px": "(1587.163, 1295.014)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.0, 1295.027)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(340.1635, 558.0143)",
+            "pose": "sit",
+            "screen_point": "(1587.0, 1295.027)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1247, 737)",
+          "window_start": "(381, 672)"
+        },
+        {
+          "error_px": 0.45055028796196,
+          "global_foot_displacement_x": 690.999938964844,
+          "global_foot_end": "(1586.642, 1468.0)",
+          "global_foot_start": "(895.6417, 1392.0)",
+          "label": "sofa",
+          "rendered_seat_px": "(1587.128, 1306.184)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.5, 1306.438)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(340.1278, 558.1843)",
+            "pose": "sit",
+            "screen_point": "(1587.5, 1306.438)",
+            "surface_id": "object:obj_2:seat"
+          },
+          "window_end": "(1247, 748)",
+          "window_start": "(381, 672)"
+        }
+      ],
+      "computer_contact": {
+        "hand_reachable": true,
+        "hands": {
+          "left": {
+            "error_px": 0.0,
+            "error_world_m": 2.98023223876953e-08,
+            "hand_reachable": true,
+            "keyboard_px": "(1582.018, 1237.254)",
+            "keyboard_world": "(-0.726864, 0.66007, -0.109544)",
+            "rendered_wrist_px": "(1582.018, 1237.254)",
+            "wrist_world": "(-0.726864, 0.66007, -0.109544)"
+          },
+          "right": {
+            "error_px": 0.0,
+            "error_world_m": 2.98023223876953e-08,
+            "hand_reachable": true,
+            "keyboard_px": "(1621.272, 1237.254)",
+            "keyboard_world": "(-0.608952, 0.66007, -0.192106)",
+            "rendered_wrist_px": "(1621.272, 1237.254)",
+            "wrist_world": "(-0.608952, 0.66007, -0.192106)"
+          }
+        },
+        "seat_attached": true,
+        "seat_error_px": 0.39329993724823,
+        "seated": true,
+        "shared_depth_buffer": true
+      },
+      "outcomes": [
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "cancelled",
+          "ms": 25525
+        },
+        {
+          "id": "obj_2",
+          "verb": "sit",
+          "outcome": "probe_next",
+          "ms": 45986
+        },
+        {
+          "id": "obj_3",
+          "verb": "use",
+          "outcome": "completed",
+          "ms": 77630
+        }
+      ],
+      "captures": [
+        {
+          "file": "chair-loaded.png",
+          "ms": 4761,
+          "position": "(400, 1133)",
+          "save_error": 0,
+          "window_id": 1,
+          "sha256": "14a1edfe8cc502a654a029dbdefe99379bb07139a4d3ab4b38fe663a05fd1400"
+        },
+        {
+          "file": "sofa-loaded.png",
+          "ms": 5011,
+          "position": "(1073, 1110)",
+          "save_error": 0,
+          "window_id": 2,
+          "sha256": "d3164670da3c99c1f8dd42907477804a595ecc1da3c707dce4ff8ed2302cc76a"
+        },
+        {
+          "file": "computer-loaded.png",
+          "ms": 5271,
+          "position": "(1872, 1099)",
+          "save_error": 0,
+          "window_id": 3,
+          "sha256": "e22c0814dd87563782c7d78422d45c706db6e2fae21580dbac96801087b06a1c"
+        },
+        {
+          "actual_character": "eishin-flash",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/eishin-flash.vrm",
+          "file": "chair-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 25512,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1247, 737)",
+          "sha256": "f1c8d608e8f4429c5ac510f13dc07502a2464cdc6379d25a57929828a2a10c18"
+        },
+        {
+          "actual_character": "eishin-flash",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/eishin-flash.vrm",
+          "file": "sofa-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 45971,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1247, 748)",
+          "sha256": "78c78ec8704efdcabbd46903f95eae6139c12e331ee58b7d9a817c2260ef9c6a"
+        },
+        {
+          "actual_character": "eishin-flash",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/eishin-flash.vrm",
+          "file": "computer-use-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 68279,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1306, 737)",
+          "sha256": "1529a88c42e2c7f75e9ff3cd2de12efe7f6d50faba8bad41ad9bf61bc1a9da01"
+        }
+      ],
+      "capture_scope": "Own root viewport, shared 3D depth buffer while occupied; no external desktop-content capture."
+    },
+    {
+      "raw_directory": "logs/windows-objects-floor-v2-eishin-scale1",
+      "report_sha256": "bfcf201aae6bd5aa941487e5ba6fed5512ef3235c008836a58a2eba4d5db8e48",
+      "build_record_sha256": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e",
+      "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+      "executable_bytes": 99674664,
+      "source_stable_during_build": true,
+      "probe_sha256": "6f25bed39319cfbdfafe609ba4bfea6bbbcda5f2bf3bbf1d9fcfde295b6fef35",
+      "renderer": "NVIDIA GeForce RTX 4090",
+      "character": "eishin-flash",
+      "model_sha256": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+      "scale": 1.0,
+      "mode": "contact-only",
+      "checks": [
+        {
+          "label": "real avatar backend and required motions ready",
+          "ok": true
+        },
+        {
+          "label": "requested character exists in backend catalogue",
+          "ok": true
+        },
+        {
+          "label": "explicit character selection matches actual loaded rig filename and session",
+          "ok": true
+        },
+        {
+          "label": "actual pet scale matches requested 1.000",
+          "ok": true
+        },
+        {
+          "label": "native furniture subwindows supported",
+          "ok": true
+        },
+        {
+          "label": "actual usable monitor floor at requested pet scale 1.000",
+          "ok": true
+        },
+        {
+          "label": "chair object created",
+          "ok": true
+        },
+        {
+          "label": "chair GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "chair separate native window",
+          "ok": true
+        },
+        {
+          "label": "chair placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport chair-loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa object created",
+          "ok": true
+        },
+        {
+          "label": "sofa GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "sofa separate native window",
+          "ok": true
+        },
+        {
+          "label": "sofa placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport sofa-loaded",
+          "ok": true
+        },
+        {
+          "label": "computer object created",
+          "ok": true
+        },
+        {
+          "label": "computer GLB loaded and actual owned window visible",
+          "ok": true
+        },
+        {
+          "label": "computer separate native window",
+          "ok": true
+        },
+        {
+          "label": "computer placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "capture own viewport computer-loaded",
+          "ok": true
+        },
+        {
+          "label": "object data survives JSON serialization with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "object data persisted through Settings with exact pixel geometry",
+          "ok": true
+        },
+        {
+          "label": "chair target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "chair target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "chair real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "chair sit accepted",
+          "ok": true
+        },
+        {
+          "label": "chair reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "chair uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "chair calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "chair visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture chair",
+          "ok": true
+        },
+        {
+          "label": "explicit user stop releases occupied chair",
+          "ok": true
+        },
+        {
+          "label": "sofa target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "sofa target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "sofa real floor approach precondition",
+          "ok": true
+        },
+        {
+          "label": "sofa sit accepted",
+          "ok": true
+        },
+        {
+          "label": "sofa reaches seated state",
+          "ok": true
+        },
+        {
+          "label": "sofa uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "sofa calibrated avatar seat anchor matches projected prop socket within 3px",
+          "ok": true
+        },
+        {
+          "label": "sofa visible global foot approach exceeds 100px",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture sofa",
+          "ok": true
+        },
+        {
+          "label": "computer target isolated and loaded",
+          "ok": true
+        },
+        {
+          "label": "computer target placed on usable floor",
+          "ok": true
+        },
+        {
+          "label": "computer approach real floor precondition",
+          "ok": true
+        },
+        {
+          "label": "computer use accepted",
+          "ok": true
+        },
+        {
+          "label": "computer reaches finite work-pose stage",
+          "ok": true
+        },
+        {
+          "label": "computer uses required shared contact scene",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene left wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "final shared-scene right wrist reaches keyboard within 3px and2cm",
+          "ok": true
+        },
+        {
+          "label": "computer use remains seated at shared-scene socket",
+          "ok": true
+        },
+        {
+          "label": "shared-depth owned viewport capture computer-use",
+          "ok": true
+        },
+        {
+          "label": "finite computer work pose ends with completed outcome, not cancellation",
+          "ok": true
+        },
+        {
+          "label": "idempotent shutdown removes own furniture windows",
+          "ok": true
+        },
+        {
+          "label": "original settings restored",
+          "ok": true
+        }
+      ],
+      "failures": 0,
+      "contacts": [
+        {
+          "error_px": 0.38955345749855,
+          "global_foot_displacement_x": 691.0,
+          "global_foot_end": "(1586.403, 1501.0)",
+          "global_foot_start": "(895.4027, 1392.0)",
+          "label": "chair",
+          "rendered_seat_px": "(1587.274, 1231.015)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.0, 1231.292)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(341.274, 450.015)",
+            "pose": "sit",
+            "screen_point": "(1587.0, 1231.292)",
+            "surface_id": "object:obj_1:seat"
+          },
+          "window_end": "(1246, 781)",
+          "window_start": "(491, 672)"
+        },
+        {
+          "error_px": 0.307508796453476,
+          "global_foot_displacement_x": 691.000061035156,
+          "global_foot_end": "(1586.403, 1520.0)",
+          "global_foot_start": "(895.4028, 1392.0)",
+          "label": "sofa",
+          "rendered_seat_px": "(1587.213, 1250.309)",
+          "shared_depth_buffer": true,
+          "socket_px": "(1587.5, 1250.2)",
+          "support": {
+            "attached": true,
+            "kind": "object_seat",
+            "local_anchor": "(341.2126, 450.3092)",
+            "pose": "sit",
+            "screen_point": "(1587.5, 1250.2)",
+            "surface_id": "object:obj_2:seat"
+          },
+          "window_end": "(1246, 800)",
+          "window_start": "(491, 672)"
+        }
+      ],
+      "computer_contact": {
+        "hand_reachable": true,
+        "hands": {
+          "left": {
+            "error_px": 0.0,
+            "error_world_m": 1.07453800524127e-07,
+            "hand_reachable": true,
+            "keyboard_px": "(1578.685, 1134.407)",
+            "keyboard_world": "(-0.848016, 1.101168, -0.182822)",
+            "rendered_wrist_px": "(1578.685, 1134.407)",
+            "wrist_world": "(-0.848016, 1.101168, -0.182822)"
+          },
+          "right": {
+            "error_px": 0.0,
+            "error_world_m": 8.42936955791629e-08,
+            "hand_reachable": true,
+            "keyboard_px": "(1644.198, 1134.407)",
+            "keyboard_world": "(-0.651228, 1.101168, -0.320614)",
+            "rendered_wrist_px": "(1644.198, 1134.407)",
+            "wrist_world": "(-0.651227, 1.101168, -0.320614)"
+          }
+        },
+        "seat_attached": true,
+        "seat_error_px": 0.161206215620041,
+        "seated": true,
+        "shared_depth_buffer": true
+      },
+      "outcomes": [
+        {
+          "id": "obj_1",
+          "verb": "sit",
+          "outcome": "cancelled",
+          "ms": 26159
+        },
+        {
+          "id": "obj_2",
+          "verb": "sit",
+          "outcome": "probe_next",
+          "ms": 47338
+        },
+        {
+          "id": "obj_3",
+          "verb": "use",
+          "outcome": "completed",
+          "ms": 80248
+        }
+      ],
+      "captures": [
+        {
+          "file": "chair-loaded.png",
+          "ms": 4791,
+          "position": "(325, 961)",
+          "save_error": 0,
+          "window_id": 1,
+          "sha256": "71dd41bb1f65d19222b121fbc7d5f3b65f28792d5e2c4ed08646c9f06d54f0e6"
+        },
+        {
+          "file": "sofa-loaded.png",
+          "ms": 5069,
+          "position": "(935, 922)",
+          "save_error": 0,
+          "window_id": 2,
+          "sha256": "d3c43960a1b74917a32d03f9748ef10ec0198612c0d7e82f9a082743d44f8566"
+        },
+        {
+          "file": "computer-loaded.png",
+          "ms": 5269,
+          "position": "(1755, 903)",
+          "save_error": 0,
+          "window_id": 3,
+          "sha256": "09dcf52bbe533ac245cd1c0284b207c20db34dee48133e63f95b0c172708c20f"
+        },
+        {
+          "actual_character": "eishin-flash",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/eishin-flash.vrm",
+          "file": "chair-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 26136,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1246, 781)",
+          "sha256": "a91ff3feeaa873236d88449b2a9259bc4c690aa7a7373295d1dcf7dffaf338c9"
+        },
+        {
+          "actual_character": "eishin-flash",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/eishin-flash.vrm",
+          "file": "sofa-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 47324,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1246, 800)",
+          "sha256": "844f83959b2638e04d8fa935d16f651913ed654b4ffa30ea1d5b2710b942e13c"
+        },
+        {
+          "actual_character": "eishin-flash",
+          "actual_model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/eishin-flash.vrm",
+          "file": "computer-use-shared-depth.png",
+          "layer_scope": "avatar and contact furniture rendered in root World3D; no assumed composite layers",
+          "ms": 70915,
+          "same_depth_buffer": true,
+          "save_error": 0,
+          "window_position": "(1343, 781)",
+          "sha256": "aa6ea48897f60e52461a82bde696215a778681cd6fcdf7c126f49f93714a1336"
+        }
+      ],
+      "capture_scope": "Own root viewport, shared 3D depth buffer while occupied; no external desktop-content capture."
+    }
+  ],
+  "assertions": 265,
+  "failures": 0,
+  "same_executable": true,
+  "analyzer_sha256": "3f38e7e924d07872dec564113a6e37482a7295892a714f7aefdcab7088c59046"
+}

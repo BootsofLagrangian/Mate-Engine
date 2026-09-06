@@ -5,9 +5,13 @@ extends RefCounted
 var duration := 0.0
 var tracks: Dictionary = {}
 var error := ""
+var hips_translation: Dictionary = {}
+var hips_rest := Vector3.ZERO
+var source_hips_height := 1.0
 
 func load_file(path: String) -> bool:
 	tracks.clear()
+	hips_translation.clear()
 	duration = 0.0
 	var bytes := FileAccess.get_file_as_bytes(path)
 	if bytes.size() < 28 or bytes.decode_u32(0) != 0x46546c67:
@@ -30,9 +34,25 @@ func load_file(path: String) -> bool:
 	var names := {}
 	for bone in bones:
 		names[int(bones[bone].node)] = bone
+	if bones.has("hips"):
+		var hips_node := int(bones.hips.node)
+		var rest_values: Array = nodes[hips_node].get("translation",[0,0,0])
+		hips_rest = Vector3(rest_values[0],rest_values[1],rest_values[2])
+		# Baked humanoid candidates place hips at the scene root in metres.
+		# Other sources remain rotation-only unless their profile opts in.
+		source_hips_height = maxf(absf(hips_rest.y),0.001)
 	var animation: Dictionary = data.animations[0]
 	for channel in animation.channels:
 		var node := int(channel.target.get("node", -1))
+		if channel.target.path == "translation" and names.get(node,"") == "hips":
+			var translation_sampler: Dictionary = animation.samplers[int(channel.sampler)]
+			if str(translation_sampler.get("interpolation","LINEAR")) not in ["LINEAR","STEP"]:
+				return _fail("Unsupported hips translation interpolation")
+			var translation_times := _accessor(data,binary,int(translation_sampler.input),1)
+			var translation_values := _accessor(data,binary,int(translation_sampler.output),3)
+			if translation_values.size() != translation_times.size()*3 or translation_times.is_empty():
+				return _fail("Invalid hips translation accessor")
+			hips_translation = {"times":translation_times,"values":translation_values,"step":translation_sampler.get("interpolation","LINEAR") == "STEP"}
 		if channel.target.path != "rotation" or not names.has(node):
 			continue
 		var sampler: Dictionary = animation.samplers[int(channel.sampler)]
@@ -70,6 +90,22 @@ func sample(time: float) -> Dictionary:
 			weight = 0.0 if time < times[right] else 1.0
 		pose[bone] = track.rotations[left].slerp(track.rotations[right],weight)
 	return pose
+
+## Source-metres offset / source hip height; caller scales by target hip height.
+## Only the explicit contact-aware ambient layer consumes it.
+func sample_hips_offset(time: float) -> Vector3:
+	if hips_translation.is_empty():
+		return Vector3.ZERO
+	var times: PackedFloat32Array = hips_translation.times
+	var values: PackedFloat32Array = hips_translation.values
+	var right := clampi(times.bsearch(time),0,times.size()-1)
+	var left := maxi(0,right-1)
+	var weight := clampf((time-times[left])/maxf(0.000001,times[right]-times[left]),0,1)
+	if hips_translation.step:
+		weight = 0.0 if time < times[right] else 1.0
+	var a := Vector3(values[left*3],values[left*3+1],values[left*3+2])
+	var b := Vector3(values[right*3],values[right*3+1],values[right*3+2])
+	return (a.lerp(b,weight)-hips_rest)/source_hips_height
 
 func _accessor(data: Dictionary, binary: PackedByteArray, idx: int, width: int) -> PackedFloat32Array:
 	var accessor: Dictionary = data.accessors[idx]

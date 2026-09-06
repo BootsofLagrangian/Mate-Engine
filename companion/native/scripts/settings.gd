@@ -46,6 +46,10 @@ const DEFAULTS := {
 	# global desktop pixels (negative on monitors left of/above the primary); the id counter is
 	# persisted so removed ids are never reused. Always re-sanitized by InterestPoints.set_points.
 	"interest_points": {"points": [], "next_id": 1},
+	# Desktop living-space objects (experimental; owned/persisted by the objects host, not the panel):
+	# {"version": 1, "next_id": n, "objects": [{id,label,type,x,y,scale,visible}...]}. Empty by
+	# default; only an explicit "추가" in the 공간 tab creates one.
+	"desktop_objects": {"version": 1, "next_id": 1, "objects": []},
 }
 
 var data: Dictionary = {}

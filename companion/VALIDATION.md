@@ -1,6 +1,83 @@
 # Validation record — 2026-09-06
 
-The newer local-behavior and stepped-turn milestone is recorded in
+## Current exported build
+
+The exported native executable is **99,674,664 bytes**, SHA256
+`80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f`.
+The [build manifest](diagnostics/native-final/build.json) records unchanged runtime source during export; final Windows
+runs use this embedded-PCK executable with external diagnostic scripts.
+
+- **265/265 furniture checks:** Cheval at scale 0.6 covers occupied mutation and
+  cleanup; Rice at 0.6 and Eishin at 0.6/1.0 cover all three furniture contacts,
+  persistence, explicit stop and finite completed computer use. All four cases
+  passed independent visual review of the actual shared scene. See
+  [final furniture acceptance](diagnostics/desktop_objects/windows-final/README.md).
+- **18/18 actual Windows surface checks:** resize/support readiness, real window-top
+  walking, seated talking, closed-support release and actual workarea floor travel.
+  The first run passed 15/17: a fixed two-second resize delay submitted a move
+  about 56 ms before the support became ready. The retained retry explicitly waits
+  for resized support readiness, with travel thresholds unchanged.
+- **29/29 actual Windows motion-chain checks:** verified Cheval rig, replacement
+  while walking, real window travel, stop and three finite overlapping gesture
+  pairs through the panel controls. Independent temporal analysis is recorded in
+  [the final motion report](diagnostics/transition_chain/windows-shared-floor-final.md).
+- **12/12 actual voice-to-intent checks:** GPU Japanese acknowledgement, dedicated
+  voice streaming and a single actual arrival after 1,244 px rightward window
+  travel. First received PCM was **920 ms** for this warm single request; this
+  excludes recording and physical speaker onset. Two retained leftward runs
+  stopped before arrival; the instrumented run proves normal hover interruption
+  when the pet reached a stationary cursor. The accepted probe chose the travel
+  direction away from the cursor, preserving hover behavior, the 45-second
+  arrival budget and the 120 px minimum movement assertion. See
+  [voice review](diagnostics/native-final/voice-review.md); no runtime change was
+  made to turn those interrupted runs into passes.
+- **581/581 native selftest checks** on final source. Seated-floor changes also
+  passed a callback-aware **102/102** standing regression across all three rigs;
+  complete standing traces were byte-identical to the preceding motion baselines.
+  See [independent standing review](diagnostics/transition_chain/final-seat-floor-standing-callbacks/INDEPENDENT-REVIEW.md).
+
+The furniture uses original geometry informed by inspected official product
+photos. Physical seat placement, keyboard reach and shared depth rendering are
+validated; bounded seated leg/spring floor constraints do not establish general
+cloth/furniture physics. Computer use is a pose interaction and does not control
+real applications. Handheld tools and visual desktop recognition remain future
+extensions. Earlier acceptance records below retain their original package and
+measurement scope.
+
+
+The current authored-walk/concurrent-motion implementation is independently
+approved within its deterministic contact/transition scope:
+[final three-rig matrix](diagnostics/transition_chain/uma-walk-final/acceptance-summary.json).
+Three rigs at 30/60 Hz and scales 0.6/1.0 pass **348 assertions**. All 60 departures
+and reversals overlap simulated desktop travel and heading change for at least
+0.833 seconds and 39.56 degrees. Thirty-six finite gesture pairs overlap their
+live timelines. The largest claimed foot-contact drift is **0.314 mm**; unclaimed
+swing is reported separately. Established walking head pitch is **−1.02° to
++2.23°** relative to humanoid rest, measured after the first 0.5 seconds of the
+continuous observed walk run; same-name restarts are not independently timed by this metric. Authored idle/contact regression passes 132 assertions across three rigs
+and both frame rates. This does not establish full-body physics or a universal
+naturalness threshold. Failed candidates, unfiltered peaks and source identities
+remain in [the transition audit](diagnostics/transition_chain/README.md).
+
+The new walk uses the original Unity quaternion curves from local UMA
+`homewalk01_loop`; the converter avoids the arm rotation artifacts found in the
+intermediate FBX Euler export. Source provenance, reproduction and acquired
+external alternatives are in [walking asset research](diagnostics/walking_assets/REPORT.md).
+Local character/source-derived assets are not redistributed in Git.
+
+An exported Windows candidate (SHA256
+`e15e395292144d0cde9eae00f246ff5adf99f46bd701e1363b41d7f228fc61ff`)
+passes **28 native motion-chain checks**, including real window travel while
+turning, reversal, interruption and three actual panel gesture sequences. It
+also passes **12 voice-to-intent checks**, including an actual destination
+arrival after dedicated voice PCM playback. That run's first PCM was **4615 ms**
+after request with a recently restarted backend; the earlier warm timing table
+below is a separate experiment. The package's furniture passed 88 functional
+checks, but its oversized seating and computer occlusion failed visual review.
+The later shared-scene/posed-contact build supersedes this furniture candidate;
+those 88 checks alone did not establish visual acceptance.
+
+The earlier local-behavior and stepped-turn milestone is recorded in
 [Windows stepped-motion acceptance](diagnostics/liveliness/windows-stepped-baseline/README.md):
 40 continuous Windows checks, 12 normal-processing voice-to-movement checks and
 17 window-top/floor checks pass on the identified exported executable. The
@@ -91,14 +168,14 @@ The native world source continues to account for occlusion. Small probe-only com
 errors were corrected before acceptance; they did not change runtime functionality.
 
 
-## Windows package acceptance
+## Earlier native-baseline Windows package acceptance
 
-The final `native/build/MateCompanion.exe` is 96,784,544 bytes, SHA-256
+That historical `native/build/MateCompanion.exe` was 96,784,544 bytes, SHA-256
 `fc8233c069ed590b86c964736b5dc2cbe48ff873c1068ad5018a3a85f898da9a`.
 Its manifest records pinned Godot/plugin revisions and patch hashes. Assets and
 models remain installed beside the backend, rather than bundled for redistribution.
 
-Final local records: `logs/windows-live/report.json` (30/0) and
+Historical baseline records: `logs/windows-live/report.json` (30/0) and
 `logs/windows-world/report.json` (17/0). Three complete voiced replies each have
 one native playback interval, zero dropped frames and a drained generator/queue.
 This measures the native playback lifecycle, not a physical acoustic gap recording.

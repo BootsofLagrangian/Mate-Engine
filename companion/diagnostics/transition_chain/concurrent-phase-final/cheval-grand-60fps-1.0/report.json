@@ -1,0 +1,457 @@
+{
+  "behavior_style": {
+    "curiosity": 0.4,
+    "gaze_hold_s": 2.2,
+    "idle_interval_s": 14.0,
+    "posture_strength": 0.45,
+    "response_delay_s": 0.35
+  },
+  "checks": [
+    {
+      "details": {},
+      "label": "matching authored behavior profile loaded",
+      "ok": true
+    },
+    {
+      "details": {
+        "effective_style": {
+          "curiosity": 0.4,
+          "gaze_hold_s": 2.2,
+          "idle_interval_s": 14.0,
+          "posture_strength": 0.45,
+          "response_delay_s": 0.35
+        }
+      },
+      "label": "director uses matching authored profile",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "authored home participates in sequence",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "initial surface support acquired",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:0",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 25.0499999999999
+          },
+          {
+            "id": "chain:1",
+            "outcome": "arrived",
+            "time": 35.3833333333326
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 45.7166666666654
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 51.966666666665
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 60.3166666666645
+          }
+        ]
+      },
+      "label": "continuous journey arrived 0",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:1",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 25.0499999999999
+          },
+          {
+            "id": "chain:1",
+            "outcome": "arrived",
+            "time": 35.3833333333326
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 45.7166666666654
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 51.966666666665
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 60.3166666666645
+          }
+        ]
+      },
+      "label": "continuous journey arrived 1",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:2",
+      "ok": true
+    },
+    {
+      "details": {
+        "outcomes": [
+          {
+            "id": "chain:0",
+            "outcome": "arrived",
+            "time": 25.0499999999999
+          },
+          {
+            "id": "chain:1",
+            "outcome": "arrived",
+            "time": 35.3833333333326
+          },
+          {
+            "id": "chain:2",
+            "outcome": "arrived",
+            "time": 45.7166666666654
+          },
+          {
+            "id": "chain:before-reversal",
+            "outcome": "superseded",
+            "time": 51.966666666665
+          },
+          {
+            "id": "chain:reversal",
+            "outcome": "arrived",
+            "time": 60.3166666666645
+          }
+        ]
+      },
+      "label": "continuous journey arrived 2",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:before-reversal",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "moving reversal has actual preceding travel",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "reason": "queued"
+      },
+      "label": "chain request accepted chain:reversal",
+      "ok": true
+    },
+    {
+      "details": {},
+      "label": "superseding opposite journey arrives",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "gated": false,
+        "reason": "queued"
+      },
+      "label": "pair_wave_nod compatible pair accepted",
+      "ok": true
+    },
+    {
+      "details": {
+        "incoming_start": 3.51666666666647,
+        "outgoing_duration": 4.0,
+        "overlap_seconds": 0.5
+      },
+      "label": "pair_wave_nod meaningful pre-end live overlap",
+      "ok": true
+    },
+    {
+      "details": {
+        "active": true,
+        "advancing_frames": 30,
+        "masks_ok": true
+      },
+      "label": "pair_wave_nod both timelines advance with continuous masks and priority",
+      "ok": true
+    },
+    {
+      "details": {
+        "active": false,
+        "promoted": true
+      },
+      "label": "pair_wave_nod promotes then completes",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "gated": false,
+        "reason": "queued"
+      },
+      "label": "pair_nod_wave compatible pair accepted",
+      "ok": true
+    },
+    {
+      "details": {
+        "incoming_start": 2.51666666666652,
+        "outgoing_duration": 3.0,
+        "overlap_seconds": 0.5
+      },
+      "label": "pair_nod_wave meaningful pre-end live overlap",
+      "ok": true
+    },
+    {
+      "details": {
+        "active": true,
+        "advancing_frames": 30,
+        "masks_ok": true
+      },
+      "label": "pair_nod_wave both timelines advance with continuous masks and priority",
+      "ok": true
+    },
+    {
+      "details": {
+        "active": false,
+        "promoted": true
+      },
+      "label": "pair_nod_wave promotes then completes",
+      "ok": true
+    },
+    {
+      "details": {
+        "accepted": true,
+        "gated": false,
+        "reason": "queued"
+      },
+      "label": "pair_wave_wave compatible pair accepted",
+      "ok": true
+    },
+    {
+      "details": {
+        "incoming_start": 3.51666666666647,
+        "outgoing_duration": 4.0,
+        "overlap_seconds": 0.5
+      },
+      "label": "pair_wave_wave meaningful pre-end live overlap",
+      "ok": true
+    },
+    {
+      "details": {
+        "active": true,
+        "advancing_frames": 30,
+        "masks_ok": true
+      },
+      "label": "pair_wave_wave both timelines advance with continuous masks and priority",
+      "ok": true
+    },
+    {
+      "details": {
+        "active": false,
+        "promoted": true
+      },
+      "label": "pair_wave_wave promotes then completes",
+      "ok": true
+    }
+  ],
+  "controlled_run_valid": true,
+  "effective_behavior_style": {
+    "curiosity": 0.4,
+    "gaze_hold_s": 2.2,
+    "idle_interval_s": 14.0,
+    "posture_strength": 0.45,
+    "response_delay_s": 0.35
+  },
+  "events": [
+    {
+      "id": "chain:0",
+      "kind": "chain_request",
+      "origin": "(713.881, 1400.0)",
+      "point": "(1073.881, 1400.0)",
+      "time": 18.9333333333335
+    },
+    {
+      "id": "chain:1",
+      "kind": "chain_request",
+      "origin": "(1073.881, 1400.0)",
+      "point": "(713.881, 1400.0)",
+      "time": 28.0499999999997
+    },
+    {
+      "id": "chain:2",
+      "kind": "chain_request",
+      "origin": "(713.881, 1400.0)",
+      "point": "(1073.881, 1400.0)",
+      "time": 38.3833333333324
+    },
+    {
+      "id": "chain:before-reversal",
+      "kind": "chain_request",
+      "origin": "(1073.881, 1400.0)",
+      "point": "(713.881, 1400.0)",
+      "time": 48.7166666666652
+    },
+    {
+      "id": "chain:reversal",
+      "kind": "chain_request",
+      "origin": "(992.881, 1400.0)",
+      "point": "(1352.881, 1400.0)",
+      "time": 51.966666666665
+    },
+    {
+      "end": 70.8333333333306,
+      "first": "wave",
+      "kind": "gesture_pair",
+      "overlap_seconds": 0.5,
+      "second": "nod",
+      "start": 64.3166666666643
+    },
+    {
+      "end": 79.3499999999968,
+      "first": "nod",
+      "kind": "gesture_pair",
+      "overlap_seconds": 0.5,
+      "second": "wave",
+      "start": 72.8333333333305
+    },
+    {
+      "end": 88.8666666666629,
+      "first": "wave",
+      "kind": "gesture_pair",
+      "overlap_seconds": 0.5,
+      "second": "wave",
+      "start": 81.3499999999967
+    },
+    {
+      "kind": "chain_boundaries",
+      "boundary_count": 52
+    }
+  ],
+  "failures": 0,
+  "fps": 60,
+  "frame_dt_p50": 0.0166666666666667,
+  "frame_dt_p95": 0.0166666666666667,
+  "frames": 5452,
+  "missing_cells": [
+    "this cell uses scale 1.0; aggregate matrix declares additional cells",
+    "actual Windows run: coordinator-owned"
+  ],
+  "model": "cheval-grand",
+  "scale": 1.0,
+  "scope": "actual main wiring; deterministic fixed-delta",
+  "seed": 2251,
+  "source_after_sha256": {
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/Assets/StreamingAssets/cheval-motions.json": "81e1e2a00d9d5619d68e4f6e08d21512cb7aec33fa5f64f0229883a6ac412c2a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/dance.vrma": "273031789e8152f0915af686e9039970d4eebe7fd2eff87357c8c682b0acd666",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_natural.vrma": "4ba99dc711238707b3cbb77c29457f21beec08be927dfb7617558a48f7995313",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_talking.vrma": "02a57732d6fe2283e1f4618518a4ef49d0b2ccced359b9f73d99da32b975ec41",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/interact.vrma": "cff1b7dbd5e2118904d8ef858b51168ea7cee78f3d00980f8e80cfdc104738f6",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/pick_up.vrma": "4a273e65619eadb66c5e3c7c6ca0e47a3dfcbdd65783fdbdcc04d1c7e522225e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/sit_idle.vrma": "1f618806f57d1a4b86802e82575224514514ce7492aad0eb7d034b1f1dea5bc5",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk.vrma": "c3d1faec4df73673cd5a37eb40a30f8111a619198f5b5bf290d16cea657d1bb0",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk_formal.vrma": "aadbb2f8cf1db1d4672f9fef325c949c7d15ce7090e4c915d23b368671919664",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_cheval_idle_action.vrma": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_eishin_idle_action.vrma": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_rice_idle_action.vrma": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/characters/cheval-grand.json": "9ee6d3c405cd70acda9e3d57c2fb17d0fa699a701b58f467c630ecd30731c8c1",
+    "action_overlap.gd": "d289c984d1be109ddf267768a686bf3ca26bcd3c14b168efd0ea787e21f0f359",
+    "ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+    "arm_ik.gd": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+    "autonomy_bridge.gd": "94e2f3dafdbba98487779b378020c0c79631cd2afe777d225123679818967b29",
+    "behavior_director.gd": "53e054d0e8b2b35a3c7558f760e98ce1629640b5e2b81011848b6f99b9af34c1",
+    "desktop_autonomy.gd": "3f3f4a03178aeaae6b43c7104bd2f56ba3d6b27d06049745f69c65ea8d579ad1",
+    "desktop_gait.gd": "7efe46b31ab03f32f5cb2ac530418edc126c696b1693cb2b7f782308f19f03b2",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "living_behavior.gd": "834d9b15bc1c447f69e2ea358fc21083017fe8916449cb8d6e9f55ab964a3fc4",
+    "main.gd": "d96c98022a0ecb89334c177f6ecbbf350a409ee9621e131b46998355fce9e692",
+    "motion-assets.json": "2e4f91be124ed79907bad673f75f22a670cae253a8a200928956e3b0f3eb2a0a",
+    "motion_bank.gd": "0c103a19e4612b97318efac939de62acacced27ad2111a5efc364a2243b61b9b",
+    "motion_player.gd": "9ae0ff2a8141d377c1ca67e1e696e398ee3e57b5fca3b58566b463b2b7fc160e",
+    "probe_transition_chain.gd": "91aa5a3715f6eeb449cd3c372f51989c16cab70475f8672ad88fef13cee4131c",
+    "res://tools/probe_liveliness.gd": "d3121312eb514d67ea1a2a119136129db77418e73de2cd6ce385c3d8ef0958e0",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "vrm_avatar.gd": "9ff5eb960ca1a0d2a7fc8137850a3a8fe769c9db2535533eb72e506b9271c2fd",
+    "vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb"
+  },
+  "source_sha256": {
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/Assets/StreamingAssets/cheval-motions.json": "81e1e2a00d9d5619d68e4f6e08d21512cb7aec33fa5f64f0229883a6ac412c2a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/dance.vrma": "273031789e8152f0915af686e9039970d4eebe7fd2eff87357c8c682b0acd666",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_natural.vrma": "4ba99dc711238707b3cbb77c29457f21beec08be927dfb7617558a48f7995313",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/idle_talking.vrma": "02a57732d6fe2283e1f4618518a4ef49d0b2ccced359b9f73d99da32b975ec41",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/interact.vrma": "cff1b7dbd5e2118904d8ef858b51168ea7cee78f3d00980f8e80cfdc104738f6",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/pick_up.vrma": "4a273e65619eadb66c5e3c7c6ca0e47a3dfcbdd65783fdbdcc04d1c7e522225e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/sit_idle.vrma": "1f618806f57d1a4b86802e82575224514514ce7492aad0eb7d034b1f1dea5bc5",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk.vrma": "c3d1faec4df73673cd5a37eb40a30f8111a619198f5b5bf290d16cea657d1bb0",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/motions/walk_formal.vrma": "aadbb2f8cf1db1d4672f9fef325c949c7d15ce7090e4c915d23b368671919664",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_cheval_idle_action.vrma": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_eishin_idle_action.vrma": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/assets/research/uma/candidates/uma_rice_idle_action.vrma": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/characters/cheval-grand.json": "9ee6d3c405cd70acda9e3d57c2fb17d0fa699a701b58f467c630ecd30731c8c1",
+    "action_overlap.gd": "d289c984d1be109ddf267768a686bf3ca26bcd3c14b168efd0ea787e21f0f359",
+    "ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+    "arm_ik.gd": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+    "autonomy_bridge.gd": "94e2f3dafdbba98487779b378020c0c79631cd2afe777d225123679818967b29",
+    "behavior_director.gd": "53e054d0e8b2b35a3c7558f760e98ce1629640b5e2b81011848b6f99b9af34c1",
+    "desktop_autonomy.gd": "3f3f4a03178aeaae6b43c7104bd2f56ba3d6b27d06049745f69c65ea8d579ad1",
+    "desktop_gait.gd": "7efe46b31ab03f32f5cb2ac530418edc126c696b1693cb2b7f782308f19f03b2",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "living_behavior.gd": "834d9b15bc1c447f69e2ea358fc21083017fe8916449cb8d6e9f55ab964a3fc4",
+    "main.gd": "d96c98022a0ecb89334c177f6ecbbf350a409ee9621e131b46998355fce9e692",
+    "motion-assets.json": "2e4f91be124ed79907bad673f75f22a670cae253a8a200928956e3b0f3eb2a0a",
+    "motion_bank.gd": "0c103a19e4612b97318efac939de62acacced27ad2111a5efc364a2243b61b9b",
+    "motion_player.gd": "9ae0ff2a8141d377c1ca67e1e696e398ee3e57b5fca3b58566b463b2b7fc160e",
+    "probe_transition_chain.gd": "91aa5a3715f6eeb449cd3c372f51989c16cab70475f8672ad88fef13cee4131c",
+    "res://tools/probe_liveliness.gd": "d3121312eb514d67ea1a2a119136129db77418e73de2cd6ce385c3d8ef0958e0",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "vrm_avatar.gd": "9ff5eb960ca1a0d2a7fc8137850a3a8fe769c9db2535533eb72e506b9271c2fd",
+    "vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb"
+  },
+  "uncontrolled_pointer_frames": 0,
+  "full_evidence": {
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-1.0/report.full.34c2716a0180.json.gz",
+    "sha256": "49c162f866c3c6c102536a60d5801bacbe4dc96fa3c8f70781eed5410efb2d76",
+    "uncompressed_sha256": "34c2716a0180dce01c7a23e84ba4b085e48148755a0865aa7af818cc30f02dea",
+    "uncompressed_bytes": 759705
+  },
+  "epoch_count": 43
+}

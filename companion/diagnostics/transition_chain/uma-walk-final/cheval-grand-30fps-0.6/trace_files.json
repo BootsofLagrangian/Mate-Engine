@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-0.6/joints.jsonl.gz",
+    "sha256": "5d2f93c940ef1d89a67d47f2d3c7ba6f982995bbc3ee177ce50a25eef4b2bcd9",
+    "bytes": 6367146
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-30fps-0.6/frames.csv.gz",
+    "sha256": "84b3d3f8bf16a5d94bbf07b8d07e43fa1e2d8103b6aca40bf7e17ca8444c67d4",
+    "bytes": 388088
+  }
+]

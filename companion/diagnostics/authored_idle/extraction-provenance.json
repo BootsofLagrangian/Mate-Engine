@@ -1,0 +1,588 @@
+{
+  "version": 1,
+  "source_root": "/mnt/f/ULTIMA/UMA-Extractor/UmaMusumeToolbox/uma_asset",
+  "source_files": [
+    {
+      "path": "3d/chara/body/bdy1089_00/pfb_bdy1089_00",
+      "sha256": "8d0f69c89ac73744879c098e503329863cbecd6e029b398ed202f2e6cabf6ba5",
+      "bytes": 548361
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_s",
+      "sha256": "8b1e7ce7c3655e3956b804089332eb8d3d472da09ca47d935df551e635943cb4",
+      "bytes": 17926
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_loop",
+      "sha256": "bc84f4933b6a8159e25d76a7a1f56e33619555f11adb8845351db26d2d35989b",
+      "bytes": 14255
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_e",
+      "sha256": "47df8ca8559f8c759d8d7c347832b3ec561ece40e0bdb558578700818a6add79",
+      "bytes": 17988
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_pose",
+      "sha256": "65e1e46f204ac651871c2f0c0cd6992619e2f7f781e94f7d18f4ab04d27564d0",
+      "bytes": 8672
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn50_l",
+      "sha256": "8078cdc4ac0ba555859f4ef48d549620c8242185fa65423fdeeba0292f641998",
+      "bytes": 21277
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn50_r",
+      "sha256": "d5b12e48778d2a9b68066200a50f9a1c322416a286f86ad9856c56107161cd5c",
+      "bytes": 21509
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn135_l",
+      "sha256": "534950ccea0e399f522bd75b871a6587c53fcbee638e5654e7484416db5c0e17",
+      "bytes": 22377
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn135_r",
+      "sha256": "83b7fc45864f76c6c7e2a5a01d4902106a8965b9e67603ad124cf81d0330e5c8",
+      "bytes": 22614
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_loop",
+      "sha256": "bb7111dbf2eb9286d25e6c7282c7e58c13d5068eb9d4b7ee04eac79afa29846c",
+      "bytes": 26521
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_u_loop",
+      "sha256": "ac998009d07ab0583332609b90d8eefe796da0282507255d4ea19632a88d3147",
+      "bytes": 27365
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_d_loop",
+      "sha256": "65fb35f62d20737779cf8051b8a20ed5917ad3a2bdf50d47cbb14a8deeedcd2f",
+      "bytes": 25326
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_walkin01",
+      "sha256": "5e5b53be95e217639f8c5bd1dedd9f5fdb95d0365e39b232f7dbbe111ead2071",
+      "bytes": 42095
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_walkout01",
+      "sha256": "e2a15e77d9a3c4c3c4bb6f34662016866d7157482e3e36976993770c13137d22",
+      "bytes": 47744
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_s",
+      "sha256": "c0150c5a28376d9bb892e6387ab7bfd2fdcd083a0dc1663834dee5241e567fa6",
+      "bytes": 12896
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_loop",
+      "sha256": "df6dada6d9e57ad22b4e54053cb3489c6dae35511c8352f5abab4955225a61d0",
+      "bytes": 9076
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_e",
+      "sha256": "edbfe1be671bebf100dacd09dcd238db6509cb7efc70c1bbe0aebdfc83038d75",
+      "bytes": 12858
+    },
+    {
+      "path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_pose",
+      "sha256": "24c46de341c6ea4e0d61b5a7aab139ccb85d410c0c7340b2961120592f3b1898",
+      "bytes": 8660
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_s",
+      "sha256": "60a8a1c9e6d7a1a6ce2e666316cee0929c5f58a5f9c5e7ade5c376815d59f200",
+      "bytes": 36820
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_loop",
+      "sha256": "4a9b84b0c21c0d13b4f69df9b0b6018cb1e08a8671e1666d61586f5447e1a862",
+      "bytes": 15214
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_e",
+      "sha256": "ab157015b7b7950cd51704e507ab8c80fdf2df007be26374897e18bc14df2c22",
+      "bytes": 28254
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_sl",
+      "sha256": "f92f2809d15e9dec39990ee8550638ffa5cd1b1a7672cc6407b83a0c90de8e17",
+      "bytes": 49971
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_pose",
+      "sha256": "65b3d02bd34ad85c1fe830a5cabb1bec237889c559decbb7861bebb914991fd3",
+      "bytes": 8759
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_s",
+      "sha256": "f1008be8e8d720333b8e7d53113183be7bde04efc40aa09e7e4092b256237083",
+      "bytes": 19576
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_loop",
+      "sha256": "4ec9c778aeb94adf44dce42bc55fc0156038351954cad196dd81da2a0d3e35e2",
+      "bytes": 25088
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_e",
+      "sha256": "13fdd56813971ceecb81c663099a493e3024d0755a77844810876362084a030e",
+      "bytes": 20873
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_sl",
+      "sha256": "003a0908716adb28af7d182b81f7606ceeed89e84fe93f931d0910efa67d9a1b",
+      "bytes": 29037
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_pose",
+      "sha256": "a659cca3f09a6462dc2ed8e9f5b368bebaf29ab072e859785f4b6d752efeda5e",
+      "bytes": 8662
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_s",
+      "sha256": "650646d93c51e880087f989979efd9d0a8fa410c6838d09019e2432a41beef1d",
+      "bytes": 24983
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_loop",
+      "sha256": "5c527b11d3b34a71ead80b2405a211336d3e30631e78eeee7421b99af5070db5",
+      "bytes": 29540
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_e",
+      "sha256": "9ac7a67b79d105652bcca0bb4d1274edf95bd7d34722646fbf2f53453c9a3678",
+      "bytes": 22162
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_sl",
+      "sha256": "4dd3de683af13d5cf3a07eed6adbbe12690ed95859d0dc159305853cdab79072",
+      "bytes": 35445
+    },
+    {
+      "path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_pose",
+      "sha256": "8343b0e8293a4f5d1324c657ac514b37669a4d56d77072e6edf1737b2d0edf2c",
+      "bytes": 8635
+    }
+  ],
+  "outputs": [
+    {
+      "path": "fbx/anm_eve_chr1030_00_idle01_E.fbx",
+      "sha256": "8596bca0dc3b951f41714c3d3e4be8f59a4254f6353f1668717c1a0dd6a7bf78",
+      "bytes": 404352,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_e"
+    },
+    {
+      "path": "fbx/anm_eve_chr1030_00_idle01_S.fbx",
+      "sha256": "a3b31cd86b0121268ca8a64e5c8d5626813d6a548eb7ee2f6ccec6a628295fa0",
+      "bytes": 355168,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_s"
+    },
+    {
+      "path": "fbx/anm_eve_chr1030_00_idle01_SL.fbx",
+      "sha256": "2eb1083a615b7f69a1d6194ad0c3c61883baa432ad68a6018e3a7254095fcf48",
+      "bytes": 375584,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_sl"
+    },
+    {
+      "path": "fbx/anm_eve_chr1030_00_idle01_loop.fbx",
+      "sha256": "5c613a6c9b87682f013511c410e0bbc98e667e12d4c7bc384a0b3b4fc94bc06f",
+      "bytes": 360400,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_loop"
+    },
+    {
+      "path": "fbx/anm_eve_chr1030_00_idle01_pose.fbx",
+      "sha256": "482f98a8acd488c5b68cd15bf53803791c475ac42fc670ca483481f1ae182a24",
+      "bytes": 343888,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_pose"
+    },
+    {
+      "path": "fbx/anm_eve_chr1037_00_idle01_E.fbx",
+      "sha256": "4119053042dbe2fccdca3c71599efc90da1d968f1d6e1a68fc16ca3c434727cd",
+      "bytes": 362848,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_e"
+    },
+    {
+      "path": "fbx/anm_eve_chr1037_00_idle01_S.fbx",
+      "sha256": "f712d88dd6feb997bf3b6957a9f12d1910ca03055d3a42f2146a4042b1bb40be",
+      "bytes": 371840,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_s"
+    },
+    {
+      "path": "fbx/anm_eve_chr1037_00_idle01_SL.fbx",
+      "sha256": "f86937c826bf6444ba8fac2a20556caf79b3f624a7372d706187590662ca1cff",
+      "bytes": 383408,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_sl"
+    },
+    {
+      "path": "fbx/anm_eve_chr1037_00_idle01_loop.fbx",
+      "sha256": "2cd3aa7152253d792fd1afc5e428bedfa816d913ed650f70b88b15156a22c09b",
+      "bytes": 375744,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_loop"
+    },
+    {
+      "path": "fbx/anm_eve_chr1037_00_idle01_pose.fbx",
+      "sha256": "82305641dbc5af097526f955e633d5a10ee38465b4e73436c3b500d1dd2c51a5",
+      "bytes": 343888,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_pose"
+    },
+    {
+      "path": "fbx/anm_eve_chr1089_00_idle01_E.fbx",
+      "sha256": "8e04dae14661c799addc495803bdacb44456d805449be34a7ddde75adb456c05",
+      "bytes": 374320,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_e"
+    },
+    {
+      "path": "fbx/anm_eve_chr1089_00_idle01_S.fbx",
+      "sha256": "69bf047d9d40e483912f1391e92e6aca34f9c11f5b7d859ee03bfa8fac8986c7",
+      "bytes": 392288,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_s"
+    },
+    {
+      "path": "fbx/anm_eve_chr1089_00_idle01_SL.fbx",
+      "sha256": "d9b86f3e220cf1c12906696476322bb1a7e1ab6986a75b9669188524eac37a50",
+      "bytes": 428112,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_sl"
+    },
+    {
+      "path": "fbx/anm_eve_chr1089_00_idle01_loop.fbx",
+      "sha256": "a82b9521c65c646c5a6dfc7f54136e8c0dd49348e7f77e9d7ab93710ade1077b",
+      "bytes": 350256,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_loop"
+    },
+    {
+      "path": "fbx/anm_eve_chr1089_00_idle01_pose.fbx",
+      "sha256": "a44ed84a35c8b3d8bc01c9749209a6cfc133913fce092bd026d1c2b6c1c332a9",
+      "bytes": 343888,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_pose"
+    },
+    {
+      "path": "fbx/anm_eve_type00_chair01_L_look01_E.fbx",
+      "sha256": "d89661233ab7566768f3672340595420808fea2c3d4a7b83d5cdc611bb1deba7",
+      "bytes": 355392,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_e"
+    },
+    {
+      "path": "fbx/anm_eve_type00_chair01_L_look01_S.fbx",
+      "sha256": "e4de4ac780c82a8d80200501e89bbc8ba0da06d15fa36f3a9297e9a1e21fd4f7",
+      "bytes": 356032,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_s"
+    },
+    {
+      "path": "fbx/anm_eve_type00_chair01_L_look01_loop.fbx",
+      "sha256": "1a5789c24cc92c302ebf076f53a3653e8b33cf943cdd3f489491d5e27276a8b9",
+      "bytes": 331312,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_loop"
+    },
+    {
+      "path": "fbx/anm_eve_type00_chair01_L_look01_pose.fbx",
+      "sha256": "b2a01391139f8d464ff8d6e291fd56fbafe3ca77cf99ca60d9e250520c1e927b",
+      "bytes": 343920,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_pose"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_E.fbx",
+      "sha256": "8c176bb83b6763f772a075682dc50db0ac80353a4e2a311213e10b0bb1871727",
+      "bytes": 351968,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_e"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_S.fbx",
+      "sha256": "13a51140d071473e43fbf3d6a4a621827d3ecc4770246ead85e43ae12f338f9b",
+      "bytes": 352080,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_s"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_loop.fbx",
+      "sha256": "5f086c6f4ab9ddd3f39524484eb9cdb06f994ce26321c4009ece37118192aba1",
+      "bytes": 348864,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_loop"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_pose.fbx",
+      "sha256": "93d974da6c734b2d957fd7f532352641accd38030d7c875365858d835f1d4ab1",
+      "bytes": 343888,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_pose"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_turn135_L.fbx",
+      "sha256": "908c7a7bcfaf0d9383850ba39979d2c7af6b14df42ab62ddf4f7e8400544ca11",
+      "bytes": 367200,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn135_l"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_turn135_R.fbx",
+      "sha256": "6be2be0bfb6dcea2560c16e237345aa99338d5224eeeceebcfcad695883c24c6",
+      "bytes": 368688,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn135_r"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_turn50_L.fbx",
+      "sha256": "b7f5c310cd110aa0e2277572d7d1f026fba9a923ad53b29464461eeae05ea676",
+      "bytes": 363344,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn50_l"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homestand01_turn50_R.fbx",
+      "sha256": "138f1cf57e20ce5030fed63fa15bb513a38ca44492dbec48ab7835956820106c",
+      "bytes": 363680,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn50_r"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homewalk01_D_loop.fbx",
+      "sha256": "c199e0c97a14b594765565d438c8520fc709d86214931e7afe08b75c14c09ec7",
+      "bytes": 370896,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_d_loop"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homewalk01_U_loop.fbx",
+      "sha256": "e9a60cb90cefbc905e387f1aa94b9783a79af6ebef18d3b5f6845a29e3bcdcb1",
+      "bytes": 377584,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_u_loop"
+    },
+    {
+      "path": "fbx/anm_eve_type00_homewalk01_loop.fbx",
+      "sha256": "05a4fb12e7dd2a739ef886162dad9f2e930e0386360cd591f01a19a6f691a113",
+      "bytes": 374336,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_loop"
+    },
+    {
+      "path": "fbx/anm_eve_type00_walkin01.fbx",
+      "sha256": "5fe38ccb69923ce5ea319f083b453fa3b0bdee5cc054e83752d9c054e294b6de",
+      "bytes": 393312,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_walkin01"
+    },
+    {
+      "path": "fbx/anm_eve_type00_walkout01.fbx",
+      "sha256": "35e6edbc962dcb199e69ef42be12a70867386bb8c249a013048738a8a61095eb",
+      "bytes": 425680,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_walkout01"
+    },
+    {
+      "path": "yaml/anm_eve_chr1030_00_idle01_E.anim",
+      "sha256": "c0346dfb99f41619243a0505f721ea3728450e6706e09e6cd4fa93dc12000669",
+      "bytes": 345948,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_e"
+    },
+    {
+      "path": "yaml/anm_eve_chr1030_00_idle01_S.anim",
+      "sha256": "0e5701d2e3f0f6a72f7efd463a6556132e93a78567223a3fce0ee1f2b10b087e",
+      "bytes": 252852,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_s"
+    },
+    {
+      "path": "yaml/anm_eve_chr1030_00_idle01_SL.anim",
+      "sha256": "c765ff8cecc7d8e27144819f146f5bfbd00e5be1d91e2617688e4d5000547049",
+      "bytes": 455544,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_sl"
+    },
+    {
+      "path": "yaml/anm_eve_chr1030_00_idle01_loop.anim",
+      "sha256": "bd74f24a8c935def8b44894e17f8618d9f7e4a8e96e323205c8007fb13d0896c",
+      "bytes": 197165,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_loop"
+    },
+    {
+      "path": "yaml/anm_eve_chr1030_00_idle01_pose.anim",
+      "sha256": "ec0b4254fa4def02acd6bd6d3dac71cd03a249cc11df9bbb1cc788efffa1b7e9",
+      "bytes": 115679,
+      "source_path": "3d/motion/event/body/chara/chr1030_00/anm_eve_chr1030_00_idle01_pose"
+    },
+    {
+      "path": "yaml/anm_eve_chr1037_00_idle01_E.anim",
+      "sha256": "3405135d0c026b0ac7fb044f5a40ffe2899a129ceca918f55e0c9810c76f5ff6",
+      "bytes": 364225,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_e"
+    },
+    {
+      "path": "yaml/anm_eve_chr1037_00_idle01_S.anim",
+      "sha256": "d4d9292efbf0e07ad6af935f5acdace5aa742ce5d60de12242aa5b4601a3f8c5",
+      "bytes": 469368,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_s"
+    },
+    {
+      "path": "yaml/anm_eve_chr1037_00_idle01_SL.anim",
+      "sha256": "4b8ca1f9b706b9ebb372b3bcdb5252a18462f87ee1a2272a8feceb23696241d7",
+      "bytes": 469891,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_sl"
+    },
+    {
+      "path": "yaml/anm_eve_chr1037_00_idle01_loop.anim",
+      "sha256": "e28e1a191b51155965ed7d8d604e03ef2b151d38d15d3be68831fb46b7fa89d4",
+      "bytes": 313717,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_loop"
+    },
+    {
+      "path": "yaml/anm_eve_chr1037_00_idle01_pose.anim",
+      "sha256": "3bf1c3a0d1be500e16f8a1c44067de3ee7d1b1504587e492ade2682ae7311474",
+      "bytes": 115641,
+      "source_path": "3d/motion/event/body/chara/chr1037_00/anm_eve_chr1037_00_idle01_pose"
+    },
+    {
+      "path": "yaml/anm_eve_chr1089_00_idle01_E.anim",
+      "sha256": "f9f3c1c62e4035f28d7b04314d39e2d3629a3d3c54b2db2422f31a5aac446e94",
+      "bytes": 504379,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_e"
+    },
+    {
+      "path": "yaml/anm_eve_chr1089_00_idle01_S.anim",
+      "sha256": "7145f308a0af9d490aacbfa83e1928bb6651762955c653265eabf01c31e3428b",
+      "bytes": 675192,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_s"
+    },
+    {
+      "path": "yaml/anm_eve_chr1089_00_idle01_SL.anim",
+      "sha256": "d1ededf55b0abb9faca533a06f77419929838c2a8e1c5724494e03866f7f936f",
+      "bytes": 1078084,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_sl"
+    },
+    {
+      "path": "yaml/anm_eve_chr1089_00_idle01_loop.anim",
+      "sha256": "b8f64e5172056ba6ebc87489800c646333f203a1935f5c51c18f86c3452cdd0a",
+      "bytes": 148825,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_loop"
+    },
+    {
+      "path": "yaml/anm_eve_chr1089_00_idle01_pose.anim",
+      "sha256": "88ae31b03e7b1491d5f1840bb5de18c0c79d01fceb6468b49bfdc42db07ce9a8",
+      "bytes": 118175,
+      "source_path": "3d/motion/event/body/chara/chr1089_00/anm_eve_chr1089_00_idle01_pose"
+    },
+    {
+      "path": "yaml/anm_eve_type00_chair01_L_look01_E.anim",
+      "sha256": "393e149c3807c37463f62691a0f61c0a2b3891bf5691398995d92e5b15fac05a",
+      "bytes": 193750,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_e"
+    },
+    {
+      "path": "yaml/anm_eve_type00_chair01_L_look01_S.anim",
+      "sha256": "5701a191a561ae0b29d159615da614d25b7a670cf47fd734e481d45916c08664",
+      "bytes": 195419,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_s"
+    },
+    {
+      "path": "yaml/anm_eve_type00_chair01_L_look01_loop.anim",
+      "sha256": "1a8c13ed914ed16297ed52ecd57860cd1f6c1b04c9495048ea54411e8ffb6ad8",
+      "bytes": 106723,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_loop"
+    },
+    {
+      "path": "yaml/anm_eve_type00_chair01_L_look01_pose.anim",
+      "sha256": "c9ec2e244910619a8d5629b7350403af20fe80945e3695b8caf2c08dc8305ddc",
+      "bytes": 115667,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_chair01_l_look01_pose"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_E.anim",
+      "sha256": "2a132b19a1933553d0f2c9a13e39bfefe9a99d6a233759c5da46f81d4968b78d",
+      "bytes": 219724,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_e"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_S.anim",
+      "sha256": "c5f8bd931635dbe98f4f04cc02c000bdf425e883408ad01f901b200999db4542",
+      "bytes": 219260,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_s"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_loop.anim",
+      "sha256": "4cb4822a8b4dfb835e7435c06c9329236c38571acf10f975af83c86d4a5dc6ed",
+      "bytes": 140335,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_loop"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_pose.anim",
+      "sha256": "43c159e645fe55f7179bf1d438e3d139588bd1717bb2537284f83897ba389943",
+      "bytes": 116112,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_pose"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_turn135_L.anim",
+      "sha256": "3cbac6ce2cc87cd6dcc608c66ab0f1c05cba5b55d00e2c8fe11576847a04a2c1",
+      "bytes": 424422,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn135_l"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_turn135_R.anim",
+      "sha256": "7091de5e93c65153b36f449e243e9aa60463319bc9cc319ba3e69704a76dd8a9",
+      "bytes": 445218,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn135_r"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_turn50_L.anim",
+      "sha256": "80ff868d10be2c14eeaa22b8f14da0f78e09d52442a33920d7bcc56e31207b17",
+      "bytes": 370344,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn50_l"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homestand01_turn50_R.anim",
+      "sha256": "b1cbd9b3656ff362498af22ccfd76516d6a79491b02b82bceaba20cdebb09fe8",
+      "bytes": 371818,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homestand01_turn50_r"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homewalk01_D_loop.anim",
+      "sha256": "e902c2e5baf28f6021e105458028751aa45983eaf29d6ba580e38b0a0b527602",
+      "bytes": 452038,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_d_loop"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homewalk01_U_loop.anim",
+      "sha256": "b7629b322e4c2214f172f61830e7d427b8399258e538de1e962b2d51bef9783b",
+      "bytes": 545849,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_u_loop"
+    },
+    {
+      "path": "yaml/anm_eve_type00_homewalk01_loop.anim",
+      "sha256": "836a814606949ea83cf5d03c33672777bde995aa1c6c10fc1becd0ce713d05e8",
+      "bytes": 495047,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_homewalk01_loop"
+    },
+    {
+      "path": "yaml/anm_eve_type00_walkin01.anim",
+      "sha256": "5da76ec899ee5f29209459402de88cc0c6dd3754689939d5a35b26fca97514aa",
+      "bytes": 660813,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_walkin01"
+    },
+    {
+      "path": "yaml/anm_eve_type00_walkout01.anim",
+      "sha256": "65c3059f3ebd2efd524a510670ab8dc5419a7722b06b138065c4c72b21bf238b",
+      "bytes": 1131593,
+      "source_path": "3d/motion/event/body/type00/anm_eve_type00_walkout01"
+    },
+    {
+      "path": "fbx/rig.json",
+      "sha256": "ccbc0fae6b3eafec509f5e07bedba6eccd402abfc15d16ab8e2d6f3fd63f3a12",
+      "bytes": 36497,
+      "source_path": "3d/chara/body/bdy1089_00/pfb_bdy1089_00"
+    }
+  ],
+  "selection": "17 generic transitions/idle/walk/chair clips + 5 idle phases for each of 1089/1030/1037",
+  "local_use_only": true,
+  "rig": "3d/chara/body/bdy1089_00/pfb_bdy1089_00",
+  "clip_count": 32,
+  "settings": {
+    "collectAnimations": false,
+    "exportAllNodes": true,
+    "exportSkins": false,
+    "exportMaterials": false,
+    "eulerFilter": false,
+    "scaleFactor": 1,
+    "fbxVersion": 3,
+    "fbxFormat": 0,
+    "rig_json_basis": "original Unity local TRS",
+    "fbx_basis": "AssetStudio mirrors translation X and quaternion Y/Z"
+  },
+  "tools": {
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/tools/dotnet-win8/dotnet.exe": "76e6472063f53379b86fe8370203ab6c46c75d27f405b722845f0e495d8f5fd0",
+    "/mnt/f/ULTIMA/UMA-Extractor/AssetStudio/x64/AssetStudio.FBXNative.dll": "cd083ffe9d5c9a99429cf2dba98b22c6f3d53950cbdda5d679b0548b7f079d31",
+    "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/diagnostics/authored_idle/AssetStudioSubset.cs": "172495b92b830beb05d75b62ae61647844fde0dc5e9e5d7fe01a3893c8b2677e",
+    "/mnt/f/ULTIMA/UMA-Extractor/AssetStudio/AssetStudio.dll": "86f31edcc04bb5845b24263945e72eee3164829bfd352d34a14034301e74925a",
+    "/mnt/f/ULTIMA/UMA-Extractor/AssetStudio/AssetStudio.Utility.dll": "12f955d51738374c49d6b87e737c451181184dc090928dd76474e7021cf192f0",
+    "/mnt/f/ULTIMA/UMA-Extractor/AssetStudio/AssetStudio.CLI.dll": "84543b0dcc21df1c30aa6ff2bbda08218418c36a5c7ff46f7a8d93b28cda82c2"
+  },
+  "complete": true
+}

@@ -75,6 +75,10 @@ def build():
         raise SystemExit('Run setup_native.py first.')
     preset_path = NATIVE / 'export_presets.cfg'
     original = preset_path.read_text()
+    def source_snapshot():
+        sources = list((NATIVE / 'scripts').glob('*.gd')) + [NATIVE / 'main.tscn', NATIVE / 'project.godot']
+        return {str(p.relative_to(NATIVE)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(sources)}
+    sources_before = source_snapshot()
     temporary = original.replace('custom_template/release=""', 'custom_template/release=' + json.dumps(str(template)))
     # Restore the portable tracked preset even if export fails.
     preset_path.write_text(temporary)
@@ -91,15 +95,25 @@ def build():
         for _, _, _, name in PLUGINS:
             shutil.copy2(NATIVE / 'addons' / name / 'LICENSE', licenses / (name + '.txt'))
         shutil.copy2(ROOT.parent / 'LICENSE.md', licenses / 'Mate-Engine.md')
+        shutil.copy2(NATIVE / 'assets/desktop_objects/License.txt', licenses / 'Kenney-Furniture.txt')
+        premium_provenance = NATIVE / 'assets/desktop_objects/premium/PROVENANCE.md'
+        if premium_provenance.is_file():
+            shutil.copy2(premium_provenance, licenses / 'Mate-Furniture-Provenance.md')
         for name in ('Launch-Mate.ps1', 'Launch-Mate.cmd'):
             shutil.copy2(ROOT / 'windows' / name, out.parent / name)
         shutil.copy2(ROOT / 'windows/README.md', out.parent / 'README.md')
         # Local launcher metadata stays in the ignored build directory.
         (out.parent / 'runtime-location.json').write_text(json.dumps({
             'distro': os.getenv('WSL_DISTRO_NAME', 'Ubuntu-24.04'), 'backend_root': str(ROOT)}, indent=2))
+        sources_after = source_snapshot()
         manifest = {'godot': VERSION, 'plugins': [{'repo': r, 'revision': v} for r, v, _, _ in PLUGINS],
+                    'source_before_sha256': sources_before, 'source_after_sha256': sources_after,
+                    'source_stable_during_build': sources_before == sources_after,
                     'executable': out.name, 'bytes': out.stat().st_size, 'sha256': hashlib.sha256(out.read_bytes()).hexdigest(),
                     'character_assets_bundled': False,
+                    'desktop_objects': {str(p.relative_to(NATIVE / 'assets/desktop_objects')): hashlib.sha256(p.read_bytes()).hexdigest()
+                                        for p in sorted((NATIVE / 'assets/desktop_objects').rglob('*'))
+                                        if p.is_file() and p.suffix in {'.glb', '.txt', '.json', '.md'}},
                     'patches': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in sorted((ROOT / 'patches').glob('*.patch'))}}
         (out.parent / 'build-manifest.json').write_text(json.dumps(manifest, indent=2))

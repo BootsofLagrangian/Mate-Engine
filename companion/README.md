@@ -3,11 +3,16 @@
 현재 Windows 데스크톱 펫은 [네이티브 호스트 안내](native/README.md)를 사용합니다.
 슈발·라이스·에이신 프로필, 음성 입력 Thinker + 전용 Uma TTS, 작업 에이전트,
 VRMA 동작과 데스크톱 이동은 [범용 엔진](engine/README.md)으로 연결됩니다.
-창 경계 상호작용과 향후 소품 확장은 [Desktop world 계획](DESKTOP-WORLD.md)에 정리했습니다.
-Windows에서는 [Launch-Mate.cmd](windows/Launch-Mate.cmd)로 실행합니다.
+창 경계 상호작용과 현재 소품과 향후 확장은 [Desktop world 계획](DESKTOP-WORLD.md)에 정리했습니다.
+Windows에서는 빌드 후 `companion/native/build/Launch-Mate.cmd`로 실행합니다. [Windows 실행 안내](windows/README.md)를 참고하세요.
 **행동** 탭에서 이름 있는 지점을 만들고 표식을 끌어 배치한 뒤 이동·살펴보기를
 요청할 수 있습니다. 자율 대기에는 LLM 호출이 필요하지 않으며, 대화 중 받은
 간헐적 행동 지시도 같은 제어기로 연결됩니다.
+**공간** 탭(실험 기능)은 의자·소파·컴퓨터 책상을 바탕화면에 놓고 이름·크기·표시를
+바꾸며, 배치 편집을 켜면 가구 창을 끌어 옮깁니다. 가구별 동작은 살펴보기·앉기·
+사용하기이며 모두 자세와 위치만 다룹니다. 화면이나 파일을 읽거나 다른 프로그램을
+조작하지 않으며, 물건 들기·도구 꽂이는 아직 없는 향후 기능입니다. 접촉 동작은
+세 캐릭터의 실제 Windows 착석·접촉 검사 265개를 통과했습니다. [검증 범위](diagnostics/desktop_objects/windows-final/README.md)를 참고하세요.
 
 ## 기존 브라우저 / Unity 어댑터
 

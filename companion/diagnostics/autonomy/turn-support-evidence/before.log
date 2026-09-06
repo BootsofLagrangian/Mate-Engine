@@ -1,0 +1,141 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+TURN_SUPPORT cheval-grand scale0.60 fps30 anchor_drift=0.0 detached=0 unsafe=0 envelope_width=319.3427734375
+TURN_SUPPORT cheval-grand scale0.60 fps60 anchor_drift=0.0 detached=0 unsafe=0 envelope_width=319.3427734375
+TURN_SUPPORT cheval-grand scale1.00 fps30 anchor_drift=45.709228515625 detached=43 unsafe=0 envelope_width=532.237976074219
+ERROR: cheval-grand scale1.00 fps30 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: cheval-grand scale1.00 fps30 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT cheval-grand scale1.00 fps60 anchor_drift=45.0650024414062 detached=88 unsafe=0 envelope_width=532.237976074219
+ERROR: cheval-grand scale1.00 fps60 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: cheval-grand scale1.00 fps60 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT cheval-grand scale1.25 fps30 anchor_drift=97.6365966796875 detached=64 unsafe=0 envelope_width=665.297485351562
+ERROR: cheval-grand scale1.25 fps30 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: cheval-grand scale1.25 fps30 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT cheval-grand scale1.25 fps60 anchor_drift=96.831298828125 detached=129 unsafe=0 envelope_width=665.297485351562
+ERROR: cheval-grand scale1.25 fps60 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: cheval-grand scale1.25 fps60 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT rice-shower scale0.60 fps30 anchor_drift=0.0 detached=0 unsafe=0 envelope_width=301.800506591797
+TURN_SUPPORT rice-shower scale0.60 fps60 anchor_drift=0.0 detached=0 unsafe=0 envelope_width=301.800506591797
+TURN_SUPPORT rice-shower scale1.00 fps30 anchor_drift=31.1565856933594 detached=39 unsafe=0 envelope_width=503.000854492188
+ERROR: rice-shower scale1.00 fps30 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: rice-shower scale1.00 fps30 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT rice-shower scale1.00 fps60 anchor_drift=31.1567077636719 detached=79 unsafe=0 envelope_width=503.000854492188
+ERROR: rice-shower scale1.00 fps60 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: rice-shower scale1.00 fps60 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT rice-shower scale1.25 fps30 anchor_drift=79.44580078125 detached=68 unsafe=0 envelope_width=628.751098632812
+ERROR: rice-shower scale1.25 fps30 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: rice-shower scale1.25 fps30 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT rice-shower scale1.25 fps60 anchor_drift=79.44580078125 detached=137 unsafe=0 envelope_width=628.751098632812
+ERROR: rice-shower scale1.25 fps60 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: rice-shower scale1.25 fps60 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT eishin-flash scale0.60 fps30 anchor_drift=0.0 detached=0 unsafe=0 envelope_width=330.716674804688
+TURN_SUPPORT eishin-flash scale0.60 fps60 anchor_drift=0.0 detached=0 unsafe=0 envelope_width=330.716674804688
+TURN_SUPPORT eishin-flash scale1.00 fps30 anchor_drift=51.8871459960938 detached=44 unsafe=0 envelope_width=551.194458007812
+ERROR: eishin-flash scale1.00 fps30 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: eishin-flash scale1.00 fps30 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT eishin-flash scale1.00 fps60 anchor_drift=51.1911315917969 detached=90 unsafe=0 envelope_width=551.194458007812
+ERROR: eishin-flash scale1.00 fps60 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: eishin-flash scale1.00 fps60 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT eishin-flash scale1.25 fps30 anchor_drift=105.358917236328 detached=68 unsafe=0 envelope_width=688.993041992188
+ERROR: eishin-flash scale1.25 fps30 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: eishin-flash scale1.25 fps30 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+TURN_SUPPORT eishin-flash scale1.25 fps60 anchor_drift=104.488800048828 detached=137 unsafe=0 envelope_width=688.993041992188
+ERROR: eishin-flash scale1.25 fps60 yaw cannot move stable window-local foot anchor
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:63)
+ERROR: eishin-flash scale1.25 fps60 yaw retains safe support
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/autonomy/probe_turn_support.gd:8)
+       [1] run (res://../diagnostics/autonomy/probe_turn_support.gd:64)
+Turn support: 54 checks, 24 failures

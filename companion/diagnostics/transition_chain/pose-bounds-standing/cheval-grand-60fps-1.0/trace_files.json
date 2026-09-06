@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/joints.jsonl.gz",
+    "sha256": "2f564f79a13b37b5b30e0641f42708f2674caea7a081d9e635b02303a663705e",
+    "bytes": 12571600
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/frames.csv.gz",
+    "sha256": "2dc32371fed87f902d53f48e08b124666b351fe01fa97ba1e24d3cb3928a2cf4",
+    "bytes": 746393
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-0.6/joints.jsonl.gz",
+    "sha256": "4adc7730ebefbbfed149aacc781455b81a1fa6ca5213843e1820eeef8014da2f",
+    "bytes": 11558622
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/cheval-grand-60fps-0.6/frames.csv.gz",
+    "sha256": "4f928d5ab74383da250d76c00a25c5529ff37682461755c6975a25b9d991a846",
+    "bytes": 773102
+  }
+]

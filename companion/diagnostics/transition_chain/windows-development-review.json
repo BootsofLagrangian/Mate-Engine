@@ -1,0 +1,171 @@
+{
+  "scope": "Windows development evidence, not final immutable-source acceptance",
+  "thresholds": {
+    "actual_speed_px_s_strictly_above": 20,
+    "speed_window_s": 0.1,
+    "absolute_yawrate_deg_s_strictly_above": 10,
+    "minimum_contiguous_s": 0.25,
+    "minimum_heading_change_deg": 5
+  },
+  "formula": "speed=Euclidean displacement of actual window position over trailing100ms with linear timestamp interpolation / .1; yawrate=absolute unwrapped yaw delta / actual adjacent sample dt. Runs require every sample above both thresholds; duration=t_last-t_first; net heading change=abs(yaw_last-yaw_first). First100ms of each phase excluded.",
+  "input_sha256": {
+    "report.json": "05e772b7cad6eb2e855b024e77b71aa7792afe3c69a55171b10586317690129e",
+    "frames.csv": "c64624ea6965eb4fad8d414f2deead2e99e4c6612652a923143afe2729e48546",
+    "source-before.json": "6fe44bb75dbd2bcb9397f5d8059e7db8ef312761b8576097a3cf1d555661e8db",
+    "source-after.json": "9d218989874212da3689019eb3778323708fddbaff70b30293e430a0c6018f2d"
+  },
+  "checks": 19,
+  "failures": 0,
+  "renderer": "NVIDIA GeForce RTX 4090",
+  "stop_drift_px": 0.0,
+  "csv_samples": 1214,
+  "capture_count": 182,
+  "source_hash_changes": {
+    "desktop_autonomy.gd": {
+      "before": "8ab58a127d541570150bc73d25fb05babb903cb64d130a825d408c048c0cb675",
+      "after": "3f3f4a03178aeaae6b43c7104bd2f56ba3d6b27d06049745f69c65ea8d579ad1"
+    }
+  },
+  "trips": [
+    {
+      "phase": "idle_to_right",
+      "samples": 68,
+      "raw_adjacent_moving_and_turning_samples": 20,
+      "trailing_window_moving_and_turning_samples": 17,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 6516,
+          "end_ms": 7384,
+          "duration_s": 0.868,
+          "heading_change_deg": 41.335,
+          "window_displacement_px": 55.0,
+          "samples": 17,
+          "passes": true,
+          "maximum_sample_gap_ms": 70
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 6516,
+        "end_ms": 7384,
+        "duration_s": 0.868,
+        "heading_change_deg": 41.335,
+        "window_displacement_px": 55.0,
+        "samples": 17,
+        "passes": true
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "moving_reversal",
+      "samples": 367,
+      "raw_adjacent_moving_and_turning_samples": 15,
+      "trailing_window_moving_and_turning_samples": 15,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 10969,
+          "end_ms": 11759,
+          "duration_s": 0.79,
+          "heading_change_deg": 39.5215,
+          "window_displacement_px": 50.0,
+          "samples": 15,
+          "passes": true,
+          "maximum_sample_gap_ms": 74
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 10969,
+        "end_ms": 11759,
+        "duration_s": 0.79,
+        "heading_change_deg": 39.5215,
+        "window_displacement_px": 50.0,
+        "samples": 15,
+        "passes": true
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "left_to_right",
+      "samples": 422,
+      "raw_adjacent_moving_and_turning_samples": 15,
+      "trailing_window_moving_and_turning_samples": 15,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 18975,
+          "end_ms": 19821,
+          "duration_s": 0.846,
+          "heading_change_deg": 38.8339,
+          "window_displacement_px": 52.0,
+          "samples": 15,
+          "passes": true,
+          "maximum_sample_gap_ms": 78
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 18975,
+        "end_ms": 19821,
+        "duration_s": 0.846,
+        "heading_change_deg": 38.8339,
+        "window_displacement_px": 52.0,
+        "samples": 15,
+        "passes": true
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "stop_and_settle",
+      "samples": 213,
+      "raw_adjacent_moving_and_turning_samples": 15,
+      "trailing_window_moving_and_turning_samples": 15,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 28328,
+          "end_ms": 29120,
+          "duration_s": 0.792,
+          "heading_change_deg": 38.1851,
+          "window_displacement_px": 52.0,
+          "samples": 15,
+          "passes": true,
+          "maximum_sample_gap_ms": 74
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 28328,
+        "end_ms": 29120,
+        "duration_s": 0.792,
+        "heading_change_deg": 38.1851,
+        "window_displacement_px": 52.0,
+        "samples": 15,
+        "passes": true
+      },
+      "all_interval_count": 1
+    }
+  ],
+  "capture_alignment": {
+    "exact_same_timestamp_metadata_matches": 181,
+    "total": 182,
+    "missing_csv_timestamps": [
+      1343
+    ],
+    "save_errors": 0,
+    "files_present": 182
+  },
+  "stop_csv_check": {
+    "start_ms": 29398,
+    "samples": 134,
+    "unique_window_positions": [
+      [
+        925,
+        672
+      ]
+    ]
+  },
+  "visually_inspected_captures": {
+    "00023.png": "b49bea0221b8b71f44e7a3462ded853dc6031c73ff46af4cd893f01871ec616b",
+    "00030.png": "e9b9dbd2dc32760ca287212c54667a436aebb615cab398638fbdd967dfc2e842",
+    "00052.png": "bff036b37a2ed08098934d2b50b559f0b289c6bbb2d7a4548ccb8f1542e08f88"
+  }
+}

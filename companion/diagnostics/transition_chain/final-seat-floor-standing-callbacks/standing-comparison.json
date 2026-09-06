@@ -1,0 +1,79 @@
+{
+  "verdict": "APPROVED for deterministic standing nonregression, including directly invoked secondary-cache callbacks.",
+  "scope": "Source-level headless actual-main order, three rigs60Hzscale1; no Windows executable run or rendered spring/furniture claim.",
+  "coordinated_package_sha256_verified_on_disk": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+  "checks": 102,
+  "failures": 0,
+  "current_script_hash_changes": [],
+  "cells": [
+    {
+      "model": "cheval-grand",
+      "checks": 34,
+      "failures": 0,
+      "identical_uma_baseline": true,
+      "identical_previous_bounds_baseline": true,
+      "uncompressed_csv_sha256": "be0e96146f592162beef33bca4b58c179f945a077971f099c4eb9ce0a12f9990",
+      "paths": [
+        "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-1.0/frames.csv.gz",
+        "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/frames.csv.gz",
+        "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/cheval-grand-60fps-1.0/frames.csv.gz"
+      ],
+      "source_stable": true,
+      "callback_check": {
+        "details": {
+          "cache_samples": 30,
+          "frames": 5452,
+          "inactive": true
+        },
+        "label": "standing secondary callbacks execute with floor constraint inactive",
+        "ok": true
+      }
+    },
+    {
+      "model": "rice-shower",
+      "checks": 34,
+      "failures": 0,
+      "identical_uma_baseline": true,
+      "identical_previous_bounds_baseline": true,
+      "uncompressed_csv_sha256": "860138a54f65a1da388e1d7b7f0190f08c8bef9acee0db820a0ffb8da94c704d",
+      "paths": [
+        "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-1.0/frames.csv.gz",
+        "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/frames.csv.gz",
+        "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/rice-shower-60fps-1.0/frames.csv.gz"
+      ],
+      "source_stable": true,
+      "callback_check": {
+        "details": {
+          "cache_samples": 30,
+          "frames": 5452,
+          "inactive": true
+        },
+        "label": "standing secondary callbacks execute with floor constraint inactive",
+        "ok": true
+      }
+    },
+    {
+      "model": "eishin-flash",
+      "checks": 34,
+      "failures": 0,
+      "identical_uma_baseline": true,
+      "identical_previous_bounds_baseline": true,
+      "uncompressed_csv_sha256": "3768f264e6ed6d04a9b353f9b5fa73ff06e5b34389e2b02d9b5bcb42117b2f0d",
+      "paths": [
+        "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-1.0/frames.csv.gz",
+        "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/frames.csv.gz",
+        "companion/logs/diagnostic-traces/transition_chain/final-seat-floor-standing-callbacks/eishin-flash-60fps-1.0/frames.csv.gz"
+      ],
+      "source_stable": true,
+      "callback_check": {
+        "details": {
+          "cache_samples": 30,
+          "frames": 5452,
+          "inactive": true
+        },
+        "label": "standing secondary callbacks execute with floor constraint inactive",
+        "ok": true
+      }
+    }
+  ]
+}

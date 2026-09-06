@@ -1,0 +1,31 @@
+{
+  "sha256": "8ce7a3b2ad50fe969f92971062eee9653849eb86f7905a6eba11e55a97ab3241",
+  "bytes": 96871056,
+  "source": {
+    "living_behavior.gd": "210665e2e97ca0979d6f8ae4c489ce94b908e8fa8f938b8361b91f49309e59df",
+    "vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb",
+    "vrm_avatar.gd": "d8b80a508d36f37faae31ae27814562871b76a8e6fbc4480429d89dbf594e26c",
+    "main.gd": "8c7dffc3b91f463c161fd8c98514638626c0f6a7bc104ab093c35923c3190e27",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "control_panel.gd": "48908825e3c5ec02853ef513ff0591837afaab71ca39964ccb400c5b4c3f737b",
+    "motion_bank.gd": "0c103a19e4612b97318efac939de62acacced27ad2111a5efc364a2243b61b9b",
+    "desktop_surfaces.gd": "64cdfc07dd012f455c5017e508aa2795aee8b16488d26dd7962ebb96c904b974",
+    "audio_output.gd": "76557d61a311f11cd9786892885da9c24f0f4c248abcc6aa64734ffc7cbc4fb6",
+    "pcm_queue.gd": "a87acecc4c121e422b48a5a2e70f48dbac2bf69f4ec051de0d7adc4d83f071b3",
+    "behavior_director.gd": "3dcd998b89ff9afa1cd6b839ee67c0ce85663f5102ca0abc110475dcb3648752",
+    "desktop_autonomy.gd": "7f4280d569f3dbbc0709cd6590b4fa88f1732b034bf6931537e4dbbc9980ebfc",
+    "interest_points.gd": "136cdf1d8098d41973eb99e00aaa42f9cf5b321cdb140f7a45957001ca6ab4e8",
+    "microphone.gd": "b9d1e052df6c00c5462ea3ff4af4063ca351cabba08faf4c96577be2ce7915d9",
+    "ambient_motion.gd": "71de05a5179fe417fd096887576890f6baf930a554f98278034263513f672291",
+    "arm_ik.gd": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+    "session.gd": "0716880cd7cbe69eefedb36e192b8c5b9fac59b0b5b2f993363b8a0a14faca10",
+    "backend_client.gd": "414d3459de50f35814c4c609f996df64eb65324d52e88990c0d458c076d020cf",
+    "motion_player.gd": "c8da80243da33929755f29dba0b82c210440c2cc29a1b8d5b87f8f5597481ce0",
+    "wav_encoder.gd": "9c7d7549d1f03b832b6c33795bc478e79a3ae05df572069ee5100ead559f8725",
+    "desktop_world_source.gd": "f9398bd78f1a9dbb85b227a2dbf9ceea73dfb3aacb121cc242b7fc04c41a0224",
+    "settings.gd": "72e24a742e230b906ef4c209fbe3284a36ae6382296cb05c941f25a345464c6c",
+    "autonomy_bridge.gd": "94e2f3dafdbba98487779b378020c0c79631cd2afe777d225123679818967b29",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "desktop_gait.gd": "62c71702f2670e649c4875c506a572a65da3b2055282af65d4fa27bb1b08f310"
+  }
+}

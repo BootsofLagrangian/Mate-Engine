@@ -1,0 +1,176 @@
+{
+  "scope": "Observed Windows run; recorded source hashes unchanged, loaded-build provenance still required",
+  "thresholds": {
+    "actual_speed_px_s_strictly_above": 20,
+    "speed_window_s": 0.1,
+    "absolute_yawrate_deg_s_strictly_above": 10,
+    "minimum_contiguous_s": 0.25,
+    "minimum_heading_change_deg": 5
+  },
+  "formula": "speed=Euclidean displacement of actual window position over trailing100ms with linear timestamp interpolation / .1; yawrate=absolute unwrapped yaw delta / actual adjacent sample dt. Runs require every sample above both thresholds; duration=t_last-t_first; net heading change=abs(yaw_last-yaw_first). First100ms of each phase excluded.",
+  "input_sha256": {
+    "report.json": "51a9e18581f72c65d133d66d7226d54926e6470b250745f82d6712120f68f52a",
+    "frames.csv": "41a983ba7148578c5dfe7a11ac1cab4e9e62e0ad49c0b4fcb7437944e61301dc",
+    "source-before.json": "d29b0e94bbe91292a068a7873c6450f235b57744483400d120eacae03e495557",
+    "source-after.json": "d29b0e94bbe91292a068a7873c6450f235b57744483400d120eacae03e495557"
+  },
+  "checks": 28,
+  "failures": 0,
+  "renderer": "NVIDIA GeForce RTX 4090",
+  "stop_drift_px": 0.0,
+  "csv_samples": 2388,
+  "capture_count": 325,
+  "source_snapshot_pair_present": true,
+  "source_hash_changes": {},
+  "trips": [
+    {
+      "phase": "idle_to_right",
+      "samples": 71,
+      "raw_adjacent_moving_and_turning_samples": 22,
+      "trailing_window_moving_and_turning_samples": 19,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 6316,
+          "end_ms": 7202,
+          "duration_s": 0.886,
+          "heading_change_deg": 42.1688,
+          "window_displacement_px": 57.0,
+          "samples": 19,
+          "passes": true,
+          "maximum_sample_gap_ms": 62
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 6316,
+        "end_ms": 7202,
+        "duration_s": 0.886,
+        "heading_change_deg": 42.1688,
+        "window_displacement_px": 57.0,
+        "samples": 19,
+        "passes": true,
+        "maximum_sample_gap_ms": 62
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "moving_reversal",
+      "samples": 370,
+      "raw_adjacent_moving_and_turning_samples": 21,
+      "trailing_window_moving_and_turning_samples": 19,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 10736,
+          "end_ms": 11636,
+          "duration_s": 0.9,
+          "heading_change_deg": 42.8662,
+          "window_displacement_px": 57.0,
+          "samples": 19,
+          "passes": true,
+          "maximum_sample_gap_ms": 65
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 10736,
+        "end_ms": 11636,
+        "duration_s": 0.9,
+        "heading_change_deg": 42.8662,
+        "window_displacement_px": 57.0,
+        "samples": 19,
+        "passes": true,
+        "maximum_sample_gap_ms": 65
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "left_to_right",
+      "samples": 424,
+      "raw_adjacent_moving_and_turning_samples": 21,
+      "trailing_window_moving_and_turning_samples": 19,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 18778,
+          "end_ms": 19649,
+          "duration_s": 0.871,
+          "heading_change_deg": 41.5943,
+          "window_displacement_px": 54.0,
+          "samples": 19,
+          "passes": true,
+          "maximum_sample_gap_ms": 60
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 18778,
+        "end_ms": 19649,
+        "duration_s": 0.871,
+        "heading_change_deg": 41.5943,
+        "window_displacement_px": 54.0,
+        "samples": 19,
+        "passes": true,
+        "maximum_sample_gap_ms": 60
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "stop_and_settle",
+      "samples": 147,
+      "raw_adjacent_moving_and_turning_samples": 20,
+      "trailing_window_moving_and_turning_samples": 17,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 28160,
+          "end_ms": 28894,
+          "duration_s": 0.734,
+          "heading_change_deg": 34.4471,
+          "window_displacement_px": 49.0,
+          "samples": 16,
+          "passes": true,
+          "maximum_sample_gap_ms": 63
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 28160,
+        "end_ms": 28894,
+        "duration_s": 0.734,
+        "heading_change_deg": 34.4471,
+        "window_displacement_px": 49.0,
+        "samples": 16,
+        "passes": true,
+        "maximum_sample_gap_ms": 63
+      },
+      "all_interval_count": 2
+    }
+  ],
+  "stationary_pair_phases": [
+    "pair:wave->nod",
+    "pair:nod->wave",
+    "pair:wave->wave"
+  ],
+  "phase_selection": "Exclude loading and explicitly stationary pair: phases; include all other phases irrespective of outcome.",
+  "capture_alignment": {
+    "exact_same_timestamp_metadata_matches": 324,
+    "total": 325,
+    "missing_csv_timestamps": [
+      1269
+    ],
+    "unmatched_metadata_timestamps": [
+      1269
+    ],
+    "save_errors": 0,
+    "files_present": 325
+  },
+  "stop_csv_check": {
+    "start_ms": 29161,
+    "samples": 68,
+    "unique_window_positions": [
+      [
+        926.0,
+        672.0
+      ]
+    ],
+    "maximum_drift_px": 0.0
+  }
+}

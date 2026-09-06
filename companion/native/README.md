@@ -13,7 +13,7 @@ settings,motion_bank,autonomy_bridge}.gd`, `selftest.gd` and `tools/{run_selftes
 probe_protocol.gd,run_protocol_probe.sh}`. Motion (`motion_player`, `vrm_avatar`, `arm_ik`,
 `vrma_clip`), `desktop_autonomy.gd`, `desktop_surfaces.gd`, `desktop_world_source.gd` and
 `platform/windows_world.ps1` are Astra-owned; `addons/`, setup/export/launchers and the backend are
-root-owned. The desktop-world plan (surfaces now, props later) is `companion/DESKTOP-WORLD.md`.
+root-owned. The desktop-world architecture and future tool plan are in `companion/DESKTOP-WORLD.md`.
 
 ## Pet size (settings `pet_scale`, 0.35..1.25, default 0.6)
 
@@ -68,27 +68,59 @@ never `foot_current`).
   open (unchanged). Readable states add 자리로 이동 중 (approach), 닿을 표면 없음 (no_surface),
   앉아 있음 / 앉을 자리로 이동 중 while seated.
 - Not claimed: jumping or stepping between platforms, leaning (needs a validated 3D hand target;
-  the lean anchor is projected but never selected), props (see DESKTOP-WORLD.md), any reading of
+  the lean anchor is projected but never selected), any reading of
   screen content.
 
 ## Turning and displacement-driven gait
 
-An accepted destination calls `MotionPlayer.set_heading_intent`; replacing a
-destination updates it even during an existing turn. DesktopAutonomy waits for
-`heading_ready()` before departure, with a six-second timeout and immediate input
-preemption. Departure speed builds over one second. A zero movement sample holds
-the current heading; `face_front()` is an explicit interaction request.
+Walking sources declare `locomotion`, `locomotion_priority` and optional
+`locomotion_preserve_hips` catalogue capabilities. The host selects the highest
+priority loaded loop; the original CC0 walks remain fallbacks. The installed
+`uma_walk` uses the original UMA neutral home-walk quaternion curves, preserving
+its upright head, arm motion and centered hip sway. Hip motion is bounded before
+final contact IK. See [source conversion and comparison](../diagnostics/walking_assets/REPORT.md).
 
-`TurnStepper` alternates a planted foot and a lifted foot along X/Z arcs, maintaining
-the planted ankle position and orientation while the body turns. `DesktopGait`
-then advances the walking clip by committed window displacement and compensates
-stance contact with leg IK. This uses 3D rig geometry within the existing fixed
+An accepted destination calls `MotionPlayer.prepare_locomotion`; replacing a
+destination updates it even during an existing turn. DesktopAutonomy uses a short
+0.25-second anticipation and `locomotion_ready()` first-step gate. The body gains
+at least 10 degrees of heading lead and starts travelling with up to 72 degrees
+of turn still remaining; the turn continues during movement. Already aligned
+destinations can depart directly. A six-second readiness timeout and immediate
+input preemption remain. Departure speed builds over one second.
+
+`DesktopGait` owns both angular and linear travel, alternating planted contacts
+and lifted feet along X/Z arcs while compensating stance contact with leg IK.
+`TurnStepper` handles explicit in-place `face_front()` requests. The two solvers
+never compete for travelling legs. This uses 3D rig geometry within the existing fixed
 orthographic projection; it does not create arbitrary 3D navigation or perspective
 depth scaling. Support, scale changes, preview ownership and cancellation remain
 separate from decorative posture. See the measured scope and retained development
-attempts in [`diagnostics/liveliness`](../diagnostics/liveliness/README.md).
+attempts in [`diagnostics/transition_chain`](../diagnostics/transition_chain/README.md).
+
+Finite bank gestures can also overlap through
+`MotionPlayer.play_gesture_sequence(first, second, lead_seconds, preview)` and the
+motion tab's **두 동작 이어보기** controls. Both timelines keep advancing during
+the overlap; head, arms and torso blend independently. Incoming playback retains
+its elapsed time at promotion. Root/leg or support-changing sequences wait for
+the contact boundary; arbitrary imported VRMA/custom sequences are not yet
+supported by this API.
 
 ## Desktop roaming (pet mode only)
+
+The **공간** tab adds a chair, sofa or computer desk as a separate transparent
+native window. Select an object to rename, resize, hide or remove it; enable
+placement editing to drag it. Turning editing off makes the object window ignore
+mouse input. Saved objects are restored on launch and parked when no current
+monitor can safely contain them.
+
+**살펴보기** uses the normal attention director. **앉기** first approaches on the
+current support, then fits the seat anchor against a dedicated narrow seat.
+**사용하기** requests a finite computer work/contact posture. Object movement,
+removal, explicit Stop, character changes and relevant input/setting interruptions
+release the interaction. These are local furniture interactions; screen content
+recognition, real application input and handheld tools remain separate extensions.
+See [the object architecture](../DESKTOP-WORLD.md#placed-furniture) and
+[validation](../diagnostics/desktop_objects/).
 
 `scripts/desktop_autonomy.gd` moves the window using the union of usable monitor rects
 (negative global origins included) and the visible pet rect; `scripts/autonomy_bridge.gd` is
@@ -203,15 +235,33 @@ persists the data, publishes the catalog to the backend and decides every moveme
   the preview button work unchanged.
 - VRMA data is read-only: the sequence/keyframe composers refuse a selected clip with a
   message instead of inventing empty keyframes; only preview/speed apply.
-- The default idle selector is disabled and displays "기본 대기 동작 사용" while the native
-  procedural idle runs. Imported idle clips remain available for motion-tab previews. An ambient
-  loop must eventually blend under gestures/gaze/IK before it can become an enabled setting.
-  `Main.walk_clip()` exposes the imported walk name.
+- "두 동작 이어보기" (motion tab): two selectors over finite built-in bank gestures only
+  (`ControlPanel.sequence_candidates()`: no procedural `idle`, no custom/saved motions, no loop
+  entries, no contact/support names such as sit/seat/prop/hold, never VRMA clips), a 겹침(초)
+  slider 0..1 (default 0.35) and the button, which emits `preview_sequence(first, second, lead)`
+  once; the host forwards it to the motion owner's preview-sequence API. Selection survives a bank
+  refresh; a dropped gesture falls back to a valid one; a null/empty bank disables the row.
+- Idle selector "대기 동작" (settings tab, setting `idle_clip`, default `auto`): items are
+  `auto` ("자동 (캐릭터에 맞게)", or "자동 · <description> (<clip>)" once the current character's
+  declared `ambient_loop` from the character catalogue is loaded, "자동 (캐릭터 동작 준비 중)" while
+  it is not), `""` ("기본 호흡만 (클립 없음)"), and every eligible imported clip
+  (`ControlPanel.idle_candidates()`: catalogue `ambient == true` **and** `loop == true`, the legacy
+  `idle_natural`, and the character's declared loop). A walk, dance or prop clip is never listed as
+  an idle just because it loops. Labels are the manifest description (truncated) plus the clip
+  name; nothing is relabelled or hardcoded per character. The saved choice survives catalogue
+  refreshes, failed downloads and character switches: a saved clip that is not loaded stays
+  selected as "<clip> (아직 없음)" and no `setting_changed` is emitted by refreshes or by the host
+  mirror `set_idle_clip(value)`; only a user selection emits `setting_changed("idle_clip", value)`.
+  `set_characters()` derives the profile loop from the `ambient_loop` field (`set_idle_profile`
+  is also public). The host resolves the actual loop (`Main._apply_ambient_idle`, motion owner's
+  `MotionPlayer.set_ambient_loop`); the panel only offers and mirrors choices. Preview of every
+  imported clip (eligible or not) stays in the motion tab. `Main.walk_clip()` exposes the imported
+  walk name.
 
 ## Tests (headless Linux, fake audio driver, no GPU / mic / display)
 
 ```sh
-companion/native/tools/run_selftest.sh            # selftest: 504 passed, 0 failed
+companion/native/tools/run_selftest.sh
 companion/native/tools/run_protocol_probe.sh 8893 9893   # protocol probe: 59 passed, 0 failed
 ```
 
@@ -232,7 +282,10 @@ lifecycle]` (tip == point, pin polygon, hidden marker nodes in headless, drag gr
 focus-loss/close cleanup, delete/hide/exit/free cleanup, parked points get no window), `[panel:
 behavior tab]` (behavior toggle/state wording, bound manager add → markers on → rename/remove,
 go/inspect only for reachable points, full list, unbound request signals, CJK width budget,
-floor-row/right-edge screen rule, inspect-vs-go wording, Windows probe parses), `[pet scale on rig]` (real Cheval Grand VRM: foot anchor on the foot pixel at
+floor-row/right-edge screen rule, inspect-vs-go wording, Windows probe parses), `[panel: idle
+selection]` (eligible-only candidates, description labels, placeholder for a missing saved clip,
+catalogue/character round trips without emitting, user selection emits, preview list intact),
+`[pet scale on rig]` (real Cheval Grand VRM: foot anchor on the foot pixel at
 0.35/0.6/1.25 and ±82° yaw, body fits the window, seat pivot keeps the seat pixel while the legs
 drop). The probe adds real `GET /motion-assets` + download + sha256 + `load_vrma` + `play_gesture`
 dispatch against the running engine.
@@ -265,7 +318,7 @@ Recorded: 34 checks, zero failures, including late profile/catalogue delivery,
 failed model intents preserving unrelated user commands, external target bounds,
 and dialogue metadata not starting navigation clips. The fake-backend protocol
 probe passes 59 checks. The separate
-[`test_host_heading.gd`](../diagnostics/behavior/test_host_heading.gd) passes seven
+[`test_host_heading.gd`](../diagnostics/behavior/test_host_heading.gd) passes eight
 actual-callback checks for heading readiness, replacement destinations, panel/drag
 ownership and timeout cancellation.
 Windows rendered contact and packaged-executable behavior remain separate validation.

@@ -141,5 +141,9 @@
   },
   "job_ack": "うん。ライスにも、お手伝いさせてね。",
   "job_done": "できたよ。詳しいことは、ここにまとめたの。",
-  "job_failed": "うまく進められないところがあったの。一緒に確認してもらえるかな。"
+  "job_failed": "うまく進められないところがあったの。一緒に確認してもらえるかな。",
+  "ambient_loop": "uma_home_idle",
+  "idle_actions": [
+    "uma_rice_idle_action"
+  ]
 }

@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-0.6/joints.jsonl.gz",
+    "sha256": "01cab905e897bcd4521f340e07271ddace9d34eac2cfd6b45dc3eb786b1aacc1",
+    "bytes": 11561289
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/concurrent-phase-final/eishin-flash-60fps-0.6/frames.csv.gz",
+    "sha256": "b0d810f079a4b4ed771f3a17e2e4380d4b42b564bb1bebc9b60aee3e523b0a8d",
+    "bytes": 773044
+  }
+]

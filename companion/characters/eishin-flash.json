@@ -141,5 +141,9 @@
   },
   "job_ack": "承知しました。内容を確認して、順に進めます。",
   "job_done": "完了しました。結果をこちらにまとめています。",
-  "job_failed": "予定通りに進められない点がありました。状況をこちらにまとめています。"
+  "job_failed": "予定通りに進められない点がありました。状況をこちらにまとめています。",
+  "ambient_loop": "uma_home_idle",
+  "idle_actions": [
+    "uma_eishin_idle_action"
+  ]
 }

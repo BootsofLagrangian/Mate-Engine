@@ -100,12 +100,27 @@ class MotionAssets:
                 continue
             if 'loop' in item and not isinstance(item['loop'], bool):
                 continue
+            if 'ambient' in item and not isinstance(item['ambient'], bool):
+                continue
+            if 'contact_mode' in item and item['contact_mode'] not in ('', 'foot'):
+                continue
+            locomotion = item.get('locomotion', False)
+            preserve_hips = item.get('locomotion_preserve_hips', False)
+            priority = item.get('locomotion_priority', 0)
+            if not isinstance(locomotion, bool) or not isinstance(preserve_hips, bool) or type(priority) is not int or not 0 <= priority <= 100:
+                continue
             path = self._path(item.get('path'))
             if path is None or not self._validated(path, sha.lower()):
                 continue
-            entry = {'name': name, 'kind': 'vrma', 'duration': float(duration), 'asset_url': f'/motion-assets/{name}', 'sha256': sha.lower()}
+            entry = {'name': name, 'kind': 'vrma', 'duration': float(duration), 'asset_url': f'/motion-assets/{name}', 'sha256': sha.lower(),
+                     'locomotion': locomotion, 'locomotion_priority': priority,
+                     'locomotion_preserve_hips': preserve_hips}
             if 'loop' in item:
                 entry['loop'] = item['loop']
+            if 'ambient' in item:
+                entry['ambient'] = item['ambient']
+            if 'contact_mode' in item:
+                entry['contact_mode'] = item['contact_mode']
             if isinstance(item.get('description'), str):
                 entry['description'] = item['description'][:500]
             entries.append((entry, path))

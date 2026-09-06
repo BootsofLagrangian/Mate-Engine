@@ -1,0 +1,69 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+AUTHORED_REVIEW cheval-grand model loaded true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_home_idle true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_cheval_idle_action true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_rice_idle_action true {}
+AUTHORED_REVIEW cheval-grand clip loaded uma_eishin_idle_action true {}
+AUTHORED_REVIEW cheval-grand talking loaded true {}
+AUTHORED_REVIEW cheval-grand rare action accepted true {}
+AUTHORED_REVIEW cheval-grand rare action ends true {}
+AUTHORED_REVIEW cheval-grand speech preempts authored ownership true {}
+AUTHORED_REVIEW cheval-grand home resumes after speech true {}
+AUTHORED_REVIEW cheval-grand gaze fully masks authored head true {}
+AUTHORED_REVIEW cheval-grand heading completes true {}
+AUTHORED_REVIEW cheval-grand disabled idle rejects rare action true {}
+AUTHORED_REVIEW cheval-grand disabled idle relinquishes authored pose true {}
+AUTHORED_REVIEW cheval-grand replacement model loaded true {}
+AUTHORED_REVIEW cheval-grand model switch clears rare action true {}
+AUTHORED_REVIEW cheval-grand model switch clears stale head mask true {}
+AUTHORED_REVIEW cheval-grand reset clears stale head mask true {}
+AUTHORED_REVIEW rice-shower model loaded true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_home_idle true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_cheval_idle_action true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_rice_idle_action true {}
+AUTHORED_REVIEW rice-shower clip loaded uma_eishin_idle_action true {}
+AUTHORED_REVIEW rice-shower talking loaded true {}
+AUTHORED_REVIEW rice-shower rare action accepted true {}
+AUTHORED_REVIEW rice-shower rare action ends true {}
+AUTHORED_REVIEW rice-shower speech preempts authored ownership true {}
+AUTHORED_REVIEW rice-shower home resumes after speech true {}
+AUTHORED_REVIEW rice-shower gaze fully masks authored head true {}
+AUTHORED_REVIEW rice-shower heading completes true {}
+AUTHORED_REVIEW rice-shower disabled idle rejects rare action true {}
+AUTHORED_REVIEW rice-shower disabled idle relinquishes authored pose true {}
+AUTHORED_REVIEW rice-shower replacement model loaded true {}
+AUTHORED_REVIEW rice-shower model switch clears rare action true {}
+AUTHORED_REVIEW rice-shower model switch clears stale head mask true {}
+AUTHORED_REVIEW rice-shower reset clears stale head mask true {}
+AUTHORED_REVIEW eishin-flash model loaded true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_home_idle true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_cheval_idle_action true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_rice_idle_action true {}
+AUTHORED_REVIEW eishin-flash clip loaded uma_eishin_idle_action true {}
+AUTHORED_REVIEW eishin-flash talking loaded true {}
+AUTHORED_REVIEW eishin-flash rare action accepted true {}
+AUTHORED_REVIEW eishin-flash rare action ends true {}
+AUTHORED_REVIEW eishin-flash speech preempts authored ownership true {}
+AUTHORED_REVIEW eishin-flash home resumes after speech true {}
+AUTHORED_REVIEW eishin-flash gaze fully masks authored head true {}
+AUTHORED_REVIEW eishin-flash heading completes true {}
+AUTHORED_REVIEW eishin-flash disabled idle rejects rare action true {}
+AUTHORED_REVIEW eishin-flash disabled idle relinquishes authored pose true {}
+AUTHORED_REVIEW eishin-flash replacement model loaded true {}
+AUTHORED_REVIEW eishin-flash model switch clears rare action true {}
+AUTHORED_REVIEW eishin-flash model switch clears stale head mask true {}
+AUTHORED_REVIEW eishin-flash reset clears stale head mask true {}
+AUTHORED_REVIEW cheval-grand generic home quiet head bounds true {"acceleration":102.836244106293,"speed":5.33662939071655}
+AUTHORED_REVIEW cheval-grand authored standing actual world foot error true {"acquisition_frames":140,"fully_acquired_frames":2080,"max_metres":0.000000270195982920995}
+AUTHORED_REVIEW cheval-grand purposeful gaze_override bounds true {"foot_error":0.000000217507192701305,"foot_step":0.000000292025703174659,"head_acceleration":107.561345100403,"head_speed":19.1568412780762,"hips_step":0.000139753843541257,"sole_error":0.000000214935553799478}
+AUTHORED_REVIEW cheval-grand purposeful gaze_release bounds true {"foot_error":0.000000195497889876606,"foot_step":0.000000306584837517221,"head_acceleration":127.966504096985,"head_speed":18.1646366119385,"hips_step":0.000139753843541257,"sole_error":0.000000210255308275009}
+AUTHORED_REVIEW rice-shower generic home quiet head bounds true {"acceleration":102.836244106293,"speed":5.33662939071655}
+AUTHORED_REVIEW rice-shower authored standing actual world foot error true {"acquisition_frames":140,"fully_acquired_frames":2080,"max_metres":0.000000231930684435611}
+AUTHORED_REVIEW rice-shower purposeful gaze_override bounds true {"foot_error":0.000000203940501819488,"foot_step":0.000000246686227001192,"head_acceleration":107.561345100403,"head_speed":19.1568412780762,"hips_step":0.000126652521430515,"sole_error":0.000000211693645724154}
+AUTHORED_REVIEW rice-shower purposeful gaze_release bounds true {"foot_error":0.000000165471675472872,"foot_step":0.00000027194619178772,"head_acceleration":127.966504096985,"head_speed":18.1646366119385,"hips_step":0.000126652521430515,"sole_error":0.000000188460518302236}
+AUTHORED_REVIEW eishin-flash generic home quiet head bounds true {"acceleration":102.836244106293,"speed":5.33662939071655}
+AUTHORED_REVIEW eishin-flash authored standing actual world foot error true {"acquisition_frames":140,"fully_acquired_frames":2080,"max_metres":0.000000215856516661006}
+AUTHORED_REVIEW eishin-flash purposeful gaze_override bounds true {"foot_error":0.000000180022510676281,"foot_step":0.000000246721384655757,"head_acceleration":107.561345100403,"head_speed":19.1568412780762,"hips_step":0.000139757976285182,"sole_error":0.000000186792902923116}
+AUTHORED_REVIEW eishin-flash purposeful gaze_release bounds true {"foot_error":0.000000179443404135782,"foot_step":0.000000268563468353022,"head_acceleration":127.966504096985,"head_speed":18.1646366119385,"hips_step":0.000139757976285182,"sole_error":0.000000185703171950991}
+AUTHORED_REVIEW_RESULT 0

@@ -1,0 +1,87 @@
+{
+  "world": {
+    "path": "logs/windows-world-shared-floor-ready/report.json",
+    "bytes": 107189,
+    "sha256": "4c27826ab1c9cf5b56a64a43a31326ee96eab42884cc6b6b13c7353af1b042ec",
+    "checks": [
+      {
+        "label": "avatar and motions ready",
+        "ok": true
+      },
+      {
+        "label": "actual fixture detected by Windows source",
+        "ok": true
+      },
+      {
+        "label": "foot attaches to actual window top",
+        "ok": true
+      },
+      {
+        "label": "manual scale applies",
+        "ok": true
+      },
+      {
+        "label": "scale preserves support height",
+        "ok": true
+      },
+      {
+        "label": "resized window support is ready for travel",
+        "ok": true
+      },
+      {
+        "label": "surface target accepted",
+        "ok": true
+      },
+      {
+        "label": "actual native window moved laterally",
+        "ok": true
+      },
+      {
+        "label": "opening panel pauses actual movement",
+        "ok": true
+      },
+      {
+        "label": "manual sit reattaches seat on window",
+        "ok": true
+      },
+      {
+        "label": "talking retains seated contact",
+        "ok": true
+      },
+      {
+        "label": "closed support detaches and stands",
+        "ok": true
+      },
+      {
+        "label": "actual workarea floor attaches",
+        "ok": true
+      },
+      {
+        "label": "measured sole matches actual floor",
+        "ok": true
+      },
+      {
+        "label": "visible bounds and sole agree",
+        "ok": true
+      },
+      {
+        "label": "actual floor lateral target accepted",
+        "ok": true
+      },
+      {
+        "label": "actual native window walks along floor",
+        "ok": true
+      },
+      {
+        "label": "owned geometry helper stopped",
+        "ok": true
+      }
+    ]
+  },
+  "selftest": {
+    "path": "logs/native-selftest-shared-floor-final.log",
+    "bytes": 1458,
+    "sha256": "3a10332acf7bbb2435ede34b0164a73f841b586cb47665abbc98ed642ce89f7f",
+    "log_tail": "== import (headless editor)\n== selftest\nGodot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org\n[scripts compile]\n[control panel fit]\n[motion bank]\n[coordinates]\n[pcm queue]\n[wav]\n[session]\n[settings]\n[audio output]\n  generator capacity=8191 frames, buffered=3200, pending=0 (headless audio driver: Dummy)\nWARNING: audio ring overflow for a2 (0.3 s pending); flushing\n     at: push_warning (core/variant/variant_utility.cpp:1034)\n[microphone]\n[motion asset catalog] (headless, parser only)\n[motion asset cache] (headless, user:// files only)\n[vrma local clip] (headless, file parse only)\n[autonomy bridge] (pure policy)\n[autonomy wiring] (simulated monitors, no window)\n[pet scale] (pure math + Camera3D projection, no rendering)\n[surface wiring] (simulated monitor + fake window geometry)\n[panel: vrma presets + roaming controls]\n[panel: preview sequence]\n[panel: idle selection]\n[interest points: validation + persistence]\n[interest markers: geometry + lifecycle]\n[panel: behavior tab]\n[vrm runtime]\n  loaded 'cg' spec 0.0 in 445 ms, bones=55 expressions=[\"aa\", \"angry\", \"blink\", \"blinkLeft\", \"blinkRight\", \"ee\", \"happy\", \"ih\", \"neutral\", \"oh\", \"ou\", \"relaxed\", \"sad\"]\n  right hand T-pose=(-0.501597, 1.294173, -0.055999) relaxed=(-0.24594, 0.905813, -0.098648) shoulder=(-0.10444, 1.273095, -0.056185)\n  right hand after(z=+60)=(-0.493265, 1.211997, -0.098648)\n[pet scale on rig] (projection only)\nselftest: 581 passed, 0 failed (1723 ms)\n"
+  }
+}

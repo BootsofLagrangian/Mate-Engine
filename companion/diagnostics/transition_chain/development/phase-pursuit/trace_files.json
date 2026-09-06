@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/phase-pursuit/joints.jsonl.gz",
+    "sha256": "31f7cd34ab60fde9c250f0ef5a8595498c5a1913cf58c8a87477c43b72dd12b9",
+    "bytes": 11558622
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/phase-pursuit/frames.csv.gz",
+    "sha256": "839b2fdcbe594979672a55a6acc5d44059b2891fb698a7074deaf3cec1c80594",
+    "bytes": 773102
+  }
+]

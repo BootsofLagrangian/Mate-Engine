@@ -32,7 +32,8 @@ def test_catalog_download_and_hash_metadata(client, companion_root):
     entry, data, _ = install(companion_root)
     catalog = client.get('/motion-assets').json()['motions']
     assert catalog == [{'name': 'walk', 'kind': 'vrma', 'duration': 1.25, 'sha256': entry['sha256'],
-                        'asset_url': '/motion-assets/walk', 'loop': True, 'description': 'Walk naturally'}]
+                        'asset_url': '/motion-assets/walk', 'loop': True, 'description': 'Walk naturally',
+                        'locomotion': False, 'locomotion_priority': 0, 'locomotion_preserve_hips': False}]
     response = client.get(catalog[0]['asset_url'])
     assert response.status_code == 200 and response.content == data
     assert response.headers['content-type'] == 'model/gltf-binary'
@@ -69,9 +70,26 @@ def test_symlink_escape_missing_file_and_replaced_file_are_not_served(client, co
 
 
 @pytest.mark.parametrize('overrides', [{'sha256': 'f' * 64}, {'sha256': 'not-a-hash'}, {'duration': -1},
-                                       {'duration': float('nan')}, {'loop': 'yes'}, {'name': '../secret'}])
+                                       {'duration': float('nan')}, {'loop': 'yes'}, {'ambient': 'yes'}, {'name': '../secret'}])
 def test_invalid_metadata_is_not_advertised(client, companion_root, overrides):
     install(companion_root, **overrides)
+    assert client.get('/motion-assets').json()['motions'] == []
+
+
+def test_ambient_capability_survives_catalogue_validation(client, companion_root):
+    install(companion_root, ambient=True)
+    assert client.get('/motion-assets').json()['motions'][0]['ambient'] is True
+
+
+@pytest.mark.parametrize('contact_mode', ['', 'foot'])
+def test_contact_mode_survives_catalog_validation(client, companion_root, contact_mode):
+    install(companion_root, contact_mode=contact_mode)
+    assert client.get('/motion-assets').json()['motions'][0]['contact_mode'] == contact_mode
+
+
+@pytest.mark.parametrize('contact_mode', ['hand', 'Foot', True, None, 0, [], {}])
+def test_invalid_contact_mode_is_not_advertised(client, companion_root, contact_mode):
+    install(companion_root, contact_mode=contact_mode)
     assert client.get('/motion-assets').json()['motions'] == []
 
 
@@ -108,4 +126,22 @@ def test_replacement_during_download_does_not_serve_wrong_etag(client, companion
         path.write_bytes(data[:-1] + b'\n')
         return validated
     monkeypatch.setattr(assets, 'resolve', replaced)
+    assert client.get('/motion-assets/walk').status_code == 404
+
+
+@pytest.mark.parametrize('locomotion,priority', [(True, 0), (True, 50), (True, 100), (False, 10)])
+def test_locomotion_capability_catalog_round_trip(client, companion_root, locomotion, priority):
+    install(companion_root, locomotion=locomotion, locomotion_priority=priority, locomotion_preserve_hips=locomotion)
+    entry = client.get('/motion-assets').json()['motions'][0]
+    assert entry['locomotion'] is locomotion and entry['locomotion_priority'] == priority
+    assert entry['locomotion_preserve_hips'] is locomotion
+    assert client.get(entry['asset_url']).status_code == 200
+
+
+@pytest.mark.parametrize('overrides', [
+    {field: value} for field in ['locomotion', 'locomotion_preserve_hips'] for value in [1, 0, 'true', None, [], {}]
+] + [{'locomotion_priority': value} for value in [-1, 101, True, False, 1.5, 10.0, '50', None, [], {}]])
+def test_invalid_locomotion_metadata_not_advertised_or_served(client, companion_root, overrides):
+    install(companion_root, **overrides)
+    assert client.get('/motion-assets').json()['motions'] == []
     assert client.get('/motion-assets/walk').status_code == 404

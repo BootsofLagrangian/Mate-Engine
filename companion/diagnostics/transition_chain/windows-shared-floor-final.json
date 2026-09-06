@@ -1,0 +1,235 @@
+{
+  "scope": "Final packaged Windows run; immutable embedded runtime identity from preserved build.json, external probe and downloaded assets separately identified.",
+  "thresholds": {
+    "actual_speed_px_s_strictly_above": 20,
+    "speed_window_s": 0.1,
+    "absolute_yawrate_deg_s_strictly_above": 10,
+    "minimum_contiguous_s": 0.25,
+    "minimum_heading_change_deg": 5
+  },
+  "formula": "speed=Euclidean displacement of actual window position over trailing100ms with linear timestamp interpolation / .1; yawrate=absolute unwrapped yaw delta / actual adjacent sample dt. Runs require every sample above both thresholds; duration=t_last-t_first; net heading change=abs(yaw_last-yaw_first). First100ms of each phase excluded.",
+  "input_sha256": {
+    "report.json": "53eee108068368f9a5057916f37bc54b2350fb0dc3cc4d4b29ca03474bcaf6b8",
+    "frames.csv": "af15da87ad1363cfe0f8d64cd400b1200b26b135c7cda16bdc24f6acb97a9770",
+    "build.json": "32d9ee15f189a989c16d983691774ad146ac06a970a18f5693138f570964d31e"
+  },
+  "checks": 29,
+  "failures": 0,
+  "renderer": "NVIDIA GeForce RTX 4090",
+  "stop_drift_px": 0.0,
+  "csv_samples": 2424,
+  "capture_count": 314,
+  "source_snapshot_pair_present": false,
+  "source_hash_changes": {},
+  "trips": [
+    {
+      "phase": "idle_to_right",
+      "samples": 68,
+      "raw_adjacent_moving_and_turning_samples": 15,
+      "trailing_window_moving_and_turning_samples": 15,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 5445,
+          "end_ms": 6297,
+          "duration_s": 0.852,
+          "heading_change_deg": 41.162,
+          "window_displacement_px": 55.0,
+          "samples": 15,
+          "passes": true,
+          "maximum_sample_gap_ms": 73
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 5445,
+        "end_ms": 6297,
+        "duration_s": 0.852,
+        "heading_change_deg": 41.162,
+        "window_displacement_px": 55.0,
+        "samples": 15,
+        "passes": true,
+        "maximum_sample_gap_ms": 73
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "moving_reversal",
+      "samples": 359,
+      "raw_adjacent_moving_and_turning_samples": 13,
+      "trailing_window_moving_and_turning_samples": 13,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 9929,
+          "end_ms": 10686,
+          "duration_s": 0.757,
+          "heading_change_deg": 34.8686,
+          "window_displacement_px": 50.0,
+          "samples": 13,
+          "passes": true,
+          "maximum_sample_gap_ms": 81
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 9929,
+        "end_ms": 10686,
+        "duration_s": 0.757,
+        "heading_change_deg": 34.8686,
+        "window_displacement_px": 50.0,
+        "samples": 13,
+        "passes": true,
+        "maximum_sample_gap_ms": 81
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "left_to_right",
+      "samples": 413,
+      "raw_adjacent_moving_and_turning_samples": 14,
+      "trailing_window_moving_and_turning_samples": 14,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 17872,
+          "end_ms": 18673,
+          "duration_s": 0.801,
+          "heading_change_deg": 39.3889,
+          "window_displacement_px": 51.0,
+          "samples": 14,
+          "passes": true,
+          "maximum_sample_gap_ms": 76
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 17872,
+        "end_ms": 18673,
+        "duration_s": 0.801,
+        "heading_change_deg": 39.3889,
+        "window_displacement_px": 51.0,
+        "samples": 14,
+        "passes": true,
+        "maximum_sample_gap_ms": 76
+      },
+      "all_interval_count": 1
+    },
+    {
+      "phase": "stop_and_settle",
+      "samples": 211,
+      "raw_adjacent_moving_and_turning_samples": 14,
+      "trailing_window_moving_and_turning_samples": 14,
+      "meaningful_overlap": true,
+      "qualifying_intervals": [
+        {
+          "start_ms": 27190,
+          "end_ms": 27993,
+          "duration_s": 0.803,
+          "heading_change_deg": 37.7448,
+          "window_displacement_px": 51.0,
+          "samples": 14,
+          "passes": true,
+          "maximum_sample_gap_ms": 79
+        }
+      ],
+      "longest_interval": {
+        "start_ms": 27190,
+        "end_ms": 27993,
+        "duration_s": 0.803,
+        "heading_change_deg": 37.7448,
+        "window_displacement_px": 51.0,
+        "samples": 14,
+        "passes": true,
+        "maximum_sample_gap_ms": 79
+      },
+      "all_interval_count": 1
+    }
+  ],
+  "stationary_pair_phases": [
+    "pair:wave->nod",
+    "pair:nod->wave",
+    "pair:wave->wave"
+  ],
+  "phase_selection": "Exclude loading and explicitly stationary pair: phases; include all other phases irrespective of outcome.",
+  "capture_alignment": {
+    "exact_same_timestamp_metadata_matches": 313,
+    "total": 314,
+    "missing_csv_timestamps": [
+      684
+    ],
+    "unmatched_metadata_timestamps": [
+      684
+    ],
+    "save_errors": 0,
+    "files_present": 314
+  },
+  "stop_csv_check": {
+    "start_ms": 28276,
+    "samples": 133,
+    "unique_window_positions": [
+      [
+        1561.0,
+        672.0
+      ]
+    ],
+    "maximum_drift_px": 0.0
+  },
+  "build": {
+    "sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+    "bytes": 99674664,
+    "godot": "4.5.2-stable",
+    "source_stable_during_build": true
+  },
+  "character_identity": {
+    "actual": "cheval-grand",
+    "model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+    "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "requested": "cheval-grand"
+  },
+  "pairs": [
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "wave",
+      "incoming_duration": 3.0,
+      "maximum_incoming_progress": 2.99971800000027,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "nod",
+      "overlap_sample_count": 30,
+      "both_timelines_strictly_increase": true
+    },
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "nod",
+      "incoming_duration": 4.0,
+      "maximum_incoming_progress": 3.99974000000029,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "wave",
+      "overlap_sample_count": 30,
+      "both_timelines_strictly_increase": true
+    },
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "wave",
+      "incoming_duration": 4.0,
+      "maximum_incoming_progress": 3.99970000000033,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "wave",
+      "overlap_sample_count": 30,
+      "both_timelines_strictly_increase": true
+    }
+  ],
+  "world_surface_probe": {
+    "directory": "companion/logs/windows-world-shared-floor-ready",
+    "checks": 18,
+    "failures": 0,
+    "executable_sha256": "80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f",
+    "report_sha256": "4c27826ab1c9cf5b56a64a43a31326ee96eab42884cc6b6b13c7353af1b042ec"
+  }
+}

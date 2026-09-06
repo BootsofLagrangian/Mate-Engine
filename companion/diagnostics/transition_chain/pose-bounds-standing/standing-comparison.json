@@ -1,0 +1,35 @@
+{
+  "scope": "Three rigs,60Hz,scale1.0 actual main standing chain; optional static calibration/bounds-selector cleanup checks; no rendered seated attachment claim.",
+  "cells": [
+    {
+      "model": "cheval-grand",
+      "checks": 33,
+      "failures": 0,
+      "identical_complete_csv": true,
+      "uncompressed_csv_sha256": "be0e96146f592162beef33bca4b58c179f945a077971f099c4eb9ce0a12f9990",
+      "before_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/cheval-grand-60fps-1.0/frames.csv.gz",
+      "after_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/cheval-grand-60fps-1.0/frames.csv.gz",
+      "source_stable": true
+    },
+    {
+      "model": "rice-shower",
+      "checks": 33,
+      "failures": 0,
+      "identical_complete_csv": true,
+      "uncompressed_csv_sha256": "860138a54f65a1da388e1d7b7f0190f08c8bef9acee0db820a0ffb8da94c704d",
+      "before_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/rice-shower-60fps-1.0/frames.csv.gz",
+      "after_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/rice-shower-60fps-1.0/frames.csv.gz",
+      "source_stable": true
+    },
+    {
+      "model": "eishin-flash",
+      "checks": 33,
+      "failures": 0,
+      "identical_complete_csv": true,
+      "uncompressed_csv_sha256": "3768f264e6ed6d04a9b353f9b5fa73ff06e5b34389e2b02d9b5bcb42117b2f0d",
+      "before_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-60fps-1.0/frames.csv.gz",
+      "after_path": "companion/logs/diagnostic-traces/transition_chain/pose-bounds-standing/eishin-flash-60fps-1.0/frames.csv.gz",
+      "source_stable": true
+    }
+  ]
+}

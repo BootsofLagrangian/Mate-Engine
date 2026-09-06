@@ -88,7 +88,7 @@ func run() -> void:
 	app = load("res://main.tscn").instantiate()
 	root.add_child(app)
 	current_scene = app
-	check(await wait_for(func(): return app.avatar.has_model() and app.motion.vrma_clips.size() == 8, 40), "avatar and motions ready")
+	check(await wait_for(func(): return app.avatar.has_model() and app.motion.vrma_clips.has("sit_idle") and app.motion.vrma_clips.has("walk") and app._vrma_pending == 0, 40), "avatar and motions ready")
 	check(await wait_for(find_fixture, 15), "actual fixture detected by Windows source")
 	if fixture.is_empty():
 		await finish()
@@ -115,7 +115,10 @@ func run() -> void:
 	check(absf(foot_after.y - foot_before.y) < 3.0, "scale preserves support height")
 	await shot("scaled-contact")
 	app._set_scale_target(0.6)
-	await create_timer(2.0).timeout
+	# Scaling can update the visible envelope and briefly relatch support. Wait
+	# for its real completion instead of racing a fixed two-second delay.
+	check(await wait_for(func(): return absf(app.pet_scale() - 0.6) < 0.001 \
+		and attached_to_fixture() and app.autonomy.can_request_move(), 8), "resized window support is ready for travel")
 	# Request a lateral target and record the actual OS window position and foot height.
 	var target := Vector2(float(fixture.x) + float(fixture.width) * 0.78, float(fixture.y))
 	app.observe_interest("fixture-right", target, 1.0, 30.0, "owned_fixture")

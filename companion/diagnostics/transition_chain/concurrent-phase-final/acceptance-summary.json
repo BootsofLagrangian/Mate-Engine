@@ -1,0 +1,189 @@
+{
+  "scope": "Actual main ordering, deterministic rounded simulated desktop origins; three rigs\u00d730/60Hz\u00d7scales0.6/1.0. Active props modules outside scope.",
+  "cells": [
+    {
+      "cell": "cheval-grand-30fps-0.6",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.00016659439512182165,
+      "support_drift_px": 0.054336545708850915,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "cheval-grand-30fps-1.0",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.0002502301338347655,
+      "support_drift_px": 0.08111416116939431,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "cheval-grand-60fps-0.6",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.00018059258595622013,
+      "support_drift_px": 0.05897701798592987,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "cheval-grand-60fps-1.0",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.0003347520462697221,
+      "support_drift_px": 0.10946923691676906,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-30fps-0.6",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.0001245030541337067,
+      "support_drift_px": 0.04108096776275222,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-30fps-1.0",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.00031351146236576475,
+      "support_drift_px": 0.10370467574728852,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-60fps-0.6",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.00016717733958597855,
+      "support_drift_px": 0.05520453589938098,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "eishin-flash-60fps-1.0",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.0003156106661931075,
+      "support_drift_px": 0.10310808967910862,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-30fps-0.6",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.00015935179164109823,
+      "support_drift_px": 0.055260281295132684,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-30fps-1.0",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.00027099013494285965,
+      "support_drift_px": 0.09292832545426684,
+      "support_frames": 1190,
+      "unclaimed_frames": 1215,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-60fps-0.6",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.0001663990523247173,
+      "support_drift_px": 0.056700050492168516,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    },
+    {
+      "cell": "rice-shower-60fps-1.0",
+      "checks": 26,
+      "failures": 0,
+      "support_drift_m": 0.0002795735500290035,
+      "support_drift_px": 0.09598618123516398,
+      "support_frames": 2381,
+      "unclaimed_frames": 2415,
+      "isolated_arm_steps": 0,
+      "source_stable": true
+    }
+  ],
+  "concurrent_intervals": 60,
+  "concurrent_passes": 60,
+  "minimum_concurrent_seconds": 0.8333333333333329,
+  "minimum_concurrent_degrees": 39.56583786177981,
+  "pair_scenarios": 36,
+  "core_source_sha256": {
+    "action_overlap.gd": "d289c984d1be109ddf267768a686bf3ca26bcd3c14b168efd0ea787e21f0f359",
+    "ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+    "arm_ik.gd": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+    "autonomy_bridge.gd": "94e2f3dafdbba98487779b378020c0c79631cd2afe777d225123679818967b29",
+    "behavior_director.gd": "53e054d0e8b2b35a3c7558f760e98ce1629640b5e2b81011848b6f99b9af34c1",
+    "desktop_autonomy.gd": "3f3f4a03178aeaae6b43c7104bd2f56ba3d6b27d06049745f69c65ea8d579ad1",
+    "desktop_gait.gd": "7efe46b31ab03f32f5cb2ac530418edc126c696b1693cb2b7f782308f19f03b2",
+    "leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "living_behavior.gd": "834d9b15bc1c447f69e2ea358fc21083017fe8916449cb8d6e9f55ab964a3fc4",
+    "main.gd": "d96c98022a0ecb89334c177f6ecbbf350a409ee9621e131b46998355fce9e692",
+    "motion_bank.gd": "0c103a19e4612b97318efac939de62acacced27ad2111a5efc364a2243b61b9b",
+    "motion_player.gd": "9ae0ff2a8141d377c1ca67e1e696e398ee3e57b5fca3b58566b463b2b7fc160e",
+    "probe_transition_chain.gd": "91aa5a3715f6eeb449cd3c372f51989c16cab70475f8672ad88fef13cee4131c",
+    "turn_stepper.gd": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "vrm_avatar.gd": "9ff5eb960ca1a0d2a7fc8137850a3a8fe769c9db2535533eb72e506b9271c2fd",
+    "vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb"
+  },
+  "analysis_sha256": "a3e9e8c704e007bbe8a27ee98e174bc76065ddf0ba063cac7888ef60e07bac4e",
+  "all_frame_head_heading_peaks_excluding_initial_grounding": {
+    "head_speed": {
+      "value": 94.610237121582,
+      "cell": "rice-shower-60fps-0.6",
+      "time": 54.9999999999982,
+      "scenario": "midwalk_reversal"
+    },
+    "head_acceleration": {
+      "value": 2026.36184692383,
+      "cell": "eishin-flash-60fps-0.6",
+      "time": 11.6666666666668,
+      "scenario": "initial_idle"
+    },
+    "heading_speed": {
+      "value": 70.0002865391429,
+      "cell": "cheval-grand-60fps-0.6",
+      "time": 29.2166666666663,
+      "scenario": "journey_1"
+    },
+    "heading_acceleration": {
+      "value": 100.051343038014,
+      "cell": "cheval-grand-60fps-0.6",
+      "time": 28.7166666666663,
+      "scenario": "journey_1"
+    }
+  },
+  "frames": 49110,
+  "verdict": "APPROVED for measured deterministic concurrent transition/contact scope; Windows visual acceptance remains coordinator-owned."
+}

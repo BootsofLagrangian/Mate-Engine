@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/uma-walk-first/joints.jsonl.gz",
+    "sha256": "0a73d72bbf0845defcc3306100ff39306fb2990ec6d75598bf0fa5a4bbe6fc0a",
+    "bytes": 12554657
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/uma-walk-first/frames.csv.gz",
+    "sha256": "3ebbff8e90948b23906ce088e8cf9e65ae3086c0f6a5b1b1957db27d1e315ef5",
+    "bytes": 762456
+  }
+]

@@ -142,5 +142,9 @@
   },
   "job_ack": "はい。僕も、やってみます。",
   "job_done": "できました。結果は、こちらにまとめてあります。",
-  "job_failed": "少し、うまく進められないところがありました。こちらを確認してもらえますか。"
+  "job_failed": "少し、うまく進められないところがありました。こちらを確認してもらえますか。",
+  "ambient_loop": "uma_home_idle",
+  "idle_actions": [
+    "uma_cheval_idle_action"
+  ]
 }

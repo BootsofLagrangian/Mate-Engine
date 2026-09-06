@@ -17,6 +17,9 @@ var _publish_at := 0.0
 var _published := ""
 var _character := ""
 var _style_fingerprint := ""
+var _motion_profile_fingerprint := ""
+var _idle_action_next := 20.0
+var _idle_action_index := 0
 var _request_counter := 0
 var _attention_until := 0.0
 var _pointer_seen := Vector2.INF
@@ -105,6 +108,9 @@ func _refresh_targets() -> void:
 		_character = host.session.character_id
 		director.set_character(_character)
 		_style_fingerprint = ""
+		_motion_profile_fingerprint = ""
+		_idle_action_index = 0
+		_idle_action_next = _clock + 20.0
 		_known.clear()
 		_external.clear()
 		_published = ""
@@ -116,6 +122,12 @@ func _refresh_targets() -> void:
 	if style_key != _style_fingerprint:
 		director.configure_style(style)
 		_style_fingerprint = style_key
+	var motion_key := JSON.stringify([profile.get("ambient_loop", ""), profile.get("idle_actions", [])])
+	if motion_key != _motion_profile_fingerprint:
+		_motion_profile_fingerprint = motion_key
+		_idle_action_next = _clock + maxf(20.0, float(director.style.idle_interval_s) * 1.5)
+		if host.has_method("_apply_ambient_idle"):
+			host._apply_ambient_idle()
 	var available: Array = []
 	for p in points.points():
 		if points.reachable(str(p.id)):
@@ -164,6 +176,7 @@ func cancel(reason: String = "cancelled") -> void:
 	director.cancel_all(reason)
 	if host != null:
 		host.autonomy.cancel_target(reason)
+		host.motion.finish_locomotion()
 		host.motion.cancel_heading()
 		host.motion.set_locomotion_sample(Vector2.ZERO, Vector2.ZERO, maxf(host._px_per_m * host.pet_scale(), 1.0), false)
 
@@ -173,7 +186,14 @@ func tick(delta: float) -> void:
 	if wanted != enabled: _set_enabled(wanted)
 	if _clock >= _refresh_at: _refresh_targets()
 	publish_world()
-	if not enabled: return
+	# Foreground ownership applies even when autonomous decisions are disabled.
+	if host.motion.has_method("set_ambient_suspended"):
+		var working: bool = not host.session.job.is_empty() and str(host.session.job.get("status", "")) not in host.session.JOB_TERMINAL
+		host.motion.set_ambient_suspended(host.audio.voice_active or host.mic.is_recording() or host.session.is_foreground_busy() or working or host._drag_active or is_marker_dragging() or host.motion._preview or host.motion._custom_motion or host.autonomy.state in ["anticipate", "walk", "arrive", "approach"])
+	if not enabled:
+		if host.motion.has_method("set_ambient_attention_override"):
+			host.motion.set_ambient_attention_override(host.panel_open or host.audio.voice_active or host.mic.is_recording() or host.session.is_foreground_busy())
+		return
 	var pointer := Vector2(DisplayServer.mouse_get_position())
 	var near: bool = host.pet_rect.grow(100.0).has_point(pointer - Vector2(host.get_window().position))
 	var job_active: bool = not host.session.job.is_empty() and str(host.session.job.get("status", "")) not in host.session.JOB_TERMINAL
@@ -195,7 +215,7 @@ func tick(delta: float) -> void:
 			host.autonomy.observe_interest(str(action.target_id), Vector2(action.point), 1.0, float(action.ttl), str(action.kind))
 			var accepted: bool = host.autonomy.move_to_interest(str(action.target_id))
 			director.resolve_intent(str(action.id), "started" if accepted else host.autonomy.last_request_outcome)
-		"cancel_move": host.autonomy.cancel_target(str(action.get("reason", "cancelled")))
+		"cancel_move": host.autonomy.cancel_target(str(action.get("reason", "cancelled")), Vector2(action.get("replacement_point", Vector2.INF)))
 	# User attention is brief and has a refractory period, rather than cursor tracking forever.
 	_look = Vector2(last_output.get("attention_point", Vector2.INF))
 	if speaking or listening or thinking or host._drag_active:
@@ -213,12 +233,35 @@ func tick(delta: float) -> void:
 		_last_state = state
 		host.panel.set_behavior_state(str(LABELS.get(state, state)))
 	host.motion.set_ambient_state(str(last_output.get("ambient", "rest")), float(last_output.get("strength", 0.5)))
+	if host.motion.has_method("set_ambient_attention_override"):
+		host.motion.set_ambient_attention_override(_look.is_finite() or speaking or listening or thinking or host.panel_open)
+	_maybe_idle_action(state)
+
+func _maybe_idle_action(state: String) -> void:
+	if str(_settings.get_value("idle_clip", "auto")) != "auto": return
+	if _clock < _idle_action_next or state not in ["rest", "sleepy"] or _look.is_finite(): return
+	if host.autonomy.state not in ["rest", "inspect"] or host._dialogue_gesture_active() or not host.motion.heading_ready(): return
+	if not host.motion.has_method("play_ambient_action"): return
+	var actions: Variant = host.session.character_by_id(host.session.character_id).get("idle_actions", [])
+	var available: Array[String] = []
+	if actions is Array:
+		for name in actions:
+			if name is String and host._vrma_loaded.has(name) and not available.has(name): available.append(name)
+	_idle_action_next = _clock + maxf(20.0, float(director.style.idle_interval_s) * 1.5)
+	if available.is_empty(): return
+	var name := available[_idle_action_index % available.size()]
+	if host.motion.play_ambient_action(name):
+		_idle_action_index += 1
 
 func apply_attention() -> bool:
 	if not enabled: return false
 	if _look.is_finite() and host.avatar.has_model():
 		var head: Vector2 = host.camera.unproject_position(host.avatar.bone_global_position("head"))
 		var delta := (_look - Vector2(host.get_window().position) - head) / 320.0
+		# Navigation destinations are floor/seat coordinates, not eye-level targets.
+		# Look ahead during travel; explicit stationary inspection retains its height.
+		if host.autonomy.state in ["anticipate", "walk", "arrive"] and not host.is_sitting():
+			delta.y = 0.0
 		host.motion.gaze_target = Vector2(0.5 - clampf(delta.x,-1,1)*0.5, 0.45 + clampf(delta.y,-1,1)*0.5)
 		host.motion.gaze_has_target = true
 	else:
@@ -227,7 +270,7 @@ func apply_attention() -> bool:
 	return true
 
 func _frame_moved(displacement: Vector2, velocity: Vector2) -> void:
-	var supported: bool = bool(host.autonomy.get_support_contact().get("attached", false)) and not host.is_sitting() and host.autonomy.state in ["walk", "arrive"] and not host._dialogue_gesture_active()
+	var supported: bool = bool(host.autonomy.get_support_contact().get("attached", false)) and not host.is_sitting() and host.autonomy.state in ["anticipate", "walk", "arrive"] and not host._dialogue_gesture_active()
 	host.motion.set_locomotion_sample(velocity, displacement, maxf(host._px_per_m * host.pet_scale(), 1.0), supported)
 
 func _navigation_finished(target_id: String, outcome: String) -> void:

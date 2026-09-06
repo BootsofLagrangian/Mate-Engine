@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-0.6/frames.csv.gz",
+    "sha256": "8201af8a29ccd096cd1a6363de3cf3e7fd0c4584e7237c157aeb8cf8dcb12287",
+    "bytes": 651588
+  },
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/cheval-grand-60fps-0.6/joints.jsonl.gz",
+    "sha256": "6c573cd205ab62ca1cf6028978c6b951f70f5686f4bf073c5e0fc853b1e40750",
+    "bytes": 8850911
+  }
+]

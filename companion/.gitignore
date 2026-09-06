@@ -19,3 +19,13 @@ diagnostics/face/renders/
 diagnostics/face/no-outline/
 diagnostics/face/fixed-outline/
 diagnostics/face/*.png
+
+# Local authored-motion sources, conversion intermediates and avatar renders.
+diagnostics/authored_idle/intermediate/
+diagnostics/authored_idle/candidates/*.vrma
+diagnostics/authored_idle/*.jpg
+diagnostics/authored_idle/*.gif
+diagnostics/authored_idle/*.png
+diagnostics/authored_idle/*.log
+# Local character-containing contact audits; original furniture previews are tracked.
+diagnostics/desktop_objects/premium-previews/*-native-seat-overlay.png

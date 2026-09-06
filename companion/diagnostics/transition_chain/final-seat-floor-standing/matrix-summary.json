@@ -1,0 +1,32 @@
+[
+  {
+    "name": "cheval-grand-60fps-1.0",
+    "exit_code": 0,
+    "checks": 33,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.1034337025480418,
+    "support_drift_m": 0.0003140386542982992
+  },
+  {
+    "name": "rice-shower-60fps-1.0",
+    "exit_code": 0,
+    "checks": 33,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.0907707489288654,
+    "support_drift_m": 0.0002626848216525879
+  },
+  {
+    "name": "eishin-flash-60fps-1.0",
+    "exit_code": 0,
+    "checks": 33,
+    "failures": 0,
+    "hash_stable": true,
+    "overlap_pass": true,
+    "support_drift_px": 0.09623306843062793,
+    "support_drift_m": 0.0002932747131149607
+  }
+]

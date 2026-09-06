@@ -1,0 +1,86 @@
+[
+  {
+    "cell": "eishin-flash-30fps-0.6",
+    "functional_checks": 14,
+    "functional_failures": 0,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "eishin-flash-30fps-1.0",
+    "functional_checks": 14,
+    "functional_failures": 1,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "rice-shower-30fps-1.0",
+    "functional_checks": 14,
+    "functional_failures": 1,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "cheval-grand-60fps-1.0",
+    "functional_checks": 14,
+    "functional_failures": 1,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "cheval-grand-60fps-0.6",
+    "functional_checks": 14,
+    "functional_failures": 0,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "rice-shower-60fps-1.0",
+    "functional_checks": 14,
+    "functional_failures": 1,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "cheval-grand-30fps-1.0",
+    "functional_checks": 14,
+    "functional_failures": 1,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "eishin-flash-60fps-0.6",
+    "functional_checks": 14,
+    "functional_failures": 0,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "cheval-grand-30fps-0.6",
+    "functional_checks": 14,
+    "functional_failures": 0,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "rice-shower-30fps-0.6",
+    "functional_checks": 14,
+    "functional_failures": 0,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "eishin-flash-60fps-1.0",
+    "functional_checks": 14,
+    "functional_failures": 1,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  },
+  {
+    "cell": "rice-shower-60fps-0.6",
+    "functional_checks": 14,
+    "functional_failures": 0,
+    "source_stable": true,
+    "current_requirement": "does not satisfy concurrent turn/travel; overlap0seconds"
+  }
+]

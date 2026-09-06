@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-1.0/frames.csv.gz",
+    "sha256": "19c304a9321636dd3230ca592037f5e3fc5affea5ce8b0a10fc4867affb810ae",
+    "bytes": 717666
+  },
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/serial-candidate-matrix/rice-shower-60fps-1.0/joints.jsonl.gz",
+    "sha256": "d29e4fe6ef025ac01e31a04c23bbd915fd062a27d023face5165792e7803ceb6",
+    "bytes": 9684105
+  }
+]

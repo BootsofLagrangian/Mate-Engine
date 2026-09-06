@@ -1,0 +1,118 @@
+{
+  "chair": {
+    "rays": [
+      {
+        "x": 0,
+        "z": 0.08,
+        "y": 0.4889262318611145,
+        "object": "Waterfall upholstered seat"
+      },
+      {
+        "x": 0.06,
+        "z": 0.08,
+        "y": 0.48911404609680176,
+        "object": "Waterfall upholstered seat"
+      },
+      {
+        "x": -0.06,
+        "z": 0.08,
+        "y": 0.48911404609680176,
+        "object": "Waterfall upholstered seat"
+      },
+      {
+        "x": 0.06,
+        "z": -0.12,
+        "y": 0.48361846804618835,
+        "object": "Waterfall upholstered seat"
+      },
+      {
+        "x": 0.06,
+        "z": 0.22,
+        "y": 0.46897974610328674,
+        "object": "Waterfall upholstered seat"
+      },
+      {
+        "x": 0.06,
+        "z": 0.31,
+        "y": null,
+        "object": null
+      }
+    ],
+    "transformed_local_aabb_union": [
+      [
+        -0.36521440744400024,
+        -6.937665375517099e-08,
+        -0.3343577980995178
+      ],
+      [
+        0.3747500777244568,
+        1.0240000486373901,
+        0.38139885663986206
+      ]
+    ],
+    "projection_ppm": 347.39273484793347,
+    "socket_composite_px": [
+      518.344,
+      556.7449999999999
+    ],
+    "socket_below_bilateral_top_px": 3.1142492450145274
+  },
+  "sofa": {
+    "rays": [
+      {
+        "x": 0,
+        "z": 0.12,
+        "y": 0.32445645332336426,
+        "object": "Upholstered lower deck"
+      },
+      {
+        "x": 0.06,
+        "z": 0.12,
+        "y": 0.4345483183860779,
+        "object": "Upholstered lower deck"
+      },
+      {
+        "x": -0.06,
+        "z": 0.12,
+        "y": 0.43457531929016113,
+        "object": "Upholstered lower deck"
+      },
+      {
+        "x": 0.06,
+        "z": -0.12,
+        "y": 0.43300342559814453,
+        "object": "Upholstered lower deck"
+      },
+      {
+        "x": 0.06,
+        "z": 0.22,
+        "y": 0.4322809875011444,
+        "object": "Upholstered lower deck"
+      },
+      {
+        "x": 0.06,
+        "z": 0.31,
+        "y": 0.4250616431236267,
+        "object": "Upholstered lower deck"
+      }
+    ],
+    "transformed_local_aabb_union": [
+      [
+        -0.9104999899864197,
+        0.004999999422580004,
+        -0.4189999997615814
+      ],
+      [
+        0.9104999899864197,
+        0.7675999999046326,
+        0.4124999940395355
+      ]
+    ],
+    "projection_ppm": 385.36759675053884,
+    "socket_composite_px": [
+      518.0,
+      556.4849999999999
+    ],
+    "socket_below_bilateral_top_px": 2.4821407074100366
+  }
+}

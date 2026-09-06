@@ -1,0 +1,50 @@
+[
+  {
+    "clip": "idle_to_walk",
+    "rotation_tracks": 52,
+    "max_frame0_rest_error_deg": 1.0799477313527668e-05,
+    "max_frame0_to1_step_deg": 0.1309946940063244
+  },
+  {
+    "clip": "turn_left",
+    "rotation_tracks": 20,
+    "max_frame0_rest_error_deg": 0.0005861788760184306,
+    "max_frame0_to1_step_deg": 72.53528391977663
+  },
+  {
+    "clip": "settle_to_idle_small",
+    "rotation_tracks": 50,
+    "max_frame0_rest_error_deg": 0.0005861788760184306,
+    "max_frame0_to1_step_deg": 65.65126900758801
+  },
+  {
+    "clip": "idle_once_lookaround",
+    "rotation_tracks": 35,
+    "max_frame0_rest_error_deg": 0.0005861788760184306,
+    "max_frame0_to1_step_deg": 72.80507419707307
+  },
+  {
+    "clip": "idle_once_shiftheelpivot",
+    "rotation_tracks": 48,
+    "max_frame0_rest_error_deg": 0.0005861788760184306,
+    "max_frame0_to1_step_deg": 71.40263136984022
+  },
+  {
+    "clip": "idle_once_headtilt",
+    "rotation_tracks": 50,
+    "max_frame0_rest_error_deg": 0.0005861788760184306,
+    "max_frame0_to1_step_deg": 71.18273346704613
+  },
+  {
+    "clip": "turn_right",
+    "rotation_tracks": 48,
+    "max_frame0_rest_error_deg": 0.0005861788760184306,
+    "max_frame0_to1_step_deg": 72.47831925165134
+  },
+  {
+    "clip": "idle_once_slownod",
+    "rotation_tracks": 50,
+    "max_frame0_rest_error_deg": 0.0005861788760184306,
+    "max_frame0_to1_step_deg": 71.1479638201013
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "scope": "Retrospective diagnosis against newly requested simultaneous travel+turn; 20px/s and10deg/s overlap thresholds proposed prospectively for revised implementation",
+  "cells": [
+    {
+      "cell": "cheval-grand-30fps-0.6",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "cheval-grand-30fps-1.0",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "cheval-grand-60fps-0.6",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "cheval-grand-60fps-1.0",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "eishin-flash-30fps-0.6",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "eishin-flash-30fps-1.0",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "eishin-flash-60fps-0.6",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "eishin-flash-60fps-1.0",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "rice-shower-30fps-0.6",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "rice-shower-30fps-1.0",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "rice-shower-60fps-0.6",
+      "meaningful_turn_travel_overlap_seconds": 0
+    },
+    {
+      "cell": "rice-shower-60fps-1.0",
+      "meaningful_turn_travel_overlap_seconds": 0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-0.6/joints.jsonl.gz",
+    "sha256": "5c4ef4ecd76b77805d91cf09e0a9c456fe35b6f4ac998481d83b620beacdd2fc",
+    "bytes": 6369924
+  },
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/uma-walk-final/eishin-flash-30fps-0.6/frames.csv.gz",
+    "sha256": "02b3e9309fd5620d4d3dc367a201f310fea97547064f493c1e9d5cb3bd624a43",
+    "bytes": 389035
+  }
+]

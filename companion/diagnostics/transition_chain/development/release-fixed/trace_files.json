@@ -1,0 +1,14 @@
+[
+  {
+    "original_name": "frames.csv.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/release-fixed/frames.csv.gz",
+    "sha256": "27cea54b49c2ddc8ce5502e57304fc7396e819c27285524a56c43c94ed36a956",
+    "bytes": 645814
+  },
+  {
+    "original_name": "joints.jsonl.gz",
+    "repo_relative_path": "companion/logs/diagnostic-traces/transition_chain/development/release-fixed/joints.jsonl.gz",
+    "sha256": "78a166433b07ecf37312abaec84c950382b72fd60b02a50f4794ad48e9fc6145",
+    "bytes": 8783355
+  }
+]
