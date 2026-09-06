@@ -1,0 +1,44 @@
+[
+  {
+    "id": "cheval-grand",
+    "vrm": {
+      "drive_id": "1-TDrBrutb5UClm-aAIat5FWoZeRDc-ar",
+      "sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a"
+    },
+    "reference": {
+      "url": "https://files.microcms-assets.io/assets/973fc097984b400db8729642ddff5938/c092ee8e4ec94adeae5d1038425a287b/chevalgrand_voice.mp3",
+      "sha256": "502dc4a9548c7edb00667b3e1aabef6eacff3dda050acffd483656d67ca9f7d2",
+      "mp3": "assets/reference.mp3",
+      "minimum_seconds": 3.2,
+      "note": "Official unchanged speech. Only trailing silence added when shorter than GPT-SoVITS v2 minimum 3 s. Reference transcript in profile; Eishin ASR homophone corrected to 厳守."
+    }
+  },
+  {
+    "id": "rice-shower",
+    "vrm": {
+      "drive_id": "1OXcc3BD8OHPDor0CzafD6lR6SqXfjgIv",
+      "sha256": "50ede37cd75029d8d00d17472588b4820408557243b6b2ee058570c7c451035a"
+    },
+    "reference": {
+      "url": "https://files.microcms-assets.io/assets/973fc097984b400db8729642ddff5938/366338684ed24545bc29bee3c908be2f/riceshower_voice.mp3",
+      "sha256": "9bf57f3c80100b6c00916d3a382b6c247590f5e92e1e3623a696bd65881d713d",
+      "mp3": "assets/rice-shower-reference.mp3",
+      "minimum_seconds": 3.2,
+      "note": "Official unchanged speech. Only trailing silence added when shorter than GPT-SoVITS v2 minimum 3 s. Reference transcript in profile; Eishin ASR homophone corrected to 厳守."
+    }
+  },
+  {
+    "id": "eishin-flash",
+    "vrm": {
+      "drive_id": "19Guc3FhCXiq2Hn1TddI4ufxtT4TEJ-5f",
+      "sha256": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28"
+    },
+    "reference": {
+      "url": "https://files.microcms-assets.io/assets/973fc097984b400db8729642ddff5938/30fe4bb4463e4dab8dc81a8ca463cbdc/eishinflash_voice.mp3",
+      "sha256": "2ea624dcdea32d07083d9e047719d59bb890c75b77c5955602f13bdd10fdb19b",
+      "mp3": "assets/eishin-flash-reference.mp3",
+      "minimum_seconds": 3.2,
+      "note": "Official unchanged speech. Only trailing silence added when shorter than GPT-SoVITS v2 minimum 3 s. Reference transcript in profile; Eishin ASR homophone corrected to 厳守."
+    }
+  }
+]
