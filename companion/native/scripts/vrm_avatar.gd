@@ -31,6 +31,8 @@ var model_path: String = ""
 var meta_title: String = ""
 var spec_version: String = ""
 var arm_ik := ArmIK.new()
+var _sole_points_rest: Array[Vector3] = []
+var sole_calibration: Dictionary = {}
 var _posed_bones: Dictionary = {}
 var _blend_targets: Dictionary = {} # "mesh_id:idx" -> [mesh, idx]
 
@@ -69,6 +71,8 @@ func clear_model() -> void:
 	expressions.clear()
 	expression_weights.clear()
 	_posed_bones.clear()
+	_sole_points_rest.clear()
+	sole_calibration.clear()
 	_blend_targets.clear()
 	model_path = ""
 
@@ -100,6 +104,7 @@ func set_model(scene: Node3D) -> void:
 		spec_version = str(meta.get("spec_version")) if meta.get("spec_version") != null else ""
 	_resolve_bones(meta)
 	_resolve_expressions()
+	_calibrate_soles()
 	apply_pose({})
 
 
@@ -380,6 +385,10 @@ func contact_anchors() -> Dictionary:
 		floor_y = minf(rest_feet[0].y,rest_feet[1].y)
 		live = (live_feet[0]+live_feet[1])*0.5
 		live.y = minf(live_feet[0].y,live_feet[1].y)
+	if not _sole_points_rest.is_empty():
+		var measured_floor := float(sole_calibration.floor_y)
+		live.y += measured_floor-floor_y
+		floor_y = measured_floor
 	var xf := skeleton.global_transform
 	return {"foot": xf*Vector3(hip_rest.x,floor_y,hip_rest.z),
 		"foot_current": xf*live,
@@ -420,3 +429,87 @@ func apply_hand_contact(side: String, world_target: Vector3) -> bool:
 	skeleton.set_bone_pose_rotation(hand,wrist_target)
 	var diagnostic: Dictionary = arm_ik.diagnostics.get(side,{})
 	return not diagnostic.is_empty() and float(diagnostic.clamped) < 0.015
+
+
+## Exact rest-mesh sole candidates for projection by the host.
+## These do not follow gait bones: moving the OS window to a swing foot jitters.
+func sole_contact_points() -> Array[Vector3]:
+	var points: Array[Vector3] = []
+	if not has_model():
+		return points
+	for point in _sole_points_rest:
+		points.append(skeleton.global_transform*point)
+	return points
+
+func _calibrate_soles() -> void:
+	_sole_points_rest.clear()
+	sole_calibration.clear()
+	if skeleton == null:
+		return
+	var foot_bones := {}
+	for name in ["leftFoot","rightFoot","leftToes","rightToes"]:
+		if bone_index.has(name):
+			foot_bones[bone_index[name]] = true
+	var weighted: Array[Vector3] = []
+	var all_points: Array[Vector3] = []
+	var meshes: Array = []
+	_collect_meshes(model,meshes)
+	for item in meshes:
+		var mesh: MeshInstance3D = item
+		if mesh.mesh == null:
+			continue
+		var transform_to_skeleton := skeleton.global_transform.affine_inverse()*mesh.global_transform
+		var foot_binds := {}
+		if mesh.skin:
+			for bind in mesh.skin.get_bind_count():
+				var idx := mesh.skin.get_bind_bone(bind)
+				var bone_name := mesh.skin.get_bind_name(bind)
+				if not bone_name.is_empty():
+					idx = skeleton.find_bone(bone_name)
+				if foot_bones.has(idx):
+					foot_binds[bind] = true
+		for surface in mesh.mesh.get_surface_count():
+			var arrays := mesh.mesh.surface_get_arrays(surface)
+			var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+			var joints: Variant = arrays[Mesh.ARRAY_BONES]
+			var weights: Variant = arrays[Mesh.ARRAY_WEIGHTS]
+			var influences := 0
+			if joints != null and weights != null and not vertices.is_empty():
+				influences = int(joints.size()/vertices.size())
+			for i in vertices.size():
+				var point := transform_to_skeleton*vertices[i]
+				all_points.append(point)
+				var foot_weight := 0.0
+				for influence in influences:
+					var at := i*influences+influence
+					if foot_binds.has(int(joints[at])):
+						foot_weight += float(weights[at])
+				if foot_weight >= 0.5:
+					weighted.append(point)
+	var candidates: Array[Vector3] = weighted if not weighted.is_empty() else all_points
+	if candidates.is_empty():
+		return
+	var floor_y := INF
+	for point in candidates:
+		floor_y = minf(floor_y,point.y)
+	var mesh_min_y := INF
+	for point in all_points:
+		mesh_min_y = minf(mesh_min_y,point.y)
+	var used_weighted := not weighted.is_empty()
+	# Preserve full visible-body containment if another mesh extends below a
+	# foot-weighted sole; never lower the safe bounds to hide real geometry.
+	if mesh_min_y < floor_y-0.00001:
+		candidates = all_points
+		floor_y = mesh_min_y
+		used_weighted = false
+	# Retain true vertices (not AABB corner combinations) at the sole; a
+	# host can inspect the exact projected bottom without phantom Z.
+	var band := 0.005
+	var unique := {}
+	for point in candidates:
+		if point.y <= floor_y+band:
+			var key := Vector3i(roundi(point.x*10000),roundi(point.y*10000),roundi(point.z*10000))
+			if not unique.has(key):
+				unique[key] = true
+				_sole_points_rest.append(point)
+	sole_calibration = {"method": "foot_weighted_mesh" if used_weighted else "mesh_minimum", "floor_y": floor_y,"sole_points": _sole_points_rest.size(),"foot_vertices": weighted.size()}

@@ -89,3 +89,10 @@ companion/tools/Godot_v4.5.2-stable_linux.x86_64 --headless \
 Recorded result: **769 checks, zero failures** in `surface-test-results.txt`. Tests cover foreground occlusion/splitting, stable IDs, negative coordinates, monitor clipping, taskbar floors, authored surfaces, width/scale filtering, grounded horizontal motion, exact foot/sit contacts, moved/closed windows, drag detach/resume, interrupted approach, new occlusion, scaling, stale source expiry, and unavailable-source floor fallback. The original 3,636 free-roam checks still pass. These tests do not validate actual Windows helper geometry, rendered foot placement, or integrated posture transitions.
 
 Surface coordinate boundary: consume DesktopWorldSource output in Godot DisplayServer desktop coordinates. On Windows the source adapter translates raw Win32 coordinates by the virtual desktop origin; autonomy must not translate again. Negative-coordinate geometry tests remain portable math coverage. Fallback monitor resize and in-progress scale-change regressions are included.
+
+
+The host now uses a measured rest-mesh sole and orthographic camera. A real-rig regression is
+`probe_floor_projection.gd` (same headless invocation pattern): **135 checks, zero failures** for
+three VRMs × three scales × three yaws, preserving floor attachment and usable-workarea safety.
+Decorative camera bob is suppressed in surface mode; approach remains a smooth unsupported glide.
+See `logs/collaboration/floor-projection-results.txt` for the recorded result.
