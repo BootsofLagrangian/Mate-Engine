@@ -1,0 +1,25 @@
+{
+    "version":  1,
+    "monitor_count":  2,
+    "timestamp_advanced":  true,
+    "minimized_filtered":  true,
+    "fixture_before":  {
+                           "id":  "16268:E0B94",
+                           "x":  127,
+                           "y":  120,
+                           "width":  346,
+                           "height":  233,
+                           "z":  28
+                       },
+    "fixture_after":  {
+                          "id":  "16268:E0B94",
+                          "x":  207,
+                          "y":  180,
+                          "width":  346,
+                          "height":  233,
+                          "z":  29
+                      },
+    "worker_stop_clean":  true,
+    "result":  "PASS",
+    "owner_helper_excluded":  true
+}

@@ -1,0 +1,19 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+Vulkan 1.4.305 - Forward+ - Using Device #0: Unknown - llvmpipe (LLVM 20.1.2, 256 bits)
+
+cheval-grand EXPRESSIONS ["aa", "angry", "blink", "blinkLeft", "blinkRight", "ee", "happy", "ih", "neutral", "oh", "ou", "relaxed", "sad"]
+BIND cheval-grand aa A index=0 weight=0.99998998641968
+BIND cheval-grand ih I index=1 weight=0.99998998641968
+BIND cheval-grand oh U index=2 weight=0.99998998641968
+BIND cheval-grand neutral Ne index=5 weight=0.99998998641968
+JAW cheval-grand pose=[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.0, 1.0), Z: (0.0, 1.0, 0.0), O: (0.0, -0.003033, -0.008403)] rest=[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.0, 1.0), Z: (0.0, 1.0, 0.0), O: (0.0, -0.003033, -0.008403)]
+rice-shower EXPRESSIONS ["aa", "angry", "blink", "ee", "happy", "ih", "oh", "ou", "relaxed", "sad"]
+BIND rice-shower aa Mouth_23_0(TalkA_A_S)[M_Face] index=126 weight=0.7089928984642
+BIND rice-shower ih Mouth_25_0(TalkA_I_S)[M_Face] index=128 weight=0.73899263143539
+BIND rice-shower oh Mouth_31_0(TalkA_O_S)[M_Face] index=134 weight=0.85399144887924
+JAW rice-shower pose=[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.0, 1.0), Z: (0.0, 1.0, 0.0), O: (0.0, -0.003669, -0.008305)] rest=[X: (-1.0, 0.0, 0.0), Y: (0.0, 0.0, 1.0), Z: (0.0, 1.0, 0.0), O: (0.0, -0.003669, -0.008305)]
+eishin-flash EXPRESSIONS ["aa", "angry", "blink", "blinkLeft", "blinkRight", "ee", "happy", "ih", "oh", "ou", "relaxed", "sad"]
+BIND eishin-flash aa Mouth_33_0(TalkB_A_S)[M_Face] index=136 weight=0.99998998641968
+BIND eishin-flash ih Mouth_35_0(TalkB_I_S)[M_Face] index=138 weight=0.99998998641968
+BIND eishin-flash oh Mouth_31_0(TalkA_O_S)[M_Face] index=134 weight=0.99998998641968
+RENDERS=/home/hard2251/workspace/mate-engine/Mate-Engine/companion/diagnostics/face/fixed-outline

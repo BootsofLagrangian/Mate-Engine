@@ -1,0 +1,17 @@
+--- a/addons/Godot-MToon-Shader/mtoon_common.gdshaderinc
++++ b/addons/Godot-MToon-Shader/mtoon_common.gdshaderinc
+@@ -112,11 +112,12 @@
+ 			float aspect = abs(nearUpperRight.y / nearUpperRight.x);
+ 			vec3 viewNormal = mat3(MODELVIEW_MATRIX) * NORMAL.xyz;
+ 			vec3 clipNormal = mat3(PROJECTION_MATRIX) * viewNormal.xyz;
+-			vec2 projectedNormal = normalize(clipNormal.xy);
++			vec2 projectedNormal = clipNormal.xy / max(length(clipNormal.xy), 0.000001);
+ 			projectedNormal *= min(clipPos.w, _OutlineScaledMaxDistance);
+ 			projectedNormal.x *= aspect;
+ 			clipPos.xy += 0.01 * _OutlineWidth * outlineTex * projectedNormal.xy * clamp(1.0 - abs(normalize(viewNormal).z), 0.0, 1.0); // ignore offset when normal toward camera
+-			VERTEX = vec3((INV_PROJECTION_MATRIX * clipPos).xy, conventional_outlined_vertex.z);
++			// Screen-space outline changes XY only: normal extrusion in Z exposes inner mouth faces.
++			VERTEX = vec3((INV_PROJECTION_MATRIX * clipPos).xy, VERTEX.z);
+ 		}
+ 	} else {
+ 		VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;

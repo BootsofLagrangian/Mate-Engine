@@ -9,3 +9,13 @@ __pycache__/
 .pytest_cache/
 web/node_modules/
 web/dist/
+/tools/
+native/.godot/
+native/addons/
+native/build/
+user-data/
+
+diagnostics/face/renders/
+diagnostics/face/no-outline/
+diagnostics/face/fixed-outline/
+diagnostics/face/*.png

@@ -1,0 +1,5 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 591.74 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4090
+
+WINDOWS_COORDINATES_PASS all workareas equal DisplayServer
+WINDOWS_SOURCE_PASS persistent snapshots, monitor geometry, owned child and cache cleanup

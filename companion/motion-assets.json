@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "source_sha256": "69591853d817488edaa8fd9bf8fc1d821eaeaf789f8627b3cd23b41c4ed67997",
+  "motions": [
+    {
+      "name": "idle_natural",
+      "path": "assets/motions/idle_natural.vrma",
+      "kind": "vrma",
+      "duration": 2.5,
+      "loop": true,
+      "description": "Relaxed standing idle",
+      "sha256": "4ba99dc711238707b3cbb77c29457f21beec08be927dfb7617558a48f7995313",
+      "source_clip": "Idle_Loop",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    },
+    {
+      "name": "idle_talking",
+      "path": "assets/motions/idle_talking.vrma",
+      "kind": "vrma",
+      "duration": 2.93333,
+      "loop": true,
+      "description": "Small conversational body gestures",
+      "sha256": "02a57732d6fe2283e1f4618518a4ef49d0b2ccced359b9f73d99da32b975ec41",
+      "source_clip": "Idle_Talking_Loop",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    },
+    {
+      "name": "walk",
+      "path": "assets/motions/walk.vrma",
+      "kind": "vrma",
+      "duration": 1.33333,
+      "loop": true,
+      "description": "Walking, root stays on the desktop anchor",
+      "sha256": "c3d1faec4df73673cd5a37eb40a30f8111a619198f5b5bf290d16cea657d1bb0",
+      "source_clip": "Walk_Loop",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    },
+    {
+      "name": "walk_formal",
+      "path": "assets/motions/walk_formal.vrma",
+      "kind": "vrma",
+      "duration": 1.33333,
+      "loop": true,
+      "description": "Measured walking",
+      "sha256": "aadbb2f8cf1db1d4672f9fef325c949c7d15ce7090e4c915d23b368671919664",
+      "source_clip": "Walk_Formal_Loop",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    },
+    {
+      "name": "dance",
+      "path": "assets/motions/dance.vrma",
+      "kind": "vrma",
+      "duration": 1.0,
+      "loop": false,
+      "description": "Celebratory dance",
+      "sha256": "273031789e8152f0915af686e9039970d4eebe7fd2eff87357c8c682b0acd666",
+      "source_clip": "Dance_Loop",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    },
+    {
+      "name": "interact",
+      "path": "assets/motions/interact.vrma",
+      "kind": "vrma",
+      "duration": 2.0,
+      "loop": false,
+      "description": "Reach to interact with a nearby object",
+      "sha256": "cff1b7dbd5e2118904d8ef858b51168ea7cee78f3d00980f8e80cfdc104738f6",
+      "source_clip": "Interact",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    },
+    {
+      "name": "pick_up",
+      "path": "assets/motions/pick_up.vrma",
+      "kind": "vrma",
+      "duration": 0.83333,
+      "loop": false,
+      "description": "Pick up an object at table height",
+      "sha256": "4a273e65619eadb66c5e3c7c6ca0e47a3dfcbdd65783fdbdcc04d1c7e522225e",
+      "source_clip": "PickUp_Table",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    },
+    {
+      "name": "sit_idle",
+      "path": "assets/motions/sit_idle.vrma",
+      "kind": "vrma",
+      "duration": 1.66667,
+      "loop": true,
+      "description": "Seated idle; requires a chosen sitting location",
+      "sha256": "1f618806f57d1a4b86802e82575224514514ce7492aad0eb7d034b1f1dea5bc5",
+      "source_clip": "Sitting_Idle_Loop",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0"
+    }
+  ]
+}

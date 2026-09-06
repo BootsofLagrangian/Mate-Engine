@@ -1,0 +1,16 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+SEAM walk endpoint_deg=0.05595290968074 bone=rightIndexProximal prior_frame_deg=4.55646871418699
+SEAM sit_idle endpoint_deg=0.05595290968074 bone=rightRingIntermediate prior_frame_deg=0.05595290968074
+SEAM idle_natural endpoint_deg=0.39167114149758 bone=head prior_frame_deg=0.39366438279646
+SEAM idle_talking endpoint_deg=0.06852804166479 bone=rightLittleIntermediate prior_frame_deg=0.41495877819444
+SEAM dance endpoint_deg=0.03956468118525 bone=chest prior_frame_deg=3.49435167324838
+SEAM interact endpoint_deg=0.05595290968074 bone=leftRingDistal prior_frame_deg=0.17693870515161
+SEAM pick_up endpoint_deg=0.05595290968074 bone=leftIndexDistal prior_frame_deg=2.20921422831346
+SEAM walk_formal endpoint_deg=1.19942572120555 bone=leftLowerArm prior_frame_deg=9.56484664952412
+LEAN_FRAME 0 claimed=false actual_world_error=0.31287577748299
+LEAN_FRAME 1 claimed=false actual_world_error=0.31204748153687
+LEAN_FRAME 5 claimed=false actual_world_error=0.2924397289753
+LEAN_FRAME 15 claimed=false actual_world_error=0.10891601443291
+LEAN_FRAME 29 claimed=true actual_world_error=0.00000002980232
+SEATED_TALK hip_y=0.9038707613945 knee_y=0.85947161912918 contact=sit
