@@ -46,3 +46,46 @@ reload may finish before speech starts; zero overlap is measured, not a failure.
 Native failure, missing intent, metadata mismatch, playback failure, feedback failure
 and timeout are reported separately. Linux headless compilation establishes syntax
 only; actual Windows execution is required for playback/rendering claims.
+
+Measured Windows runs are summarized in
+[windows-appearance-results.json](windows-appearance-results.json): Mambo and
+Hachimi each completed wet → default through two actual Korean text requests,
+Japanese PCM playback, exactly one native completion per turn, matching action/done
+intent, and acknowledged feedback (four turns, no failed assertions). First native
+playback was 1.018–2.516 seconds after text submission. These runs used executable
+`26d9fb9…` and the appearance-lifecycle prompt checkpoint; they are not a broad
+reliability benchmark. The subsequent Cheval computer request omitted intent and
+is preserved separately in [computer-grounding-change.json](computer-grounding-change.json).
+That record distinguishes the later prompt repair from the earlier measured runs.
+
+For an ordinary-conversation negative control, run
+`computer-conversation.json`. Its `expect_no_intent:true` assertion fails if either
+`action` or `done` contains an intent. It cannot be combined with `expect_intent`,
+and neither assertion is forwarded to the model: only the step's text is submitted.
+This checks that a stronger skill prompt does not turn discussion into an unsolicited
+furniture action. Python and headless native assertion tests cover both event paths.
+
+Assertion-only native regression (Linux headless, no native window or GPU model):
+
+```sh
+companion/tools/Godot_v4.5.2-stable_linux.x86_64 --headless \
+  --path companion/native --script ../diagnostics/text_scenarios/test_assertions.gd
+```
+
+To verify capability delivery and the exact model prompt, add `--capture-prompt`.
+The launcher arms one local marker for the first step's exact text SHA256 and
+selected character, expiring after 15 minutes. The backend captures only a fresh
+text-only session with no prior history, once, to local user-data; the launcher
+copies it to `assembled-prompt.json`. It contains the actual messages and exact
+`apply_chat_template` string plus generation prefix used for inference, not a
+reconstruction. Capturing never changes token inputs or generation settings. The
+marker is removed on capture or launcher cleanup, and existing captures are never
+overwritten. No HTTP endpoint exposes the prompt. Do not arm this against private
+conversation: it is deliberately limited to the explicit first-step fixture.
+
+The trial also records a pre-publication native furniture catalogue. Backend
+`world_context` acknowledgments now echo accepted rich-catalog IDs/verbs separately
+from legacy `furniture_types`; an empty legacy list does not imply an empty rich
+catalogue. Exact-turn provider diagnostics contain the capability IDs/verbs actually
+forwarded on the request. Use these layers before attributing an omitted skill to
+model behavior rather than missing capability delivery.

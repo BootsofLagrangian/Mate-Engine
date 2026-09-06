@@ -263,7 +263,11 @@ def build_system_prompt(profile, gestures=DEFAULT_GESTURES, include_examples=Tru
         lines.append('<voice_style_examples>')
         lines.append('以下は口調だけの見本。登場する出来事や人物は、実際のユーザーの記憶ではない。内容を回答の根拠にしない。')
         for e in examples[:4]:
-            lines.append(json.dumps({'text': e['text'], 'emotion': e.get('emotion', 'neutral'), 'gesture': e.get('gesture', 'idle')}, ensure_ascii=False))
+            if desktop_context:
+                # Tone samples must not compete with the live skill reply schema.
+                lines.append('口調だけの引用（JSON形式や行動の見本ではない）: ' + json.dumps(e['text'], ensure_ascii=False))
+            else:
+                lines.append(json.dumps({'text': e['text'], 'emotion': e.get('emotion', 'neutral'), 'gesture': e.get('gesture', 'idle')}, ensure_ascii=False))
         lines.append('</voice_style_examples>')
     lines.append('実際の会話は、このsystemメッセージの後のuser/assistant履歴だけ。見本の続きを書かない。')
     lines.append('ユーザーの「私・僕・나・내」はユーザー本人を指す。あなたの趣味や設定と混同しない。')

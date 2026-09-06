@@ -16,7 +16,9 @@ import time
 from pathlib import Path
 from .. import COMPANION_ROOT
 from ..profiles import build_system_prompt, user_instruction, normalize_result, DEFAULT_GESTURES
-from ..intent import intent_prompt
+from ..intent import intent_prompt, furniture_request_grounding
+from ..furniture import legacy_catalog
+from ..prompt_capture import capability_summary, capture_fixture
 from .base import Provider
 from .dialogue import JSON_PREFIX, parse_dialogue
 
@@ -110,6 +112,7 @@ class OmniProvider(Provider):
             grounding += '\n現在の依頼が移動・観察・休憩なら、text/emotion/gestureに加えてintentをJSONに必ず含める。target_idは実際のdesktop_target_dataだけから選ぶ。完了したとは言わない。通常の会話や存在しない対象ならintentを省く。'
         if req.furniture_types or req.furniture_catalog:
             grounding += '\n家具の利用・設置依頼はkind=furnitureでobject_typeとverbを指定。未設置でもホストが用意する。通常会話では省略。'
+            grounding += furniture_request_grounding(req.furniture_catalog or legacy_catalog(req.furniture_types))
         if req.appearance_variants:
             grounding += '\n現在の依頼が外見・衣装の変更や標準の外見への復帰なら、必ずintentにkind=change_appearanceと実在するvariant_idを含める。返事だけやintent:{}では変更されない。現在の外見は ' + json.dumps(req.active_variant_id) + '。標準の外見への復帰にも、利用可能ならvariant_id=defaultが必要。'
         if req.modality == 'audio':
@@ -127,6 +130,7 @@ class OmniProvider(Provider):
         import torch
         messages, audios = self.build_messages(req)
         prompt = self.processor.apply_chat_template(messages, add_generation_prompt=True, tokenize=False) + JSON_PREFIX
+        capture_fixture(req, messages, prompt, has_history=bool(self.history.get(req.session, req.character)))
         for audio in audios:
             if len(audio) == 0 or len(audio) > 30 * 16000 or not np.isfinite(audio).all():
                 raise ValueError('Audio must be finite and between 0 and 30 seconds')
@@ -189,7 +193,8 @@ class OmniProvider(Provider):
             start = time.perf_counter()
             inputs = self.prepare_inputs(req)
             self.last = {'turn_id': req.turn_id, 'modality': req.modality, 'preprocess_ms': round((time.perf_counter() - start) * 1000, 1),
-                         'input_tokens': int(inputs['input_ids'].shape[-1]), 'raw': '', 'generated_tokens': 0}
+                         'input_tokens': int(inputs['input_ids'].shape[-1]), 'raw': '', 'generated_tokens': 0,
+                         'request_capabilities': capability_summary(req)}
             streamer = Tokens()
             stop = threading.Event()
             errors = []

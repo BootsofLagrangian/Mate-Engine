@@ -1,0 +1,141 @@
+{
+  "scope": "Four actual Korean text turns through exported Windows native session, local Omni Thinker and trained GPT-SoVITS. One retained run per character; not a reliability-rate or broad instruction benchmark. Zero overlap is permissible for a fast load.",
+  "trials": [
+    {
+      "character": "mambo",
+      "index": 0,
+      "input": "젖은 외형으로 바꿔 줘. 먼저 짧게 대답해 줘.",
+      "reply": "外見を変えますね。",
+      "action": {
+        "kind": "change_appearance",
+        "variant_id": "wet"
+      },
+      "done_intent": {
+        "kind": "change_appearance",
+        "variant_id": "wet"
+      },
+      "failures": [],
+      "outcomes": [
+        {
+          "id": "t1-3319:intent",
+          "ms": 4431,
+          "outcome": "completed",
+          "owner": "avatar",
+          "reason": "avatar_loaded"
+        }
+      ],
+      "feedback_accepted": true,
+      "latency_ms": {
+        "first_text_ms": 852,
+        "first_playback_ms": 2516,
+        "action_delivered_ms": 1620,
+        "done_ms": 2700
+      },
+      "simultaneous_native_active_playback_samples": 0,
+      "executable_sha256": "26d9fb9bf8d2df9e28999a159f89a558235250c9210452a1354e1c458d411797",
+      "source_report": "logs/text-scenario-mambo-01/report.json"
+    },
+    {
+      "character": "mambo",
+      "index": 1,
+      "input": "원래의 기본 외형으로 돌아가 줘. 먼저 짧게 대답해 줘.",
+      "reply": "外見を変えますね。",
+      "action": {
+        "kind": "change_appearance",
+        "variant_id": "default"
+      },
+      "done_intent": {
+        "kind": "change_appearance",
+        "variant_id": "default"
+      },
+      "failures": [],
+      "outcomes": [
+        {
+          "id": "t2-7626:intent",
+          "ms": 8477,
+          "outcome": "completed",
+          "owner": "avatar",
+          "reason": "avatar_loaded"
+        }
+      ],
+      "feedback_accepted": true,
+      "latency_ms": {
+        "first_text_ms": 435,
+        "first_playback_ms": 1069,
+        "action_delivered_ms": 1354,
+        "done_ms": 1354
+      },
+      "simultaneous_native_active_playback_samples": 33,
+      "executable_sha256": "26d9fb9bf8d2df9e28999a159f89a558235250c9210452a1354e1c458d411797",
+      "source_report": "logs/text-scenario-mambo-01/report.json"
+    },
+    {
+      "character": "hachimi",
+      "index": 0,
+      "input": "젖은 외형으로 바꿔 줘. 먼저 짧게 대답해 줘.",
+      "reply": "はちみ〜。湿った外見に変えるよ。",
+      "action": {
+        "kind": "change_appearance",
+        "variant_id": "wet"
+      },
+      "done_intent": {
+        "kind": "change_appearance",
+        "variant_id": "wet"
+      },
+      "failures": [],
+      "outcomes": [
+        {
+          "id": "t1-3344:intent",
+          "ms": 4668,
+          "outcome": "completed",
+          "owner": "avatar",
+          "reason": "avatar_loaded"
+        }
+      ],
+      "feedback_accepted": true,
+      "latency_ms": {
+        "first_text_ms": 552,
+        "first_playback_ms": 1251,
+        "action_delivered_ms": 1987,
+        "done_ms": 2401
+      },
+      "simultaneous_native_active_playback_samples": 22,
+      "executable_sha256": "26d9fb9bf8d2df9e28999a159f89a558235250c9210452a1354e1c458d411797",
+      "source_report": "logs/text-scenario-hachimi-01/report.json"
+    },
+    {
+      "character": "hachimi",
+      "index": 1,
+      "input": "원래의 기본 외형으로 돌아가 줘. 먼저 짧게 대답해 줘.",
+      "reply": "外見を変えますね。",
+      "action": {
+        "kind": "change_appearance",
+        "variant_id": "default"
+      },
+      "done_intent": {
+        "kind": "change_appearance",
+        "variant_id": "default"
+      },
+      "failures": [],
+      "outcomes": [
+        {
+          "id": "t2-7719:intent",
+          "ms": 8330,
+          "outcome": "completed",
+          "owner": "avatar",
+          "reason": "avatar_loaded"
+        }
+      ],
+      "feedback_accepted": true,
+      "latency_ms": {
+        "first_text_ms": 418,
+        "first_playback_ms": 1018,
+        "action_delivered_ms": 1270,
+        "done_ms": 1270
+      },
+      "simultaneous_native_active_playback_samples": 29,
+      "executable_sha256": "26d9fb9bf8d2df9e28999a159f89a558235250c9210452a1354e1c458d411797",
+      "source_report": "logs/text-scenario-hachimi-01/report.json"
+    }
+  ]
+}

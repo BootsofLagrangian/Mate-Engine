@@ -390,7 +390,8 @@ class Connection:
         self.active_variant_id = active_variant_id
         self.world_updated = time.monotonic()
         await self.send({'type': 'world_context', 'character_id': self.character,
-                         'revision': self.world_revision, 'accepted': len(interests), 'furniture_types': list(furniture_types)})
+                         'revision': self.world_revision, 'accepted': len(interests), 'furniture_types': list(furniture_types),
+                         'furniture_catalog': [{'id': entry['id'], 'verbs': list(entry['verbs'])} for entry in furniture_catalog]})
 
     async def on_intent_result(self, message):
         intent_id, outcome = message.get('intent_id'), message.get('outcome')

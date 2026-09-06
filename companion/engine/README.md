@@ -152,3 +152,10 @@ cd Mate-Engine/companion
 All tests use fakes: the `stub` provider, a fake GPT-SoVITS client patched into `stream_pipeline`, and
 `engine/tests/fake_codex.py` (emits the `codex exec --json` shapes observed with codex-cli 0.153.4).
 `test_omni_prompt.py` loads only the real Omni processor on CPU (skipped without the local checkpoint).
+
+The character-independent [Mate Engine interaction contract](INSTRUCTIONS.md) is
+loaded into every system prompt. It separates direct conversational answers from
+spoken acknowledgments plus validated skill calls, and treats native outcomes as
+the authority for completion. The [real native text scenario harness](../diagnostics/text_scenarios/README.md)
+submits local text through the UI's normal path and records speech, action and
+feedback independently, including an explicit no-action conversational control.

@@ -16,3 +16,10 @@ def test_scenario_timeout_is_bounded_numeric(bad):
 def test_scenario_rejects_unbounded_or_empty_steps():
     for steps in ([],[{'text':'hello'}]*9,[{'text':' '}],[{'text':'x'*4001}]):
         with pytest.raises(ValueError):validate_scenario({'version':1,'steps':steps})
+
+
+def test_conversation_no_intent_assertion_is_boolean_and_mutually_exclusive():
+    step={'text':'Just discuss it','expect_no_intent':True}
+    assert validate_scenario({'version':1,'steps':[step]})['steps'][0]==step
+    for change in ({'expect_no_intent':1},{'expect_no_intent':'true'},{'expect_intent':{'kind':'furniture'}}):
+        with pytest.raises(ValueError):validate_scenario({'version':1,'steps':[{**step,**change}]})

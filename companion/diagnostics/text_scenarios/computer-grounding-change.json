@@ -1,0 +1,182 @@
+{
+  "failed_report": "companion/logs/text-scenario-computer-01/report.json",
+  "failed_report_sha256": "88051585284b7634522b93e09cbf34ccf282bfb64c008b8a1983a4975a7b5fea",
+  "failed_trial": {
+    "action": {
+      "character": "cheval-grand",
+      "elapsed_ms": 1376.3,
+      "emotion": "happy",
+      "gesture": "wave",
+      "intensity": 0.8,
+      "ms": 8742,
+      "speed": 0.92,
+      "turn_id": "t1-8915",
+      "type": "action"
+    },
+    "action_delivered_ms": 8742,
+    "actual_character": "cheval-grand",
+    "actual_model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "actual_variant": "default",
+    "delivered_action_to_terminal_playback_overlap_ms": 0,
+    "done": {
+      "audio_url": null,
+      "character": "cheval-grand",
+      "elapsed_ms": 1814.6,
+      "emotion": "happy",
+      "gesture": "wave",
+      "intensity": 0.8,
+      "ms": 9175,
+      "ok": true,
+      "speed": 0.92,
+      "text": "はい、トレーナーさん。",
+      "timings": {
+        "first_audio_ms": 1512.2,
+        "first_text_ms": 570.4,
+        "first_token_ms": 570.2,
+        "llm_done_ms": 1376.3,
+        "total_ms": 1814.6
+      },
+      "turn_id": "t1-8915",
+      "type": "done",
+      "voice_error": null
+    },
+    "done_ms": 9175,
+    "failures": [
+      "expected_intent_missing_or_different",
+      "terminal_count_not_one",
+      "feedback_not_acknowledged"
+    ],
+    "feedback": {},
+    "finished_ms": 13828,
+    "first_pcm_received_ms": 8876,
+    "first_playback_ms": 8892,
+    "first_text_ms": 7926,
+    "index": 0,
+    "outcomes": [],
+    "overlap_required": false,
+    "pcm_bytes": 114560,
+    "playback_intervals_ms": [
+      [
+        8892,
+        10691
+      ]
+    ],
+    "raw_provider": {
+      "available": true,
+      "record": {
+        "generated_tokens": 22.0,
+        "input_tokens": 4300.0,
+        "modality": "text",
+        "preprocess_ms": 9.6,
+        "raw": "{\"text\":\"はい、トレーナーさん。\", \"emotion\": \"happy\", \"gesture\": \"wave\"}",
+        "turn_id": "t1-8915"
+      }
+    },
+    "reply": "はい、トレーナーさん。",
+    "simultaneous_native_active_playback_samples": 0,
+    "started_ms": 7306,
+    "text": "컴퓨터를 꺼내서 써 봐. 먼저 짧게 대답해 줘.",
+    "turn_id": "t1-8915"
+  },
+  "previous_source_commit": "ce63a902",
+  "prior_prompt_source_sha256": {
+    "companion/engine/profiles.py": "6a3455fcb2aba97be45383e19a6da1321e59a0efe8439a391b3a1cc52223c37d",
+    "companion/engine/intent.py": "56aa189223e3350350dca0be3624e7b2fdf24459f1e0769c2861573b5a6ad8b6",
+    "companion/engine/providers/omni.py": "a65bacc3933bab2263158f7ba04eeb635e7ee8c58c722f2519bb531670a47327",
+    "companion/engine/INSTRUCTIONS.md": "cebb422e8efa3184cf385d48c481a30053c453943be3663444b7b2ff0cf15c2b"
+  },
+  "new_prompt_source_sha256": {
+    "companion/engine/profiles.py": "c89ec73adc3a6a74e5e61860f3390a4c4fd6dcf3632e75961ac3dc36bfc5b360",
+    "companion/engine/intent.py": "dffd96239ff6f65ea64f113e5e7540f6feb501b5e6238ec142cd9b3144d04d98",
+    "companion/engine/providers/omni.py": "44c3e01eaa8736312ea9fe150f7c7bc0f05840170e1daf7e77e1c306ea6038e3",
+    "companion/engine/INSTRUCTIONS.md": "cebb422e8efa3184cf385d48c481a30053c453943be3663444b7b2ff0cf15c2b"
+  },
+  "prompt_record_scope": "Source prompt builders and exact failed-turn raw output preserved. Original fully assembled request prompt was not recorded; do not claim byte-exact prompt reconstruction.",
+  "rationale": [
+    "Desktop-context voice examples should demonstrate tone without competing three-field JSON response format.",
+    "Choose an available use-capability across registry before a place-only entry, independent of type name or current input.",
+    "Near-request positive/negative examples distinguish actual execution request from ordinary conversation; only capability IDs from current registry."
+  ],
+  "model_results_after_change": {
+    "source_report": "companion/logs/text-scenario-computer-grounded-01/report.json",
+    "sha256": "4afd1482838baedf3d3b8e78cf1ba55a1bc0beebf149426707ae619ef8c3a072",
+    "trial": {
+      "action": {
+        "character": "cheval-grand",
+        "elapsed_ms": 1423.0,
+        "emotion": "neutral",
+        "gesture": "idle",
+        "intensity": 0.8,
+        "ms": 8167,
+        "speed": 0.92,
+        "turn_id": "t1-7845",
+        "type": "action"
+      },
+      "action_delivered_ms": 8167,
+      "actual_character": "cheval-grand",
+      "actual_model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+      "actual_variant": "default",
+      "delivered_action_to_terminal_playback_overlap_ms": 0,
+      "done": {
+        "audio_url": null,
+        "character": "cheval-grand",
+        "elapsed_ms": 2390.6,
+        "emotion": "neutral",
+        "gesture": "idle",
+        "intensity": 0.8,
+        "ms": 9134,
+        "ok": true,
+        "speed": 0.92,
+        "text": "はい、トレーナーさん。",
+        "timings": {
+          "first_audio_ms": 2171.5,
+          "first_text_ms": 746.2,
+          "first_token_ms": 745.8,
+          "llm_done_ms": 1423.0,
+          "total_ms": 2390.6
+        },
+        "turn_id": "t1-7845",
+        "type": "done",
+        "voice_error": null
+      },
+      "done_ms": 9134,
+      "failures": [
+        "expected_intent_missing_or_different",
+        "terminal_count_not_one",
+        "feedback_not_acknowledged"
+      ],
+      "feedback": {},
+      "finished_ms": 13838,
+      "first_pcm_received_ms": 8917,
+      "first_playback_ms": 8934,
+      "first_text_ms": 7484,
+      "index": 0,
+      "outcomes": [],
+      "overlap_required": false,
+      "pcm_bytes": 114560,
+      "playback_intervals_ms": [
+        [
+          8934,
+          10717
+        ]
+      ],
+      "raw_provider": {
+        "available": true,
+        "record": {
+          "generated_tokens": 27.0,
+          "input_tokens": 4529.0,
+          "modality": "text",
+          "preprocess_ms": 15.9,
+          "raw": "{\"text\":\"はい、トレーナーさん。\", \"emotion\": \"neutral\", \"gesture\": \"idle\", \"intent\": {}}",
+          "turn_id": "t1-7845"
+        }
+      },
+      "reply": "はい、トレーナーさん。",
+      "simultaneous_native_active_playback_samples": 0,
+      "started_ms": 6682,
+      "text": "컴퓨터를 꺼내서 써 봐. 먼저 짧게 대답해 줘.",
+      "turn_id": "t1-7845"
+    },
+    "interpretation": "Raw output contains empty intent. Rich native catalogue delivery was not recorded in these runs, so omission cannot yet be attributed solely to model capability. Instrumentation added before further diagnosis."
+  }
+}

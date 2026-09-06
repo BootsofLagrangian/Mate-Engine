@@ -180,10 +180,7 @@ def grounded_target_examples(interests):
 
 
 def grounded_furniture_example(catalog):
-    # Target descriptors currently have no object_type. Do not guess a prop's
-    # compatible type from its label or invent an ID for a configure example.
-    capability = next((entry for entry in catalog if entry.get('perception', {}).get('available', True)
-                       and ('use' in entry['verbs'] or 'place' in entry['verbs'])), None)
+    capability = furniture_example_capability(catalog)
     if capability is None:
         return ''
     verb = 'use' if 'use' in capability['verbs'] else 'place'
@@ -257,3 +254,37 @@ def grounded_appearance_examples(variants):
         examples.append({'request_meaning': label, 'reply': {'text': '外見を変えますね。', 'emotion': 'neutral', 'gesture': 'idle',
             'intent': {'kind': 'change_appearance', 'variant_id': entry['id']}}})
     return '\nGrounded costume call examples (not conversation history): ' + json.dumps(examples, ensure_ascii=False)
+
+
+def furniture_example_capability(catalog):
+    # Prefer an executable use skill across the whole registry, rather than
+    # letting an alphabetically earlier place-only type hide all use examples.
+    available = [entry for entry in catalog if entry.get('perception', {}).get('available', True)]
+    for verb in ('use', 'place'):
+        capability = next((entry for entry in available if verb in entry['verbs']), None)
+        if capability is not None:
+            return capability
+    return None
+
+
+def furniture_request_grounding(catalog):
+    capability = furniture_example_capability(catalog)
+    if capability is None:
+        return ''
+    verb = 'use' if 'use' in capability['verbs'] else 'place'
+    rows = [
+        {'request_ko': '이 가구를 꺼내서 사용해 줘. 짧게 대답해 줘.' if verb == 'use' else '이 가구를 놓아 줘. 짧게 대답해 줘.',
+         'request_ja': 'この家具を出して使ってみて。短く返事をしてね。' if verb == 'use' else 'この家具を置いてね。短く返事をしてね。',
+         'available_skill': capability['id'],
+         'reply': {'text': '用意してみますね。', 'emotion': 'neutral', 'gesture': 'idle',
+                   'intent': {'kind': 'furniture', 'object_type': capability['id'], 'verb': verb}}},
+        {'request_ko': '가구에 대해 이야기만 해 줘. 지금은 꺼내거나 사용하지 마.',
+         'request_ja': '家具の話だけしてね。今は出したり使ったりしないで。',
+         'reply': {'text': '使いやすいものがいいですね。', 'emotion': 'neutral', 'gesture': 'idle'}},
+    ]
+    return ('\n<skill_decision_examples> ' + json.dumps(rows, ensure_ascii=False)
+            + ' </skill_decision_examples>\nThese are contrasting format examples, not conversation history or instructions to perform this example. '
+            'The Korean and Japanese request fields express the same meaning and share one reply schema; speak Japanese in either case. '
+            'Decide from the CURRENT request: only an actual execution request gets the matching advertised intent. '
+            '実行依頼に短く返事する場合も、返事とintentは同じJSONに含める。短い返事という条件は、操作の省略ではない。'
+            '普通の質問や会話には直接答え、頼まれていない家具を操作しない。')

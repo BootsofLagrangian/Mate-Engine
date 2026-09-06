@@ -47,3 +47,27 @@ def test_messages_and_features_for_text_and_audio_history(companion_root, provid
     # No transcript of the audio appears anywhere in the prompt.
     prompt = provider.processor.tokenizer.decode(inputs['input_ids'][0])
     assert '音声での発言' in prompt and 'テキスト' in prompt
+
+
+def test_fixture_capture_is_exact_processor_prompt_and_does_not_change_inputs(companion_root, provider, tmp_path, monkeypatch):
+    import hashlib
+    import json
+    import time
+    import torch
+    from engine.providers import omni
+    from engine.prompt_capture import capture_fixture
+    profile=load_profiles(companion_root/'characters',companion_root)['alpha']
+    req=make_request(turn_id='capture-real-processor',character='alpha',profile=profile,session='capture-fresh',text='fixture request',voice=False)
+    req.furniture_catalog=({'id':'computer','verbs':['use','place']},)
+    directory=tmp_path/'user-data/diagnostics';directory.mkdir(parents=True)
+    (directory/'prompt-capture-request.json').write_text(json.dumps({'capture_id':'b'*32,'character_id':'alpha',
+        'text_sha256':hashlib.sha256(req.text.encode()).hexdigest(),'expires_unix':time.time()+60}))
+    monkeypatch.setattr(omni,'capture_fixture',lambda *args,**kwargs:capture_fixture(*args,**kwargs,root=tmp_path))
+    first=provider.prepare_inputs(req)
+    captured=json.loads((directory/'prompt-captures'/('b'*32+'.json')).read_text())
+    messages,_=provider.build_messages(req)
+    assert captured['messages']==messages
+    assert captured['rendered_prompt']==provider.processor.apply_chat_template(messages,add_generation_prompt=True,tokenize=False)+omni.JSON_PREFIX
+    assert captured['capabilities']['furniture_catalog']==[{'id':'computer','verbs':['use','place']}]
+    second=provider.prepare_inputs(req)  # marker consumed: diagnostics now inactive
+    assert torch.equal(first['input_ids'],second['input_ids'])

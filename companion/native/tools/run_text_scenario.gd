@@ -81,6 +81,7 @@ func trial(step: Dictionary, index: int) -> void:
 	max_envelope = 0.0; playback_intervals = []; playback_started = -1
 	active_trial = {"index":index,"text":step.text,"started_ms":elapsed(),"simultaneous_native_active_playback_samples":0,"failures":[]}
 	report["trials"].append(active_trial)
+	active_trial["native_capabilities_before_publish"] = {"living_enabled":app.living.enabled,"furniture_native_available":app.objects.native_available(),"furniture_catalog":app.objects.furniture_catalog().duplicate(true)}
 	app.living.publish_world(true)
 	app._send_chat(str(step.text))
 	turn = app.session.turn_id
@@ -95,6 +96,8 @@ func trial(step: Dictionary, index: int) -> void:
 	var issued: Dictionary = action.get("intent",{})
 	if wants_intent and not subset_matches(issued,step.expect_intent): failures.append("expected_intent_missing_or_different")
 	if wants_intent and issued != done.get("intent",{}): failures.append("action_done_metadata_mismatch")
+	if not no_intent_assertion_passes(step,action,done):
+		failures.append("unexpected_intent_for_conversation")
 	var outcomes: Array = terminal_rows.filter(func(row): return row.id == turn+":intent")
 	if wants_intent:
 		if outcomes.size()!=1: failures.append("terminal_count_not_one")
@@ -124,6 +127,26 @@ func trial(step: Dictionary, index: int) -> void:
 	write_report()
 	active_trial = {}
 
+
+func valid_step(step: Variant) -> bool:
+	if not step is Dictionary: return false
+	for key in step:
+		if key not in ["text","timeout_s","expect_intent","expect_no_intent","expected_outcomes"]: return false
+	if not step.get("text") is String or step.text.strip_edges().is_empty() or step.text.length()>4000: return false
+	var timeout: Variant = step.get("timeout_s",60)
+	if typeof(timeout) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(timeout)) or float(timeout)<1 or float(timeout)>90: return false
+	if typeof(step.get("expect_no_intent",false)) != TYPE_BOOL: return false
+	if bool(step.get("expect_no_intent",false)) and step.has("expect_intent"): return false
+	if step.has("expect_intent") and (not step.expect_intent is Dictionary or step.expect_intent.is_empty()): return false
+	var outcomes: Variant = step.get("expected_outcomes",["completed","arrived"])
+	if not outcomes is Array or outcomes.is_empty(): return false
+	for outcome in outcomes:
+		if outcome not in ["completed","arrived","rejected","failed","cancelled","expired","interrupted"]: return false
+	return true
+
+func no_intent_assertion_passes(step: Dictionary, delivered_action: Dictionary, final_event: Dictionary) -> bool:
+	return not bool(step.get("expect_no_intent",false)) or (not delivered_action.has("intent") and not final_event.has("intent"))
+
 func run() -> void:
 	if OS.get_name() != "Windows": print("TEXT_SCENARIO_NOT_RUN: Windows native display required"); quit(2); return
 	output = argument("--output"); requested_character = argument("--character")
@@ -132,8 +155,8 @@ func run() -> void:
 		push_error("Require --output, --character and version1 scenario with1..8 steps"); quit(2); return
 	scenario = parsed
 	for step in scenario.steps:
-		if not step is Dictionary or not step.get("text") is String or step.text.is_empty() or step.text.length()>4000 or not is_finite(float(step.get("timeout_s",60))) or float(step.get("timeout_s",60))<1 or float(step.get("timeout_s",60))>90:
-			push_error("Invalid scenario step"); quit(2); return
+		if not valid_step(step):
+			push_error("Invalid scenario step or conflicting assertions"); quit(2); return
 	DirAccess.make_dir_recursive_absolute(output)
 	started = Time.get_ticks_msec()
 	report["trials"] = []; report["native_outcomes"] = []

@@ -1,0 +1,1 @@
+{"version":1,"captures":true,"steps":[{"text":"パソコンを出して使ってみて。最初に短く返事をしてね。","timeout_s":90,"expect_intent":{"kind":"furniture","object_type":"computer","verb":"use"}}]}

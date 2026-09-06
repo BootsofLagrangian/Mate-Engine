@@ -1,0 +1,135 @@
+{
+  "scope": "One retained Korean/Japanese equivalent pair, same character and capabilities. Not a broad language benchmark.",
+  "prompts_identical_except_current_user_request": true,
+  "runs": {
+    "ko": {
+      "prompt_sha256": "ae8d81b298a813c8c328ca70cbc080eb5c595e45d913fec546072391cdf108dd",
+      "rendered_prompt_sha256": "238e7ce222b3071474f80220a47620dbcd331acb8d38d35bb30d1d1286ed8825",
+      "report_sha256": "ff511dedd45f55d524a4e6bfbac27e3f8175e6b0a942c216b780661fac80cc4d",
+      "input": "컴퓨터를 꺼내서 써 봐. 먼저 짧게 대답해 줘.",
+      "raw": "{\"text\":\"はい、トレーナーさん。\", \"emotion\": \"neutral\", \"gesture\": \"idle\", \"intent\": {}}",
+      "capabilities": {
+        "furniture_catalog": [
+          {
+            "id": "chair",
+            "verbs": [
+              "appearance",
+              "configure",
+              "hide",
+              "inspect",
+              "place",
+              "remove",
+              "sit"
+            ]
+          },
+          {
+            "id": "computer",
+            "verbs": [
+              "appearance",
+              "configure",
+              "hide",
+              "inspect",
+              "place",
+              "remove",
+              "use"
+            ]
+          },
+          {
+            "id": "sofa",
+            "verbs": [
+              "appearance",
+              "configure",
+              "hide",
+              "inspect",
+              "place",
+              "remove",
+              "sit"
+            ]
+          }
+        ],
+        "furniture_types": [],
+        "interests_count": 1,
+        "locomotion_ids": [
+          "mambo_goofy_walk",
+          "playful_strut",
+          "uma_walk"
+        ],
+        "appearance_variant_ids": [
+          "default"
+        ]
+      },
+      "native_outcomes": [],
+      "source_directory": "companion/logs/text-scenario-computer-traced-ko-01"
+    },
+    "ja": {
+      "prompt_sha256": "848c38127d333bfb0203478d1ad8cf1c83a2399f8abbaea7c615c22266e13e01",
+      "rendered_prompt_sha256": "b42b29f55d72fa1a1d3620d433eef8bc3f15ee1ddcf54403ee0879f962845ec9",
+      "report_sha256": "18517ecc2d1828d9151d9abd7f853b4e2518e1f311e135d07ce3b6dc883be00c",
+      "input": "パソコンを出して使ってみて。最初に短く返事をしてね。",
+      "raw": "{\"text\":\"はい、トレーナーさん。パソコンを出してみますね。\", \"emotion\": \"neutral\", \"gesture\": \"idle\", \"intent\": {\"kind\": \"furniture\", \"object_type\": \"computer\", \"verb\": \"use\", \"placement\": \"near\"}}",
+      "capabilities": {
+        "furniture_catalog": [
+          {
+            "id": "chair",
+            "verbs": [
+              "appearance",
+              "configure",
+              "hide",
+              "inspect",
+              "place",
+              "remove",
+              "sit"
+            ]
+          },
+          {
+            "id": "computer",
+            "verbs": [
+              "appearance",
+              "configure",
+              "hide",
+              "inspect",
+              "place",
+              "remove",
+              "use"
+            ]
+          },
+          {
+            "id": "sofa",
+            "verbs": [
+              "appearance",
+              "configure",
+              "hide",
+              "inspect",
+              "place",
+              "remove",
+              "sit"
+            ]
+          }
+        ],
+        "furniture_types": [],
+        "interests_count": 1,
+        "locomotion_ids": [
+          "mambo_goofy_walk",
+          "playful_strut",
+          "uma_walk"
+        ],
+        "appearance_variant_ids": [
+          "default"
+        ]
+      },
+      "native_outcomes": [
+        {
+          "id": "t1-7859:intent",
+          "ms": 24594,
+          "outcome": "unsafe_seat",
+          "owner": "furniture",
+          "reason": ""
+        }
+      ],
+      "source_directory": "companion/logs/text-scenario-computer-traced-ja-01"
+    }
+  },
+  "bounded_change": "Replace English-only abstract request meanings in existing grounded decision pair with natural Korean/Japanese equivalent snippets, using generic this furniture and only actual available ID/use-or-place. Negative discussion pair remains without intent. No router, generation or parser changes.",
+  "new_intent_source_sha256": "c520f41e0ba09c55e4aa24af3d804d135b0699ab2ff334ab5546c5733276ecce",
+  "post_change_real_result": "Not yet run."
+}
