@@ -107,7 +107,7 @@ def conversation_stream(brain,req,root,cancelled=None):
                     result.update(value);metrics['llm_done_ms']=ms()
                     for phrase in chunker.push('',final=True):
                         phrases.put((count,phrase));emit('phrase',index=count,text=phrase);count+=1
-                    emit('action',**{k:value[k] for k in ('gesture','emotion','intensity','speed','repeat') if k in value})
+                    emit('action',**{k:value[k] for k in ('gesture','emotion','intensity','speed','repeat','intent') if k in value})
         except Exception as exc:
             llm_failed.set();result.clear()
             errors.append(str(exc));emit('error',message=str(exc))

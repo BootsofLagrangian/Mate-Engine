@@ -20,6 +20,7 @@ from .motion_assets import MotionAssets, available_motions
 from .profiles import load_profiles, valid_id
 from .providers import create_provider, ScriptedProvider
 from .turns import Turn, make_request, is_job_turn
+from .intent import validate_interests, WORLD_TTL_SECONDS
 
 log = logging.getLogger('engine.server')
 ID_RE = re.compile(r'^[A-Za-z0-9:_.-]{1,128}$')
@@ -185,6 +186,9 @@ class Connection:
         self.turn = None
         self.job = None
         self.closed = False
+        self.world_interests = ()
+        self.world_revision = 0
+        self.world_updated = None
 
     # thread-safe: called from turn/job worker threads
     def emit(self, event):
@@ -231,7 +235,7 @@ class Connection:
                 'characters': [p.catalog_entry() for p in self.profiles.values()], 'character': self.character,
                 'capabilities': {'audio_input': True, 'jobs': bool(self.jobs['available']), 'text_input': True,
                                  'job_workspace': self.jobs['root'], 'job_sandbox': self.jobs['sandbox'],
-                                 'provider': self.state.provider.name}}
+                                 'provider': self.state.provider.name, 'world_context': True}}
 
     async def run(self):
         await self.send(self.hello())
@@ -273,6 +277,8 @@ class Connection:
             if event.pop('_turn_event', False) and event.get('type') != 'cancelled':
                 if not self.turn or event['turn_id'] != self.turn.turn_id or self.turn.outcome == 'cancelled':
                     continue
+                if 'intent' in event and not self.turn.req.world_context_valid():
+                    event.pop('intent', None)
             if event.get('type') == 'audio':
                 seconds = len(base64.b64decode(event['pcm'])) / (2 * event.get('sample_rate', 32000))
                 self.playback_until = max(time.monotonic(), self.playback_until) + seconds
@@ -284,7 +290,7 @@ class Connection:
     async def handle(self, message):
         kind = message.get('type')
         handler = {'chat': self.on_chat, 'audio': self.on_audio, 'cancel': self.on_cancel, 'job': self.on_job,
-                   'cancel_job': self.on_cancel_job, 'playback': self.on_playback, 'select_character': self.on_select_character, 'reset': self.on_reset, 'ping': self.on_ping}.get(kind)
+                   'cancel_job': self.on_cancel_job, 'playback': self.on_playback, 'select_character': self.on_select_character, 'reset': self.on_reset, 'ping': self.on_ping, 'world_context': self.on_world_context}.get(kind)
         if handler is None:
             await self.send({'type': 'error', 'message': f'unknown message type: {kind!r}'})
             return
@@ -315,6 +321,32 @@ class Connection:
         return isinstance(value, str) and bool(ID_RE.fullmatch(value))
 
     # ----- turns --------------------------------------------------------------
+    def _clear_world(self):
+        self.world_interests = ()
+        self.world_updated = None
+        self.world_revision += 1
+
+    def _select(self, character):
+        if character != self.character:
+            self._clear_world()
+        self.character = character
+
+    async def on_world_context(self, message):
+        if message.get('character_id') != self.character:
+            await self.send({'type': 'error', 'message': 'world_context character_id must match selected character'})
+            return
+        try:
+            interests = validate_interests(message.get('interests'))
+        except ValueError as exc:
+            await self.send({'type': 'error', 'message': str(exc)})
+            return
+        if interests != self.world_interests or self.world_updated is None or time.monotonic() - self.world_updated > WORLD_TTL_SECONDS:
+            self.world_revision += 1
+        self.world_interests = interests
+        self.world_updated = time.monotonic()
+        await self.send({'type': 'world_context', 'character_id': self.character,
+                         'revision': self.world_revision, 'accepted': len(interests)})
+
     def foreground_active(self):
         return self.turn is not None and self.turn.foreground and not self.turn.finished.is_set() and not self.turn.cancelled.is_set()
 
@@ -326,6 +358,14 @@ class Connection:
         motions = available_motions(self.state.motions, self.state.motion_assets)
         req.gestures = tuple(m['name'] for m in motions)
         req.motion_descriptions = {m['name']: m['description'] for m in motions if m.get('description')}
+        revision = self.world_revision
+        req.world_context_valid = lambda: (not self.closed and self.character == req.character
+            and self.world_revision == revision and self.world_updated is not None
+            and time.monotonic() - self.world_updated <= WORLD_TTL_SECONDS)
+        if req.world_context_valid() and not is_job_turn(req.turn_id):
+            req.world_interests = self.world_interests
+        else:
+            req.world_context_valid = lambda: False
         self.turn = Turn(req, provider, self.emit, self.state.root)
         self.turn.start()
         return self.turn
@@ -347,7 +387,7 @@ class Connection:
         if session is None:
             await self.send(self._turn_error(turn_id, character, 'invalid session id'))
             return
-        self.character = character
+        self._select(character)
         req = make_request(turn_id=turn_id, character=character, profile=profile, session=session,
                            voice=bool(message.get('voice', True)), text=text.strip())
         self._start_turn(req, self.state.provider)
@@ -370,7 +410,7 @@ class Connection:
         except AudioError as exc:
             await self.send(self._turn_error(turn_id, character, str(exc)))
             return
-        self.character = character
+        self._select(character)
         req = make_request(turn_id=turn_id, character=character, profile=profile, session=session,
                            voice=bool(message.get('voice', True)), audio=audio, audio_seconds=seconds)
         self._start_turn(req, self.state.provider)
@@ -394,7 +434,8 @@ class Connection:
             return
         if self.turn:
             self.turn.cancel('character_changed')
-        self.character = character
+        self._clear_world()
+        self._select(character)
         self.playing = None
         self.playback_until = 0.0
         await self.send({'type': 'character_selected', 'character': character})
@@ -403,6 +444,7 @@ class Connection:
         return self.playing is not None or time.monotonic() < self.playback_until
 
     async def on_reset(self, message):
+        self._clear_world()
         session = self._session_for(message) or self.session
         character = message.get('character')
         if self.turn and self.turn.req.session == session and (not character or self.turn.character == character):

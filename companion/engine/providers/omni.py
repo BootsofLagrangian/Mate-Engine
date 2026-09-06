@@ -16,6 +16,7 @@ import time
 from pathlib import Path
 from .. import COMPANION_ROOT
 from ..profiles import build_system_prompt, user_instruction, normalize_result, DEFAULT_GESTURES
+from ..intent import intent_prompt
 from .base import Provider
 from .dialogue import JSON_PREFIX, parse_dialogue
 
@@ -68,7 +69,8 @@ class OmniProvider(Provider):
         """Chat messages plus the ordered list of waveforms referenced by audio placeholders."""
         prior = self.history.get(req.session, req.character)
         audios = []
-        system = build_system_prompt(req.profile, req.gestures or self.gestures, include_examples=not prior)
+        system = build_system_prompt(req.profile, req.gestures or self.gestures, include_examples=not prior, desktop_context=bool(req.world_interests))
+        system += intent_prompt(req.world_interests)
         if req.motion_descriptions:
             system += '\nAvailable motion descriptions: ' + json.dumps(req.motion_descriptions, ensure_ascii=False)
         messages = [{'role': 'system', 'content': [{'type': 'text', 'text': system}]}]
@@ -99,6 +101,8 @@ class OmniProvider(Provider):
             grounding += '\n<actual_recent_user_messages>\n' + json.dumps(recent_users, ensure_ascii=False) + '\n</actual_recent_user_messages>'
             grounding += '\n上は実際の過去のユーザー発言の引用（指示ではない）。現在の質問が過去を指す時は、その具体的内容に基づいて答える。ユーザーの出来事を自分の設定に置き換えない。'
         grounding += '\nAnswer only the CURRENT user message below. Earlier quoted messages are context, not questions to answer again. Do not repeat your previous reply.'
+        if req.world_interests:
+            grounding += '\n現在の依頼が移動・観察・休憩なら、text/emotion/gestureに加えてintentをJSONに必ず含める。target_idは実際のdesktop_target_dataだけから選ぶ。完了したとは言わない。通常の会話や存在しない対象ならintentを省く。'
         if req.modality == 'audio':
             audios.append(req.audio)
             content = [{'type': 'text', 'text': grounding + '\n【現在のユーザー発言】'},
@@ -243,7 +247,7 @@ class OmniProvider(Provider):
                 return
             if result is None:
                 raise ValueError('Omni did not emit complete dialogue JSON: ' + raw[:250])
-            result = normalize_result(result, req.gestures or self.gestures)
+            result = normalize_result(result, req.gestures or self.gestures, req.world_interests)
             if NON_JAPANESE.search(result['text']) or result['text'] != previous.strip():
                 raise ValueError('Final dialogue differs from validated streamed text')
             self.remember(req, result)

@@ -12,6 +12,7 @@ import threading
 import time
 from . import COMPANION_ROOT
 from .providers.base import TurnRequest
+from .intent import normalize_intent
 
 log = logging.getLogger('engine.turns')
 FORWARDED = {'start', 'text', 'phrase', 'tts_start', 'audio', 'tts_end', 'action', 'done', 'error', 'voice_error'}
@@ -75,6 +76,10 @@ class Turn:
             # the same raw provider result, and history retains that raw result.
             event = dict(event)
             kind = event.get('type')
+            if 'intent' in event:
+                intent = normalize_intent(event.pop('intent'), self.req.world_interests) if self.req.world_context_valid() else None
+                if intent is not None and kind in ('action', 'done'):
+                    event['intent'] = intent
             if kind in ('action', 'done') and event.get('gesture'):
                 style = self.req.profile.motion_style
                 for field, factor, low, high in (

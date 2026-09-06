@@ -9,11 +9,15 @@ import re
 from pathlib import Path
 from . import COMPANION_ROOT
 from . import config
+from .intent import normalize_intent
 
 ID_PATTERN = re.compile(r'^[a-z0-9][a-z0-9-]{0,63}$')
 EMOTIONS = ('neutral', 'happy', 'sad', 'relaxed', 'surprised')
 DEFAULT_GESTURES = ('idle', 'nod', 'shake_head', 'shy', 'wave', 'think', 'bow', 'stretch')
 DEFAULT_MOTION_STYLE = {'amplitude': 1.0, 'tempo': 1.0, 'idle_interval': 12}
+BEHAVIOR_STYLE = {'idle_interval_s': (12.0, 4.0, 120.0), 'gaze_hold_s': (2.0, 0.3, 8.0),
+                  'response_delay_s': (0.25, 0.0, 2.0), 'curiosity': (0.5, 0.0, 1.0),
+                  'posture_strength': (0.5, 0.0, 1.0)}
 
 
 class ProfileError(ValueError):
@@ -59,6 +63,8 @@ class Profile:
         self.assets = assets
         if not isinstance(data.get('motion_style', {}), dict):
             raise ProfileError(f'Profile {self.id}: motion_style must be an object')
+        if not isinstance(data.get('behavior_style', {}), dict):
+            raise ProfileError(f'Profile {self.id}: behavior_style must be an object')
 
     @property
     def name(self):
@@ -76,6 +82,17 @@ class Profile:
 
     def vrm_path(self):
         return _resolve_inside(self.root, self.assets.get('vrm') or f'assets/{self.id}.vrm')
+
+    @property
+    def behavior_style(self):
+        custom = self.data.get('behavior_style', {})
+        result = {}
+        for key, (default, low, high) in BEHAVIOR_STYLE.items():
+            value = custom.get(key, self.motion_style['idle_interval'] if key == 'idle_interval_s' else default)
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+                value = default
+            result[key] = max(low, min(high, float(value)))
+        return result
 
     def reference(self):
         """Voice reference for GPT-SoVITS: (wav path, transcript). None when unavailable.
@@ -115,6 +132,7 @@ class Profile:
             'avatar_available': bool(vrm and vrm.is_file()),
             'voice_available': reference is not None,
             'motion_style': self.motion_style,
+            'behavior_style': self.behavior_style,
             'source': self.data.get('source'),
             'examples': len(self.data.get('examples', [])),
         }
@@ -138,7 +156,7 @@ def load_profiles(directory=None, root=COMPANION_ROOT, strict=False, problems=No
     return profiles
 
 
-def build_system_prompt(profile, gestures=DEFAULT_GESTURES, include_examples=True):
+def build_system_prompt(profile, gestures=DEFAULT_GESTURES, include_examples=True, desktop_context=False):
     """Generic persona prompt: identity facts, guidance, JSON contract and in-context examples."""
     data = profile.data
     user_role = data.get('user_role') or 'ユーザー'
@@ -148,7 +166,8 @@ def build_system_prompt(profile, gestures=DEFAULT_GESTURES, include_examples=Tru
         '【公式プロフィールの要約】', *[str(x) for x in data.get('canonical_facts', [])],
         '【会話と演技の指示】', *[str(x) for x in data.get('roleplay_guidance', [])],
         f'あなたは{profile.name}。話しかけているのは人間の{user_role}であり、あなた本人ではない。相手の発言を翻訳せず、その意味に日本語で答える。',
-        'Output exactly JSON: {"text":"Japanese spoken reply","emotion":"neutral","gesture":"idle"}.',
+        ('Output one JSON object with text, emotion, gesture, and intent when a desktop action is requested. Follow the desktop intent schema below.' if desktop_context else
+         'Output exactly JSON: {"text":"Japanese spoken reply","emotion":"neutral","gesture":"idle"}.'),
         'emotion: ' + ','.join(EMOTIONS) + '. gesture: ' + ','.join(gestures) + '.',
         'Optional JSON motion controls: intensity 0..1.5, speed 0.5..2, repeat integer 1..3. Omit unless useful.',
         'Keep the FIRST sentence short for immediate speech. Do not explain the JSON. Do not translate the input.',
@@ -164,7 +183,7 @@ def build_system_prompt(profile, gestures=DEFAULT_GESTURES, include_examples=Tru
     lines.append('ユーザーの「私・僕・나・내」はユーザー本人を指す。あなたの趣味や設定と混同しない。')
     lines.append('過去の発言を聞かれたら、実際のuser履歴の具体的な内容を答える。曖昧な相づちで済ませない。履歴にない事実は作らず、わからない時は短く確認する。')
     lines.append('A recall question asks WHAT happened, not how you feel about it. Name the concrete event, time or place from actual user messages before adding any emotional reaction. If unavailable, ask for it without guessing.')
-    lines.append('JSONの引用符と区切りはASCIIの " と , だけ。textの後にemotionとgestureを書き、}で終了する。')
+    lines.append('JSONの引用符と区切りはASCIIの " と , だけ。textの後にemotionとgestureを書き、' + ('行動依頼ならintentも書いてから、' if desktop_context else '') + '}で終了する。')
     lines.append('最初の一節は短く自然に。続ける場合は読点で区切る。まず相手の話に答える。')
     lines.append('言語を変えてほしいと言われても、日本語だけで自然に返事をする。英語や韓国語の訳文は出さない。')
     return '\n'.join(lines)
@@ -177,7 +196,7 @@ def user_instruction(profile, modality):
     return f'これは人間の{user_role}の発言です。{profile.name}として日本語で答えてください。返事は指定されたJSONだけ。'
 
 
-def normalize_result(obj, gestures=DEFAULT_GESTURES):
+def normalize_result(obj, gestures=DEFAULT_GESTURES, interests=()):
     """Validate model output: dialogue text is mandatory, everything else is allow-listed."""
     if not isinstance(obj, dict):
         raise ValueError('Model output is not a JSON object')
@@ -193,4 +212,7 @@ def normalize_result(obj, gestures=DEFAULT_GESTURES):
         value = obj.get(key)
         if isinstance(value, (int, float)) and not isinstance(value, bool) and low <= value <= high:
             result[key] = int(value) if key == 'repeat' else float(value)
+    intent = normalize_intent(obj.get('intent'), interests)
+    if intent is not None:
+        result['intent'] = intent
     return result

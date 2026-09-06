@@ -132,6 +132,13 @@
     "tempo": 0.88,
     "idle_interval": 15
   },
+  "behavior_style": {
+    "idle_interval_s": 15,
+    "gaze_hold_s": 2.8,
+    "response_delay_s": 0.5,
+    "curiosity": 0.3,
+    "posture_strength": 0.35
+  },
   "job_ack": "うん。ライスにも、お手伝いさせてね。",
   "job_done": "できたよ。詳しいことは、ここにまとめたの。",
   "job_failed": "うまく進められないところがあったの。一緒に確認してもらえるかな。"

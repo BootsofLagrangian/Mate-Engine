@@ -30,6 +30,8 @@ class TurnRequest:
         self.motion_descriptions = {}
         self.pending_history = None
         self.defer_history = False
+        self.world_interests = ()
+        self.world_context_valid = lambda: False
 
     @property
     def modality(self):

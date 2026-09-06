@@ -92,7 +92,29 @@ Turn `action` and `done` metadata already includes the selected profile's motion
 `speed = clamp((provider speed or 1) * tempo, 0.5, 2)` (defaults apply only when omitted or invalid).
 This also applies to scripted job acknowledgements/results. Clients use these final values
 without another profile multiplier. Provider history and explicit motion previews are unchanged.
-`motion_style.idle_interval` remains profile metadata; it does not currently control idle scheduling.
+`behavior_style` is also exposed in each character catalog entry for the native director:
+`idle_interval_s` (4..120, default 12), `gaze_hold_s` (0.3..8, default 2),
+`response_delay_s` (0..2, default 0.25), `curiosity` and `posture_strength` (0..1, default 0.5).
+Values are finite and clamped. If omitted, `idle_interval_s` falls back to legacy
+`motion_style.idle_interval`. Response delay affects quiet nonverbal dispatch only, never speech.
+
+Optional desktop context: send `{type:"world_context",character_id,interests:[{id,label,kind}]}`
+for the selected character. This replaces the connection's snapshot and receives
+`{type:"world_context",character_id,revision,accepted:N}`. At most 16 targets; ID is 1..96
+ASCII letters/digits or `_ : . / @ -`; label is 1..80 printable characters;
+kind is `window|floor|surface|point|prop|pointer`. Extra target fields, including coordinates,
+are rejected. Context expires after 45 seconds; send an unchanged heartbeat around every 20 seconds.
+Changed/expired snapshots advance revision; identical live heartbeats do not. Selection/reset clears
+context; reconnect starts empty. Context never transfers between characters or connections.
+
+The model may add `intent:{kind:"move_to"|"inspect"|"rest",target_id?,duration_s?}` to a
+normal reply; `action` and `done` both carry it. Move/inspect require a listed target;
+rest may omit its target. Optional duration must be finite 1..30 seconds. Invalid, unknown,
+expired or superseded intentions are dropped without delaying text/TTS or failing dialogue.
+Scripted job speech cannot request movement. The native director must deduplicate using
+`turn_id + ":intent"`, revalidate current geometry, and report its own actual outcomes.
+Model text is not evidence that movement occurred. Targets are untrusted labels, never screen
+contents or instructions. No periodic LLM calls are added; old clients can ignore this metadata.
 
 Validation failures (unknown character, blank text, bad `turn_id`, unreadable WAV, > 30 s) are `error`
 events tagged with the offending `turn_id`.

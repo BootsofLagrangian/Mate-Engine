@@ -133,6 +133,13 @@
     "tempo": 0.92,
     "idle_interval": 14
   },
+  "behavior_style": {
+    "idle_interval_s": 14,
+    "gaze_hold_s": 2.2,
+    "response_delay_s": 0.35,
+    "curiosity": 0.4,
+    "posture_strength": 0.45
+  },
   "job_ack": "はい。僕も、やってみます。",
   "job_done": "できました。結果は、こちらにまとめてあります。",
   "job_failed": "少し、うまく進められないところがありました。こちらを確認してもらえますか。"

@@ -132,6 +132,13 @@
     "tempo": 1.03,
     "idle_interval": 18
   },
+  "behavior_style": {
+    "idle_interval_s": 18,
+    "gaze_hold_s": 1.8,
+    "response_delay_s": 0.15,
+    "curiosity": 0.55,
+    "posture_strength": 0.7
+  },
   "job_ack": "承知しました。内容を確認して、順に進めます。",
   "job_done": "完了しました。結果をこちらにまとめています。",
   "job_failed": "予定通りに進められない点がありました。状況をこちらにまとめています。"
