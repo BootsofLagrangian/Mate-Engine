@@ -2,7 +2,17 @@ extends "../../native/tools/run_text_scenario.gd"
 
 func run() -> void:
 	var failures := 0
+	var raw := {"fit":{"error":INF},"rows":[{"scale":0.8}]}
+	var safe: Dictionary = bounded_diagnostic(raw)
+	raw.rows[0].scale = 1.2
+	var many: Array = []
+	many.resize(40)
 	var cases: Array = [
+		JSON.parse_string(JSON.stringify(safe)) is Dictionary,
+		safe.rows[0].scale == 0.8,
+		bounded_diagnostic(many).size() == 33,
+		bounded_diagnostic("x".repeat(3000)).length() == 2048,
+		native_diagnostic_snapshot() == {"available":false},
 		valid_step({"text":"Discuss it","expect_no_intent":true}),
 		not valid_step({"text":"Discuss it","expect_no_intent":1}),
 		not valid_step({"text":"Discuss it","expect_no_intent":true,"expect_intent":{"kind":"furniture"}}),
