@@ -9,7 +9,8 @@ import math
 import re
 import threading
 from pathlib import Path
-from . import config
+from . import config, COMPANION_ROOT
+from .package_assets import package_manifests
 
 MOTION_ID = re.compile(r'^[a-z0-9][a-z0-9_-]{0,31}$')
 VRM_BONES = {
@@ -97,9 +98,10 @@ def validate_motion(motion_id, body):
 
 
 class MotionBank:
-    def __init__(self, bank_path=None, custom_dir=None):
+    def __init__(self, bank_path=None, custom_dir=None, root=COMPANION_ROOT):
         self.bank_path = Path(bank_path) if bank_path else config.motion_bank_path()
         self.custom_dir = Path(custom_dir) if custom_dir else config.user_data_dir() / 'motions'
+        self.root = Path(root)
         self._lock = threading.Lock()
 
     def builtin(self):
@@ -113,14 +115,20 @@ class MotionBank:
 
     def customs(self):
         motions = []
-        if not self.custom_dir.is_dir():
-            return motions
         for path in sorted(self.custom_dir.glob('*.json')):
             try:
                 motion = validate_motion(path.stem, json.loads(path.read_text(encoding='utf-8')))
             except (OSError, ValueError):
                 continue  # a corrupt saved file must not take the whole bank down
             motions.append(motion)
+        for package in package_manifests(self.root):
+            for body in package.get('procedural', []):
+                try:
+                    motion = validate_motion(body.get('name'), body)
+                except (AttributeError, TypeError, ValueError):
+                    continue
+                if not any(existing['name'] == motion['name'] for existing in motions):
+                    motions.append(motion)
         return motions
 
     def bank(self):

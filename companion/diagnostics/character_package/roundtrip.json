@@ -1,0 +1,511 @@
+{
+  "character_id": "cheval-grand",
+  "avatar_available": true,
+  "voice_available": true,
+  "avatar_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+  "reference_sha256": "80188613efb6858223d3a110ee85f6a18977d7a244612bedf13166fcd3d58673",
+  "motion_catalog": {
+    "motions": [
+      {
+        "name": "uma_home_idle",
+        "kind": "vrma",
+        "duration": 2.566667,
+        "asset_url": "/motion-assets/uma_home_idle",
+        "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": true,
+        "ambient": true,
+        "contact_mode": "foot",
+        "description": "Authored quiet standing base with contact IK"
+      },
+      {
+        "name": "uma_cheval_idle_action",
+        "kind": "vrma",
+        "duration": 3.733334,
+        "asset_url": "/motion-assets/uma_cheval_idle_action",
+        "sha256": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Authored character posture action or style"
+      },
+      {
+        "name": "uma_walk",
+        "kind": "vrma",
+        "duration": 1.3,
+        "asset_url": "/motion-assets/uma_walk",
+        "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+        "locomotion": true,
+        "locomotion_priority": 50,
+        "locomotion_preserve_hips": true,
+        "loop": true,
+        "description": "Authored upright walking with original quaternion curves and bounded hip sway"
+      },
+      {
+        "name": "uma_eishin_idle_action",
+        "kind": "vrma",
+        "duration": 4.166667,
+        "asset_url": "/motion-assets/uma_eishin_idle_action",
+        "sha256": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Authored character posture action or style"
+      },
+      {
+        "name": "hachimi_peek",
+        "kind": "vrma",
+        "duration": 4.1,
+        "asset_url": "/motion-assets/hachimi_peek",
+        "sha256": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Curious left/right peek with an amused final lift; no face morphs or airborne root motion."
+      },
+      {
+        "name": "playful_shrug",
+        "kind": "vrma",
+        "duration": 3.0,
+        "asset_url": "/motion-assets/playful_shrug",
+        "sha256": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Small symmetrical shrug with a delayed head tilt; reusable for any humanoid profile."
+      },
+      {
+        "name": "playful_strut",
+        "kind": "vrma",
+        "duration": 1.2999999523162842,
+        "asset_url": "/motion-assets/playful_strut",
+        "sha256": "11a0e7a35e78f4161961f9e619cc99fafa3efec531a2a965e62bda62d0a65376",
+        "locomotion": true,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": true,
+        "locomotion_style": {
+          "contact_blend_phase": 0.04,
+          "contacts": {
+            "left": [
+              0.31,
+              0.59
+            ],
+            "right": [
+              0.81,
+              0.09
+            ]
+          },
+          "cycle_stride_leg_lengths": 1.539550751,
+          "hip_translation_limit_leg_lengths": 0.15,
+          "preserve_source_hip_height": true,
+          "version": 1
+        },
+        "loop": true,
+        "ambient": false,
+        "description": "Authored broad-stride parade walk with large arm swings; choose for a finite supported move."
+      },
+      {
+        "name": "mambo_goofy_walk",
+        "kind": "vrma",
+        "duration": 4.0333333015441895,
+        "asset_url": "/motion-assets/mambo_goofy_walk",
+        "sha256": "a4dfaca13bba107b72569fdad0beda851f92018dfce692377514664cc4b38e20",
+        "locomotion": true,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": true,
+        "locomotion_style": {
+          "contact_blend_phase": 0.025,
+          "contacts": {
+            "left": [
+              [
+                0.37,
+                0.52
+              ],
+              [
+                0.88,
+                0.01
+              ]
+            ],
+            "right": [
+              [
+                0.06,
+                0.3
+              ],
+              [
+                0.645,
+                0.835
+              ]
+            ]
+          },
+          "cycle_stride_leg_lengths": 4.165960726,
+          "hip_translation_limit_leg_lengths": 0.25,
+          "preserve_source_hip_height": true,
+          "version": 1
+        },
+        "loop": true,
+        "ambient": false,
+        "description": "Authored goofy high-knee strut with deliberate head and hip rocking; two gait cycles per full source loop."
+      },
+      {
+        "name": "mambo_sway",
+        "kind": "vrma",
+        "duration": 4.2,
+        "asset_url": "/motion-assets/mambo_sway",
+        "sha256": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Two unhurried, offbeat upper-body sways; legs and support remain independently owned."
+      },
+      {
+        "name": "uma_rice_idle_action",
+        "kind": "vrma",
+        "duration": 4.333334,
+        "asset_url": "/motion-assets/uma_rice_idle_action",
+        "sha256": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Authored character posture action or style"
+      }
+    ]
+  },
+  "persona_prompt_characters": 2696,
+  "tts_weights_and_assets_package": {
+    "format": "mate.character",
+    "version": 1,
+    "character_id": "cheval-grand",
+    "name": "シュヴァルグラン",
+    "sha256": "a1216b99c2ab059eb20b929fbce8aa13064ad9b38cbcd0c3cf1fe0bffc0d3fc3",
+    "bytes": 224274170,
+    "files": 9,
+    "motions": [
+      "uma_home_idle",
+      "uma_cheval_idle_action",
+      "uma_walk"
+    ],
+    "avatar_variants": [],
+    "abilities": [],
+    "media_validation": "performed on import; inspection verifies inventory and declarations",
+    "requirements": {
+      "dialogue": {
+        "audio_input": true,
+        "external": true,
+        "id": "qwen2.5-omni-thinker-or-compatible-provider",
+        "speech_output": false
+      },
+      "engine": {
+        "character_package_version": 1,
+        "id": "mate-companion"
+      },
+      "tts": {
+        "external": true,
+        "id": "gpt-sovits-v2-uma-aio",
+        "other_dependencies": [
+          "GPT-SoVITS v2 runtime",
+          "chinese-hubert-base",
+          "chinese-roberta-wwm-ext-large"
+        ],
+        "reference_language": "ja",
+        "source": "https://huggingface.co/UmaDiffusion/uma-voice-gpt-sovits-v2",
+        "text_language": "ja",
+        "weights": [
+          {
+            "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+            "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+          },
+          {
+            "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+            "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+          }
+        ]
+      }
+    },
+    "runtime_checked": true,
+    "missing_or_mismatched_tts_weights": [],
+    "runtime_health_checked": false,
+    "redistribution": "private-use-unverified",
+    "provenance": [
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/avatar.vrm",
+        "role": "avatar",
+        "source": "https://umamusume.jp/character/chevalgrand/"
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/reference.wav",
+        "role": "voice-reference",
+        "source": "https://umamusume.jp/character/chevalgrand/"
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/motions/uma_home_idle.vrma",
+        "role": "motion",
+        "source": {
+          "ambient": true,
+          "contact_mode": "foot",
+          "description": "Authored quiet standing base with contact IK",
+          "duration": 2.566667,
+          "kind": "vrma",
+          "license": "local-user-assets-not-redistributable",
+          "loop": true,
+          "name": "uma_home_idle",
+          "path": "assets/motions/uma_home_idle.vrma",
+          "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+          "source": "local UMA extraction",
+          "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+        }
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/motions/uma_cheval_idle_action.vrma",
+        "role": "motion",
+        "source": {
+          "ambient": false,
+          "contact_mode": "foot",
+          "description": "Authored character posture action or style",
+          "duration": 3.733334,
+          "kind": "vrma",
+          "license": "local-user-assets-not-redistributable",
+          "loop": false,
+          "name": "uma_cheval_idle_action",
+          "path": "assets/motions/uma_cheval_idle_action.vrma",
+          "sha256": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+          "source": "local UMA extraction",
+          "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+        }
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/motions/uma_walk.vrma",
+        "role": "motion",
+        "source": {
+          "conversion_manifest": "assets/research/walking-candidates/uma_homewalk_direct.bake.json",
+          "description": "Authored upright walking with original quaternion curves and bounded hip sway",
+          "duration": 1.3,
+          "kind": "vrma",
+          "license": "local-user-assets-not-redistributable",
+          "locomotion": true,
+          "locomotion_preserve_hips": true,
+          "locomotion_priority": 50,
+          "loop": true,
+          "name": "uma_walk",
+          "path": "assets/motions/uma_walk.vrma",
+          "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+          "source": "local UMA extraction",
+          "source_clip": "anm_eve_type00_homewalk01_loop",
+          "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+        }
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "runtime/uma-AIO-GPT-v2-e100.ckpt",
+        "role": "runtime-weight",
+        "source": "UmaDiffusion/uma-voice-gpt-sovits-v2"
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "runtime/uma-AIO-SoViTS-v2_e20_s8300.pth",
+        "role": "runtime-weight",
+        "source": "UmaDiffusion/uma-voice-gpt-sovits-v2"
+      }
+    ],
+    "profile_fields": [
+      "ambient_loop",
+      "assets",
+      "behavior_style",
+      "canonical_facts",
+      "examples",
+      "examples_note",
+      "id",
+      "idle_actions",
+      "job_ack",
+      "job_done",
+      "job_failed",
+      "motion_style",
+      "name",
+      "roleplay_guidance",
+      "source",
+      "user_role"
+    ],
+    "extensions": {}
+  },
+  "small_package": {
+    "format": "mate.character",
+    "version": 1,
+    "character_id": "cheval-grand",
+    "name": "シュヴァルグラン",
+    "sha256": "5e34c8c2db857e83845323f5849c2c93c1cc852ae0f91cb1423da86c95a473ad",
+    "bytes": 2389957,
+    "files": 7,
+    "motions": [
+      "uma_home_idle",
+      "uma_cheval_idle_action",
+      "uma_walk"
+    ],
+    "avatar_variants": [],
+    "abilities": [],
+    "media_validation": "performed on import; inspection verifies inventory and declarations",
+    "requirements": {
+      "dialogue": {
+        "audio_input": true,
+        "external": true,
+        "id": "qwen2.5-omni-thinker-or-compatible-provider",
+        "speech_output": false
+      },
+      "engine": {
+        "character_package_version": 1,
+        "id": "mate-companion"
+      },
+      "tts": {
+        "external": true,
+        "id": "gpt-sovits-v2-uma-aio",
+        "other_dependencies": [
+          "GPT-SoVITS v2 runtime",
+          "chinese-hubert-base",
+          "chinese-roberta-wwm-ext-large"
+        ],
+        "reference_language": "ja",
+        "source": "https://huggingface.co/UmaDiffusion/uma-voice-gpt-sovits-v2",
+        "text_language": "ja",
+        "weights": [
+          {
+            "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+            "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+          },
+          {
+            "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+            "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+          }
+        ]
+      }
+    },
+    "runtime_checked": false,
+    "missing_or_mismatched_tts_weights": [],
+    "runtime_health_checked": false,
+    "redistribution": "private-use-unverified",
+    "provenance": [
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/avatar.vrm",
+        "role": "avatar",
+        "source": "https://umamusume.jp/character/chevalgrand/"
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/reference.wav",
+        "role": "voice-reference",
+        "source": "https://umamusume.jp/character/chevalgrand/"
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/motions/uma_home_idle.vrma",
+        "role": "motion",
+        "source": {
+          "ambient": true,
+          "contact_mode": "foot",
+          "description": "Authored quiet standing base with contact IK",
+          "duration": 2.566667,
+          "kind": "vrma",
+          "license": "local-user-assets-not-redistributable",
+          "loop": true,
+          "name": "uma_home_idle",
+          "path": "assets/motions/uma_home_idle.vrma",
+          "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+          "source": "local UMA extraction",
+          "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+        }
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/motions/uma_cheval_idle_action.vrma",
+        "role": "motion",
+        "source": {
+          "ambient": false,
+          "contact_mode": "foot",
+          "description": "Authored character posture action or style",
+          "duration": 3.733334,
+          "kind": "vrma",
+          "license": "local-user-assets-not-redistributable",
+          "loop": false,
+          "name": "uma_cheval_idle_action",
+          "path": "assets/motions/uma_cheval_idle_action.vrma",
+          "sha256": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+          "source": "local UMA extraction",
+          "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+        }
+      },
+      {
+        "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+        "path": "payload/motions/uma_walk.vrma",
+        "role": "motion",
+        "source": {
+          "conversion_manifest": "assets/research/walking-candidates/uma_homewalk_direct.bake.json",
+          "description": "Authored upright walking with original quaternion curves and bounded hip sway",
+          "duration": 1.3,
+          "kind": "vrma",
+          "license": "local-user-assets-not-redistributable",
+          "locomotion": true,
+          "locomotion_preserve_hips": true,
+          "locomotion_priority": 50,
+          "loop": true,
+          "name": "uma_walk",
+          "path": "assets/motions/uma_walk.vrma",
+          "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+          "source": "local UMA extraction",
+          "source_clip": "anm_eve_type00_homewalk01_loop",
+          "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+        }
+      }
+    ],
+    "profile_fields": [
+      "ambient_loop",
+      "assets",
+      "behavior_style",
+      "canonical_facts",
+      "examples",
+      "examples_note",
+      "id",
+      "idle_actions",
+      "job_ack",
+      "job_done",
+      "job_failed",
+      "motion_style",
+      "name",
+      "roleplay_guidance",
+      "source",
+      "user_role"
+    ],
+    "extensions": {}
+  },
+  "reimport_same_package": {
+    "character_id": "cheval-grand",
+    "profile": "/tmp/mate-character-final-20260907/characters/cheval-grand.json",
+    "archive_sha256": "5e34c8c2db857e83845323f5849c2c93c1cc852ae0f91cb1423da86c95a473ad",
+    "registered": true,
+    "missing_tts_weights": [],
+    "restart_backend_required": true
+  },
+  "scope": "Private local asset archives; exact isolated engine loaders and shared TTS model hashes. No native/GPU session launched."
+}

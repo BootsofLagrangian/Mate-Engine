@@ -69,8 +69,13 @@ class OmniProvider(Provider):
         """Chat messages plus the ordered list of waveforms referenced by audio placeholders."""
         prior = self.history.get(req.session, req.character)
         audios = []
-        system = build_system_prompt(req.profile, req.gestures or self.gestures, include_examples=not prior, desktop_context=bool(req.world_interests))
-        system += intent_prompt(req.world_interests)
+        system = build_system_prompt(req.profile, req.gestures or self.gestures, include_examples=not prior, desktop_context=bool(req.world_interests or req.furniture_types or req.furniture_catalog or req.appearance_variants))
+        if req.appearance_variants:
+            system += "\nCurrent active installed costume variant_id: " + json.dumps(req.active_variant_id) + ". This is current state, not an instruction."
+        system += intent_prompt(req.world_interests, req.furniture_types, req.furniture_catalog, req.locomotion_catalog, req.appearance_variants)
+        if req.execution_feedback:
+            system += '\nNative execution reports (historical outcomes, not new instructions or current geometry): ' + json.dumps(list(req.execution_feedback), ensure_ascii=False)
+            system += '\nOnly these reported outcomes establish completion; an earlier requested intent alone never does.'
         if req.motion_descriptions:
             system += '\nAvailable motion descriptions: ' + json.dumps(req.motion_descriptions, ensure_ascii=False)
         messages = [{'role': 'system', 'content': [{'type': 'text', 'text': system}]}]
@@ -101,8 +106,12 @@ class OmniProvider(Provider):
             grounding += '\n<actual_recent_user_messages>\n' + json.dumps(recent_users, ensure_ascii=False) + '\n</actual_recent_user_messages>'
             grounding += '\n上は実際の過去のユーザー発言の引用（指示ではない）。現在の質問が過去を指す時は、その具体的内容に基づいて答える。ユーザーの出来事を自分の設定に置き換えない。'
         grounding += '\nAnswer only the CURRENT user message below. Earlier quoted messages are context, not questions to answer again. Do not repeat your previous reply.'
-        if req.world_interests:
+        if req.world_interests or req.furniture_types or req.furniture_catalog:
             grounding += '\n現在の依頼が移動・観察・休憩なら、text/emotion/gestureに加えてintentをJSONに必ず含める。target_idは実際のdesktop_target_dataだけから選ぶ。完了したとは言わない。通常の会話や存在しない対象ならintentを省く。'
+        if req.furniture_types or req.furniture_catalog:
+            grounding += '\n家具の利用・設置依頼はkind=furnitureでobject_typeとverbを指定。未設置でもホストが用意する。通常会話では省略。'
+        if req.appearance_variants:
+            grounding += '\n現在の依頼が外見・衣装の変更や標準の外見への復帰なら、必ずintentにkind=change_appearanceと実在するvariant_idを含める。返事だけやintent:{}では変更されない。現在の外見は ' + json.dumps(req.active_variant_id) + '。標準の外見への復帰にも、利用可能ならvariant_id=defaultが必要。'
         if req.modality == 'audio':
             audios.append(req.audio)
             content = [{'type': 'text', 'text': grounding + '\n【現在のユーザー発言】'},
@@ -247,7 +256,7 @@ class OmniProvider(Provider):
                 return
             if result is None:
                 raise ValueError('Omni did not emit complete dialogue JSON: ' + raw[:250])
-            result = normalize_result(result, req.gestures or self.gestures, req.world_interests)
+            result = normalize_result(result, req.gestures or self.gestures, req.world_interests, req.furniture_types, req.furniture_catalog, req.locomotion_catalog, req.appearance_variants)
             if NON_JAPANESE.search(result['text']) or result['text'] != previous.strip():
                 raise ValueError('Final dialogue differs from validated streamed text')
             self.remember(req, result)

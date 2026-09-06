@@ -12,6 +12,8 @@ from . import config
 from .intent import normalize_intent
 from .motions import MOTION_ID
 
+ENGINE_INSTRUCTIONS = Path(__file__).with_name('INSTRUCTIONS.md').read_text(encoding='utf-8')
+
 ID_PATTERN = re.compile(r'^[a-z0-9][a-z0-9-]{0,63}$')
 EMOTIONS = ('neutral', 'happy', 'sad', 'relaxed', 'surprised')
 DEFAULT_GESTURES = ('idle', 'nod', 'shake_head', 'shy', 'wave', 'think', 'bow', 'stretch')
@@ -62,6 +64,28 @@ class Profile:
         if not isinstance(assets, dict):
             raise ProfileError(f'Profile {self.id}: assets must be an object')
         self.assets = assets
+        variants = data.get('avatar_variants', [])
+        if not isinstance(variants, list) or len(variants) > 16:
+            raise ProfileError(f'Profile {self.id}: avatar_variants must contain at most 16 entries')
+        seen_variants = {'default'}
+        for variant in variants:
+            if not isinstance(variant, dict) or set(variant) - {'id', 'label', 'vrm', 'description', 'mood_tags'}:
+                raise ProfileError(f'Profile {self.id}: only avatar variant fields are supported; voice/motion overrides are unavailable')
+            variant_id, label, relative = variant.get('id'), variant.get('label'), variant.get('vrm')
+            if not valid_id(variant_id) or variant_id in seen_variants:
+                raise ProfileError(f'Profile {self.id}: duplicate, reserved or invalid avatar variant id')
+            if not isinstance(label, str) or not label.strip() or len(label) > 100:
+                raise ProfileError(f'Profile {self.id}: avatar variant needs a short label')
+            if (not isinstance(relative, str) or '\\' in relative or ':' in relative
+                    or not relative.lower().endswith('.vrm') or _resolve_inside(root, relative) is None):
+                raise ProfileError(f'Profile {self.id}: avatar variant VRM path must stay inside companion')
+            description, tags = variant.get('description', ''), variant.get('mood_tags', [])
+            if not isinstance(description, str) or len(description) > 1000:
+                raise ProfileError(f'Profile {self.id}: avatar variant description is too long')
+            if not isinstance(tags, list) or len(tags) > 16 or any(not isinstance(tag, str) or not tag or len(tag) > 64 for tag in tags):
+                raise ProfileError(f'Profile {self.id}: avatar mood_tags must contain short strings')
+            seen_variants.add(variant_id)
+        self.avatar_variants = [dict(v) for v in variants]
         if not isinstance(data.get('motion_style', {}), dict):
             raise ProfileError(f'Profile {self.id}: motion_style must be an object')
         if not isinstance(data.get('behavior_style', {}), dict):
@@ -73,6 +97,13 @@ class Profile:
         if not isinstance(idle_actions, list) or len(idle_actions) > 8 or any(
                 not isinstance(name, str) or not MOTION_ID.fullmatch(name) for name in idle_actions):
             raise ProfileError(f'Profile {self.id}: idle_actions must contain at most eight motion IDs')
+        package = data.get('package', {})
+        if not isinstance(package, dict):
+            raise ProfileError(f'Profile {self.id}: package must be an object')
+        for key in ('speaking_patterns', 'voice_patterns'):
+            values = package.get(key, [])
+            if not isinstance(values, list) or len(values) > 32 or any(not isinstance(v, str) or len(v) > 1000 for v in values):
+                raise ProfileError(f'Profile {self.id}: package.{key} must contain at most 32 short strings')
         self.ambient_loop = ambient_loop
         self.idle_actions = list(dict.fromkeys(idle_actions))
 
@@ -90,8 +121,44 @@ class Profile:
                 style[key] = value
         return style
 
-    def vrm_path(self):
-        return _resolve_inside(self.root, self.assets.get('vrm') or f'assets/{self.id}.vrm')
+    def vrm_path(self, variant_id=None):
+        if variant_id in (None, '', 'default'):
+            return _resolve_inside(self.root, self.assets.get('vrm') or f'assets/{self.id}.vrm')
+        variant = next((v for v in self.avatar_variants if v['id'] == variant_id), None)
+        return _resolve_inside(self.root, variant['vrm']) if variant else None
+
+    def avatar_variant_catalog(self):
+        entries = [{'id': 'default', 'label': 'Default', 'description': '', 'mood_tags': []}, *self.avatar_variants]
+        result = []
+        for variant in entries:
+            path = self.vrm_path(variant['id'])
+            result.append({key: variant.get(key, [] if key == 'mood_tags' else '')
+                           for key in ('id', 'label', 'description', 'mood_tags')} | {
+                'avatar_url': f'/characters/{self.id}/avatar' + ('' if variant['id'] == 'default' else f'?variant={variant["id"]}'),
+                'avatar_available': bool(path and path.is_file())})
+        return result
+
+    def appearance_ability(self, available_only=True):
+        """Derive a declarative LM action from validated variants; no editable second ID list."""
+        if not self.avatar_variants:
+            return None
+        variants = self.avatar_variant_catalog()
+        if available_only:
+            variants = [v for v in variants if v['avatar_available']]
+        if not variants:
+            return None
+        return {
+            'id': 'change_appearance', 'version': 1,
+            'description': 'Choose an installed appearance for this same character; mood tags describe suitable situations.',
+            'intent_schema': {
+                'type': 'object', 'additionalProperties': False,
+                'required': ['kind', 'variant_id'],
+                'properties': {'kind': {'const': 'change_appearance'},
+                               'variant_id': {'type': 'string', 'enum': [v['id'] for v in variants]}},
+            },
+            'variants': [{key: v[key] for key in ('id', 'label', 'description', 'mood_tags')} for v in variants],
+            'execution': 'native_avatar_reload',
+        }
 
     @property
     def behavior_style(self):
@@ -135,11 +202,14 @@ class Profile:
     def catalog_entry(self):
         reference = self.reference()
         vrm = self.vrm_path()
+        appearance_ability = self.appearance_ability()
         return {
             'id': self.id,
             'name': self.name,
             'avatar_url': f'/characters/{self.id}/avatar',
             'avatar_available': bool(vrm and vrm.is_file()),
+            'avatar_variants': self.avatar_variant_catalog(),
+            'abilities': [appearance_ability] if appearance_ability else [],
             'voice_available': reference is not None,
             'motion_style': self.motion_style,
             'behavior_style': self.behavior_style,
@@ -172,7 +242,7 @@ def build_system_prompt(profile, gestures=DEFAULT_GESTURES, include_examples=Tru
     """Generic persona prompt: identity facts, guidance, JSON contract and in-context examples."""
     data = profile.data
     user_role = data.get('user_role') or 'ユーザー'
-    lines = [
+    lines = [ENGINE_INSTRUCTIONS,
         f'You are {profile.name}. Stay in this character. Always speak Japanese, whatever language the {user_role} uses.',
         'Character facts below are ONLY about you. They are never facts about the human user, their birthday, schedule, preferences, or past experiences.',
         '【公式プロフィールの要約】', *[str(x) for x in data.get('canonical_facts', [])],
@@ -184,6 +254,10 @@ def build_system_prompt(profile, gestures=DEFAULT_GESTURES, include_examples=Tru
         'Optional JSON motion controls: intensity 0..1.5, speed 0.5..2, repeat integer 1..3. Omit unless useful.',
         'Keep the FIRST sentence short for immediate speech. Do not explain the JSON. Do not translate the input.',
     ]
+    package = data.get('package', {})
+    patterns = package.get('speaking_patterns', []) + package.get('voice_patterns', [])
+    if patterns:
+        lines.extend(['【キャラクターパッケージの発話スタイル】', *patterns])
     examples = [e for e in data.get('examples', []) if isinstance(e, dict) and 'user' in e and 'text' in e]
     if examples and include_examples:
         lines.append('<voice_style_examples>')
@@ -208,7 +282,7 @@ def user_instruction(profile, modality):
     return f'これは人間の{user_role}の発言です。{profile.name}として日本語で答えてください。返事は指定されたJSONだけ。'
 
 
-def normalize_result(obj, gestures=DEFAULT_GESTURES, interests=()):
+def normalize_result(obj, gestures=DEFAULT_GESTURES, interests=(), furniture_types=(), furniture_catalog=(), locomotion_catalog=(), appearance_variants=()):
     """Validate model output: dialogue text is mandatory, everything else is allow-listed."""
     if not isinstance(obj, dict):
         raise ValueError('Model output is not a JSON object')
@@ -224,7 +298,7 @@ def normalize_result(obj, gestures=DEFAULT_GESTURES, interests=()):
         value = obj.get(key)
         if isinstance(value, (int, float)) and not isinstance(value, bool) and low <= value <= high:
             result[key] = int(value) if key == 'repeat' else float(value)
-    intent = normalize_intent(obj.get('intent'), interests)
+    intent = normalize_intent(obj.get('intent'), interests, furniture_types, furniture_catalog, locomotion_catalog, appearance_variants)
     if intent is not None:
         result['intent'] = intent
     return result

@@ -1,0 +1,1 @@
+{"version":1,"captures":true,"steps":[{"text":"컴퓨터를 꺼내서 써 봐. 먼저 짧게 대답해 줘.","timeout_s":90,"expect_intent":{"kind":"furniture","object_type":"computer","verb":"use"}}]}

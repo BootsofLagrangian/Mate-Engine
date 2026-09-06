@@ -77,7 +77,7 @@ class Turn:
             event = dict(event)
             kind = event.get('type')
             if 'intent' in event:
-                intent = normalize_intent(event.pop('intent'), self.req.world_interests) if self.req.world_context_valid() else None
+                intent = normalize_intent(event.pop('intent'), self.req.world_interests, self.req.furniture_types, self.req.furniture_catalog, self.req.locomotion_catalog, self.req.appearance_variants) if self.req.world_context_valid() else None
                 if intent is not None and kind in ('action', 'done'):
                     event['intent'] = intent
             if kind in ('action', 'done') and event.get('gesture'):

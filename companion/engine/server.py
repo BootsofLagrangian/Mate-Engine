@@ -20,7 +20,8 @@ from .motion_assets import MotionAssets, available_motions
 from .profiles import load_profiles, valid_id
 from .providers import create_provider, ScriptedProvider
 from .turns import Turn, make_request, is_job_turn
-from .intent import validate_interests, WORLD_TTL_SECONDS
+from .furniture import validate_catalog
+from .intent import validate_interests, validate_furniture_types, validate_locomotion_catalog, WORLD_TTL_SECONDS
 
 log = logging.getLogger('engine.server')
 ID_RE = re.compile(r'^[A-Za-z0-9:_.-]{1,128}$')
@@ -91,11 +92,11 @@ def create_app(provider=None, history=None, profiles_dir=None, root=COMPANION_RO
         return {**profile.catalog_entry(), 'job_lines': {k: profile.job_line(k) for k in ('ack', 'done', 'failed')}}
 
     @app.get('/characters/{character_id}/avatar')
-    def avatar(character_id: str):
+    def avatar(character_id: str, variant: str | None = None):
         loaded = profiles()
         if not valid_id(character_id) or character_id not in loaded:
             raise HTTPException(404, 'Unknown character')
-        path = loaded[character_id].vrm_path()
+        path = loaded[character_id].vrm_path(variant)
         if not path or not path.is_file():
             raise HTTPException(404, 'Avatar file is not installed for this character')
         return FileResponse(path, media_type='model/gltf-binary', filename=f'{character_id}.vrm')
@@ -187,6 +188,13 @@ class Connection:
         self.job = None
         self.closed = False
         self.world_interests = ()
+        self.furniture_types = ()
+        self.furniture_catalog = ()
+        self.locomotion_catalog = ()
+        self.appearance_supported = False
+        self.active_variant_id = "default"
+        self.issued_intents = {}
+        self.execution_feedback = []
         self.world_revision = 0
         self.world_updated = None
 
@@ -277,8 +285,21 @@ class Connection:
             if event.pop('_turn_event', False) and event.get('type') != 'cancelled':
                 if not self.turn or event['turn_id'] != self.turn.turn_id or self.turn.outcome == 'cancelled':
                     continue
-                if 'intent' in event and not self.turn.req.world_context_valid():
+                issued = self.issued_intents.get(event['turn_id'] + ':intent')
+                if event.get('type') == 'done' and event.get('ok') and issued and issued['character'] == self.character:
+                    # Historical metadata for the action already delivered to this
+                    # native connection. Its execution may itself change the world
+                    # revision before TTS finishes. Never grant a new stale action.
+                    event['intent'] = dict(issued['intent'])
+                    event['intent_replay'] = True
+                elif 'intent' in event and not self.turn.req.world_context_valid():
                     event.pop('intent', None)
+            if event.get('type') in ('action', 'done') and 'intent' in event:
+                intent_id = event['turn_id'] + ':intent'
+                if intent_id not in self.issued_intents:
+                    self.issued_intents[intent_id] = {'character': self.character, 'at': time.monotonic(), 'intent': event['intent']}
+                    if len(self.issued_intents) > 16:
+                        self.issued_intents.pop(next(iter(self.issued_intents)))
             if event.get('type') == 'audio':
                 seconds = len(base64.b64decode(event['pcm'])) / (2 * event.get('sample_rate', 32000))
                 self.playback_until = max(time.monotonic(), self.playback_until) + seconds
@@ -290,7 +311,7 @@ class Connection:
     async def handle(self, message):
         kind = message.get('type')
         handler = {'chat': self.on_chat, 'audio': self.on_audio, 'cancel': self.on_cancel, 'job': self.on_job,
-                   'cancel_job': self.on_cancel_job, 'playback': self.on_playback, 'select_character': self.on_select_character, 'reset': self.on_reset, 'ping': self.on_ping, 'world_context': self.on_world_context}.get(kind)
+                   'cancel_job': self.on_cancel_job, 'playback': self.on_playback, 'select_character': self.on_select_character, 'reset': self.on_reset, 'ping': self.on_ping, 'world_context': self.on_world_context, 'intent_result': self.on_intent_result}.get(kind)
         if handler is None:
             await self.send({'type': 'error', 'message': f'unknown message type: {kind!r}'})
             return
@@ -323,6 +344,13 @@ class Connection:
     # ----- turns --------------------------------------------------------------
     def _clear_world(self):
         self.world_interests = ()
+        self.furniture_types = ()
+        self.furniture_catalog = ()
+        self.locomotion_catalog = ()
+        self.appearance_supported = False
+        self.active_variant_id = "default"
+        self.issued_intents = {}
+        self.execution_feedback = []
         self.world_updated = None
         self.world_revision += 1
 
@@ -336,16 +364,50 @@ class Connection:
             await self.send({'type': 'error', 'message': 'world_context character_id must match selected character'})
             return
         try:
-            interests = validate_interests(message.get('interests'))
+            if type(message.get('furniture_schema_version', 1)) is not int or message.get('furniture_schema_version', 1) != 1:
+                raise ValueError('unsupported furniture schema version')
+            furniture_types = validate_furniture_types(message.get('furniture_types', []))
+            furniture_catalog = validate_catalog(message.get('furniture_catalog', []))
+            locomotion_catalog = validate_locomotion_catalog(message.get('locomotion_catalog', []))
+            appearance_supported = message.get('appearance_supported', False)
+            if type(appearance_supported) is not bool:
+                raise ValueError('appearance_supported must be boolean')
+            active_variant_id = message.get('active_variant_id', 'default')
+            available_variants = {v['id'] for v in self.profiles[self.character].avatar_variant_catalog() if v['avatar_available']}
+            if not isinstance(active_variant_id, str) or (appearance_supported and active_variant_id not in available_variants) or (not appearance_supported and active_variant_id != 'default'):
+                raise ValueError('active_variant_id must identify an installed variant with native appearance support')
+            interests = validate_interests(message.get('interests'), {e['id'] for e in furniture_catalog} or set(furniture_types))
         except ValueError as exc:
             await self.send({'type': 'error', 'message': str(exc)})
             return
-        if interests != self.world_interests or self.world_updated is None or time.monotonic() - self.world_updated > WORLD_TTL_SECONDS:
+        if interests != self.world_interests or furniture_types != self.furniture_types or furniture_catalog != self.furniture_catalog or locomotion_catalog != self.locomotion_catalog or appearance_supported != self.appearance_supported or active_variant_id != self.active_variant_id or self.world_updated is None or time.monotonic() - self.world_updated > WORLD_TTL_SECONDS:
             self.world_revision += 1
         self.world_interests = interests
+        self.furniture_types = furniture_types
+        self.furniture_catalog = furniture_catalog
+        self.locomotion_catalog = locomotion_catalog
+        self.appearance_supported = appearance_supported
+        self.active_variant_id = active_variant_id
         self.world_updated = time.monotonic()
         await self.send({'type': 'world_context', 'character_id': self.character,
-                         'revision': self.world_revision, 'accepted': len(interests)})
+                         'revision': self.world_revision, 'accepted': len(interests), 'furniture_types': list(furniture_types)})
+
+    async def on_intent_result(self, message):
+        intent_id, outcome = message.get('intent_id'), message.get('outcome')
+        issued = self.issued_intents.get(intent_id) if isinstance(intent_id, str) else None
+        reason = message.get('reason', '')
+        if (set(message) - {'type', 'character_id', 'intent_id', 'outcome', 'reason'}
+                or message.get('character_id') != self.character or issued is None
+                or issued['character'] != self.character or time.monotonic() - issued['at'] > 120
+                or outcome not in ('completed', 'arrived', 'rejected', 'failed', 'cancelled', 'expired', 'interrupted')
+                or not isinstance(reason, str) or len(reason) > 64 or any(c not in 'abcdefghijklmnopqrstuvwxyz_' for c in reason)):
+            await self.send({'type': 'error', 'message': 'invalid or unissued intent result'})
+            return
+        if not issued.get('reported'):
+            issued['reported'] = True
+            self.execution_feedback.append({'intent_id': intent_id, 'intent': issued['intent'], 'outcome': outcome, 'reason': reason})
+            self.execution_feedback = self.execution_feedback[-8:]
+        await self.send({'type': 'intent_result', 'intent_id': intent_id, 'accepted': True})
 
     def foreground_active(self):
         return self.turn is not None and self.turn.foreground and not self.turn.finished.is_set() and not self.turn.cancelled.is_set()
@@ -357,6 +419,7 @@ class Connection:
         self.playback_until = 0.0
         motions = available_motions(self.state.motions, self.state.motion_assets)
         req.gestures = tuple(m['name'] for m in motions)
+        req.execution_feedback = tuple(self.execution_feedback)
         req.motion_descriptions = {m['name']: m['description'] for m in motions if m.get('description')}
         revision = self.world_revision
         req.world_context_valid = lambda: (not self.closed and self.character == req.character
@@ -364,6 +427,13 @@ class Connection:
             and time.monotonic() - self.world_updated <= WORLD_TTL_SECONDS)
         if req.world_context_valid() and not is_job_turn(req.turn_id):
             req.world_interests = self.world_interests
+            req.furniture_types = self.furniture_types
+            req.furniture_catalog = self.furniture_catalog
+            req.locomotion_catalog = self.locomotion_catalog
+            if self.appearance_supported:
+                req.active_variant_id = self.active_variant_id
+                req.appearance_variants = tuple({key: entry[key] for key in ('id', 'label', 'description', 'mood_tags')}
+                    for entry in req.profile.avatar_variant_catalog() if entry['avatar_available'])
         else:
             req.world_context_valid = lambda: False
         self.turn = Turn(req, provider, self.emit, self.state.root)

@@ -1,0 +1,52 @@
+{
+  "focused_tests": {
+    "passed": 47,
+    "failed": 0
+  },
+  "existing_regression_tests": {
+    "passed": 98,
+    "failed": 0
+  },
+  "source_sha256": {
+    "engine/character_package.py": "633587e9f8f305e0689973dc16b3a485dec55a748ed805b85d68686d93dd46b9",
+    "engine/package_assets.py": "184a74d0eae89def824171cc60fb6e47e85faf9d19151f366c9738795f11ed6c",
+    "engine/motion_assets.py": "78ac3b2d2ad453ccf25f086873e03fb0cfa04199c92870456d0af8bc4617c87e",
+    "engine/motions.py": "2c2ab15d63ad0c93a491a144b738284b3e5583f32b23992a6ea10c2e76f5bbd8",
+    "engine/profiles.py": "bcb8b49590a3ced4b9a7c961a39e3817cb16f3700e3e12ce34a7ce32f12f7f2d",
+    "diagnostics/character_package/test_package.py": "7226ea2cb920b3ce5b54ab722b78b051df3d63956bdbf3aa006a1dbffdb478a7",
+    "schemas/matecharacter-v1.schema.json": "77b028398054a4522b2486264535c091544258ddeb611c6fd04eb4b360ee3760",
+    "diagnostics/character_package/roundtrip_real.py": "cba021242b6b2e4d8a6a7754ef575c0d59892e052d0e4146d5465aba0f3e4f31"
+  },
+  "real_asset_evidence": "roundtrip.json",
+  "actual_characters_roundtripped": [
+    "cheval-grand",
+    "rice-shower",
+    "eishin-flash",
+    "mambo",
+    "hachimi"
+  ],
+  "actual_variant_assets_roundtripped": [
+    "mambo:wet",
+    "hachimi:wet"
+  ],
+  "appearance_ability_contract": {
+    "kind": "change_appearance",
+    "variant_id": "<declared-profile-variant>"
+  },
+  "real_final_audit": {
+    "passed": true,
+    "source_profiles_stable": true,
+    "source_motion_manifest_stable": true,
+    "exact_motion_metadata_match": true,
+    "package_and_live_appearance_ability_match": true,
+    "installation_root": "/tmp/mate-character-final-20260907",
+    "sample_record_sha256": "3691b81c3db86cdceb71fcac2f74269f09a3a23bd3c2c2e5ff046ff02e5143cd",
+    "roundtrip_record_sha256": "03412c1cbd782232ed284c3442cba7b53eaeb0dd89fdc4098e0b498d06a02c45",
+    "scope": "Current production authored mini VRMs; experimental garment/hand-proxy tuning is not packaged."
+  },
+  "final_combined_tests": {
+    "passed": 145,
+    "failed": 0,
+    "report_sha256": "3e3e86c235f3a71b18923fe3708c263c81fca02423ed0bf900d00e04e2804f83"
+  }
+}

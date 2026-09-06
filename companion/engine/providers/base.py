@@ -31,6 +31,12 @@ class TurnRequest:
         self.pending_history = None
         self.defer_history = False
         self.world_interests = ()
+        self.furniture_types = ()
+        self.furniture_catalog = ()
+        self.locomotion_catalog = ()
+        self.appearance_variants = ()
+        self.active_variant_id = "default"
+        self.execution_feedback = ()
         self.world_context_valid = lambda: False
 
     @property

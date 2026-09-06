@@ -145,3 +145,54 @@ def test_invalid_locomotion_metadata_not_advertised_or_served(client, companion_
     install(companion_root, **overrides)
     assert client.get('/motion-assets').json()['motions'] == []
     assert client.get('/motion-assets/walk').status_code == 404
+
+
+def test_seated_transition_and_authored_gait_metadata(companion_root):
+    style = {'version': 1, 'cycle_stride_leg_lengths': 1.8,
+             'contacts': {'left': [0.05, 0.45], 'right': [0.55, 0.95]},
+             'hip_translation_limit_leg_lengths': 0.2}
+    install(companion_root, locomotion=True, locomotion_style=style, seated_transition='enter')
+    entry = MotionAssets(companion_root).catalog()['motions'][0]
+    assert entry['locomotion_style'] == style
+    assert entry['seated_transition'] == 'enter'
+
+
+@pytest.mark.parametrize('overrides', [
+    {'seated_transition': 'sit'}, {'seated_transition': 1},
+    {'locomotion_style': []},
+    {'locomotion': True, 'locomotion_style': {'version': 1}},
+    {'locomotion': True, 'locomotion_style': {'version': 1, 'cycle_stride_leg_lengths': 1.8,
+      'contacts': {'left': [[0.0, 0.5], [0.4, 0.7]], 'right': [0.5, 0.9]}}},
+])
+def test_invalid_seat_and_gait_metadata_is_not_published(companion_root, overrides):
+    install(companion_root, **overrides)
+    assert MotionAssets(companion_root).catalog()['motions'] == []
+
+
+def test_context_phases_remain_catalogued_but_not_standalone_gestures(companion_root):
+    from engine.motion_assets import available_motions
+    class EmptyBank:
+        def bank(self): return {'motions': []}
+    assets = MotionAssets(companion_root)
+    for overrides in [
+        {'seated_transition': 'enter'},
+        {'locomotion': True, 'locomotion_style': {'version': 1, 'cycle_stride_leg_lengths': 1.8,
+          'contacts': {'left': [0.05, 0.45], 'right': [0.55, 0.95]}}},
+    ]:
+        install(companion_root, **overrides)
+        assert len(assets.catalog()['motions']) == 1
+        assert assets.resolve('walk') is not None
+        assert available_motions(EmptyBank(), assets) == []
+    install(companion_root)
+    assert [x['name'] for x in available_motions(EmptyBank(), assets)] == ['walk']
+
+
+def test_internal_seated_idle_is_not_a_standalone_gesture(companion_root):
+    from engine.motion_assets import available_motions
+    class EmptyBank:
+        def bank(self): return {'motions': []}
+    install(companion_root, name='sit_idle')
+    assets = MotionAssets(companion_root)
+    assert assets.catalog()['motions'][0]['name'] == 'sit_idle'
+    assert assets.resolve('sit_idle') is not None
+    assert available_motions(EmptyBank(), assets) == []

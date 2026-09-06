@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mate:character-package:1",
+  "title": "Mate character package manifest v1",
+  "description": "manifest.json inside a .matecharacter ZIP. The importer additionally validates hashes, media, runtime allowlist and archive containment.",
+  "type": "object",
+  "required": [
+    "format",
+    "version",
+    "character_id",
+    "profile",
+    "motions",
+    "files",
+    "requirements",
+    "provenance",
+    "redistribution",
+    "extensions"
+  ],
+  "properties": {
+    "format": {
+      "const": "mate.character"
+    },
+    "version": {
+      "const": 1
+    },
+    "character_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+    },
+    "profile": {
+      "const": "profile.json"
+    },
+    "motions": {
+      "const": "motions.json"
+    },
+    "files": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 511,
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "bytes",
+          "sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483648
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "required": [
+        "engine",
+        "dialogue",
+        "tts"
+      ],
+      "description": "v1 supports the exact pinned engine/UMA GPT-SoVITS contract returned by engine.character_package.requirements; no arbitrary model/plugin activation."
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "role",
+          "source",
+          "license"
+        ]
+      }
+    },
+    "redistribution": {
+      "type": "string"
+    },
+    "extensions": {
+      "$ref": "#/$defs/character_extensions"
+    },
+    "abilities": {
+      "type": "array",
+      "maxItems": 1,
+      "description": "Derived descriptor, never an authored independent allowlist. Optional for older v1 files; importer reconstructs from validated avatar_variants.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "description",
+          "intent_schema",
+          "variants",
+          "execution"
+        ],
+        "properties": {
+          "id": {
+            "const": "change_appearance"
+          },
+          "version": {
+            "const": 1
+          },
+          "execution": {
+            "const": "native_avatar_reload"
+          },
+          "intent_schema": {
+            "type": "object"
+          },
+          "variants": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "patterns": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      }
+    },
+    "character_extensions": {
+      "type": "object",
+      "description": "Mirrors profile.package; extra namespaced JSON data is preserved but does not execute code.",
+      "properties": {
+        "speaking_patterns": {
+          "$ref": "#/$defs/patterns"
+        },
+        "voice_patterns": {
+          "$ref": "#/$defs/patterns"
+        },
+        "motion_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,31}$"
+          }
+        }
+      }
+    },
+    "avatar_variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "vrm"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,63}$",
+          "not": {
+            "const": "default"
+          }
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "vrm": {
+          "type": "string",
+          "description": "Package-relative payload/variants/<id>.vrm; engine import rewrites to contained immutable asset path."
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "mood_tags": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "description": "Existing generic character profile plus optional additive v1 avatar variants. Persona/voice remain character-level.",
+      "properties": {
+        "avatar_variants": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/avatar_variant"
+          }
+        },
+        "package": {
+          "$ref": "#/$defs/character_extensions"
+        }
+      }
+    }
+  }
+}

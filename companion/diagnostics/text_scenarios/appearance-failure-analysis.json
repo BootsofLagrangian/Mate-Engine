@@ -1,0 +1,203 @@
+{
+  "source_report_sha256": "c58aacd921b3f8f3ffd255b0f2360536cf62beabc4672da086ca4966462c35ef",
+  "source_report": "companion/logs/windows-appearance-skills-external-mambo/report.json",
+  "original_checks": 30,
+  "original_failures": 8,
+  "selected_events": [
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 966,
+      "revision": 3.0,
+      "type": "world_context"
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 1348,
+      "revision": 3.0,
+      "type": "world_context"
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 1397,
+      "revision": 4.0,
+      "type": "world_context"
+    },
+    {
+      "ms": 2284,
+      "path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/mambo.vrm",
+      "sha256": "01f0e5b3165fc5d525f7e5bb73512bce0d8ea63a9b8fae31926655aba99017cd",
+      "type": "native_avatar_path",
+      "variant": "default"
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 3002,
+      "revision": 4.0,
+      "type": "world_context"
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 3002,
+      "revision": 4.0,
+      "type": "world_context"
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 3051,
+      "revision": 4.0,
+      "type": "world_context"
+    },
+    {
+      "character": "mambo",
+      "elapsed_ms": 2921.1,
+      "emotion": "happy",
+      "gesture": "mambo_sway",
+      "intensity": 0.9,
+      "intent": {
+        "kind": "change_appearance",
+        "variant_id": "wet"
+      },
+      "ms": 5971,
+      "speed": 0.91,
+      "turn_id": "t1-4503",
+      "type": "action"
+    },
+    {
+      "ms": 6641,
+      "path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/variants/fa63acf8adad436b0e560ff71de6a5b8e05cb76517b62d94af69df1ac9a04bbc.vrm",
+      "sha256": "56d042e9d1c60b8b9a6bec36c7192c29473cb66c335e2a806a4c82b123e36104",
+      "type": "native_avatar_path",
+      "variant": "wet"
+    },
+    {
+      "accepted": true,
+      "intent_id": "t1-4503:intent",
+      "ms": 6675,
+      "type": "intent_result"
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 6675,
+      "revision": 5.0,
+      "type": "world_context"
+    },
+    {
+      "audio_url": null,
+      "character": "mambo",
+      "elapsed_ms": 6064.6,
+      "emotion": "happy",
+      "gesture": "mambo_sway",
+      "intensity": 0.9,
+      "ms": 9125,
+      "ok": true,
+      "speed": 0.91,
+      "text": "湿った外見にしますね。",
+      "timings": {
+        "first_audio_ms": 5635.2,
+        "first_text_ms": 1400.7,
+        "first_token_ms": 1400.1,
+        "llm_done_ms": 2921.1,
+        "total_ms": 6064.5
+      },
+      "turn_id": "t1-4503",
+      "type": "done",
+      "voice_error": null
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 10807,
+      "revision": 5.0,
+      "type": "world_context"
+    },
+    {
+      "accepted": 0.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 10807,
+      "revision": 5.0,
+      "type": "world_context"
+    },
+    {
+      "character": "mambo",
+      "elapsed_ms": 1293.3,
+      "emotion": "neutral",
+      "gesture": "idle",
+      "intensity": 0.9,
+      "ms": 12107,
+      "speed": 0.91,
+      "turn_id": "t2-12307",
+      "type": "action"
+    },
+    {
+      "audio_url": null,
+      "character": "mambo",
+      "elapsed_ms": 1776.2,
+      "emotion": "neutral",
+      "gesture": "idle",
+      "intensity": 0.9,
+      "ms": 12590,
+      "ok": true,
+      "speed": 0.91,
+      "text": "元の外見に戻しますね。",
+      "timings": {
+        "first_audio_ms": 1424.9,
+        "first_text_ms": 367.5,
+        "first_token_ms": 367.2,
+        "llm_done_ms": 1293.3,
+        "total_ms": 1776.2
+      },
+      "turn_id": "t2-12307",
+      "type": "done",
+      "voice_error": null
+    },
+    {
+      "accepted": 2.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 23172,
+      "revision": 6.0,
+      "type": "world_context"
+    },
+    {
+      "accepted": 2.0,
+      "character_id": "mambo",
+      "furniture_types": [],
+      "ms": 43189,
+      "revision": 6.0,
+      "type": "world_context"
+    }
+  ],
+  "provider_last": {
+    "turn_id": "t2-12307",
+    "modality": "text",
+    "preprocess_ms": 7.7,
+    "input_tokens": 3320,
+    "raw": "{\"text\":\"元の外見に戻しますね。\", \"emotion\":\"neutral\", \"gesture\":\"idle\", \"intent\":{}}",
+    "generated_tokens": 24
+  },
+  "provider_last_exact_turn_match": true,
+  "diagnosis": [
+    "Wet action delivered5971ms; actual requested VRM loaded6641ms, terminal acknowledged6675ms; context revision4->5 before done9125ms stripped already-issued metadata.",
+    "Return attempt action12107ms and done12590ms both lacked intent. Captured exact-turn raw output contains intent:{}; no intervening world update. This is model grounding/skill omission, not stale-parser removal."
+  ],
+  "planned_change": [
+    "Replay only exact already-delivered same-turn intent in successful done, marked intent_replay; reset/cancel/supersession remain authoritative.",
+    "Separate movement target restriction from appearance capabilities, shared character-agnostic instructions and grounded current installed-variant examples."
+  ]
+}

@@ -1,0 +1,2161 @@
+{
+  "records": [
+    {
+      "id": "cheval-grand",
+      "source_profile_sha256": "9ee6d3c405cd70acda9e3d57c2fb17d0fa699a701b58f467c630ecd30731c8c1",
+      "source_stable_during_export": true,
+      "archive_path": "output/cheval-grand.matecharacter",
+      "archive_sha256": "5e34c8c2db857e83845323f5849c2c93c1cc852ae0f91cb1423da86c95a473ad",
+      "archive_bytes": 2389957,
+      "inventory": {
+        "format": "mate.character",
+        "version": 1,
+        "character_id": "cheval-grand",
+        "name": "シュヴァルグラン",
+        "sha256": "5e34c8c2db857e83845323f5849c2c93c1cc852ae0f91cb1423da86c95a473ad",
+        "bytes": 2389957,
+        "files": 7,
+        "motions": [
+          "uma_home_idle",
+          "uma_cheval_idle_action",
+          "uma_walk"
+        ],
+        "avatar_variants": [],
+        "abilities": [],
+        "media_validation": "performed on import; inspection verifies inventory and declarations",
+        "requirements": {
+          "dialogue": {
+            "audio_input": true,
+            "external": true,
+            "id": "qwen2.5-omni-thinker-or-compatible-provider",
+            "speech_output": false
+          },
+          "engine": {
+            "character_package_version": 1,
+            "id": "mate-companion"
+          },
+          "tts": {
+            "external": true,
+            "id": "gpt-sovits-v2-uma-aio",
+            "other_dependencies": [
+              "GPT-SoVITS v2 runtime",
+              "chinese-hubert-base",
+              "chinese-roberta-wwm-ext-large"
+            ],
+            "reference_language": "ja",
+            "source": "https://huggingface.co/UmaDiffusion/uma-voice-gpt-sovits-v2",
+            "text_language": "ja",
+            "weights": [
+              {
+                "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+                "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+              },
+              {
+                "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+                "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+              }
+            ]
+          }
+        },
+        "runtime_checked": true,
+        "missing_or_mismatched_tts_weights": [],
+        "runtime_health_checked": false,
+        "redistribution": "private-use-unverified",
+        "provenance": [
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/avatar.vrm",
+            "role": "avatar",
+            "source": "https://umamusume.jp/character/chevalgrand/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/reference.wav",
+            "role": "voice-reference",
+            "source": "https://umamusume.jp/character/chevalgrand/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_home_idle.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": true,
+              "contact_mode": "foot",
+              "description": "Authored quiet standing base with contact IK",
+              "duration": 2.566667,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": true,
+              "name": "uma_home_idle",
+              "path": "assets/motions/uma_home_idle.vrma",
+              "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_cheval_idle_action.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "contact_mode": "foot",
+              "description": "Authored character posture action or style",
+              "duration": 3.733334,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": false,
+              "name": "uma_cheval_idle_action",
+              "path": "assets/motions/uma_cheval_idle_action.vrma",
+              "sha256": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_walk.vrma",
+            "role": "motion",
+            "source": {
+              "conversion_manifest": "assets/research/walking-candidates/uma_homewalk_direct.bake.json",
+              "description": "Authored upright walking with original quaternion curves and bounded hip sway",
+              "duration": 1.3,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 50,
+              "loop": true,
+              "name": "uma_walk",
+              "path": "assets/motions/uma_walk.vrma",
+              "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_homewalk01_loop",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          }
+        ],
+        "profile_fields": [
+          "ambient_loop",
+          "assets",
+          "behavior_style",
+          "canonical_facts",
+          "examples",
+          "examples_note",
+          "id",
+          "idle_actions",
+          "job_ack",
+          "job_done",
+          "job_failed",
+          "motion_style",
+          "name",
+          "roleplay_guidance",
+          "source",
+          "user_role"
+        ],
+        "extensions": {}
+      },
+      "installed": {
+        "character_id": "cheval-grand",
+        "profile": "/tmp/mate-character-final-20260907/characters/cheval-grand.json",
+        "archive_sha256": "5e34c8c2db857e83845323f5849c2c93c1cc852ae0f91cb1423da86c95a473ad",
+        "registered": true,
+        "missing_tts_weights": [],
+        "restart_backend_required": true
+      },
+      "loader_catalog": {
+        "id": "cheval-grand",
+        "name": "シュヴァルグラン",
+        "avatar_url": "/characters/cheval-grand/avatar",
+        "avatar_available": true,
+        "avatar_variants": [
+          {
+            "id": "default",
+            "label": "Default",
+            "description": "",
+            "mood_tags": [],
+            "avatar_url": "/characters/cheval-grand/avatar",
+            "avatar_available": true
+          }
+        ],
+        "abilities": [],
+        "voice_available": true,
+        "motion_style": {
+          "amplitude": 0.8,
+          "tempo": 0.92,
+          "idle_interval": 14
+        },
+        "behavior_style": {
+          "idle_interval_s": 14.0,
+          "gaze_hold_s": 2.2,
+          "response_delay_s": 0.35,
+          "curiosity": 0.4,
+          "posture_strength": 0.45
+        },
+        "ambient_loop": "uma_home_idle",
+        "idle_actions": [
+          "uma_cheval_idle_action"
+        ],
+        "source": "https://umamusume.jp/character/chevalgrand/",
+        "examples": 16
+      },
+      "avatar_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+      "reference_audio_sha256": "80188613efb6858223d3a110ee85f6a18977d7a244612bedf13166fcd3d58673",
+      "reference_seconds": 5.2,
+      "profile_motion_ids": [
+        "uma_home_idle",
+        "uma_cheval_idle_action"
+      ],
+      "variant_assets": [],
+      "voice_style_in_system_prompt": true,
+      "motion_metadata_exact_match": true,
+      "appearance_ability_exact_match": true
+    },
+    {
+      "id": "rice-shower",
+      "source_profile_sha256": "4bfd08507f8ee48d990076ae178aab818cb513a9052db535c875d5806b62acc5",
+      "source_stable_during_export": true,
+      "archive_path": "output/rice-shower.matecharacter",
+      "archive_sha256": "74a41b46873d057d94873c6f74db4a3f2be171872901e5d4c07646fb248f9872",
+      "archive_bytes": 7138505,
+      "inventory": {
+        "format": "mate.character",
+        "version": 1,
+        "character_id": "rice-shower",
+        "name": "ライスシャワー",
+        "sha256": "74a41b46873d057d94873c6f74db4a3f2be171872901e5d4c07646fb248f9872",
+        "bytes": 7138505,
+        "files": 7,
+        "motions": [
+          "uma_home_idle",
+          "uma_rice_idle_action",
+          "uma_walk"
+        ],
+        "avatar_variants": [],
+        "abilities": [],
+        "media_validation": "performed on import; inspection verifies inventory and declarations",
+        "requirements": {
+          "dialogue": {
+            "audio_input": true,
+            "external": true,
+            "id": "qwen2.5-omni-thinker-or-compatible-provider",
+            "speech_output": false
+          },
+          "engine": {
+            "character_package_version": 1,
+            "id": "mate-companion"
+          },
+          "tts": {
+            "external": true,
+            "id": "gpt-sovits-v2-uma-aio",
+            "other_dependencies": [
+              "GPT-SoVITS v2 runtime",
+              "chinese-hubert-base",
+              "chinese-roberta-wwm-ext-large"
+            ],
+            "reference_language": "ja",
+            "source": "https://huggingface.co/UmaDiffusion/uma-voice-gpt-sovits-v2",
+            "text_language": "ja",
+            "weights": [
+              {
+                "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+                "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+              },
+              {
+                "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+                "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+              }
+            ]
+          }
+        },
+        "runtime_checked": true,
+        "missing_or_mismatched_tts_weights": [],
+        "runtime_health_checked": false,
+        "redistribution": "private-use-unverified",
+        "provenance": [
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/avatar.vrm",
+            "role": "avatar",
+            "source": "https://umamusume.jp/character/riceshower/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/reference.wav",
+            "role": "voice-reference",
+            "source": "https://umamusume.jp/character/riceshower/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_home_idle.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": true,
+              "contact_mode": "foot",
+              "description": "Authored quiet standing base with contact IK",
+              "duration": 2.566667,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": true,
+              "name": "uma_home_idle",
+              "path": "assets/motions/uma_home_idle.vrma",
+              "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_rice_idle_action.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "contact_mode": "foot",
+              "description": "Authored character posture action or style",
+              "duration": 4.333334,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": false,
+              "name": "uma_rice_idle_action",
+              "path": "assets/motions/uma_rice_idle_action.vrma",
+              "sha256": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_walk.vrma",
+            "role": "motion",
+            "source": {
+              "conversion_manifest": "assets/research/walking-candidates/uma_homewalk_direct.bake.json",
+              "description": "Authored upright walking with original quaternion curves and bounded hip sway",
+              "duration": 1.3,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 50,
+              "loop": true,
+              "name": "uma_walk",
+              "path": "assets/motions/uma_walk.vrma",
+              "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_homewalk01_loop",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          }
+        ],
+        "profile_fields": [
+          "ambient_loop",
+          "assets",
+          "behavior_style",
+          "canonical_facts",
+          "examples",
+          "examples_note",
+          "id",
+          "idle_actions",
+          "job_ack",
+          "job_done",
+          "job_failed",
+          "motion_style",
+          "name",
+          "roleplay_guidance",
+          "source",
+          "user_role"
+        ],
+        "extensions": {}
+      },
+      "installed": {
+        "character_id": "rice-shower",
+        "profile": "/tmp/mate-character-final-20260907/characters/rice-shower.json",
+        "archive_sha256": "74a41b46873d057d94873c6f74db4a3f2be171872901e5d4c07646fb248f9872",
+        "registered": true,
+        "missing_tts_weights": [],
+        "restart_backend_required": true
+      },
+      "loader_catalog": {
+        "id": "rice-shower",
+        "name": "ライスシャワー",
+        "avatar_url": "/characters/rice-shower/avatar",
+        "avatar_available": true,
+        "avatar_variants": [
+          {
+            "id": "default",
+            "label": "Default",
+            "description": "",
+            "mood_tags": [],
+            "avatar_url": "/characters/rice-shower/avatar",
+            "avatar_available": true
+          }
+        ],
+        "abilities": [],
+        "voice_available": true,
+        "motion_style": {
+          "amplitude": 0.72,
+          "tempo": 0.88,
+          "idle_interval": 15
+        },
+        "behavior_style": {
+          "idle_interval_s": 15.0,
+          "gaze_hold_s": 2.8,
+          "response_delay_s": 0.5,
+          "curiosity": 0.3,
+          "posture_strength": 0.35
+        },
+        "ambient_loop": "uma_home_idle",
+        "idle_actions": [
+          "uma_rice_idle_action"
+        ],
+        "source": "https://umamusume.jp/character/riceshower/",
+        "examples": 16
+      },
+      "avatar_sha256": "50ede37cd75029d8d00d17472588b4820408557243b6b2ee058570c7c451035a",
+      "reference_audio_sha256": "32f980a45616d4420b4cc3684eea6172643c0792b9ed395ca7b3dbf79aea3e40",
+      "reference_seconds": 3.2,
+      "profile_motion_ids": [
+        "uma_home_idle",
+        "uma_rice_idle_action"
+      ],
+      "variant_assets": [],
+      "voice_style_in_system_prompt": true,
+      "motion_metadata_exact_match": true,
+      "appearance_ability_exact_match": true
+    },
+    {
+      "id": "eishin-flash",
+      "source_profile_sha256": "bdccd5171703268767c0eb00fb60e9f5ff7107d07a199e8d082b70bfec579ef5",
+      "source_stable_during_export": true,
+      "archive_path": "output/eishin-flash.matecharacter",
+      "archive_sha256": "755aabf7b0974efaaecc01d5de73ef1344318bf6cccc7c745f3edbd96892dc70",
+      "archive_bytes": 2948981,
+      "inventory": {
+        "format": "mate.character",
+        "version": 1,
+        "character_id": "eishin-flash",
+        "name": "エイシンフラッシュ",
+        "sha256": "755aabf7b0974efaaecc01d5de73ef1344318bf6cccc7c745f3edbd96892dc70",
+        "bytes": 2948981,
+        "files": 7,
+        "motions": [
+          "uma_home_idle",
+          "uma_eishin_idle_action",
+          "uma_walk"
+        ],
+        "avatar_variants": [],
+        "abilities": [],
+        "media_validation": "performed on import; inspection verifies inventory and declarations",
+        "requirements": {
+          "dialogue": {
+            "audio_input": true,
+            "external": true,
+            "id": "qwen2.5-omni-thinker-or-compatible-provider",
+            "speech_output": false
+          },
+          "engine": {
+            "character_package_version": 1,
+            "id": "mate-companion"
+          },
+          "tts": {
+            "external": true,
+            "id": "gpt-sovits-v2-uma-aio",
+            "other_dependencies": [
+              "GPT-SoVITS v2 runtime",
+              "chinese-hubert-base",
+              "chinese-roberta-wwm-ext-large"
+            ],
+            "reference_language": "ja",
+            "source": "https://huggingface.co/UmaDiffusion/uma-voice-gpt-sovits-v2",
+            "text_language": "ja",
+            "weights": [
+              {
+                "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+                "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+              },
+              {
+                "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+                "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+              }
+            ]
+          }
+        },
+        "runtime_checked": true,
+        "missing_or_mismatched_tts_weights": [],
+        "runtime_health_checked": false,
+        "redistribution": "private-use-unverified",
+        "provenance": [
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/avatar.vrm",
+            "role": "avatar",
+            "source": "https://umamusume.jp/character/eishinflash/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/reference.wav",
+            "role": "voice-reference",
+            "source": "https://umamusume.jp/character/eishinflash/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_home_idle.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": true,
+              "contact_mode": "foot",
+              "description": "Authored quiet standing base with contact IK",
+              "duration": 2.566667,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": true,
+              "name": "uma_home_idle",
+              "path": "assets/motions/uma_home_idle.vrma",
+              "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_eishin_idle_action.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "contact_mode": "foot",
+              "description": "Authored character posture action or style",
+              "duration": 4.166667,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": false,
+              "name": "uma_eishin_idle_action",
+              "path": "assets/motions/uma_eishin_idle_action.vrma",
+              "sha256": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_walk.vrma",
+            "role": "motion",
+            "source": {
+              "conversion_manifest": "assets/research/walking-candidates/uma_homewalk_direct.bake.json",
+              "description": "Authored upright walking with original quaternion curves and bounded hip sway",
+              "duration": 1.3,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 50,
+              "loop": true,
+              "name": "uma_walk",
+              "path": "assets/motions/uma_walk.vrma",
+              "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_homewalk01_loop",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          }
+        ],
+        "profile_fields": [
+          "ambient_loop",
+          "assets",
+          "behavior_style",
+          "canonical_facts",
+          "examples",
+          "examples_note",
+          "id",
+          "idle_actions",
+          "job_ack",
+          "job_done",
+          "job_failed",
+          "motion_style",
+          "name",
+          "roleplay_guidance",
+          "source",
+          "user_role"
+        ],
+        "extensions": {}
+      },
+      "installed": {
+        "character_id": "eishin-flash",
+        "profile": "/tmp/mate-character-final-20260907/characters/eishin-flash.json",
+        "archive_sha256": "755aabf7b0974efaaecc01d5de73ef1344318bf6cccc7c745f3edbd96892dc70",
+        "registered": true,
+        "missing_tts_weights": [],
+        "restart_backend_required": true
+      },
+      "loader_catalog": {
+        "id": "eishin-flash",
+        "name": "エイシンフラッシュ",
+        "avatar_url": "/characters/eishin-flash/avatar",
+        "avatar_available": true,
+        "avatar_variants": [
+          {
+            "id": "default",
+            "label": "Default",
+            "description": "",
+            "mood_tags": [],
+            "avatar_url": "/characters/eishin-flash/avatar",
+            "avatar_available": true
+          }
+        ],
+        "abilities": [],
+        "voice_available": true,
+        "motion_style": {
+          "amplitude": 0.9,
+          "tempo": 1.03,
+          "idle_interval": 18
+        },
+        "behavior_style": {
+          "idle_interval_s": 18.0,
+          "gaze_hold_s": 1.8,
+          "response_delay_s": 0.15,
+          "curiosity": 0.55,
+          "posture_strength": 0.7
+        },
+        "ambient_loop": "uma_home_idle",
+        "idle_actions": [
+          "uma_eishin_idle_action"
+        ],
+        "source": "https://umamusume.jp/character/eishinflash/",
+        "examples": 16
+      },
+      "avatar_sha256": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+      "reference_audio_sha256": "e559a0eeda0690f223ceee671ccfd1a87e1e3e9406e1aa6e3e79c9011f50e7d9",
+      "reference_seconds": 3.2,
+      "profile_motion_ids": [
+        "uma_home_idle",
+        "uma_eishin_idle_action"
+      ],
+      "variant_assets": [],
+      "voice_style_in_system_prompt": true,
+      "motion_metadata_exact_match": true,
+      "appearance_ability_exact_match": true
+    },
+    {
+      "id": "mambo",
+      "source_profile_sha256": "7522e0f1dc7575da5786010845e61de4f036b6b561eb20d8dc1f345983d9d509",
+      "source_stable_during_export": true,
+      "archive_path": "output/mambo.matecharacter",
+      "archive_sha256": "de01893066c6d95cd91b0e245f0500a433924d88d298d8bdeb38498f6ee0ddf6",
+      "archive_bytes": 2620496,
+      "inventory": {
+        "format": "mate.character",
+        "version": 1,
+        "character_id": "mambo",
+        "name": "マンボ（マチタン・ミニ）",
+        "sha256": "de01893066c6d95cd91b0e245f0500a433924d88d298d8bdeb38498f6ee0ddf6",
+        "bytes": 2620496,
+        "files": 11,
+        "motions": [
+          "uma_home_idle",
+          "mambo_sway",
+          "playful_shrug",
+          "uma_walk",
+          "playful_strut",
+          "mambo_goofy_walk"
+        ],
+        "avatar_variants": [
+          {
+            "id": "wet",
+            "label": "젖은 모습",
+            "path": "payload/variants/wet.vrm",
+            "sha256": "56d042e9d1c60b8b9a6bec36c7192c29473cb66c335e2a806a4c82b123e36104"
+          }
+        ],
+        "abilities": [
+          {
+            "id": "change_appearance",
+            "version": 1,
+            "description": "Choose an installed appearance for this same character; mood tags describe suitable situations.",
+            "intent_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "variant_id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "change_appearance"
+                },
+                "variant_id": {
+                  "type": "string",
+                  "enum": [
+                    "default",
+                    "wet"
+                  ]
+                }
+              }
+            },
+            "variants": [
+              {
+                "id": "default",
+                "label": "Default",
+                "description": "",
+                "mood_tags": []
+              },
+              {
+                "id": "wet",
+                "label": "젖은 모습",
+                "description": "Optional wet diffuse texture adaptation on the same mini rig; default uses original dry mini textures.",
+                "mood_tags": [
+                  "playful"
+                ]
+              }
+            ],
+            "execution": "native_avatar_reload"
+          }
+        ],
+        "media_validation": "performed on import; inspection verifies inventory and declarations",
+        "requirements": {
+          "dialogue": {
+            "audio_input": true,
+            "external": true,
+            "id": "qwen2.5-omni-thinker-or-compatible-provider",
+            "speech_output": false
+          },
+          "engine": {
+            "character_package_version": 1,
+            "id": "mate-companion"
+          },
+          "tts": {
+            "external": true,
+            "id": "gpt-sovits-v2-uma-aio",
+            "other_dependencies": [
+              "GPT-SoVITS v2 runtime",
+              "chinese-hubert-base",
+              "chinese-roberta-wwm-ext-large"
+            ],
+            "reference_language": "ja",
+            "source": "https://huggingface.co/UmaDiffusion/uma-voice-gpt-sovits-v2",
+            "text_language": "ja",
+            "weights": [
+              {
+                "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+                "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+              },
+              {
+                "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+                "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+              }
+            ]
+          }
+        },
+        "runtime_checked": true,
+        "missing_or_mismatched_tts_weights": [],
+        "runtime_health_checked": false,
+        "redistribution": "private-use-unverified",
+        "provenance": [
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/avatar.vrm",
+            "role": "avatar",
+            "source": "https://umamusume.jp/character/matikanetannhauser/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/variants/wet.vrm",
+            "role": "avatar-variant",
+            "source": "https://umamusume.jp/character/matikanetannhauser/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/reference.wav",
+            "role": "voice-reference",
+            "source": "https://umamusume.jp/character/matikanetannhauser/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_home_idle.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": true,
+              "contact_mode": "foot",
+              "description": "Authored quiet standing base with contact IK",
+              "duration": 2.566667,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": true,
+              "name": "uma_home_idle",
+              "path": "assets/motions/uma_home_idle.vrma",
+              "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/mambo_sway.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "contact_mode": "foot",
+              "description": "Two unhurried, offbeat upper-body sways; legs and support remain independently owned.",
+              "duration": 4.2,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": false,
+              "name": "mambo_sway",
+              "path": "assets/motions/mambo_sway.vrma",
+              "sha256": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+              "source": "Original bounded upper-body curves over local UMA resting pose",
+              "source_manifest": "diagnostics/meme_motion/motions.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/playful_shrug.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "contact_mode": "foot",
+              "description": "Small symmetrical shrug with a delayed head tilt; reusable for any humanoid profile.",
+              "duration": 3.0,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": false,
+              "name": "playful_shrug",
+              "path": "assets/motions/playful_shrug.vrma",
+              "sha256": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+              "source": "Original bounded upper-body curves over local UMA resting pose",
+              "source_manifest": "diagnostics/meme_motion/motions.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_walk.vrma",
+            "role": "motion",
+            "source": {
+              "conversion_manifest": "assets/research/walking-candidates/uma_homewalk_direct.bake.json",
+              "description": "Authored upright walking with original quaternion curves and bounded hip sway",
+              "duration": 1.3,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 50,
+              "loop": true,
+              "name": "uma_walk",
+              "path": "assets/motions/uma_walk.vrma",
+              "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_homewalk01_loop",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/playful_strut.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "conversion_manifest": "assets/research/playful-walk/candidates/uma_homewalk03_loop.bake.json",
+              "description": "Authored broad-stride parade walk with large arm swings; choose for a finite supported move.",
+              "duration": 1.2999999523162842,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 0,
+              "locomotion_style": {
+                "contact_blend_phase": 0.04,
+                "contacts": {
+                  "left": [
+                    0.31,
+                    0.59
+                  ],
+                  "right": [
+                    0.81,
+                    0.09
+                  ]
+                },
+                "cycle_stride_leg_lengths": 1.539550751,
+                "hip_translation_limit_leg_lengths": 0.15,
+                "preserve_source_hip_height": true,
+                "version": 1
+              },
+              "loop": true,
+              "name": "playful_strut",
+              "path": "assets/motions/playful_strut.vrma",
+              "sha256": "11a0e7a35e78f4161961f9e619cc99fafa3efec531a2a965e62bda62d0a65376",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_homewalk03_loop",
+              "source_manifest": "assets/research/playful-walk/uma-source/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/mambo_goofy_walk.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "conversion_manifest": "assets/research/playful-walk/candidates/uma_walkunique09_loop.bake.json",
+              "description": "Authored goofy high-knee strut with deliberate head and hip rocking; two gait cycles per full source loop.",
+              "duration": 4.0333333015441895,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 0,
+              "locomotion_style": {
+                "contact_blend_phase": 0.025,
+                "contacts": {
+                  "left": [
+                    [
+                      0.37,
+                      0.52
+                    ],
+                    [
+                      0.88,
+                      0.01
+                    ]
+                  ],
+                  "right": [
+                    [
+                      0.06,
+                      0.3
+                    ],
+                    [
+                      0.645,
+                      0.835
+                    ]
+                  ]
+                },
+                "cycle_stride_leg_lengths": 4.165960726,
+                "hip_translation_limit_leg_lengths": 0.25,
+                "preserve_source_hip_height": true,
+                "version": 1
+              },
+              "loop": true,
+              "name": "mambo_goofy_walk",
+              "path": "assets/motions/mambo_goofy_walk.vrma",
+              "sha256": "a4dfaca13bba107b72569fdad0beda851f92018dfce692377514664cc4b38e20",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_walkunique09_loop",
+              "source_manifest": "assets/research/playful-walk/uma-source/manifest.json"
+            }
+          }
+        ],
+        "profile_fields": [
+          "ambient_loop",
+          "assets",
+          "avatar_variants",
+          "behavior_style",
+          "canonical_facts",
+          "examples",
+          "examples_note",
+          "id",
+          "idle_actions",
+          "job_ack",
+          "job_done",
+          "job_failed",
+          "motion_style",
+          "name",
+          "package",
+          "roleplay_guidance",
+          "source",
+          "user_role"
+        ],
+        "extensions": {
+          "motion_ids": [
+            "playful_strut",
+            "mambo_goofy_walk"
+          ],
+          "provenance": {
+            "bones": 128,
+            "bytes": 1843228,
+            "character_id": "1062",
+            "expressions": [
+              "blink",
+              "a",
+              "i",
+              "u",
+              "e",
+              "o"
+            ],
+            "humanoid_bones": 31,
+            "id": "mambo",
+            "limits": [
+              "Mate-authored bounded hair/skirt spring groups; not original game physics or full cloth simulation.",
+              "Original mini-specific dry diffuse textures.",
+              "Single source AA atlas surface with five continuous mouth deformations; no original facial animation engine.",
+              "Copyrighted user-local game assets; no redistribution license inferred."
+            ],
+            "meshes": 7,
+            "optional_wet_variant": {
+              "bones": 128,
+              "bytes": 1828248,
+              "character_id": "1062",
+              "expressions": [
+                "blink",
+                "a",
+                "i",
+                "u",
+                "e",
+                "o"
+              ],
+              "humanoid_bones": 31,
+              "id": "mambo",
+              "limits": [
+                "Mate-authored bounded hair/skirt spring groups; not original game physics or full cloth simulation.",
+                "Optional main-model wet diffuse adaptation on mini geometry.",
+                "Single source AA atlas surface with five continuous mouth deformations; no original facial animation engine.",
+                "Copyrighted user-local game assets; no redistribution license inferred."
+              ],
+              "meshes": 7,
+              "physics": {
+                "changed": true,
+                "cloth_triangles": false,
+                "collider_groups": 4,
+                "hair_roots": 8,
+                "skirt_roots": 12,
+                "source": "Mate authored conservative VRM0 spring tuning",
+                "version": 1
+              },
+              "sha256": "56d042e9d1c60b8b9a6bec36c7192c29473cb66c335e2a806a4c82b123e36104",
+              "source_files": [
+                {
+                  "bytes": 506873,
+                  "path": "3d/chara/mini/body/mbdy1062_00/pfb_mbdy1062_00",
+                  "sha256": "fe2a831b9ea9e2aa8648682cae895984852f86c8e665bc590e6c0b77854a90cf"
+                },
+                {
+                  "bytes": 158372,
+                  "path": "3d/chara/mini/head/mchr1062_00/pfb_mchr1062_00_hair",
+                  "sha256": "58b8c2571c37d74fbeca4ac73ab8b940b6452251b59e88de1686ce61c453845d"
+                },
+                {
+                  "bytes": 51308,
+                  "path": "3d/chara/mini/head/mchr0001_00/pfb_mchr0001_00_face0",
+                  "sha256": "c2caaf1e9461680e4620c1d37065fe6f06425746f75c94d34617a497d2914112"
+                },
+                {
+                  "bytes": 35478,
+                  "path": "3d/chara/mini/head/mchr1062_00/textures/tex_mchr1062_00_eye_diff",
+                  "sha256": "f5e098102cee3522e256d0ee4a504ade0355f7a7dd9c6f79b7779297078d421c"
+                },
+                {
+                  "bytes": 14807,
+                  "path": "3d/chara/mini/head/mchr1062_00/textures/tex_mchr1062_00_mayu_diff",
+                  "sha256": "7511d280be055fb6b9c9e45674aa3543f139685a60e5ffcad927c0065f0975d1"
+                },
+                {
+                  "bytes": 9067,
+                  "path": "3d/chara/mini/head/mchr1062_00/textures/tex_mchr1062_00_mouth_diff",
+                  "sha256": "70631680e631da1c6e11f9cf7510dcbb5d358297525ff5b2c2a3c8943a07c1df"
+                },
+                {
+                  "bytes": 14183,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_0_diff",
+                  "sha256": "dcaa9fae14362c0814571c32b58d8bced273135622736f0bc3d954bec7e3526f"
+                },
+                {
+                  "bytes": 14276,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_1_diff",
+                  "sha256": "2f392bafb021acb119ef2b2b8f662c3ed8115134206e60416b1b3c09a63d54d9"
+                },
+                {
+                  "bytes": 14175,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_2_diff",
+                  "sha256": "9fba2f9d21d734f59221435ec4987a9a7edd4c68e3ec1f81ebd98830c6390972"
+                },
+                {
+                  "bytes": 16822,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_3_diff",
+                  "sha256": "0c717912b7aa1d775b122b97bcf16694fd062229880389003496f38fb8164b92"
+                },
+                {
+                  "bytes": 426817,
+                  "path": "3d/chara/body/bdy1062_00/textures/tex_bdy1062_00_base_wet",
+                  "sha256": "708a4e9a9bb291ecee3a7e8bfd7e58c9a7af38928239062738b590b1946a8dc8"
+                },
+                {
+                  "bytes": 74329,
+                  "path": "3d/chara/body/bdy1062_00/textures/tex_bdy1062_00_diff_wet",
+                  "sha256": "9c75167470d46f5a63bf2be48e8031fc60620e7857b314bb9d2abde55346187d"
+                },
+                {
+                  "bytes": 20540,
+                  "path": "3d/chara/head/chr1062_00/textures/tex_chr1062_00_face_diff_wet",
+                  "sha256": "19b70691a8dc7bb8546db91002723f03245666a364b7f3b5043879f48e27a4da"
+                },
+                {
+                  "bytes": 132791,
+                  "path": "3d/chara/head/chr1062_00/textures/tex_chr1062_00_hair_diff_wet",
+                  "sha256": "27abc9aa7c82feb8a745e5167209861f58efa76251ec1df92780dd59adcfffa7"
+                }
+              ],
+              "spring_authoring_sha256": "ec0a7e16d35cc25ebf926f971f72d2098336e95e0882f2416573414a18a40c5a",
+              "texture_variant": "wet",
+              "variant": "actual UMA mini/chibi game model, locally assembled"
+            },
+            "physics": {
+              "changed": true,
+              "cloth_triangles": false,
+              "collider_groups": 4,
+              "hair_roots": 8,
+              "skirt_roots": 12,
+              "source": "Mate authored conservative VRM0 spring tuning",
+              "version": 1
+            },
+            "sha256": "01f0e5b3165fc5d525f7e5bb73512bce0d8ea63a9b8fae31926655aba99017cd",
+            "source_files": [
+              {
+                "bytes": 506873,
+                "path": "3d/chara/mini/body/mbdy1062_00/pfb_mbdy1062_00",
+                "sha256": "fe2a831b9ea9e2aa8648682cae895984852f86c8e665bc590e6c0b77854a90cf"
+              },
+              {
+                "bytes": 158372,
+                "path": "3d/chara/mini/head/mchr1062_00/pfb_mchr1062_00_hair",
+                "sha256": "58b8c2571c37d74fbeca4ac73ab8b940b6452251b59e88de1686ce61c453845d"
+              },
+              {
+                "bytes": 51308,
+                "path": "3d/chara/mini/head/mchr0001_00/pfb_mchr0001_00_face0",
+                "sha256": "c2caaf1e9461680e4620c1d37065fe6f06425746f75c94d34617a497d2914112"
+              },
+              {
+                "bytes": 35478,
+                "path": "3d/chara/mini/head/mchr1062_00/textures/tex_mchr1062_00_eye_diff",
+                "sha256": "f5e098102cee3522e256d0ee4a504ade0355f7a7dd9c6f79b7779297078d421c"
+              },
+              {
+                "bytes": 14807,
+                "path": "3d/chara/mini/head/mchr1062_00/textures/tex_mchr1062_00_mayu_diff",
+                "sha256": "7511d280be055fb6b9c9e45674aa3543f139685a60e5ffcad927c0065f0975d1"
+              },
+              {
+                "bytes": 9067,
+                "path": "3d/chara/mini/head/mchr1062_00/textures/tex_mchr1062_00_mouth_diff",
+                "sha256": "70631680e631da1c6e11f9cf7510dcbb5d358297525ff5b2c2a3c8943a07c1df"
+              },
+              {
+                "bytes": 14183,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_0_diff",
+                "sha256": "dcaa9fae14362c0814571c32b58d8bced273135622736f0bc3d954bec7e3526f"
+              },
+              {
+                "bytes": 14276,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_1_diff",
+                "sha256": "2f392bafb021acb119ef2b2b8f662c3ed8115134206e60416b1b3c09a63d54d9"
+              },
+              {
+                "bytes": 14175,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_2_diff",
+                "sha256": "9fba2f9d21d734f59221435ec4987a9a7edd4c68e3ec1f81ebd98830c6390972"
+              },
+              {
+                "bytes": 16822,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_3_diff",
+                "sha256": "0c717912b7aa1d775b122b97bcf16694fd062229880389003496f38fb8164b92"
+              },
+              {
+                "bytes": 78760,
+                "path": "sourceresources/3d/chara/mini/body/mbdy1062_00/materials/mtl_mbdy1062_00",
+                "sha256": "0203a80c637f57b384c3d0149b077bb2020f9eaefcf26f20ce6ef1f194c6fec9"
+              },
+              {
+                "bytes": 141996,
+                "path": "sourceresources/3d/chara/mini/head/mchr1062_00/materials/mtl_mchr1062_00_hair",
+                "sha256": "6fc4725964ca1c0f394036a40d36b834d8d83080873d0897408bef84a23a3454"
+              }
+            ],
+            "spring_authoring_sha256": "ec0a7e16d35cc25ebf926f971f72d2098336e95e0882f2416573414a18a40c5a",
+            "texture_variant": "dry",
+            "variant": "actual UMA mini/chibi game model, locally assembled"
+          },
+          "rights": "User-local Cygames game assets and official voice sample. No redistribution license is inferred.",
+          "source_character": "matikanetannhauser",
+          "speaking_patterns": [
+            "Japanese only",
+            "gentle absent-minded curiosity"
+          ],
+          "variant": "UMA game mini/chibi model with authored fan meme persona; not fumo plush or a downloaded fan meme sculpt",
+          "voice_patterns": [
+            "マンボ〜",
+            "むん！",
+            "Occasional short reaction; never every sentence."
+          ],
+          "voice_reference_kind": "Official clean spoken sample, unpitched; not exact meme edit."
+        }
+      },
+      "installed": {
+        "character_id": "mambo",
+        "profile": "/tmp/mate-character-final-20260907/characters/mambo.json",
+        "archive_sha256": "de01893066c6d95cd91b0e245f0500a433924d88d298d8bdeb38498f6ee0ddf6",
+        "registered": true,
+        "missing_tts_weights": [],
+        "restart_backend_required": true
+      },
+      "loader_catalog": {
+        "id": "mambo",
+        "name": "マンボ（マチタン・ミニ）",
+        "avatar_url": "/characters/mambo/avatar",
+        "avatar_available": true,
+        "avatar_variants": [
+          {
+            "id": "default",
+            "label": "Default",
+            "description": "",
+            "mood_tags": [],
+            "avatar_url": "/characters/mambo/avatar",
+            "avatar_available": true
+          },
+          {
+            "id": "wet",
+            "label": "젖은 모습",
+            "description": "Optional wet diffuse texture adaptation on the same mini rig; default uses original dry mini textures.",
+            "mood_tags": [
+              "playful"
+            ],
+            "avatar_url": "/characters/mambo/avatar?variant=wet",
+            "avatar_available": true
+          }
+        ],
+        "abilities": [
+          {
+            "id": "change_appearance",
+            "version": 1,
+            "description": "Choose an installed appearance for this same character; mood tags describe suitable situations.",
+            "intent_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "variant_id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "change_appearance"
+                },
+                "variant_id": {
+                  "type": "string",
+                  "enum": [
+                    "default",
+                    "wet"
+                  ]
+                }
+              }
+            },
+            "variants": [
+              {
+                "id": "default",
+                "label": "Default",
+                "description": "",
+                "mood_tags": []
+              },
+              {
+                "id": "wet",
+                "label": "젖은 모습",
+                "description": "Optional wet diffuse texture adaptation on the same mini rig; default uses original dry mini textures.",
+                "mood_tags": [
+                  "playful"
+                ]
+              }
+            ],
+            "execution": "native_avatar_reload"
+          }
+        ],
+        "voice_available": true,
+        "motion_style": {
+          "amplitude": 0.9,
+          "tempo": 0.91,
+          "idle_interval": 11
+        },
+        "behavior_style": {
+          "idle_interval_s": 11.0,
+          "gaze_hold_s": 1.8,
+          "response_delay_s": 0.2,
+          "curiosity": 0.78,
+          "posture_strength": 0.45
+        },
+        "ambient_loop": "uma_home_idle",
+        "idle_actions": [
+          "mambo_sway",
+          "playful_shrug"
+        ],
+        "source": "https://umamusume.jp/character/matikanetannhauser/",
+        "examples": 4
+      },
+      "avatar_sha256": "01f0e5b3165fc5d525f7e5bb73512bce0d8ea63a9b8fae31926655aba99017cd",
+      "reference_audio_sha256": "22da3226a092cf1377403c879b23966ae706a4741ac2ef88909740aa5269a99b",
+      "reference_seconds": 3.2,
+      "profile_motion_ids": [
+        "uma_home_idle",
+        "mambo_sway",
+        "playful_shrug",
+        "playful_strut",
+        "mambo_goofy_walk"
+      ],
+      "variant_assets": [
+        {
+          "id": "wet",
+          "sha256": "56d042e9d1c60b8b9a6bec36c7192c29473cb66c335e2a806a4c82b123e36104",
+          "bytes": 1828248
+        }
+      ],
+      "voice_style_in_system_prompt": true,
+      "motion_metadata_exact_match": true,
+      "appearance_ability_exact_match": true
+    },
+    {
+      "id": "hachimi",
+      "source_profile_sha256": "772ec00cfe2968df091fc70db299103a9edca116f38eb0f072ddc51c1df5758d",
+      "source_stable_during_export": true,
+      "archive_path": "output/hachimi.matecharacter",
+      "archive_sha256": "9297c3a2aac099036dc2fa626ac30afb68d368e3edf45a48c7d794c90e754934",
+      "archive_bytes": 2541046,
+      "inventory": {
+        "format": "mate.character",
+        "version": 1,
+        "character_id": "hachimi",
+        "name": "ハチミ（テイオー・ミニ）",
+        "sha256": "9297c3a2aac099036dc2fa626ac30afb68d368e3edf45a48c7d794c90e754934",
+        "bytes": 2541046,
+        "files": 11,
+        "motions": [
+          "uma_home_idle",
+          "hachimi_peek",
+          "playful_shrug",
+          "uma_walk",
+          "playful_strut",
+          "mambo_goofy_walk"
+        ],
+        "avatar_variants": [
+          {
+            "id": "wet",
+            "label": "젖은 모습",
+            "path": "payload/variants/wet.vrm",
+            "sha256": "4432961c18fcc247f02c52596ba1ca490bdf77130d911c3475031e08df65b3a9"
+          }
+        ],
+        "abilities": [
+          {
+            "id": "change_appearance",
+            "version": 1,
+            "description": "Choose an installed appearance for this same character; mood tags describe suitable situations.",
+            "intent_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "variant_id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "change_appearance"
+                },
+                "variant_id": {
+                  "type": "string",
+                  "enum": [
+                    "default",
+                    "wet"
+                  ]
+                }
+              }
+            },
+            "variants": [
+              {
+                "id": "default",
+                "label": "Default",
+                "description": "",
+                "mood_tags": []
+              },
+              {
+                "id": "wet",
+                "label": "젖은 모습",
+                "description": "Optional wet diffuse texture adaptation on the same mini rig; default uses original dry mini textures.",
+                "mood_tags": [
+                  "playful"
+                ]
+              }
+            ],
+            "execution": "native_avatar_reload"
+          }
+        ],
+        "media_validation": "performed on import; inspection verifies inventory and declarations",
+        "requirements": {
+          "dialogue": {
+            "audio_input": true,
+            "external": true,
+            "id": "qwen2.5-omni-thinker-or-compatible-provider",
+            "speech_output": false
+          },
+          "engine": {
+            "character_package_version": 1,
+            "id": "mate-companion"
+          },
+          "tts": {
+            "external": true,
+            "id": "gpt-sovits-v2-uma-aio",
+            "other_dependencies": [
+              "GPT-SoVITS v2 runtime",
+              "chinese-hubert-base",
+              "chinese-roberta-wwm-ext-large"
+            ],
+            "reference_language": "ja",
+            "source": "https://huggingface.co/UmaDiffusion/uma-voice-gpt-sovits-v2",
+            "text_language": "ja",
+            "weights": [
+              {
+                "path": "models/uma-AIO-GPT-v2-e100.ckpt",
+                "sha256": "847f88e3d8bea9dc37fc686a02499e7402d9af6cceb6e6eda6bdbb3b16582716"
+              },
+              {
+                "path": "models/uma-AIO-SoViTS-v2_e20_s8300.pth",
+                "sha256": "417d80e4fedb5bd4d9f45d985dc889d4fa738a8644177dea310f894e3c973a06"
+              }
+            ]
+          }
+        },
+        "runtime_checked": true,
+        "missing_or_mismatched_tts_weights": [],
+        "runtime_health_checked": false,
+        "redistribution": "private-use-unverified",
+        "provenance": [
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/avatar.vrm",
+            "role": "avatar",
+            "source": "https://umamusume.jp/character/tokaiteio/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/variants/wet.vrm",
+            "role": "avatar-variant",
+            "source": "https://umamusume.jp/character/tokaiteio/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/reference.wav",
+            "role": "voice-reference",
+            "source": "https://umamusume.jp/character/tokaiteio/"
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_home_idle.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": true,
+              "contact_mode": "foot",
+              "description": "Authored quiet standing base with contact IK",
+              "duration": 2.566667,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": true,
+              "name": "uma_home_idle",
+              "path": "assets/motions/uma_home_idle.vrma",
+              "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+              "source": "local UMA extraction",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/hachimi_peek.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "contact_mode": "foot",
+              "description": "Curious left/right peek with an amused final lift; no face morphs or airborne root motion.",
+              "duration": 4.1,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": false,
+              "name": "hachimi_peek",
+              "path": "assets/motions/hachimi_peek.vrma",
+              "sha256": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+              "source": "Original bounded upper-body curves over local UMA resting pose",
+              "source_manifest": "diagnostics/meme_motion/motions.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/playful_shrug.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "contact_mode": "foot",
+              "description": "Small symmetrical shrug with a delayed head tilt; reusable for any humanoid profile.",
+              "duration": 3.0,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "loop": false,
+              "name": "playful_shrug",
+              "path": "assets/motions/playful_shrug.vrma",
+              "sha256": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+              "source": "Original bounded upper-body curves over local UMA resting pose",
+              "source_manifest": "diagnostics/meme_motion/motions.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/uma_walk.vrma",
+            "role": "motion",
+            "source": {
+              "conversion_manifest": "assets/research/walking-candidates/uma_homewalk_direct.bake.json",
+              "description": "Authored upright walking with original quaternion curves and bounded hip sway",
+              "duration": 1.3,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 50,
+              "loop": true,
+              "name": "uma_walk",
+              "path": "assets/motions/uma_walk.vrma",
+              "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_homewalk01_loop",
+              "source_manifest": "assets/research/uma/export-work/natural-subset/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/playful_strut.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "conversion_manifest": "assets/research/playful-walk/candidates/uma_homewalk03_loop.bake.json",
+              "description": "Authored broad-stride parade walk with large arm swings; choose for a finite supported move.",
+              "duration": 1.2999999523162842,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 0,
+              "locomotion_style": {
+                "contact_blend_phase": 0.04,
+                "contacts": {
+                  "left": [
+                    0.31,
+                    0.59
+                  ],
+                  "right": [
+                    0.81,
+                    0.09
+                  ]
+                },
+                "cycle_stride_leg_lengths": 1.539550751,
+                "hip_translation_limit_leg_lengths": 0.15,
+                "preserve_source_hip_height": true,
+                "version": 1
+              },
+              "loop": true,
+              "name": "playful_strut",
+              "path": "assets/motions/playful_strut.vrma",
+              "sha256": "11a0e7a35e78f4161961f9e619cc99fafa3efec531a2a965e62bda62d0a65376",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_homewalk03_loop",
+              "source_manifest": "assets/research/playful-walk/uma-source/manifest.json"
+            }
+          },
+          {
+            "license": "Unverified; private local use. Verify redistribution permission before sharing.",
+            "path": "payload/motions/mambo_goofy_walk.vrma",
+            "role": "motion",
+            "source": {
+              "ambient": false,
+              "conversion_manifest": "assets/research/playful-walk/candidates/uma_walkunique09_loop.bake.json",
+              "description": "Authored goofy high-knee strut with deliberate head and hip rocking; two gait cycles per full source loop.",
+              "duration": 4.0333333015441895,
+              "kind": "vrma",
+              "license": "local-user-assets-not-redistributable",
+              "locomotion": true,
+              "locomotion_preserve_hips": true,
+              "locomotion_priority": 0,
+              "locomotion_style": {
+                "contact_blend_phase": 0.025,
+                "contacts": {
+                  "left": [
+                    [
+                      0.37,
+                      0.52
+                    ],
+                    [
+                      0.88,
+                      0.01
+                    ]
+                  ],
+                  "right": [
+                    [
+                      0.06,
+                      0.3
+                    ],
+                    [
+                      0.645,
+                      0.835
+                    ]
+                  ]
+                },
+                "cycle_stride_leg_lengths": 4.165960726,
+                "hip_translation_limit_leg_lengths": 0.25,
+                "preserve_source_hip_height": true,
+                "version": 1
+              },
+              "loop": true,
+              "name": "mambo_goofy_walk",
+              "path": "assets/motions/mambo_goofy_walk.vrma",
+              "sha256": "a4dfaca13bba107b72569fdad0beda851f92018dfce692377514664cc4b38e20",
+              "source": "local UMA extraction",
+              "source_clip": "anm_eve_type00_walkunique09_loop",
+              "source_manifest": "assets/research/playful-walk/uma-source/manifest.json"
+            }
+          }
+        ],
+        "profile_fields": [
+          "ambient_loop",
+          "assets",
+          "avatar_variants",
+          "behavior_style",
+          "canonical_facts",
+          "examples",
+          "examples_note",
+          "id",
+          "idle_actions",
+          "job_ack",
+          "job_done",
+          "job_failed",
+          "motion_style",
+          "name",
+          "package",
+          "roleplay_guidance",
+          "source",
+          "user_role"
+        ],
+        "extensions": {
+          "motion_ids": [
+            "playful_strut",
+            "mambo_goofy_walk"
+          ],
+          "provenance": {
+            "bones": 114,
+            "bytes": 1608864,
+            "character_id": "1003",
+            "expressions": [
+              "blink",
+              "a",
+              "i",
+              "u",
+              "e",
+              "o"
+            ],
+            "humanoid_bones": 31,
+            "id": "hachimi",
+            "limits": [
+              "Mate-authored bounded hair/skirt spring groups; not original game physics or full cloth simulation.",
+              "Original mini-specific dry diffuse textures.",
+              "Single source AA atlas surface with five continuous mouth deformations; no original facial animation engine.",
+              "Copyrighted user-local game assets; no redistribution license inferred."
+            ],
+            "meshes": 7,
+            "optional_wet_variant": {
+              "bones": 114,
+              "bytes": 1617472,
+              "character_id": "1003",
+              "expressions": [
+                "blink",
+                "a",
+                "i",
+                "u",
+                "e",
+                "o"
+              ],
+              "humanoid_bones": 31,
+              "id": "hachimi",
+              "limits": [
+                "Mate-authored bounded hair/skirt spring groups; not original game physics or full cloth simulation.",
+                "Optional main-model wet diffuse adaptation on mini geometry.",
+                "Single source AA atlas surface with five continuous mouth deformations; no original facial animation engine.",
+                "Copyrighted user-local game assets; no redistribution license inferred."
+              ],
+              "meshes": 7,
+              "physics": {
+                "changed": true,
+                "cloth_triangles": false,
+                "collider_groups": 4,
+                "hair_roots": 7,
+                "skirt_roots": 10,
+                "source": "Mate authored conservative VRM0 spring tuning",
+                "version": 1
+              },
+              "sha256": "4432961c18fcc247f02c52596ba1ca490bdf77130d911c3475031e08df65b3a9",
+              "source_files": [
+                {
+                  "bytes": 379987,
+                  "path": "3d/chara/mini/body/mbdy1003_00/pfb_mbdy1003_00",
+                  "sha256": "7e1fa0bd0739ffea871185506326515a9771ecf380b68cd927debb9263e9c0b4"
+                },
+                {
+                  "bytes": 129964,
+                  "path": "3d/chara/mini/head/mchr1003_00/pfb_mchr1003_00_hair",
+                  "sha256": "55ac9adf1f41d45e4c90d2d6303bfc05986c937e60ceb03ec3a2b2bf66c6b9d1"
+                },
+                {
+                  "bytes": 51308,
+                  "path": "3d/chara/mini/head/mchr0001_00/pfb_mchr0001_00_face0",
+                  "sha256": "c2caaf1e9461680e4620c1d37065fe6f06425746f75c94d34617a497d2914112"
+                },
+                {
+                  "bytes": 33147,
+                  "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_eye_diff",
+                  "sha256": "e5cf707c1c82d1d4dfbb9ec51875d4d00e9f0fe16203c3b1616d48bed3667970"
+                },
+                {
+                  "bytes": 15718,
+                  "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_mayu_diff",
+                  "sha256": "cadedbb6f5063b0dd1bada2401edea91ac770e4dd42a9128f8d684213d20b9c3"
+                },
+                {
+                  "bytes": 9140,
+                  "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_mouth_diff",
+                  "sha256": "4f7dcea9e8108cc0cd6171610e902a62034c2287c49f518547854e955b31d30f"
+                },
+                {
+                  "bytes": 14183,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_0_diff",
+                  "sha256": "dcaa9fae14362c0814571c32b58d8bced273135622736f0bc3d954bec7e3526f"
+                },
+                {
+                  "bytes": 14276,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_1_diff",
+                  "sha256": "2f392bafb021acb119ef2b2b8f662c3ed8115134206e60416b1b3c09a63d54d9"
+                },
+                {
+                  "bytes": 14175,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_2_diff",
+                  "sha256": "9fba2f9d21d734f59221435ec4987a9a7edd4c68e3ec1f81ebd98830c6390972"
+                },
+                {
+                  "bytes": 16822,
+                  "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_3_diff",
+                  "sha256": "0c717912b7aa1d775b122b97bcf16694fd062229880389003496f38fb8164b92"
+                },
+                {
+                  "bytes": 258042,
+                  "path": "3d/chara/body/bdy1003_00/textures/tex_bdy1003_00_base_wet",
+                  "sha256": "3f1143f89f9264bbc62cc2d890a244f4353a99b64f34141d09f36dc59ab62fdb"
+                },
+                {
+                  "bytes": 77554,
+                  "path": "3d/chara/body/bdy1003_00/textures/tex_bdy1003_00_diff_wet",
+                  "sha256": "a3c1deabdac5b6026dc734f574af6ba6ad7e50054c19fffaa8db489447455bc6"
+                },
+                {
+                  "bytes": 17094,
+                  "path": "3d/chara/head/chr1003_00/textures/tex_chr1003_00_face_diff_wet",
+                  "sha256": "20f160e528098e4c90ecd90a8dad51a1a9179d7e368e172a90d0922dd45ce525"
+                },
+                {
+                  "bytes": 169518,
+                  "path": "3d/chara/head/chr1003_00/textures/tex_chr1003_00_hair_diff_wet",
+                  "sha256": "1fc7cd359351527de422dda43164419afbe5bbc817149e5dceb18f48458de377"
+                }
+              ],
+              "spring_authoring_sha256": "ec0a7e16d35cc25ebf926f971f72d2098336e95e0882f2416573414a18a40c5a",
+              "texture_variant": "wet",
+              "variant": "actual UMA mini/chibi game model, locally assembled"
+            },
+            "physics": {
+              "changed": true,
+              "cloth_triangles": false,
+              "collider_groups": 4,
+              "hair_roots": 7,
+              "skirt_roots": 10,
+              "source": "Mate authored conservative VRM0 spring tuning",
+              "version": 1
+            },
+            "sha256": "b9bd8e8693e12e17f91856f156f82a0e68bae6b647f94587809134dc66d870d1",
+            "source_files": [
+              {
+                "bytes": 379987,
+                "path": "3d/chara/mini/body/mbdy1003_00/pfb_mbdy1003_00",
+                "sha256": "7e1fa0bd0739ffea871185506326515a9771ecf380b68cd927debb9263e9c0b4"
+              },
+              {
+                "bytes": 129964,
+                "path": "3d/chara/mini/head/mchr1003_00/pfb_mchr1003_00_hair",
+                "sha256": "55ac9adf1f41d45e4c90d2d6303bfc05986c937e60ceb03ec3a2b2bf66c6b9d1"
+              },
+              {
+                "bytes": 51308,
+                "path": "3d/chara/mini/head/mchr0001_00/pfb_mchr0001_00_face0",
+                "sha256": "c2caaf1e9461680e4620c1d37065fe6f06425746f75c94d34617a497d2914112"
+              },
+              {
+                "bytes": 33147,
+                "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_eye_diff",
+                "sha256": "e5cf707c1c82d1d4dfbb9ec51875d4d00e9f0fe16203c3b1616d48bed3667970"
+              },
+              {
+                "bytes": 15718,
+                "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_mayu_diff",
+                "sha256": "cadedbb6f5063b0dd1bada2401edea91ac770e4dd42a9128f8d684213d20b9c3"
+              },
+              {
+                "bytes": 9140,
+                "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_mouth_diff",
+                "sha256": "4f7dcea9e8108cc0cd6171610e902a62034c2287c49f518547854e955b31d30f"
+              },
+              {
+                "bytes": 14183,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_0_diff",
+                "sha256": "dcaa9fae14362c0814571c32b58d8bced273135622736f0bc3d954bec7e3526f"
+              },
+              {
+                "bytes": 14276,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_1_diff",
+                "sha256": "2f392bafb021acb119ef2b2b8f662c3ed8115134206e60416b1b3c09a63d54d9"
+              },
+              {
+                "bytes": 14175,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_2_diff",
+                "sha256": "9fba2f9d21d734f59221435ec4987a9a7edd4c68e3ec1f81ebd98830c6390972"
+              },
+              {
+                "bytes": 16822,
+                "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_3_diff",
+                "sha256": "0c717912b7aa1d775b122b97bcf16694fd062229880389003496f38fb8164b92"
+              },
+              {
+                "bytes": 78182,
+                "path": "sourceresources/3d/chara/mini/body/mbdy1003_00/materials/mtl_mbdy1003_00",
+                "sha256": "dccba5ca3f19db568a8191278e260fb18a8bb794c1c853ed950ef5580940946e"
+              },
+              {
+                "bytes": 169866,
+                "path": "sourceresources/3d/chara/mini/head/mchr1003_00/materials/mtl_mchr1003_00_hair",
+                "sha256": "e8b38d87da2037fb9e49d0148b3d8645b4a9413b6132aa9860c6b4dbfa576684"
+              }
+            ],
+            "spring_authoring_sha256": "ec0a7e16d35cc25ebf926f971f72d2098336e95e0882f2416573414a18a40c5a",
+            "texture_variant": "dry",
+            "variant": "actual UMA mini/chibi game model, locally assembled"
+          },
+          "rights": "User-local Cygames game assets and official voice sample. No redistribution license is inferred.",
+          "source_character": "tokaiteio",
+          "speaking_patterns": [
+            "Japanese only",
+            "quick playful confidence"
+          ],
+          "variant": "UMA game mini/chibi model with authored fan meme persona; not fumo plush or a downloaded fan meme sculpt",
+          "voice_patterns": [
+            "はちみ〜",
+            "へへっ",
+            "Occasional short reaction; never every sentence."
+          ],
+          "voice_reference_kind": "Official clean spoken sample, unpitched; not exact meme edit."
+        }
+      },
+      "installed": {
+        "character_id": "hachimi",
+        "profile": "/tmp/mate-character-final-20260907/characters/hachimi.json",
+        "archive_sha256": "9297c3a2aac099036dc2fa626ac30afb68d368e3edf45a48c7d794c90e754934",
+        "registered": true,
+        "missing_tts_weights": [],
+        "restart_backend_required": true
+      },
+      "loader_catalog": {
+        "id": "hachimi",
+        "name": "ハチミ（テイオー・ミニ）",
+        "avatar_url": "/characters/hachimi/avatar",
+        "avatar_available": true,
+        "avatar_variants": [
+          {
+            "id": "default",
+            "label": "Default",
+            "description": "",
+            "mood_tags": [],
+            "avatar_url": "/characters/hachimi/avatar",
+            "avatar_available": true
+          },
+          {
+            "id": "wet",
+            "label": "젖은 모습",
+            "description": "Optional wet diffuse texture adaptation on the same mini rig; default uses original dry mini textures.",
+            "mood_tags": [
+              "playful"
+            ],
+            "avatar_url": "/characters/hachimi/avatar?variant=wet",
+            "avatar_available": true
+          }
+        ],
+        "abilities": [
+          {
+            "id": "change_appearance",
+            "version": 1,
+            "description": "Choose an installed appearance for this same character; mood tags describe suitable situations.",
+            "intent_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "variant_id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "change_appearance"
+                },
+                "variant_id": {
+                  "type": "string",
+                  "enum": [
+                    "default",
+                    "wet"
+                  ]
+                }
+              }
+            },
+            "variants": [
+              {
+                "id": "default",
+                "label": "Default",
+                "description": "",
+                "mood_tags": []
+              },
+              {
+                "id": "wet",
+                "label": "젖은 모습",
+                "description": "Optional wet diffuse texture adaptation on the same mini rig; default uses original dry mini textures.",
+                "mood_tags": [
+                  "playful"
+                ]
+              }
+            ],
+            "execution": "native_avatar_reload"
+          }
+        ],
+        "voice_available": true,
+        "motion_style": {
+          "amplitude": 1.0,
+          "tempo": 1.1,
+          "idle_interval": 11
+        },
+        "behavior_style": {
+          "idle_interval_s": 11.0,
+          "gaze_hold_s": 1.8,
+          "response_delay_s": 0.2,
+          "curiosity": 0.85,
+          "posture_strength": 0.45
+        },
+        "ambient_loop": "uma_home_idle",
+        "idle_actions": [
+          "hachimi_peek",
+          "playful_shrug"
+        ],
+        "source": "https://umamusume.jp/character/tokaiteio/",
+        "examples": 4
+      },
+      "avatar_sha256": "b9bd8e8693e12e17f91856f156f82a0e68bae6b647f94587809134dc66d870d1",
+      "reference_audio_sha256": "58b8dbbb17c474ee33efdafdee1986a6855eec9f5ac6e0963432a16c530baf16",
+      "reference_seconds": 3.2,
+      "profile_motion_ids": [
+        "uma_home_idle",
+        "hachimi_peek",
+        "playful_shrug",
+        "playful_strut",
+        "mambo_goofy_walk"
+      ],
+      "variant_assets": [
+        {
+          "id": "wet",
+          "sha256": "4432961c18fcc247f02c52596ba1ca490bdf77130d911c3475031e08df65b3a9",
+          "bytes": 1617472
+        }
+      ],
+      "voice_style_in_system_prompt": true,
+      "motion_metadata_exact_match": true,
+      "appearance_ability_exact_match": true
+    }
+  ],
+  "installed_motion_catalog": {
+    "motions": [
+      {
+        "name": "uma_home_idle",
+        "kind": "vrma",
+        "duration": 2.566667,
+        "asset_url": "/motion-assets/uma_home_idle",
+        "sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": true,
+        "ambient": true,
+        "contact_mode": "foot",
+        "description": "Authored quiet standing base with contact IK"
+      },
+      {
+        "name": "uma_cheval_idle_action",
+        "kind": "vrma",
+        "duration": 3.733334,
+        "asset_url": "/motion-assets/uma_cheval_idle_action",
+        "sha256": "5a6fc35a25351d7a1d4f45c506f922ea48d2c285e9b07534f92c6715c8a2a8d9",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Authored character posture action or style"
+      },
+      {
+        "name": "uma_walk",
+        "kind": "vrma",
+        "duration": 1.3,
+        "asset_url": "/motion-assets/uma_walk",
+        "sha256": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+        "locomotion": true,
+        "locomotion_priority": 50,
+        "locomotion_preserve_hips": true,
+        "loop": true,
+        "description": "Authored upright walking with original quaternion curves and bounded hip sway"
+      },
+      {
+        "name": "uma_eishin_idle_action",
+        "kind": "vrma",
+        "duration": 4.166667,
+        "asset_url": "/motion-assets/uma_eishin_idle_action",
+        "sha256": "ab0de35bf739c0b2ddf1d5115968770873c270c14aa838ff5ba85889b249403e",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Authored character posture action or style"
+      },
+      {
+        "name": "hachimi_peek",
+        "kind": "vrma",
+        "duration": 4.1,
+        "asset_url": "/motion-assets/hachimi_peek",
+        "sha256": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Curious left/right peek with an amused final lift; no face morphs or airborne root motion."
+      },
+      {
+        "name": "playful_shrug",
+        "kind": "vrma",
+        "duration": 3.0,
+        "asset_url": "/motion-assets/playful_shrug",
+        "sha256": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Small symmetrical shrug with a delayed head tilt; reusable for any humanoid profile."
+      },
+      {
+        "name": "playful_strut",
+        "kind": "vrma",
+        "duration": 1.2999999523162842,
+        "asset_url": "/motion-assets/playful_strut",
+        "sha256": "11a0e7a35e78f4161961f9e619cc99fafa3efec531a2a965e62bda62d0a65376",
+        "locomotion": true,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": true,
+        "locomotion_style": {
+          "contact_blend_phase": 0.04,
+          "contacts": {
+            "left": [
+              0.31,
+              0.59
+            ],
+            "right": [
+              0.81,
+              0.09
+            ]
+          },
+          "cycle_stride_leg_lengths": 1.539550751,
+          "hip_translation_limit_leg_lengths": 0.15,
+          "preserve_source_hip_height": true,
+          "version": 1
+        },
+        "loop": true,
+        "ambient": false,
+        "description": "Authored broad-stride parade walk with large arm swings; choose for a finite supported move."
+      },
+      {
+        "name": "mambo_goofy_walk",
+        "kind": "vrma",
+        "duration": 4.0333333015441895,
+        "asset_url": "/motion-assets/mambo_goofy_walk",
+        "sha256": "a4dfaca13bba107b72569fdad0beda851f92018dfce692377514664cc4b38e20",
+        "locomotion": true,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": true,
+        "locomotion_style": {
+          "contact_blend_phase": 0.025,
+          "contacts": {
+            "left": [
+              [
+                0.37,
+                0.52
+              ],
+              [
+                0.88,
+                0.01
+              ]
+            ],
+            "right": [
+              [
+                0.06,
+                0.3
+              ],
+              [
+                0.645,
+                0.835
+              ]
+            ]
+          },
+          "cycle_stride_leg_lengths": 4.165960726,
+          "hip_translation_limit_leg_lengths": 0.25,
+          "preserve_source_hip_height": true,
+          "version": 1
+        },
+        "loop": true,
+        "ambient": false,
+        "description": "Authored goofy high-knee strut with deliberate head and hip rocking; two gait cycles per full source loop."
+      },
+      {
+        "name": "mambo_sway",
+        "kind": "vrma",
+        "duration": 4.2,
+        "asset_url": "/motion-assets/mambo_sway",
+        "sha256": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Two unhurried, offbeat upper-body sways; legs and support remain independently owned."
+      },
+      {
+        "name": "uma_rice_idle_action",
+        "kind": "vrma",
+        "duration": 4.333334,
+        "asset_url": "/motion-assets/uma_rice_idle_action",
+        "sha256": "79e651d894376e27c6927314a6f82f8008fed7200c134675a51a28d3f4fd8001",
+        "locomotion": false,
+        "locomotion_priority": 0,
+        "locomotion_preserve_hips": false,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Authored character posture action or style"
+      }
+    ]
+  },
+  "source_motion_manifest_sha256": "aff9f1f8d113d85e728afc77b9aa47fb4999cb269d46dd01a5612e660977ad82",
+  "scope": "Private local asset archives; exact isolated engine loaders and shared TTS model hashes. No native/GPU session launched."
+}

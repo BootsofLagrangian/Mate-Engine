@@ -12,8 +12,50 @@ import threading
 from pathlib import Path, PurePosixPath
 from . import COMPANION_ROOT
 from .motions import MOTION_ID
+from .package_assets import package_manifests
 
 SHA256 = re.compile(r'^[0-9a-fA-F]{64}$')
+
+
+def valid_locomotion_style(value):
+    if not isinstance(value, dict):
+        return False
+    if not value:
+        return True
+    def number(v, lower, upper, inclusive=True):
+        return type(v) in (int, float) and math.isfinite(v) and lower <= v and (v <= upper if inclusive else v < upper)
+    if type(value.get('version')) is not int or value['version'] != 1:
+        return False
+    if not number(value.get('cycle_stride_leg_lengths'), .1, 5):
+        return False
+    if 'preserve_source_hip_height' in value and type(value['preserve_source_hip_height']) is not bool:
+        return False
+    if 'hip_translation_limit_leg_lengths' in value and not number(value['hip_translation_limit_leg_lengths'], 0, .5):
+        return False
+    fade = value.get('contact_blend_phase', .06)
+    if not number(fade, .02, .2) or not isinstance(value.get('contacts'), dict):
+        return False
+    for side in ('left', 'right'):
+        intervals = value['contacts'].get(side)
+        if not isinstance(intervals, list) or not intervals:
+            return False
+        if len(intervals) == 2 and not isinstance(intervals[0], list):
+            intervals = [intervals]
+        if len(intervals) > 4:
+            return False
+        segments = []
+        for interval in intervals:
+            if not isinstance(interval, list) or len(interval) != 2 or not all(number(v, 0, 1, False) for v in interval):
+                return False
+            start, end = interval
+            if (end - start) % 1 < fade * 2:
+                return False
+            pieces = [(start, end)] if start < end else [(start, 1), (0, end)]
+            for lo, hi in pieces:
+                if any(max(lo, a) < min(hi, b) for a, b in segments):
+                    return False
+                segments.append((lo, hi))
+    return True
 
 
 class MotionAssets:
@@ -84,11 +126,15 @@ class MotionAssets:
         try:
             manifest = json.loads(self.manifest.read_text(encoding='utf-8'))
         except (OSError, ValueError):
-            return []
+            manifest = {'version': 1, 'motions': []}
         if not isinstance(manifest, dict) or manifest.get('version') != 1 or not isinstance(manifest.get('motions'), list):
-            return []
+            manifest = {'version': 1, 'motions': []}
+        candidates = list(manifest['motions'])
+        for package in package_manifests(self.root):
+            if isinstance(package.get('motions'), list):
+                candidates.extend(package['motions'])
         entries, seen = [], set()
-        for item in manifest['motions']:
+        for item in candidates:
             if not isinstance(item, dict):
                 continue
             name, duration, sha = item.get('name'), item.get('duration'), item.get('sha256')
@@ -109,12 +155,22 @@ class MotionAssets:
             priority = item.get('locomotion_priority', 0)
             if not isinstance(locomotion, bool) or not isinstance(preserve_hips, bool) or type(priority) is not int or not 0 <= priority <= 100:
                 continue
+            seat_transition = item.get('seated_transition', '')
+            style = item.get('locomotion_style', {})
+            if seat_transition not in ('', 'enter', 'exit') or not valid_locomotion_style(style):
+                continue
+            if style and not locomotion:
+                continue
             path = self._path(item.get('path'))
             if path is None or not self._validated(path, sha.lower()):
                 continue
             entry = {'name': name, 'kind': 'vrma', 'duration': float(duration), 'asset_url': f'/motion-assets/{name}', 'sha256': sha.lower(),
                      'locomotion': locomotion, 'locomotion_priority': priority,
                      'locomotion_preserve_hips': preserve_hips}
+            if 'locomotion_style' in item:
+                entry['locomotion_style'] = style
+            if 'seated_transition' in item:
+                entry['seated_transition'] = seat_transition
             if 'loop' in item:
                 entry['loop'] = item['loop']
             if 'ambient' in item:
@@ -156,4 +212,5 @@ def available_motions(bank, assets):
     """Native VRMA and local procedural gestures share a name namespace; bank wins duplicates."""
     motions = bank.bank()['motions']
     names = {motion['name'] for motion in motions}
-    return motions + [entry for entry, _ in assets.entries() if entry['name'] not in names]
+    return motions + [entry for entry, _ in assets.entries() if entry['name'] not in names and entry['name'] != 'sit_idle'
+                     and not entry.get('seated_transition') and not entry.get('locomotion_style')]
