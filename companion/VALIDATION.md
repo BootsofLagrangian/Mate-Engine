@@ -1,51 +1,107 @@
-# Validation record — 2026-09-06 KST
+# Validation record — 2026-09-06
 
-The browser + local inference service has been executed. Unity 6000.2.6f2 is not installed here: **native compilation, Play mode, transparent desktop window, built-in clip blending and Unity PCM playback have not been executed**. The Unity changes are independently source-reviewed, not runtime-approved.
+This is a development acceptance record, not a general reliability benchmark.
+The earlier browser/Unity-adapter record is preserved in [VALIDATION-LEGACY.md](VALIDATION-LEGACY.md).
+Both the Windows editor host and the exported Windows executable passed the voice
+and world checks below. Export acceptance uses the final embedded-PCK executable,
+with diagnostic scripts supplied externally; the runtime project and Windows geometry
+helper are loaded from the package.
 
-## Hardware and models
+## Verified components
 
-WSL, RTX 4090 24 GB. `/usr/lib/wsl/lib/nvidia-smi` works although ordinary PATH lookup does not. Initially unrelated jobs occupied ~23.7 GB; they ended independently and were never stopped by this task. Final default is CUDA for LLM/TTS/STT.
+| Check | Evidence and scope |
+| --- | --- |
+| Native voice and input | 30 actual Windows checks pass: three voices, driver microphone frames, waveform-input reply, PCM draining, cancellation and lip envelope; no dropped PCM frames and one uninterrupted playback interval per full test reply |
+| Native desktop interaction | 17 actual Windows checks pass with a dedicated visible test window and actual workarea floor: foot contact, scale preserving height, 248 px lateral movement, about 82° facing, panel pause, seat contact, seated talking closed-support release and floor walking |
+| Generic backend | 86 tests pass: profiles, isolated history, cancellation, streaming errors, work jobs, motion storage/catalog, browser-Origin rejection |
+| Real GPU conversation | RTX 4090, Qwen2.5-Omni 3B Thinker on CUDA BF16, dedicated original Uma GPT-SoVITS v2 on CUDA FP16; no Omni speech decoder |
+| Current exploratory prompt variant | 16/16 valid completed dialogue JSON; raw Korean tea-request fixture on topic for all three profiles |
+| First received PCM | Nine voiced requests: median 871 ms, range 502–1645 ms; excludes recording, model startup and physical speaker onset |
+| Real Codex work | Selected Eishin, acknowledgement PCM at 984.5 ms, job-start marker at 1002 ms, verified exact smoke-file content at 15.25 s, result PCM at 15.60 s |
+| VRMA conversion | Eight CC0 Quaternius Standard clips; independent comparison found all 416 mapped channels, 21,632 quaternion samples and timestamps byte-identical to source |
+| VRMA/IK | All 24 clip/character combinations tested; three rigs pass contact, scale, seated-gesture and hand-reach regressions |
+| Actual-rig floor projection | 135 checks pass over all three rigs, three scales and three yaws; measured mesh sole and orthographic bounds agree, floor support persists and workarea safety is retained |
+| Desktop movement modules | 3,636 free-roam and 769 surface checks; moving/closed windows, monitor changes, resize and stale targets included |
+| Windows geometry source | Actual dedicated test window moved/minimized; persistent snapshots, owner exclusion and child cleanup pass; normalized workareas exactly match Windows Godot DisplayServer |
+| Mouth rendering | All three characters rendered on actual Windows RTX 4090, including idle and phoneme weights; screen-outline depth fix removes Cheval's protruding inner-mouth triangles while preserving outlines |
+| Idle head movement | Actual Windows 20-second rendered Cheval idle: 1,201 samples, 200 screenshots, approximately 60 fps; separate fixed-step baseline/fix ablation is in diagnostics/head_motion |
 
-- PyTorch 2.6.0+cu126: GPU matrix multiplication and attention comparisons executed.
-- llama-cpp-python 0.3.19 CUDA 12.4: Qwen2.5-1.5B-Instruct Q4_K_M, all layers offloaded, flash attention enabled. This is 1.54B, not exactly 1.0B.
-- UmaDiffusion GPT-SoVITS v2: CUDA FP16, pinned upstream `38cd8815781275a9b438d2c5812087c82f73a377`.
-- faster-whisper small CUDA FP16: actual STT requests executed. ~5.9 GB total GPU use observed with all stages loaded, including background/desktop baseline.
-- Drive VRM: GLB2/VRM0.x, 18,567,488 bytes. Download hashes and provenance are recorded separately.
+The Codex test used emulated playback acknowledgements over WebSocket; its timing
+does not establish physical speaker onset. The Korean audio fixture is synthetic
+input from `facebook/mms-tts-kor`, seed 42, asking for warm tea instead of coffee.
+The fixture enters the Thinker as waveform, with no transcript or ASR in that path.
+Character output always uses the supplied dedicated Uma voice weights and the
+selected official reference sample. No replacement output voice was trained.
 
-## Streaming and optimization
+## Known limits
 
-There is no separate translation call. Character facts, authored examples and language/role instructions reside in SYSTEM. A user-turn wrapper identifies the human trainer; explicit motion requests also receive a short Japanese meaning hint. A constrained JSON text character range excludes ordinary Korean and Latin letters, but **script restriction is not a semantic language guarantee**.
+The current 3B model still fails indirect conversation recall: all three exam-event
+recall checks failed in the final exploratory variant. A fresh-session question
+also elicited an invented date/place from the character profile. Two direct
+bicycle-color recall checks and one relocation recall succeeded. These mixed
+results do **not** establish reliable memory or consistent character nuance.
 
-LLM JSON is parsed incrementally; short clauses are committed before the final reply completes. Japanese morpheme boundaries allow splitting longer comma-free text without arbitrary mid-word cuts. LLM and TTS workers overlap. TTS produces an entire input fragment before yielding audio; 20ms PCM is transport framing, not phoneme-level acoustic streaming. No claim is made that TTS matches every LLM token's decoding speed.
+Prompt variants were selected after observing results; all attempts were retained
+locally. Structured-output success is distinct from semantic accuracy. The code
+isolates and passes actual session history; a model can still fail to use it.
 
-The original parallel batch path took 0.65–1.09 s for the two tested Japanese phrases. The single-fragment path took about 0.54–0.62 s for 2.51–2.83 s of audio (real-time factor ~0.21–0.24 in warm samples). The tiny repeated set is a scoped engineering comparison, not a general benchmark. Logs: `tts-mode-bench.json`, `tts-sdpa-bench.json`.
+Microphone utterances are submitted after PTT release or VAD endpoint. Response
+text and TTS PCM stream incrementally; continuous partial-audio understanding and
+acoustic echo cancellation are not implemented. A stalled TTS read can retain the
+serialization lock until its ten-second read timeout.
 
-`tts_optimization.py` patches the batch decoder's materialized attention to PyTorch SDPA before TorchScript import. Source hash checks, pristine backup and environment-controlled restoration guard the patch. Boolean blocked masks are inverted for SDPA, including fully masked rows. GPU random-input comparison: float32 max absolute error 1.91e-6; float16 9.77e-4. A fixed-seed batch-SDPA/naive audio pair had identical samples (correlation 1.0). This does not establish equivalence for every input. The deployed short-fragment path uses `parallel_infer=False`, which was faster than the patched batch path. Reference caches remain stable, and startup warms LLM/TTS before interaction.
+Desktop surfaces currently mean horizontal visible window-top segments, authored
+lines and the monitor work-area floor. There is no general jumping/path planner,
+wall-climbing, screen-content recognition or full foot/cloth physics. Explicit
+hand-target leaning is an API; automatic wall attachment remains future work.
+Magnifier/laptop props are planned in DESKTOP-WORLD.md, not delivered props.
 
-Actual three-turn streaming samples are in `logs/stream-benchmark.json`, including first token/text/audio and model completion. Final measured warm first PCM arrivals were 0.408, 0.473 and 0.523 s; all three delivered audio before LLM completion. These observations do not exclude GPU contention or scheduling variability. Latest exact values are in that JSON.
+## Reproducible evidence
 
-A rebuilt Chromium browser run measured first scheduled playback at 0.795 s, with 274 PCM frames and **zero scheduled gaps**. The next buffers were already queued while the current utterance played. Gap measurement includes `scheduledStart - previousPlayhead`, not merely arrivals after buffer exhaustion. `check-pcm.mjs` separately verifies late-arrival accounting. Log: `browser-live.json`. This is one observed run, not a universal no-stutter guarantee; physical speakers were not listened to.
+Tracked probes and component records are in `diagnostics/`, `native/tools/` and
+`engine/tests/`. Raw audio, character assets, rendered images and complete GPU
+event logs stay local under ignored `assets/` and `logs/`.
 
-## Checks
+Independent reviews approved backend/supervisor/build source, desktop geometry
+modules, converter and motion contact implementation after fixes. Root separately
+reviewed and reran the five Origin regression tests because the backend reviewer
+authored that fix. Root independently reviewed the host corrections, reran 25 actual-handler checks,
+and verified 30 voice/input and 17 world checks on Windows. Fable's full suite passed
+407 checks and its isolated fake-provider protocol probe passed 59. The final Windows package separately passes the same 30 voice/input and 17 world
+checks; these are not inferred from headless or editor results.
 
-- 15 Python tests: invalid replies, upload limits, motion consistency, session behavior, partial JSON, phrase commitment, controlled provider overlap and stopping at the first complete JSON object.
-- Vite build passed; dependency checks previously passed (`uv pip check`, npm audit 0 vulnerabilities).
-- Browser: actual VRM loaded, streamed PCM playing, lip-sync analyser connected, correct wave action, no JavaScript exceptions. Chromium uses SwiftShader in this WSL validation environment; model inference uses CUDA.
-- Cancellation: delayed STT response does not revive speech; Stop during delayed `AudioContext.close()` releases controls; actual queued PCM stops. Delayed STT/close portions intentionally use controlled test timing. Log: `cancellation-validation.json`.
-- Virtual browser microphone fed the official reference WAV through getUserMedia → browser WAV encoding → real Whisper → real Qwen → real streaming TTS. Exactly one chat request; Enter during recording submitted none. Physical microphone not tested.
-- Eight shared motions (`idle`, `nod`, `shake_head`, `shy`, `wave`, `think`, `bow`, `stretch`) rendered with active offsets and return to zero. Wave/stretch/bow screenshots inspected. Web VRM0 rotation requires spring-bone reset; semantic forward bends require an adapter axis sign conversion. Web rendering capped at 30 FPS.
-- Earlier audio roundtrip: generated 32kHz/5.22s audio, RMS .0685/peak .783; Whisper transcribed `トレーナーさん、お疲れ様です。僕も、ここにいますから。`. No human voice-identity evaluation performed.
-- Supervisor SIGTERM closed both ports and the stack was restarted. Wait for old processes to exit before an immediate restart.
-- Independent review approved current streaming cancellation/cleanup, attention patch and Unity source changes; native Unity runtime explicitly excluded.
+The first desktop fixture was occluded by another window: attachment correctly did not
+select it. A subsequent owned topmost fixture made the tested edge visible and passed.
+The native world source continues to account for occlusion. Small probe-only compile
+errors were corrected before acceptance; they did not change runtime functionality.
 
-## Observed quality limits
 
-Eight authored Korean language probes (including requests for English/Chinese) produced Japanese with kana and no ordinary Hangul/Latin letters. The original greeting role inversion was fixed for its follow-up probe. This is a narrow test set, partly overlapping SYSTEM examples, not an unseen evaluation or proof of always-Japanese behavior.
+## Windows package acceptance
 
-The 1.5B model still sometimes uses 私 instead of 僕, thanks the trainer when asked to praise the trainer, or gives an off-topic answer. One multi-turn stretch request generated text about raising a flag while the action controller correctly selected stretch; a Japanese motion-meaning hint was subsequently added and the final multi-turn stretch retest returned the intended body-stretch reply. No fine-tuning was performed. Do not represent this implementation as a faithful or consistently accurate character model.
+The final `native/build/MateCompanion.exe` is 96,784,544 bytes, SHA-256
+`fc8233c069ed590b86c964736b5dc2cbe48ff873c1068ad5018a3a85f898da9a`.
+Its manifest records pinned Godot/plugin revisions and patch hashes. Assets and
+models remain installed beside the backend, rather than bundled for redistribution.
 
-Whisper's reference transcription had homophone errors (`僕は鳴る勝手偉大な馬娘に`) and the resulting dialogue also drifted. The microphone test proves connection, not recognition accuracy. STT operates after recording ends; it is not live incremental recognition or automatic voice activity turn-taking.
+Final local records: `logs/windows-live/report.json` (30/0) and
+`logs/windows-world/report.json` (17/0). Three complete voiced replies each have
+one native playback interval, zero dropped frames and a drained generator/queue.
+This measures the native playback lifecycle, not a physical acoustic gap recording.
 
-Unity streaming now uses incremental UTF-8 NDJSON plus a bounded PCM ring and audio-thread callback. That implementation, raw-bone retargeting and built-in Animator composition need the actual Unity Editor to validate. No completed native build is included.
+An earlier packaged probe failed the microphone-frame assertion: it read the
+buffer after a fixed 0.8 seconds while synchronous avatar import could delay main
+thread capture processing. A focused integrated diagnostic observed first processed
+frames at 1.31 seconds, without focus loss or cancellation; isolated packaged and
+editor input also passed. The corrected test waits at most five seconds for actual
+frames and retains the assertion. The final full package run captured 0.117 seconds
+of frames after 184 ms and canceled without saving or transmitting that recording.
+The original failed report is retained in `logs/windows-live-packaged-v1/`.
 
-Evidence lives in ignored `logs/`; models, downloaded VRM, reference audio and generated speech are also excluded from Git. See `SOURCES.md` for usage metadata and origins.
+All three avatars also pass measured sole calibration and stable floor projection.
+Windows floor and window-top renders were inspected. Imported gait can lift the feet
+above the stable support line; this is not a per-frame physical foot-lock solver.
+
+The ordinary `Launch-Mate.ps1` path also completed successfully against the warm
+GPU supervisor. The launched Windows process responded, had a nonzero native window
+handle, and established one backend WebSocket connection. The app and owned GPU
+services were left running for use.
