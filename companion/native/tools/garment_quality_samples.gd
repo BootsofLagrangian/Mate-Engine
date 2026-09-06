@@ -1,12 +1,13 @@
 extends RefCounted
 ## Offline diagnostic only: deterministic sparse triangles influenced by spring bones.
 var surfaces:=[]
-func configure(avatar: VrmAvatar) -> void:
+func configure(avatar: VrmAvatar, bone_contains:String="") -> void:
 	var springs:={}
 	var secondary=avatar.spring_contacts.secondary
 	if secondary:
 		for state in secondary.spring_bones_internal:
-			for joint in state.verlets: springs[joint.bone_idx]=true
+			for joint in state.verlets:
+				if bone_contains.is_empty() or bone_contains in avatar.skeleton.get_bone_name(joint.bone_idx): springs[joint.bone_idx]=true
 	var meshes:=[]
 	avatar._collect_meshes(avatar.model,meshes)
 	for mesh in meshes:

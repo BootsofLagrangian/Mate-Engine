@@ -1,0 +1,51 @@
+{
+  "trace": {
+    "animated_steady": {
+      "callbacks": 110,
+      "engine_frames": 55,
+      "engine_delta_histogram": {
+        "0.0": 55,
+        "0.016666667": 55
+      },
+      "callbacks_per_engine_frame_histogram": {
+        "2": 55
+      },
+      "max_zero_time_tail_advance_m": 0.0111687099561095
+    },
+    "held_steady": {
+      "callbacks": 25,
+      "engine_frames": 25,
+      "engine_delta_histogram": {
+        "0.016666667": 25
+      },
+      "callbacks_per_engine_frame_histogram": {
+        "1": 25
+      },
+      "max_zero_time_tail_advance_m": 0
+    }
+  },
+  "auto": {
+    "animated_steady": {
+      "callbacks": 55,
+      "engine_frames": 55,
+      "engine_delta_histogram": {
+        "0.016666667": 55
+      },
+      "callbacks_per_engine_frame_histogram": {
+        "1": 55
+      },
+      "max_zero_time_tail_advance_m": 0
+    },
+    "held_steady": {
+      "callbacks": 25,
+      "engine_frames": 25,
+      "engine_delta_histogram": {
+        "0.016666667": 25
+      },
+      "callbacks_per_engine_frame_histogram": {
+        "1": 25
+      },
+      "max_zero_time_tail_advance_m": 0
+    }
+  }
+}

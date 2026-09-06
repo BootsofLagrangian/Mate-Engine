@@ -1,0 +1,9 @@
+{
+  "native/tools/probe_cape_continuous_automatic.gd": "f0dd0b5d51fc286a726552f0d38ac3c7e92963ef1eca3dfb0d77eea3f3fb883b",
+  "native/tools/cape_delta_observer.gd": "03c004cbdfef76758572455bd7f1b0313eb7dff6fa89df1b4e05bace8ca57033",
+  "native/tools/garment_quality_samples.gd": "514c2a7f439225cb5c231f125cea782002688985fb1e5f194bc59d57f0fe8f1a",
+  "assets/research/cape-continuous-automatic/comparison.mp4": "bca0d7b59a5d108bad8576300ad7a0af6911c4cc670b261cfaab335b1101cc98",
+  "assets/research/cape-continuous-automatic/report.json": "958a1c90e34e4274fedacba65a309b2734f4769ea8811a29fff38c6ade0043cf",
+  "diagnostics/physics_cloth/cape_continuous_automatic/report.json": "6e6af36af537d4546342cddc298f4a3aab241116c8559aee19421440c8612dd6",
+  "diagnostics/physics_cloth/summarize_cape_continuous.py": "5d5d0e5b81c310062fce9048acb31cd83d6f20507d915419bd8a46d23083cf42"
+}

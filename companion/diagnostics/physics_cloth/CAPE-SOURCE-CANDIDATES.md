@@ -1,5 +1,7 @@
 # Recovered cape source and nondefault candidates
 
+**Follow-up:** the manual seated-transition test was scheduling-confounded. The corrected automatic comparison also finds excessive stand-up motion, so candidate 1.2 remains rejected for the production default. See [continuous acceptance](CAPE-CONTINUOUS-ACCEPTANCE.md). The snapshot improvements below remain research observations.
+
 The original UMA secondary-physics data is recoverable. `extract_cyspring_profile.py` reads the serialized Unity `Gallop.CySpringDataContainer`, preserving raw fields and provenance in a versioned JSON profile. No runtime or default VRM was changed by this follow-up. This is a source recovery and small comparison experiment, not a completed cloth replacement.
 
 The selected local bundle is `3d/chara/body/bdy1089_00/clothes/pfb_bdy1089_00_cloth00`, SHA256 `e1385d37f4614d469e56eb759c659947a8d02084d76f2ea441474d3a68aa4a72`. It has four cape chains / 18 joints, 27 collider entries and four connected-panel links. Other locally inspected cloth01–04 containers differ; their game-mode selection is not established. The main body prefab alone only exposed an AssetHolder, so the separate clothes bundles were necessary.

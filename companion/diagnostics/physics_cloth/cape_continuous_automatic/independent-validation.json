@@ -1,0 +1,217 @@
+{
+  "scope": "Automatic production MotionPlayer with diagnostic host, 60Hz; no Windows chair host.",
+  "raw_sha256": "958a1c90e34e4274fedacba65a309b2734f4769ea8811a29fff38c6ade0043cf",
+  "source_start": {
+    "res://../assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "res://../assets/research/cape-candidates/cyspring-cloth00.json": "4f15c380b6d35c6e4fa34ec9f3162ce13566f9a3b7c6ea2b9a0c85f31ec3215c",
+    "res://addons/vrm/vrm_secondary.gd": "cc5b78de0523a372fa93f5f28685542aa3348caef35c8a43e838f6c2b367756e",
+    "res://addons/vrm/vrm_spring_bone.gd": "f6200c07441b10a70269c3e1e51b664dedd56d5b2a0e279f66e9c03a38b24b8f",
+    "res://addons/vrm/vrm_spring_bone_logic.gd": "ae1a2b7e88c761139c6b78b1564830f378972f722b82f4b1378891671df7e392",
+    "res://scripts/desktop_gait.gd": "6f1f542c15c6819c2e7fb47178ff28367e65ac49afc1ffcfbcc79f1459499ead",
+    "res://scripts/motion_player.gd": "4db42755299819c9b570631fbc79992bd875e04318df1dc64109933ebf04edbc",
+    "res://scripts/seated_transition.gd": "499063fd28c7158e049c311325d78ff19ce026303e13db37578163085e8c31bc",
+    "res://scripts/vrm_avatar.gd": "da4680e41ddbbc5652f03ba67c596ecd20ab1734169ffa5e1ce21e235037637e",
+    "res://tools/cape_delta_observer.gd": "03c004cbdfef76758572455bd7f1b0313eb7dff6fa89df1b4e05bace8ca57033",
+    "res://tools/garment_quality_samples.gd": "514c2a7f439225cb5c231f125cea782002688985fb1e5f194bc59d57f0fe8f1a",
+    "res://tools/probe_cape_continuous_automatic.gd": "f0dd0b5d51fc286a726552f0d38ac3c7e92963ef1eca3dfb0d77eea3f3fb883b"
+  },
+  "source_hashes_equal": true,
+  "parameter_checks": 384,
+  "parameter_errors": [],
+  "max_body_error": 0.0,
+  "max_world_error": 0.0,
+  "mesh_count": 660,
+  "sides": {
+    "0": {
+      "callbacks": 1320,
+      "per_engine_frame_histogram": {
+        "1": 1320
+      },
+      "engine_deltas": {
+        "0.016666667": 1319,
+        "0.0": 1
+      },
+      "zero_frames": [
+        720
+      ],
+      "yaw_range": [
+        0.0,
+        1.91980159282684
+      ],
+      "max_segment_length_error_m": 2.68220901489258e-07,
+      "phases": {
+        "startup_idle": {
+          "max_tip_step_m": 0.02018818592764987,
+          "source_frame": 28,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "walk_blend_in": {
+          "max_tip_step_m": 0.016700975088384112,
+          "source_frame": 146,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "walk": {
+          "max_tip_step_m": 0.009905026614440371,
+          "source_frame": 224,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "curved_turn": {
+          "max_tip_step_m": 0.021536498099881788,
+          "source_frame": 321,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "walk_blend_out": {
+          "max_tip_step_m": 0.02040241564446824,
+          "source_frame": 363,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "overhead_blend": {
+          "max_tip_step_m": 0.028367264166566937,
+          "source_frame": 511,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "idle_return": {
+          "max_tip_step_m": 0.027351837511757397,
+          "source_frame": 619,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "reload_settling": {
+          "max_tip_step_m": 0.017448005558093227,
+          "source_frame": 748,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "sit_enter": {
+          "max_tip_step_m": 0.03471204888256705,
+          "source_frame": 915,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "sit_hold": {
+          "max_tip_step_m": 0.0030083414906133354,
+          "source_frame": 1002,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "sit_exit": {
+          "max_tip_step_m": 0.02608700170687018,
+          "source_frame": 1143,
+          "bone": "Sp_Sh_Mantle0_L_00",
+          "boundary": false
+        },
+        "final_idle": {
+          "max_tip_step_m": 0.02424155133661343,
+          "source_frame": 1185,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        }
+      }
+    },
+    "1": {
+      "callbacks": 1320,
+      "per_engine_frame_histogram": {
+        "1": 1320
+      },
+      "engine_deltas": {
+        "0.016666667": 1319,
+        "0.0": 1
+      },
+      "zero_frames": [
+        720
+      ],
+      "yaw_range": [
+        0.0,
+        1.91980159282684
+      ],
+      "max_segment_length_error_m": 2.83122062683105e-07,
+      "phases": {
+        "startup_idle": {
+          "max_tip_step_m": 0.03603775593510268,
+          "source_frame": 3,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "walk_blend_in": {
+          "max_tip_step_m": 0.011077049175696466,
+          "source_frame": 140,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "walk": {
+          "max_tip_step_m": 0.01206375608642399,
+          "source_frame": 213,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "curved_turn": {
+          "max_tip_step_m": 0.02431026792985225,
+          "source_frame": 312,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "walk_blend_out": {
+          "max_tip_step_m": 0.01587130341133956,
+          "source_frame": 441,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "overhead_blend": {
+          "max_tip_step_m": 0.021996024246305305,
+          "source_frame": 505,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "idle_return": {
+          "max_tip_step_m": 0.02107723270727942,
+          "source_frame": 620,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "reload_settling": {
+          "max_tip_step_m": 0.033260463109126996,
+          "source_frame": 722,
+          "bone": "Sp_Sh_Mantle0_R_04",
+          "boundary": false
+        },
+        "sit_enter": {
+          "max_tip_step_m": 0.047736622550852606,
+          "source_frame": 909,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "sit_hold": {
+          "max_tip_step_m": 0.0020545437984642516,
+          "source_frame": 1001,
+          "bone": "Sp_Sh_Mantle0_R_00",
+          "boundary": false
+        },
+        "sit_exit": {
+          "max_tip_step_m": 0.0711859272665188,
+          "source_frame": 1147,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        },
+        "final_idle": {
+          "max_tip_step_m": 0.02169165551187778,
+          "source_frame": 1181,
+          "bone": "Sp_Sh_Mantle0_L_04",
+          "boundary": false
+        }
+      }
+    }
+  },
+  "exit_mesh": {
+    "scope": "candidate vs simultaneous baseline sparse triangles, not rest strain",
+    "max_edge_difference": 0.589857719657999,
+    "max_p95_edge_difference": 0.348260256662148,
+    "min_area_ratio": 0.355828481341559,
+    "max_opposed_normals": 0
+  }
+}

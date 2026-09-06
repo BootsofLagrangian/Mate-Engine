@@ -1,0 +1,17 @@
+{
+  "diagnostics/physics_cloth/modifier_timing/summary.json": "6cd3d49e26f967fcf001aaf08b52b55d67e735f77c8244ce2049bb9eda76e7ba",
+  "diagnostics/physics_cloth/modifier_timing/review_modifier_delta_auto.log": "ac078dcc73b3289ded64efc7836ab9517aad678b4b76565b2525d15240d63e28",
+  "diagnostics/physics_cloth/modifier_timing/review_modifier_delta_auto.gd": "3a239c66a841d2d17b4381db6c76a6d26110689278e7c63cf3722e67b455bb9b",
+  "diagnostics/physics_cloth/modifier_timing/review_delta_observer.gd": "aa3690c89258fb730b673cc3d5a09aff284bf88d2e2089f6da64b4cb0ff72a24",
+  "diagnostics/physics_cloth/modifier_timing/review_modifier_delta_trace.json": "b3cdb5b2c94068f00adf95ad97d0e6b5561672c26067d66f9dcf52436cc303fc",
+  "diagnostics/physics_cloth/modifier_timing/review_modifier_delta_trace.gd": "024a188b352bb35a6d633fc9ae3dfb1f1981abf17b1d2ce6f67fc1948895f55a",
+  "diagnostics/physics_cloth/modifier_timing/review_modifier_delta_trace.log": "41a97015453d0ef78331fd89b49971e8eddb6cf65c7ee220721ddba1635444f5",
+  "diagnostics/physics_cloth/modifier_timing/review_modifier_delta_auto.json": "b27df77a15cbd64f28524a2efb9150b0ba5ebf590576ca13c7d47d3bbd843f3f",
+  "native/addons/vrm/vrm_secondary.gd": "cc5b78de0523a372fa93f5f28685542aa3348caef35c8a43e838f6c2b367756e",
+  "native/addons/vrm/vrm_spring_bone.gd": "f6200c07441b10a70269c3e1e51b664dedd56d5b2a0e279f66e9c03a38b24b8f",
+  "native/addons/vrm/vrm_spring_bone_logic.gd": "ae1a2b7e88c761139c6b78b1564830f378972f722b82f4b1378891671df7e392",
+  "native/scripts/motion_player.gd": "4db42755299819c9b570631fbc79992bd875e04318df1dc64109933ebf04edbc",
+  "native/scripts/vrm_avatar.gd": "da4680e41ddbbc5652f03ba67c596ecd20ab1734169ffa5e1ce21e235037637e",
+  "assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+  "assets/motions/uma_cheval_idle.vrma": "93ca5fc2daf81902e0d61117903d39300e2157b26a6ec593763e473d2702311e"
+}

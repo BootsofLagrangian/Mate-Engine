@@ -1,0 +1,35 @@
+{
+  "scope": "Historical manual source writer; two addon integrations per engine frame. Does not establish automatic production motion timing.",
+  "checks": {
+    "source_hashes_match": true,
+    "body_input_error": 0.0,
+    "world_error": 0.0,
+    "callback_count": 5280,
+    "mesh_count": 660
+  },
+  "side_metrics": {
+    "0": {
+      "distance_m": 0.028765697144797365,
+      "frame": 1142,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "boundary": false
+    },
+    "1": {
+      "distance_m": 0.0830719138559215,
+      "frame": 1144,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "boundary": false
+    }
+  },
+  "mesh_scope": "Cross-condition differences, not strain relative to rest; 38 sparse triangles",
+  "exit_mesh": {
+    "max_relative_edge_change": 0.49165552976173,
+    "min_relative_area": 0.40830152314127,
+    "max_opposed_normals": 0
+  },
+  "identities": {
+    "native/tools/probe_cape_continuous.gd": "d6fef3232df91ef54214f2f39cfb22c9c138b4486f52c1ca2a32c00c6ab4a0a7",
+    "assets/research/cape-continuous/report.json": "03bf115c9a38f72d57a9007f6f848133f2982f5cb10d3118090a82da9c19a60a",
+    "diagnostics/physics_cloth/cape_continuous/summary.json": "adcf93b5aeeaad2920a251bcf321dd1046233a5828b6968a0b4111ccd359f274"
+  }
+}

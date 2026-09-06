@@ -1,0 +1,384 @@
+{
+  "source_hashes_unchanged": true,
+  "callbacks": [
+    1320,
+    1320
+  ],
+  "paired_mesh_samples": 660,
+  "max_body_input_error": 0.0,
+  "max_world_error": 0.0,
+  "yaw_range_rad": [
+    0.0,
+    1.91980159282684
+  ],
+  "phases": {
+    "curved_turn": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0215364973992109,
+        "max_net_engine_frame_tail_step": [
+          0.021536498099881788,
+          321,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 43.91770655183176
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0243102684617043,
+        "max_net_engine_frame_tail_step": [
+          0.02431026792985225,
+          312,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.68220901489258e-07,
+        "max_source_deflection_degrees": 20.737086112656918
+      },
+      "mesh": {
+        "max_displacement_m": 0.210643976926804,
+        "p95_relative_edge_change": 0.131988935971451,
+        "max_relative_edge_change": 0.188267064332276,
+        "min_relative_area": 0.825813884471993,
+        "opposed_normals": 0
+      }
+    },
+    "final_idle": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0242415517568588,
+        "max_net_engine_frame_tail_step": [
+          0.02424155133661343,
+          1185,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 52.274678642868764
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0216916557401419,
+        "max_net_engine_frame_tail_step": [
+          0.02169165551187778,
+          1181,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 27.09204950324039
+      },
+      "mesh": {
+        "max_displacement_m": 0.299232065677643,
+        "p95_relative_edge_change": 0.13700279210607,
+        "max_relative_edge_change": 0.191189870058865,
+        "min_relative_area": 0.828671676949688,
+        "opposed_normals": 0
+      }
+    },
+    "idle_return": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.027351837605238,
+        "max_net_engine_frame_tail_step": [
+          0.027351837511757397,
+          619,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.38418579101562e-07,
+        "max_source_deflection_degrees": 35.13056231667824
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0210772324353456,
+        "max_net_engine_frame_tail_step": [
+          0.02107723270727942,
+          620,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.83122062683105e-07,
+        "max_source_deflection_degrees": 43.33824013283709
+      },
+      "mesh": {
+        "max_displacement_m": 0.397158950567245,
+        "p95_relative_edge_change": 0.22713340168402,
+        "max_relative_edge_change": 0.312975263944879,
+        "min_relative_area": 0.635299873415552,
+        "opposed_normals": 0
+      }
+    },
+    "overhead_blend": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0283672641962767,
+        "max_net_engine_frame_tail_step": [
+          0.028367264166566937,
+          511,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.68220901489258e-07,
+        "max_source_deflection_degrees": 58.47910295659767
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0219960249960423,
+        "max_net_engine_frame_tail_step": [
+          0.021996024246305305,
+          505,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.68220901489258e-07,
+        "max_source_deflection_degrees": 44.442442665007206
+      },
+      "mesh": {
+        "max_displacement_m": 0.423123568296432,
+        "p95_relative_edge_change": 0.248935392909103,
+        "max_relative_edge_change": 0.312543249899395,
+        "min_relative_area": 0.689690576427927,
+        "opposed_normals": 0
+      }
+    },
+    "reload_settling": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0174480061978102,
+        "max_net_engine_frame_tail_step": [
+          0.017448005558093227,
+          748,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 36.35381846117625
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0332604609429836,
+        "max_net_engine_frame_tail_step": [
+          0.033260463109126996,
+          722,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 24.203492493803026
+      },
+      "mesh": {
+        "max_displacement_m": 0.208933562040329,
+        "p95_relative_edge_change": 0.16207142094365,
+        "max_relative_edge_change": 0.246831143953656,
+        "min_relative_area": 0.710950524099077,
+        "opposed_normals": 0
+      }
+    },
+    "sit_enter": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0347120463848114,
+        "max_net_engine_frame_tail_step": [
+          0.03471204888256705,
+          915,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 42.28187283051918
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0477366223931313,
+        "max_net_engine_frame_tail_step": [
+          0.047736622550852606,
+          909,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 42.364593251557174
+      },
+      "mesh": {
+        "max_displacement_m": 0.495093107223511,
+        "p95_relative_edge_change": 0.266652380058368,
+        "max_relative_edge_change": 0.367486675685005,
+        "min_relative_area": 0.601320202512488,
+        "opposed_normals": 0
+      }
+    },
+    "sit_exit": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0260870028287172,
+        "max_net_engine_frame_tail_step": [
+          0.02608700170687018,
+          1143,
+          "Sp_Sh_Mantle0_L_00"
+        ],
+        "max_bone_length_error_m": 2.23517417907715e-07,
+        "max_source_deflection_degrees": 39.98282091060909
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0711859241127968,
+        "max_net_engine_frame_tail_step": [
+          0.0711859272665188,
+          1147,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.38418579101562e-07,
+        "max_source_deflection_degrees": 45.88826052361008
+      },
+      "mesh": {
+        "max_displacement_m": 0.405233055353165,
+        "p95_relative_edge_change": 0.348260256662148,
+        "max_relative_edge_change": 0.589857719657999,
+        "min_relative_area": 0.355828481341559,
+        "opposed_normals": 0
+      }
+    },
+    "sit_hold": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.00300834164954722,
+        "max_net_engine_frame_tail_step": [
+          0.0030083414906133354,
+          1002,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.38418579101562e-07,
+        "max_source_deflection_degrees": 13.625129441266342
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.00205454370006919,
+        "max_net_engine_frame_tail_step": [
+          0.0020545437984642516,
+          1001,
+          "Sp_Sh_Mantle0_R_00"
+        ],
+        "max_bone_length_error_m": 2.38418579101562e-07,
+        "max_source_deflection_degrees": 24.47568236241719
+      },
+      "mesh": {
+        "max_displacement_m": 0.167250603437424,
+        "p95_relative_edge_change": 0.12008811044806,
+        "max_relative_edge_change": 0.181848807953079,
+        "min_relative_area": 0.809325523388484,
+        "opposed_normals": 0
+      }
+    },
+    "startup_idle": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0201881863176823,
+        "max_net_engine_frame_tail_step": [
+          0.02018818592764987,
+          28,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 38.552528071989656
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0360377579927444,
+        "max_net_engine_frame_tail_step": [
+          0.03603775593510268,
+          3,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.68220901489258e-07,
+        "max_source_deflection_degrees": 24.27324409315449
+      },
+      "mesh": {
+        "max_displacement_m": 0.205189988017082,
+        "p95_relative_edge_change": 0.133554884765022,
+        "max_relative_edge_change": 0.210213054992605,
+        "min_relative_area": 0.746160715890842,
+        "opposed_normals": 0
+      }
+    },
+    "walk": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.00990502722561359,
+        "max_net_engine_frame_tail_step": [
+          0.009905026614440371,
+          224,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 24.46764152221683
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0120637565851212,
+        "max_net_engine_frame_tail_step": [
+          0.01206375608642399,
+          213,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 17.279499213276626
+      },
+      "mesh": {
+        "max_displacement_m": 0.21681122481823,
+        "p95_relative_edge_change": 0.0681115669282456,
+        "max_relative_edge_change": 0.131345516482998,
+        "min_relative_area": 0.872608316868821,
+        "opposed_normals": 0
+      }
+    },
+    "walk_blend_in": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0167009737342596,
+        "max_net_engine_frame_tail_step": [
+          0.016700975088384112,
+          146,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.38418579101562e-07,
+        "max_source_deflection_degrees": 27.185191085404586
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0110770491883159,
+        "max_net_engine_frame_tail_step": [
+          0.011077049175696466,
+          140,
+          "Sp_Sh_Mantle0_L_04"
+        ],
+        "max_bone_length_error_m": 2.5331974029541e-07,
+        "max_source_deflection_degrees": 20.797466692467165
+      },
+      "mesh": {
+        "max_displacement_m": 0.253420501947403,
+        "p95_relative_edge_change": 0.104126709506667,
+        "max_relative_edge_change": 0.171282242569784,
+        "min_relative_area": 0.798483109669213,
+        "opposed_normals": 0
+      }
+    },
+    "walk_blend_out": {
+      "baseline": {
+        "max_per_callback_tail_step_m": 0.0204024147242308,
+        "max_net_engine_frame_tail_step": [
+          0.02040241564446824,
+          363,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.68220901489258e-07,
+        "max_source_deflection_degrees": 42.14728053782949
+      },
+      "candidate": {
+        "max_per_callback_tail_step_m": 0.0158713031560183,
+        "max_net_engine_frame_tail_step": [
+          0.01587130341133956,
+          441,
+          "Sp_Sh_Mantle0_R_04"
+        ],
+        "max_bone_length_error_m": 2.83122062683105e-07,
+        "max_source_deflection_degrees": 24.643740874492686
+      },
+      "mesh": {
+        "max_displacement_m": 0.211778834462166,
+        "p95_relative_edge_change": 0.114457670199845,
+        "max_relative_edge_change": 0.184969375518799,
+        "min_relative_area": 0.827168018986365,
+        "opposed_normals": 0
+      }
+    }
+  },
+  "scope": "Tail steps per actual callback and net engine frame are separate. Edge/area metrics compare candidate with simultaneously simulated baseline, not an unstretched rest mesh. Sparse Mantle-selected triangles only.",
+  "callbacks_per_engine_frame": {
+    "1": 2640
+  },
+  "engine_delta_counts": {
+    "0.0166666666666667": 2638,
+    "0.0": 2
+  },
+  "zero_delta_passes": [
+    {
+      "side": 0,
+      "source_frame": 720,
+      "generation": 1
+    },
+    {
+      "side": 1,
+      "source_frame": 720,
+      "generation": 1
+    }
+  ]
+}

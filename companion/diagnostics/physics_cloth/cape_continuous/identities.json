@@ -1,0 +1,7 @@
+{
+  "native/tools/probe_cape_continuous.gd": "d6fef3232df91ef54214f2f39cfb22c9c138b4486f52c1ca2a32c00c6ab4a0a7",
+  "native/tools/garment_quality_samples.gd": "514c2a7f439225cb5c231f125cea782002688985fb1e5f194bc59d57f0fe8f1a",
+  "assets/research/cape-continuous/comparison.mp4": "6517252a1c589d95d3705d2a774c9cea870b58a71e10a1dba410a00c2579e928",
+  "assets/research/cape-continuous/report.json": "03bf115c9a38f72d57a9007f6f848133f2982f5cb10d3118090a82da9c19a60a",
+  "diagnostics/physics_cloth/cape_continuous/report.json": "9c548ded28f3edff5298e768900295dafb18ab38d3b2d7b512c559a0e627e27f"
+}
