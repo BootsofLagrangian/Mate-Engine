@@ -7,6 +7,7 @@ turn_id prefix 'job:' and never pre-empt a foreground user turn.
 """
 import json
 import logging
+import math
 import threading
 import time
 from . import COMPANION_ROOT
@@ -70,7 +71,20 @@ class Turn:
         with self._lock:
             if self.cancelled.is_set():
                 return
+            # Shape the outbound copy only: action and done independently carry
+            # the same raw provider result, and history retains that raw result.
+            event = dict(event)
             kind = event.get('type')
+            if kind in ('action', 'done') and event.get('gesture'):
+                style = self.req.profile.motion_style
+                for field, factor, low, high in (
+                    ('intensity', 'amplitude', 0.0, 1.5),
+                    ('speed', 'tempo', 0.5, 2.0),
+                ):
+                    value = event.get(field, 1.0)
+                    if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
+                        value = 1.0
+                    event[field] = max(low, min(high, value * style[factor]))
             if kind == 'done':
                 event['ok'] = bool(event.get('text')) and self.outcome != 'error'
                 self.outcome = 'done' if event['ok'] else 'error'

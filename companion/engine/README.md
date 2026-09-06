@@ -87,6 +87,13 @@ Every turn event carries `turn_id` and `character`: `state(thinking|speaking|idl
 `done.ok=false` (no `text`) follows an `error`; queued speech is discarded. The client must flush audio on `error`; speech already played before a later generation failure cannot be retracted. A cancelled turn
 emits nothing after `cancelled`.
 
+Turn `action` and `done` metadata already includes the selected profile's motion style:
+`intensity = clamp((provider intensity or 1) * amplitude, 0, 1.5)` and
+`speed = clamp((provider speed or 1) * tempo, 0.5, 2)` (defaults apply only when omitted or invalid).
+This also applies to scripted job acknowledgements/results. Clients use these final values
+without another profile multiplier. Provider history and explicit motion previews are unchanged.
+`motion_style.idle_interval` remains profile metadata; it does not currently control idle scheduling.
+
 Validation failures (unknown character, blank text, bad `turn_id`, unreadable WAV, > 30 s) are `error`
 events tagged with the offending `turn_id`.
 
