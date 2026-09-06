@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "motions": [
+    {
+      "source_path": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_s.vrma",
+      "entry": {
+        "name": "sit_enter",
+        "path": "assets/motions/sit_enter.vrma",
+        "kind": "vrma",
+        "duration": 1.3666666746139526,
+        "loop": false,
+        "ambient": false,
+        "description": "Authored chair sit-down: bend, reach toward seat and lower pelvis",
+        "sha256": "462730295dd046fb9c20f9d6e82c15f8937b64df690d680fa8ac153e1d0cc001",
+        "source_clip": "anm_eve_type00_sitdown01_S",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/seating-candidates/uma-actions/manifest.json",
+        "conversion_manifest": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_s.bake.json",
+        "license": "local-user-assets-not-redistributable",
+        "seated_transition": "enter"
+      }
+    },
+    {
+      "source_path": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_loop.vrma",
+      "entry": {
+        "name": "sit_idle",
+        "path": "assets/motions/sit_idle.vrma",
+        "kind": "vrma",
+        "duration": 2.0,
+        "loop": true,
+        "ambient": false,
+        "description": "Authored seated idle paired with sit_enter and sit_exit",
+        "sha256": "0e39233152825252f022dbbe6a34e0a4978545602083502293b788b58e3792ff",
+        "source_clip": "anm_eve_type00_sitdown01_loop",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/seating-candidates/uma-actions/manifest.json",
+        "conversion_manifest": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_loop.bake.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_e.vrma",
+      "entry": {
+        "name": "sit_exit",
+        "path": "assets/motions/sit_exit.vrma",
+        "kind": "vrma",
+        "duration": 1.0333333015441895,
+        "loop": false,
+        "ambient": false,
+        "description": "Authored chair stand-up with forward weight transfer",
+        "sha256": "8aca1b030941b910bb09b5c05fcd2fc8652139de9dedb4f0715d11fe89fc851c",
+        "source_clip": "anm_eve_type00_sitdown01_E",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/seating-candidates/uma-actions/manifest.json",
+        "conversion_manifest": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_e.bake.json",
+        "license": "local-user-assets-not-redistributable",
+        "seated_transition": "exit"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/assembled/authored_think.vrma",
+      "entry": {
+        "name": "authored_think",
+        "path": "assets/motions/authored_think.vrma",
+        "kind": "vrma",
+        "duration": 5.166667103767395,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Think with hand near chin",
+        "sha256": "749c2aab9e7f2e7d79784c0d5ac4c2067c6bfc1c88c5e6e41faff5fb46f7872d",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/everyday-candidates/export/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/assembled/authored_think.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/assembled/authored_bow.vrma",
+      "entry": {
+        "name": "authored_bow",
+        "path": "assets/motions/authored_bow.vrma",
+        "kind": "vrma",
+        "duration": 3.0666670203208923,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Small polite standing bow",
+        "sha256": "6e67a6761e46237ad56b4bd8c72dccbf04745778731ba4c44c3be37d1b25c75e",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/everyday-candidates/export/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/assembled/authored_bow.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/assembled/authored_breathe.vrma",
+      "entry": {
+        "name": "authored_breathe",
+        "path": "assets/motions/authored_breathe.vrma",
+        "kind": "vrma",
+        "duration": 5.400000154972076,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "One deliberate breath and relax",
+        "sha256": "5a0f186049fac93425b6d0297b91cff7e86b5a6e5fef5aeb5f378d526c8f27b7",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/everyday-candidates/export/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/assembled/authored_breathe.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/assembled/authored_read.vrma",
+      "entry": {
+        "name": "authored_read",
+        "path": "assets/motions/authored_read.vrma",
+        "kind": "vrma",
+        "duration": 12.53333330154419,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Reading pantomime; no book is attached",
+        "sha256": "dddb8406067a38ff6864501a4df8558c43a2caefeb9059a6ef534e51f7a04c5b",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/seating-candidates/uma-actions/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/assembled/authored_read.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/assembled/authored_drink.vrma",
+      "entry": {
+        "name": "authored_drink",
+        "path": "assets/motions/authored_drink.vrma",
+        "kind": "vrma",
+        "duration": 4.600000023841858,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Drink pantomime; no cup is attached",
+        "sha256": "aa391db82aac34d030b9f5e79ea0f28f9c5dbeaa03cd00c415628b643047e42b",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/seating-candidates/uma-actions/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/assembled/authored_drink.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/assembled/authored_phone.vrma",
+      "entry": {
+        "name": "authored_phone",
+        "path": "assets/motions/authored_phone.vrma",
+        "kind": "vrma",
+        "duration": 2.0333333015441895,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Check-phone pantomime; no phone is attached",
+        "sha256": "14b5186afb6df1fc2c4c59e5eb1b894e7a698cd9cfd8b1ea908661f40ef20cba",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/seating-candidates/uma-actions/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/assembled/authored_phone.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/canonical/uma_byebye01.vrma",
+      "entry": {
+        "name": "authored_wave",
+        "path": "assets/motions/authored_wave.vrma",
+        "kind": "vrma",
+        "duration": 1.9666666984558105,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "One friendly hand wave",
+        "sha256": "b4bcb974fef34507eca4261bb3e50da01f47c9eef2e4ff5bcc4d8b6ec21aeafd",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/everyday-candidates/export/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/canonical/uma_byebye01.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/canonical/uma_stretch01.vrma",
+      "entry": {
+        "name": "authored_stretch",
+        "path": "assets/motions/authored_stretch.vrma",
+        "kind": "vrma",
+        "duration": 3.366666555404663,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Shoulder and arm stretch",
+        "sha256": "c806297dc5edb03bbfd3cd51a27cd27352111d31a3ef5f276e2ace254c49b34e",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/everyday-candidates/export/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/canonical/uma_stretch01.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/canonical/uma_stretch02.vrma",
+      "entry": {
+        "name": "authored_overhead_stretch",
+        "path": "assets/motions/authored_overhead_stretch.vrma",
+        "kind": "vrma",
+        "duration": 4.099999904632568,
+        "loop": false,
+        "ambient": false,
+        "contact_mode": "foot",
+        "description": "Open arms overhead and relax",
+        "sha256": "4e018ee772b0163e037b3f30b383936b2f44f839060075f9d0b89fdb7a15e19c",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/everyday-candidates/export/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/canonical/uma_stretch02.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    },
+    {
+      "source_path": "assets/research/everyday-candidates/assembled/authored_type.vrma",
+      "entry": {
+        "name": "authored_type",
+        "path": "assets/motions/authored_type.vrma",
+        "kind": "vrma",
+        "duration": 8.333333969116211,
+        "loop": true,
+        "ambient": false,
+        "contact_mode": "",
+        "description": "Typing pantomime, upper body only; no laptop is attached",
+        "sha256": "201b0463ab399aa5e965c773b7568dfd0988bb9be59e9a653a313d6f1e8b5b06",
+        "source": "local UMA extraction",
+        "source_manifest": "assets/research/seating-candidates/uma-actions/manifest.json",
+        "conversion_manifest": "assets/research/everyday-candidates/assembled/authored_type.curation.json",
+        "license": "local-user-assets-not-redistributable"
+      }
+    }
+  ]
+}

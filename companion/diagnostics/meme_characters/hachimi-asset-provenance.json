@@ -1,0 +1,98 @@
+{
+  "id": "hachimi",
+  "character_id": "1003",
+  "variant": "actual UMA mini/chibi game model, locally assembled",
+  "texture_variant": "dry",
+  "vrm": "assets/hachimi.vrm",
+  "sha256": "b9bd8e8693e12e17f91856f156f82a0e68bae6b647f94587809134dc66d870d1",
+  "bytes": 1608864,
+  "bones": 114,
+  "humanoid_bones": 31,
+  "meshes": 7,
+  "source_files": [
+    {
+      "path": "3d/chara/mini/body/mbdy1003_00/pfb_mbdy1003_00",
+      "sha256": "7e1fa0bd0739ffea871185506326515a9771ecf380b68cd927debb9263e9c0b4",
+      "bytes": 379987
+    },
+    {
+      "path": "3d/chara/mini/head/mchr1003_00/pfb_mchr1003_00_hair",
+      "sha256": "55ac9adf1f41d45e4c90d2d6303bfc05986c937e60ceb03ec3a2b2bf66c6b9d1",
+      "bytes": 129964
+    },
+    {
+      "path": "3d/chara/mini/head/mchr0001_00/pfb_mchr0001_00_face0",
+      "sha256": "c2caaf1e9461680e4620c1d37065fe6f06425746f75c94d34617a497d2914112",
+      "bytes": 51308
+    },
+    {
+      "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_eye_diff",
+      "sha256": "e5cf707c1c82d1d4dfbb9ec51875d4d00e9f0fe16203c3b1616d48bed3667970",
+      "bytes": 33147
+    },
+    {
+      "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_mayu_diff",
+      "sha256": "cadedbb6f5063b0dd1bada2401edea91ac770e4dd42a9128f8d684213d20b9c3",
+      "bytes": 15718
+    },
+    {
+      "path": "3d/chara/mini/head/mchr1003_00/textures/tex_mchr1003_00_mouth_diff",
+      "sha256": "4f7dcea9e8108cc0cd6171610e902a62034c2287c49f518547854e955b31d30f",
+      "bytes": 9140
+    },
+    {
+      "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_0_diff",
+      "sha256": "dcaa9fae14362c0814571c32b58d8bced273135622736f0bc3d954bec7e3526f",
+      "bytes": 14183
+    },
+    {
+      "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_1_diff",
+      "sha256": "2f392bafb021acb119ef2b2b8f662c3ed8115134206e60416b1b3c09a63d54d9",
+      "bytes": 14276
+    },
+    {
+      "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_2_diff",
+      "sha256": "9fba2f9d21d734f59221435ec4987a9a7edd4c68e3ec1f81ebd98830c6390972",
+      "bytes": 14175
+    },
+    {
+      "path": "3d/chara/mini/head/mchr0001_00/textures/tex_mchr0001_00_face0_3_diff",
+      "sha256": "0c717912b7aa1d775b122b97bcf16694fd062229880389003496f38fb8164b92",
+      "bytes": 16822
+    },
+    {
+      "path": "sourceresources/3d/chara/mini/body/mbdy1003_00/materials/mtl_mbdy1003_00",
+      "sha256": "dccba5ca3f19db568a8191278e260fb18a8bb794c1c853ed950ef5580940946e",
+      "bytes": 78182
+    },
+    {
+      "path": "sourceresources/3d/chara/mini/head/mchr1003_00/materials/mtl_mchr1003_00_hair",
+      "sha256": "e8b38d87da2037fb9e49d0148b3d8645b4a9413b6132aa9860c6b4dbfa576684",
+      "bytes": 169866
+    }
+  ],
+  "physics": {
+    "changed": true,
+    "version": 1,
+    "source": "Mate authored conservative VRM0 spring tuning",
+    "hair_roots": 7,
+    "skirt_roots": 10,
+    "collider_groups": 4,
+    "cloth_triangles": false
+  },
+  "spring_authoring_sha256": "ec0a7e16d35cc25ebf926f971f72d2098336e95e0882f2416573414a18a40c5a",
+  "expressions": [
+    "blink",
+    "a",
+    "i",
+    "u",
+    "e",
+    "o"
+  ],
+  "limits": [
+    "Mate-authored bounded hair/skirt spring groups; not original game physics or full cloth simulation.",
+    "Original mini-specific dry diffuse textures.",
+    "Single source AA atlas surface with five continuous mouth deformations; no original facial animation engine.",
+    "Copyrighted user-local game assets; no redistribution license inferred."
+  ]
+}

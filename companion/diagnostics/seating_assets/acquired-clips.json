@@ -1,0 +1,419 @@
+{
+  "clips": [
+    {
+      "path": "assets/research/seating-candidates/quaternius_seated_idle.vrma",
+      "duration": 1.6666666269302368,
+      "humanoid_bones": 52,
+      "sha256": "7edc237e688ba1fe7bed16939c0c050a2b1c57b268050c996efdd0026f4ee453",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/quaternius_sit_down.vrma",
+      "duration": 1.2999999523162842,
+      "humanoid_bones": 52,
+      "sha256": "9a9b623a6091cc69d79959f23e28cb9db5f4a9ce4dde5c4bc5144840195a2ffa",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/quaternius_stand_up.vrma",
+      "duration": 1.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "4739c5f0ceb2e8465e5ad8a13d2420d089fd3ae1ff1877fac7948ab12b76eebb",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_book01_e.vrma",
+      "duration": 3.0,
+      "humanoid_bones": 52,
+      "sha256": "ca114caf6e9de7ccdad2a77bb1118fa1e1ac12d627e1434c9501fc8d550825b8",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_book01_loop.vrma",
+      "duration": 6.599999904632568,
+      "humanoid_bones": 52,
+      "sha256": "70cebb80a39279fd0e98942f79de526869510b1242e1eab7da67a0ae6383deff",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_book01_s.vrma",
+      "duration": 2.933333396911621,
+      "humanoid_bones": 52,
+      "sha256": "8bec18ee3a33b6ab059ed2639fde0721cf2be8b82960814095b50e87b065c0e7",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_chair01_l_drink01_loop.vrma",
+      "duration": 3.3333334922790527,
+      "humanoid_bones": 52,
+      "sha256": "4bb7983d7a7d65864ae683ab8108a9da136a364247631ec0acd611c8ea939b77",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_chair01_s_drink01_loop.vrma",
+      "duration": 3.366666555404663,
+      "humanoid_bones": 52,
+      "sha256": "b3034b55c6f1802333c07943cebacb682348b4a4cb41197064d561a7ff9d29be",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_diarylook01_e.vrma",
+      "duration": 3.700000047683716,
+      "humanoid_bones": 52,
+      "sha256": "b444a6216bd8beb1817e278d3cadb5e50da8c2b866084a210bd5df82a935de50",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_diarylook01_loop.vrma",
+      "duration": 2.000000476837158,
+      "humanoid_bones": 52,
+      "sha256": "2bfbb866fbbd45cba477214c3cf55694f0a595bef17af1093ac6e2ba47d50869",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_diarylook01_s.vrma",
+      "duration": 4.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "19acaaac2701e48395f2fb1572211c383da993a01a7aabe01cf121070d02ebb0",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_drink01_e.vrma",
+      "duration": 1.2000000476837158,
+      "humanoid_bones": 52,
+      "sha256": "478cc5160ab0732ec023080367f5b6bae53e31e82191f8824d5ac0d60222621e",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_drink01_loop.vrma",
+      "duration": 2.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "8033a65107949336eabc9254a4a82a2cb209696f9f61d391f853b56e3de5c2e6",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_drink01_s.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "5c1be168939863d834090967380a8049cb7b656d46a1f213f18643872fb2353e",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_phonelook01_e.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "431fa7e0553e3f50def79f36caee2b73404c28290b5148dae45747370d90d339",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_phonelook01_loop.vrma",
+      "duration": 2.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "a132cdd6623ba598054dfe74f32a16b37a92a0eb6270f37c04d8681feacb3c0b",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_phonelook01_s.vrma",
+      "duration": 1.5333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "aca829c474fc6647dae152f6b5bde3c53291477f29fb819bd1272d0046831771",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_e.vrma",
+      "duration": 1.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "8aca1b030941b910bb09b5c05fcd2fc8652139de9dedb4f0715d11fe89fc851c",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_loop.vrma",
+      "duration": 2.0,
+      "humanoid_bones": 52,
+      "sha256": "0e39233152825252f022dbbe6a34e0a4978545602083502293b788b58e3792ff",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown01_s.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "462730295dd046fb9c20f9d6e82c15f8937b64df690d680fa8ac153e1d0cc001",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown02_e.vrma",
+      "duration": 2.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "7476321a1fce4ffce053203ecb52c3123ca13612b8316f52fd56d06ba7b20865",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown02_loop.vrma",
+      "duration": 2.0,
+      "humanoid_bones": 52,
+      "sha256": "f3fa53fe52a6559eb9c08dc42ac3d55d2031708a3c0a076234911866762d33ea",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown02_s.vrma",
+      "duration": 2.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "a8412467c09d19635ee09b567030f8e83bbb7a29968c7982914c85ad3b5eb563",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown03_e.vrma",
+      "duration": 0.699999988079071,
+      "humanoid_bones": 52,
+      "sha256": "d153222ccf84bd826196d2819da43b1e74689827c367f9d910f9161200504010",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown03_loop.vrma",
+      "duration": 2.000000238418579,
+      "humanoid_bones": 52,
+      "sha256": "82c683b87d2ce5e46f68437c98f9f5552832ae47c6c2b01f0b9046802fa27b09",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown03_s.vrma",
+      "duration": 1.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "3931f8e97d72680890c64e291f2309a9fcee22cf6fca822792cadff16d586093",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown04_e.vrma",
+      "duration": 0.8666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "a90da79e04739ac8f912a50c2dea324b777eb69414ef29ca77b05523e061cef5",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown04_loop.vrma",
+      "duration": 2.000000238418579,
+      "humanoid_bones": 52,
+      "sha256": "d996cbaeeeab6da893f1337c278a326ceac88bf4a87896b024593d1d6e14dc93",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown04_s.vrma",
+      "duration": 1.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "383f54894e751325b01ea7718a742a003c5e305ab31e787627219d300bde243c",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown05_e.vrma",
+      "duration": 1.4333332777023315,
+      "humanoid_bones": 52,
+      "sha256": "24522e6f7da56d2e14b41e440e617bf3b0ba81fbe913437aec85a277fbb1d1c7",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown05_loop.vrma",
+      "duration": 2.3333334922790527,
+      "humanoid_bones": 52,
+      "sha256": "09a4ecfca5f8394780f2d49a6d4e10f4c77938ae56ad61eab3fb4cc2e10cc112",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown05_s.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "379f6a4e1c6b8e7b14a646f484f92d7ab12874a357b9b7e041b0f0315f1761f4",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown06_01_e.vrma",
+      "duration": 1.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "bfb56cd045415ed56cb18b9698b48f62d33a4cc8f5f04587a113b687b560d656",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown06_01_loop.vrma",
+      "duration": 2.0,
+      "humanoid_bones": 52,
+      "sha256": "bcdd3bf491d85262c932bfb5cddc5425085195a59071af544898f96b8ceaf0e1",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown06_01_s.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "1d55af1d9e816540e78b108146a9b35be641305db17e85bf3af3e2da2fee326e",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown06_e.vrma",
+      "duration": 1.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "c27209aa783b647b840f6d1196b6dcd73ef7dbbf53866b7677116bb23989418a",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown06_loop.vrma",
+      "duration": 2.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "bcac0a96bf72a4c1e659141ff6ec7ea1ebd4073c2d62ec75bcfbf7e5a52b361b",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown06_s.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "cc3bf42d1b164bbe4993e988f1d09d2bc37e943067b08c094649cc06861c74c6",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown07_e.vrma",
+      "duration": 1.9666666984558105,
+      "humanoid_bones": 52,
+      "sha256": "22d1f47048ec9368b65b5cc19ca3c4568e2f6ec8a2bfca58fd55b2a2a20be75a",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown07_loop.vrma",
+      "duration": 2.366666555404663,
+      "humanoid_bones": 52,
+      "sha256": "755d3545c97fe4b0efe9fa34b51db8bb2351c8919e6812a493d64158c08718de",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_sitdown07_s.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "2b6c459766575f5825d47930d705e666254bdb99558fe84124548fd9c5ba5020",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_l_eat01_e.vrma",
+      "duration": 0.36666667461395264,
+      "humanoid_bones": 52,
+      "sha256": "1ccd2fa3b8219032383f6aeb9c6a9f3ce9d4b7c912b3ffacfa9271be84decf93",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_l_eat01_loop.vrma",
+      "duration": 2.0333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "ab3bf2e6d9b1c759e068f157b93b48711b77e8d7ec1a87487d19aefda412904a",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_l_eat01_s.vrma",
+      "duration": 3.9666666984558105,
+      "humanoid_bones": 52,
+      "sha256": "a564d68be73ff239c484329aa6e7db1da24dd8ad59b5c60765bf684841b437d6",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_l_laptop01_loop.vrma",
+      "duration": 8.333333969116211,
+      "humanoid_bones": 52,
+      "sha256": "494210d5d09431bc2fb3a3a2e4deb4c9bcacd5c7bb73b4a8af215e25be7987fb",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_l_study01_loop.vrma",
+      "duration": 11.366666793823242,
+      "humanoid_bones": 52,
+      "sha256": "cb6e8ef8fae9162b2a28f3c484f11d8b48386a2bf3c0c4528d4ed6a28b76612d",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_l_study02_loop.vrma",
+      "duration": 11.333333969116211,
+      "humanoid_bones": 52,
+      "sha256": "4832d27ccf0a2db11a38e60139dd098b6822c68e7999aba4b5843d647d0e1a49",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_s_laptop01_loop.vrma",
+      "duration": 8.366666793823242,
+      "humanoid_bones": 52,
+      "sha256": "50395db535a7e507da8aee68c01cd07fa87caa6079b2f0dc9d0a56d65f6ffbd7",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_s_study01_loop.vrma",
+      "duration": 11.333333969116211,
+      "humanoid_bones": 52,
+      "sha256": "3a7135a1f0b88417afc19e71f17da4c675e5bc10b4749b1a27be2fff2f0576cf",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/uma-canonical/uma_table_s_study02_loop.vrma",
+      "duration": 11.333333969116211,
+      "humanoid_bones": 52,
+      "sha256": "c0fb10c066d808b193da5a18c0a4c74c74d8a3a9cc60e81ea629076b084394f6",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_chest_open.vrma",
+      "duration": 1.3666666746139526,
+      "humanoid_bones": 52,
+      "sha256": "d29deba93bbedb3fc171b138788f3ad34302fb90601b66de8c2620a85b970927",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_consume.vrma",
+      "duration": 1.3333333730697632,
+      "humanoid_bones": 52,
+      "sha256": "99d6d61d1d2ab8b077aeefc5f2e47508994c5919df2541098931cf1e0bc3c3cb",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_fold_arms.vrma",
+      "duration": 2.5,
+      "humanoid_bones": 52,
+      "sha256": "c83d3f327262f309c12a012ca1b30068b3b6ee66a7a6dc323cb7c79cd8fc654a",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_no.vrma",
+      "duration": 2.5,
+      "humanoid_bones": 52,
+      "sha256": "0c3e7f049cde23ad2c5b3be52ecb0139f2ac38ebb15c63c7873abb270dda97c8",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_phone.vrma",
+      "duration": 2.933333396911621,
+      "humanoid_bones": 52,
+      "sha256": "007d7760ad085a0d45a8c390ce477661d57194cc4d7eafa04d3b9a3254568444",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_rail_call.vrma",
+      "duration": 2.5,
+      "humanoid_bones": 52,
+      "sha256": "4effd3be9787507661784da05a5a6330daeb191e7ab18970fa4711e77ceecec7",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_rail_lean.vrma",
+      "duration": 2.5,
+      "humanoid_bones": 52,
+      "sha256": "c0f6111dc16084ece3ceed8293cf9fbbf521892dee63799e5a1017851297ff76",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_rise_from_lying.vrma",
+      "duration": 1.5333333015441895,
+      "humanoid_bones": 52,
+      "sha256": "476a5d0b1895c6f97ade036710c289d68df19c49416a625be3c318607cc04009",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "assets/research/seating-candidates/public-actions/quaternius_yes.vrma",
+      "duration": 2.5,
+      "humanoid_bones": 52,
+      "sha256": "af8c5c8ad5c908845d173ad671f5610e7d7447e217bba7f96a9ad1f30c1f1802",
+      "license": "CC0-1.0"
+    }
+  ],
+  "count": 59,
+  "scope": "Acquired canonical research candidates; runtime acceptance is separate."
+}

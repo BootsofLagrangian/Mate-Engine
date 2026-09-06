@@ -1,0 +1,545 @@
+{
+  "scope": "Owned Godot source-window captures, Windows RTX4090 D3D12 Forward+; static neutral/blink/vowels at0.3/0.6/1, front and45degrees. No live microphone/viseme timing claim.",
+  "avatar_hashes": {
+    "mambo": "bf2e0d9578f40be246532a72172c23e1e5ce4e675446122440fff7ce904050c7",
+    "hachimi": "be12334e7e519347fda2965dd39dd6e87105f2ae7f0b9e60d991cb53ee5710b2"
+  },
+  "captures": [
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-aa-0.3.png",
+      "sha256": "c0c4a14dd02ab2235d2fa5b5dae4337b0b79e298462b769fd88cb00512a555ec",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-aa-0.6.png",
+      "sha256": "ce773bded5bc4f9d5894cdae5a79517689e7bfc72a484d93e1fbc95c5edf64e4",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-aa-1.0.png",
+      "sha256": "649d9e54b6be76bc03e37564b46e15b5796b2ee690fde347c3059b029b4ff5cc",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-blink-0.3.png",
+      "sha256": "04ed82cb2cff4a10aab5677ad1f87082b726e019a5c70536ff1f5a4f2a9937fa",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-blink-0.6.png",
+      "sha256": "46d34e7aa74e5d86cab97c8dfca517220006add0fd66c4a98adad13910d28df7",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-blink-1.0.png",
+      "sha256": "a4e9a61ff76df4ae9135c8a26e431e96e9c713943f84f873919c545cff28108f",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ee-0.3.png",
+      "sha256": "1aedbfd4e69a7eccaa40aff84b5f430db7e578ea8f5164d9f78001ae4bf86aca",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ee-0.6.png",
+      "sha256": "2e40516b2df4a9b6d2f2c197f195a468c0ed52e2095ff0a323461a10dd0ebb7b",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ee-1.0.png",
+      "sha256": "46bc9a33868d0caa291eb0d7b0e4de72878fc5f49d01a7902fe74f69c2b3d0d7",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ih-0.3.png",
+      "sha256": "341a30dc29373f3b9ba64bf3fb71c5bcc3ee334422dafce84da36947fd8f1883",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ih-0.6.png",
+      "sha256": "0bc249ff23012bda0a4bb25c90da156540d8807275e155f8ce7eb5a01348b4ad",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ih-1.0.png",
+      "sha256": "1f3aa4dd7a67e8837308827e122451260742ab23c8be40b966e673bbf81f348f",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-oh-0.3.png",
+      "sha256": "c3667c76d5bcff8d679e8d71e2e3abd9bbd72fc334e5bac16a0734c5dd50a235",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-oh-0.6.png",
+      "sha256": "e48d528e70e90f210bbd8d40524b1ad3755eaa6b91806e13308d7152607a7f64",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-oh-1.0.png",
+      "sha256": "a842863125c5ca7550025d52e176d1b8e05209eb1aee98282563f2ba282182dd",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ou-0.3.png",
+      "sha256": "bc418105d1a7f10160e69dfe2c063a679a7a63acf4d268bcd259b702c7b1b968",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ou-0.6.png",
+      "sha256": "3aa8cd122acf325af428d0f496bb0941e1418d04b8a4f38acac0a2af17940586",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-ou-1.0.png",
+      "sha256": "8cd60579489c965b704dcd056bdf3a3174eb18d58b34e5dc7ca3f17b4408168d",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/hachimi-raw-0.0.png",
+      "sha256": "4b763b5f446dae34fcda158a7408996aa807541a19755aee75124dc31546db2a",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-aa-0.3.png",
+      "sha256": "dc669165373aefc805a6aba6691410b43fc69e7cf763781b35b427be3fd923d7",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-aa-0.6.png",
+      "sha256": "776e34cc4efd1728d0f4ed6cc33b498b5091377de164e86e187c4337b3690a05",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-aa-1.0.png",
+      "sha256": "52425319cab6ecdbc3ddc23c22d0715923df9e83d08df2af77288bc477855d85",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-blink-0.3.png",
+      "sha256": "e00fdb05653b8cad7928185aa88ea94a0565c5b4395578a26fa73cc6815d86af",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-blink-0.6.png",
+      "sha256": "64d2bd7800280d600becf8606cad7a3d61ff159ef835686752dfa7423fe4378b",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-blink-1.0.png",
+      "sha256": "b6842095b1984890464e7faf0d2b9cfb06bcd21b43e4bb8060e6336f3e21e79b",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ee-0.3.png",
+      "sha256": "aee2eac53a1b9de491dce0be30c3c03422317e3cf2bb5b959842c63140ffa571",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ee-0.6.png",
+      "sha256": "17bbfe589ca4986b52190781acf03a61af338fcaf7f304713ec2f9493ed1a56b",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ee-1.0.png",
+      "sha256": "7a15500c1105ac6a19a091fb183421ae5338130929a0f9764cd88122e1ba3460",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ih-0.3.png",
+      "sha256": "24880086f81c8b791fb4cd99b8190ae6d9fc66295c3524c673e0fc8f8b7781fc",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ih-0.6.png",
+      "sha256": "ae466492026052f7c807e01dd48675a025cdbb19b26dfb4e242711bd42ed715d",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ih-1.0.png",
+      "sha256": "ba7d152ac78e006c1a93eb510c22f2af1312978f4c414f08658965fe8d8cb167",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-oh-0.3.png",
+      "sha256": "3e940912f9646a274aeacee2fb12e483889367493ee26335b9d336f0a27dfbc5",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-oh-0.6.png",
+      "sha256": "38f289e83ee695d4151aff7f335fd283ed92deba0e684d035c2d5fda592f4bb7",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-oh-1.0.png",
+      "sha256": "5fe3a3371d88b5e646d57c24f77cbd09c6b60b3b45682ac7a3a8e34899336d07",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ou-0.3.png",
+      "sha256": "334542c8fe9ec596b47bbe0d5341d9fb206584cf7e0f6f77af1ab48ffbc2d7b4",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ou-0.6.png",
+      "sha256": "48ef10cd7b56eeabef9d615744c12c461601d530df4f569e3766ce8bd6a98359",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-ou-1.0.png",
+      "sha256": "50dbba5a071e924003456b41929b5520d6b793b5fbf5a473ef872458e0545082",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-front/mambo-raw-0.0.png",
+      "sha256": "b065051b6db08bc359896237703dbd245785a445151de14068584438296dd365",
+      "angle": "front"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-aa-0.3.png",
+      "sha256": "2a77d5a54b58c3837020eed9ad1080014c605a81175bdded0b6f782accb108bc",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-aa-0.6.png",
+      "sha256": "336bb86c2bd988aad442003fbf90e613d8dfe0bc7ea04234d11cfe8c09f57384",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-aa-1.0.png",
+      "sha256": "0d55586c072cc0695b6ddd141f87785055394d5f3b23ed66ad5c1cf590489388",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-blink-0.3.png",
+      "sha256": "c66a4c2bf058ede49855056660e145ec3d2af115219105145ff970c61d7260f9",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-blink-0.6.png",
+      "sha256": "9a1c58a07388719223d66e66f60b1f378284cc95088204a50ba2e3712af863dc",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-blink-1.0.png",
+      "sha256": "e2d5b81e17bdaec9ced1b7edb50d4a49496184404d267ea2a909276eac8df9ec",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ee-0.3.png",
+      "sha256": "2275bc8be044e194acbe34c3fdf18884aeacf2ad64eeecbce8beb902065a5a15",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ee-0.6.png",
+      "sha256": "fda5ad3da1b6aac109dcccb0da7913eeecdd46c2e8edc6f8b788ef3056c062a9",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ee-1.0.png",
+      "sha256": "13809a8423c7c226afb59f6fbdb9134d9c0347a3fb0420a192d610ae5f68021c",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ih-0.3.png",
+      "sha256": "56eda913d2a6c67ceccf4de83e025c3fcc307878b91e2b53f87302f4f9f5564c",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ih-0.6.png",
+      "sha256": "82db7e10e91268c76208f8007493a56685aa12a3f71e930833dacddbffffb082",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ih-1.0.png",
+      "sha256": "d9064d22ec5f679080929f133bb82634d73488e00f0e02a6f5f1da42b923b263",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-oh-0.3.png",
+      "sha256": "dab50256de0f100cfaa26f9c09a059939f687f443d053f9cf95fd54ed28ec60c",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-oh-0.6.png",
+      "sha256": "92ca1ae83e0691afaf46575e9f2c3fbc1e02eb0a3731fe60297399d017a92504",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-oh-1.0.png",
+      "sha256": "1d0eb5606b3bbef22e7a9e406128b0d58212d3c18f4463195a49418dc5b6d9f0",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ou-0.3.png",
+      "sha256": "a8c3e62095302e3c31df231cfbb1a226154d667e6366e9d7018c154e0db1fd15",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ou-0.6.png",
+      "sha256": "f85e4e64b1795a2889d59277f8d95da09feccd7f10b3873443bfbeac5085969b",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-ou-1.0.png",
+      "sha256": "481d131987297bd6ccd9472995212b49450c1d89884c8fba3979e9cacb0f2554",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/hachimi-raw-0.0.png",
+      "sha256": "34ef2ecb98f5d3ee8b3524eebdeab62aed5edf980ac42ed331f2bd5c5761cb0e",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-aa-0.3.png",
+      "sha256": "b93faaa64b33e7cb38356b3c71b49b8f6fb599095c05cf76195eb1d6a979beb2",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-aa-0.6.png",
+      "sha256": "9f3fde6755e2c2be6a2284894d22e24bbe12d0982a1a74eb1fd4b0e0300826a4",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-aa-1.0.png",
+      "sha256": "d1ea6d3fd1eb4366fe919a012eab5e211773ba70da06bd1438f194799c981508",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-blink-0.3.png",
+      "sha256": "4ec4dc634cfcbcce8aa34008c89eb30959092ffbcebbf9fb04b136aebea5487a",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-blink-0.6.png",
+      "sha256": "3f3cf68c10fc9fedc78d4e5c1650c833a535cae6f0ee849023ad29a820383fdf",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-blink-1.0.png",
+      "sha256": "1d537b03216d1cbaa5bdaebc82f96a2a251925a74e4adb05ceb063d059d6b439",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ee-0.3.png",
+      "sha256": "51f496969f33945e8287e360f9717b4c5816a4f3091a0d5bed08e4afb5d66f6f",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ee-0.6.png",
+      "sha256": "a5c54e68cf20d46bcaf8ba8269f315412655fb6ccb2eedc6e084bf52a6f4cda2",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ee-1.0.png",
+      "sha256": "b164c2a671bd8cb0ad79116a048af9272a040f2c86e73316ab1123e7457d5d5e",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ih-0.3.png",
+      "sha256": "231281196a18d9c52ef0edc15754457b95e88f543ec4c449268bfd81298cf3f5",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ih-0.6.png",
+      "sha256": "ce599c0896b2413bc429db6da0bd3e843e54b40182638c26f51c9bed12ffdd94",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ih-1.0.png",
+      "sha256": "4bff12a07e5013e80e8fd30f01f1d666980c96edb9c20505187e2e510acbc38f",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-oh-0.3.png",
+      "sha256": "88bffcf0e1f9792f66476dbfb8a3c64886c6442f3a05c2e610fa3465c8334a2d",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-oh-0.6.png",
+      "sha256": "51a243e870faba79f8f0b1abd78577a0c6f776e511ad5ca1a66f55a961267e44",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-oh-1.0.png",
+      "sha256": "22476284d93516d28ae2c8c4d4f1b69a3ddf4c9799360109cd4ff5d9fb7cbb34",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ou-0.3.png",
+      "sha256": "ebb868a33db09cf88772e1c026f1489a28c01930a14ea346459ea72b54e2b2e9",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ou-0.6.png",
+      "sha256": "615359377661cb02d23f9f461768e8ab67df8a70e3d085e7f794518db7f81ed8",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-ou-1.0.png",
+      "sha256": "51b7c8f39dcf3af9dc1f53790f9e2f8aed866be469dd059c747f6639f051a902",
+      "angle": "45"
+    },
+    {
+      "path": "logs/meme-dry-windows-45/mambo-raw-0.0.png",
+      "sha256": "c683458a3a3068b076cf139eb8474c249c67a65fc6dc586415b46714af7cb16a",
+      "angle": "45"
+    }
+  ],
+  "aperture_checks": [
+    {
+      "character": "mambo",
+      "vowel": "aa",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        670,
+        1247,
+        2068
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "mambo",
+      "vowel": "ih",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        256,
+        452,
+        763
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "mambo",
+      "vowel": "ou",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        371,
+        576,
+        674
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "mambo",
+      "vowel": "ee",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        440,
+        832,
+        1343
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "mambo",
+      "vowel": "oh",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        528,
+        831,
+        1142
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "hachimi",
+      "vowel": "aa",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        894,
+        1658,
+        2739
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "hachimi",
+      "vowel": "ih",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        333,
+        586,
+        1017
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "hachimi",
+      "vowel": "ou",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        480,
+        743,
+        878
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "hachimi",
+      "vowel": "ee",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        561,
+        1103,
+        1773
+      ],
+      "strictly_increasing": true
+    },
+    {
+      "character": "hachimi",
+      "vowel": "oh",
+      "weights": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "pink_pixels": [
+        673,
+        1132,
+        1499
+      ],
+      "strictly_increasing": true
+    }
+  ],
+  "process_log_sha256": "d899eab59778a0f5cdfcadfffab3633de98427a500e2691e8b5d7361e46e7377",
+  "render_script_sha256": "6e77288db2e9dfa5f92649e6b98cf9d21b8b6bdef22c7e420ac0d99381260a98",
+  "checks": 10,
+  "failures": 0
+}

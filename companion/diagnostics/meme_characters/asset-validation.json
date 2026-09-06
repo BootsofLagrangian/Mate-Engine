@@ -1,0 +1,71 @@
+{
+  "scope": "Actual installed GLB/VRM numeric and reference-WAV checks; not GPU rendering or subjective voice similarity.",
+  "rows": [
+    {
+      "id": "mambo",
+      "profile_sha256": "7522e0f1dc7575da5786010845e61de4f036b6b561eb20d8dc1f345983d9d509",
+      "variants": [
+        {
+          "variant": "dry",
+          "sha256": "01f0e5b3165fc5d525f7e5bb73512bce0d8ea63a9b8fae31926655aba99017cd",
+          "bytes": 1843228,
+          "checks": 69,
+          "failures": 0,
+          "mesh_layout_sha256": "c26e782cc3a8d9b5cb2670cc055b7527ef36239e82342d6aed69cb7850cb1639",
+          "geometry_sha256": "583010b0229a726a497478aa971e40536bb488abc32a55f70bdf87fbc5de4460",
+          "humanoid_bones": 31
+        },
+        {
+          "variant": "wet",
+          "sha256": "56d042e9d1c60b8b9a6bec36c7192c29473cb66c335e2a806a4c82b123e36104",
+          "bytes": 1828248,
+          "checks": 69,
+          "failures": 0,
+          "mesh_layout_sha256": "c26e782cc3a8d9b5cb2670cc055b7527ef36239e82342d6aed69cb7850cb1639",
+          "geometry_sha256": "583010b0229a726a497478aa971e40536bb488abc32a55f70bdf87fbc5de4460",
+          "humanoid_bones": 31
+        }
+      ],
+      "voice": {
+        "sha256": "22da3226a092cf1377403c879b23966ae706a4741ac2ef88909740aa5269a99b",
+        "channels": 1,
+        "sample_rate": 32000,
+        "seconds": 3.2
+      }
+    },
+    {
+      "id": "hachimi",
+      "profile_sha256": "772ec00cfe2968df091fc70db299103a9edca116f38eb0f072ddc51c1df5758d",
+      "variants": [
+        {
+          "variant": "dry",
+          "sha256": "b9bd8e8693e12e17f91856f156f82a0e68bae6b647f94587809134dc66d870d1",
+          "bytes": 1608864,
+          "checks": 69,
+          "failures": 0,
+          "mesh_layout_sha256": "c26e782cc3a8d9b5cb2670cc055b7527ef36239e82342d6aed69cb7850cb1639",
+          "geometry_sha256": "66b9e6a37f32344efe8f1e8f3ab3c9c399e0a688af8d456ed96a52d67f4f5032",
+          "humanoid_bones": 31
+        },
+        {
+          "variant": "wet",
+          "sha256": "4432961c18fcc247f02c52596ba1ca490bdf77130d911c3475031e08df65b3a9",
+          "bytes": 1617472,
+          "checks": 69,
+          "failures": 0,
+          "mesh_layout_sha256": "c26e782cc3a8d9b5cb2670cc055b7527ef36239e82342d6aed69cb7850cb1639",
+          "geometry_sha256": "66b9e6a37f32344efe8f1e8f3ab3c9c399e0a688af8d456ed96a52d67f4f5032",
+          "humanoid_bones": 31
+        }
+      ],
+      "voice": {
+        "sha256": "58b8dbbb17c474ee33efdafdee1986a6855eec9f5ac6e0963432a16c530baf16",
+        "channels": 1,
+        "sample_rate": 32000,
+        "seconds": 3.2
+      }
+    }
+  ],
+  "checks": 284,
+  "failures": 0
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "join": "enter_to_loop",
+    "max_rotation_deg": 2.9575586669421963e-06,
+    "max_translation_m": 4.656612873077393e-10,
+    "worst_rotation": {
+      "bone": "rightIndexProximal",
+      "property": "rotation",
+      "error": 2.9575586669421963e-06
+    }
+  },
+  {
+    "join": "loop_to_exit",
+    "max_rotation_deg": 3.4150945850063755e-06,
+    "max_translation_m": 1.0896096981628377e-16,
+    "worst_rotation": {
+      "bone": "leftFoot",
+      "property": "rotation",
+      "error": 3.4150945850063755e-06
+    }
+  },
+  {
+    "join": "exit_to_enter_standing",
+    "max_rotation_deg": 3.257792601184328e-05,
+    "max_translation_m": 7.450580596923828e-09,
+    "worst_rotation": {
+      "bone": "leftUpperArm",
+      "property": "rotation",
+      "error": 3.257792601184328e-05
+    }
+  },
+  {
+    "join": "idle_loop_seam",
+    "max_rotation_deg": 0.0,
+    "max_translation_m": 4.656612873077393e-10,
+    "worst_rotation": {
+      "bone": "hips",
+      "property": "rotation",
+      "error": 0.0
+    }
+  }
+]

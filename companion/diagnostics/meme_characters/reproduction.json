@@ -1,0 +1,30 @@
+{
+  "tool_sha256": "a53c6902c85896d38336e88ed7a00d687384d9813963f699716df23ac2c32cac",
+  "scope": "Fresh conversion with Mate-authored spring metadata in isolated temporary output from same recorded local source bundles; no installed assets mutated.",
+  "outputs": [
+    {
+      "id": "mambo",
+      "variant": "dry",
+      "sha256": "01f0e5b3165fc5d525f7e5bb73512bce0d8ea63a9b8fae31926655aba99017cd",
+      "bit_identical": true
+    },
+    {
+      "id": "mambo",
+      "variant": "wet",
+      "sha256": "56d042e9d1c60b8b9a6bec36c7192c29473cb66c335e2a806a4c82b123e36104",
+      "bit_identical": true
+    },
+    {
+      "id": "hachimi",
+      "variant": "dry",
+      "sha256": "b9bd8e8693e12e17f91856f156f82a0e68bae6b647f94587809134dc66d870d1",
+      "bit_identical": true
+    },
+    {
+      "id": "hachimi",
+      "variant": "wet",
+      "sha256": "4432961c18fcc247f02c52596ba1ca490bdf77130d911c3475031e08df65b3a9",
+      "bit_identical": true
+    }
+  ]
+}

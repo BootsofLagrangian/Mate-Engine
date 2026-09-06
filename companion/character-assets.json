@@ -40,5 +40,39 @@
       "minimum_seconds": 3.2,
       "note": "Official unchanged speech. Only trailing silence added when shorter than GPT-SoVITS v2 minimum 3 s. Reference transcript in profile; Eishin ASR homophone corrected to 厳守."
     }
+  },
+  {
+    "id": "mambo",
+    "vrm": {
+      "source_kind": "local_uma_mini",
+      "sha256": "01f0e5b3165fc5d525f7e5bb73512bce0d8ea63a9b8fae31926655aba99017cd",
+      "provenance": "diagnostics/meme_characters/mambo-asset-provenance.json",
+      "variant": "dry",
+      "optional_wet_sha256": "56d042e9d1c60b8b9a6bec36c7192c29473cb66c335e2a806a4c82b123e36104"
+    },
+    "reference": {
+      "url": "https://files.microcms-assets.io/assets/973fc097984b400db8729642ddff5938/f724ae38d8e743d995a560ef7b3d7a90/matikanetannhauser_voice.mp3",
+      "sha256": "2deb374b1bdb2fb2baa0539fe986e17828d746caa83cbd665d76d86fb6d704e7",
+      "mp3": "assets/mambo-reference.mp3",
+      "minimum_seconds": 3.2,
+      "note": "Official unchanged clean speech, resampled mono32k; trailing silence only to minimum3.2s. Japanese transcript ASR inspected with character-context homophone correction. Meme persona is authored; not an exact meme recording."
+    }
+  },
+  {
+    "id": "hachimi",
+    "vrm": {
+      "source_kind": "local_uma_mini",
+      "sha256": "b9bd8e8693e12e17f91856f156f82a0e68bae6b647f94587809134dc66d870d1",
+      "provenance": "diagnostics/meme_characters/hachimi-asset-provenance.json",
+      "variant": "dry",
+      "optional_wet_sha256": "4432961c18fcc247f02c52596ba1ca490bdf77130d911c3475031e08df65b3a9"
+    },
+    "reference": {
+      "url": "https://files.microcms-assets.io/assets/973fc097984b400db8729642ddff5938/4d827fc2a81046e4a18c6564ec56df68/tokaiteio_voice.mp3",
+      "sha256": "ca27015bfbe545647c2ad8bab627f968098cf880e851ca763e7a883ec21d2362",
+      "mp3": "assets/hachimi-reference.mp3",
+      "minimum_seconds": 3.2,
+      "note": "Official unchanged clean speech, resampled mono32k; trailing silence only to minimum3.2s. Japanese transcript ASR inspected with character-context homophone correction. Meme persona is authored; not an exact meme recording."
+    }
   }
 ]

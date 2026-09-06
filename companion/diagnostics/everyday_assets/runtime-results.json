@@ -1,0 +1,245 @@
+{
+  "cases": [
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 5.76666710376739,
+      "max_solver_reported_error_m": 0.000000361967124717921,
+      "name": "authored_think",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 3.66666702032089,
+      "max_solver_reported_error_m": 0.000000327910214537042,
+      "name": "authored_bow",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 6.00000015497208,
+      "max_solver_reported_error_m": 0.000000331948228904366,
+      "name": "authored_breathe",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 13.1333333015442,
+      "max_solver_reported_error_m": 0.000000339226488677014,
+      "name": "authored_read",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 5.20000002384186,
+      "max_solver_reported_error_m": 0.000000389163574254781,
+      "name": "authored_drink",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 2.63333330154419,
+      "max_solver_reported_error_m": 0.000000333283395548278,
+      "name": "authored_phone",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 2.56666669845581,
+      "max_solver_reported_error_m": 0.000000390924810744764,
+      "name": "authored_wave",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 3.96666655540466,
+      "max_solver_reported_error_m": 0.000000363268327419064,
+      "name": "authored_stretch",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "foot",
+      "duration": 4.69999990463257,
+      "max_solver_reported_error_m": 0.000000301932431057139,
+      "name": "authored_overhead_stretch",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "cheval-grand",
+      "contact_mode": "",
+      "duration": 17.2666679382324,
+      "max_solver_reported_error_m": 0.0,
+      "name": "authored_type",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 5.76666710376739,
+      "max_solver_reported_error_m": 0.000000270308248673246,
+      "name": "authored_think",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 3.66666702032089,
+      "max_solver_reported_error_m": 0.00000029844201776541,
+      "name": "authored_bow",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 6.00000015497208,
+      "max_solver_reported_error_m": 0.000000241340160300751,
+      "name": "authored_breathe",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 13.1333333015442,
+      "max_solver_reported_error_m": 0.000000300919538176458,
+      "name": "authored_read",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 5.20000002384186,
+      "max_solver_reported_error_m": 0.000000274789101695205,
+      "name": "authored_drink",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 2.63333330154419,
+      "max_solver_reported_error_m": 0.000000243287416878957,
+      "name": "authored_phone",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 2.56666669845581,
+      "max_solver_reported_error_m": 0.000000268324356511584,
+      "name": "authored_wave",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 3.96666655540466,
+      "max_solver_reported_error_m": 0.000000330859478481216,
+      "name": "authored_stretch",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "foot",
+      "duration": 4.69999990463257,
+      "max_solver_reported_error_m": 0.000000273244381787663,
+      "name": "authored_overhead_stretch",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "rice-shower",
+      "contact_mode": "",
+      "duration": 17.2666679382324,
+      "max_solver_reported_error_m": 0.0,
+      "name": "authored_type",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 5.76666710376739,
+      "max_solver_reported_error_m": 0.000000328671120541912,
+      "name": "authored_think",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 3.66666702032089,
+      "max_solver_reported_error_m": 0.000000358867481509151,
+      "name": "authored_bow",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 6.00000015497208,
+      "max_solver_reported_error_m": 0.000000302552280118107,
+      "name": "authored_breathe",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 13.1333333015442,
+      "max_solver_reported_error_m": 0.00000032961978035928,
+      "name": "authored_read",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 5.20000002384186,
+      "max_solver_reported_error_m": 0.000000330859478481216,
+      "name": "authored_drink",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 2.63333330154419,
+      "max_solver_reported_error_m": 0.000000298116333397047,
+      "name": "authored_phone",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 2.56666669845581,
+      "max_solver_reported_error_m": 0.00000038744809671698,
+      "name": "authored_wave",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 3.96666655540466,
+      "max_solver_reported_error_m": 0.000000299161911243573,
+      "name": "authored_stretch",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "foot",
+      "duration": 4.69999990463257,
+      "max_solver_reported_error_m": 0.000000328164020402255,
+      "name": "authored_overhead_stretch",
+      "nonfinite_poses": 0
+    },
+    {
+      "character": "eishin-flash",
+      "contact_mode": "",
+      "duration": 17.2666679382324,
+      "max_solver_reported_error_m": 0.0,
+      "name": "authored_type",
+      "nonfinite_poses": 0
+    }
+  ],
+  "failures": 0
+}

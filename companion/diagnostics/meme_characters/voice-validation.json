@@ -1,0 +1,30 @@
+[
+  {
+    "id": "mambo",
+    "text": "マンボ〜。えい、えい、むん！",
+    "reference_text": "頑張るぞー！えい、えい、むん！",
+    "reference_sha256": "22da3226a092cf1377403c879b23966ae706a4741ac2ef88909740aa5269a99b",
+    "output_sha256": "30b8b3da3d9fcdb25ae363648206ef820a00a969856b62d43206fec9f16c245f",
+    "elapsed_seconds": 1.4834158970043063,
+    "audio_seconds": 2.9,
+    "sample_rate": 32000,
+    "peak": 0.7158203125,
+    "rms": 0.08260412180665644,
+    "bytes": 185644,
+    "scope": "Direct warm existing GPU GPT-SoVITS /tts functional generation; no microphone/LLM/latency benchmark"
+  },
+  {
+    "id": "hachimi",
+    "text": "はちみ〜。へへ、ボクの出番だね！",
+    "reference_text": "帝王目指して、頑張ろうね！",
+    "reference_sha256": "58b8dbbb17c474ee33efdafdee1986a6855eec9f5ac6e0963432a16c530baf16",
+    "output_sha256": "b9b852c45e6e2d1567110000277ba362233802ea1d9f3ca0a40cd6c755bdd14c",
+    "elapsed_seconds": 1.1565497300034622,
+    "audio_seconds": 3.9,
+    "sample_rate": 32000,
+    "peak": 0.54443359375,
+    "rms": 0.07672277650701777,
+    "bytes": 249644,
+    "scope": "Direct warm existing GPU GPT-SoVITS /tts functional generation; no microphone/LLM/latency benchmark"
+  }
+]

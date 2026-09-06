@@ -26,9 +26,13 @@ def main():
     parser.add_argument('--clip', default='homewalk01_loop')
     parser.add_argument('--intermediate', default='uma_homewalk')
     parser.add_argument('--alias', default='uma_homewalk_direct')
+    parser.add_argument('--source-root', type=Path,
+                        default=COMPANION / 'assets/research/uma/export-work/natural-subset')
+    parser.add_argument('--research-root', type=Path,
+                        default=COMPANION / 'assets/research/walking-candidates')
     args = parser.parse_args()
-    research = COMPANION / 'assets/research/walking-candidates'
-    source = COMPANION / 'assets/research/uma/export-work/natural-subset'
+    research = args.research_root.resolve()
+    source = args.source_root.resolve()
     yaml_path = source / 'yaml' / f'anm_eve_type00_{args.clip}.anim'
     rig_path = source / 'fbx/rig.json'
     paths = json.loads(rig_path.read_text())['avatars'][0]['paths']
@@ -91,6 +95,20 @@ def main():
     intermediate = research / 'intermediate' / (args.alias+'.glb')
     intermediate.write_bytes(pack(data, bytes(packed)))
     mapping = json.loads((COMPANION / 'diagnostics/authored_idle/uma-bone-map.json').read_text())
+    # Prop visibility/size tracks can animate Hand_Attach nodes. They cannot
+    # affect humanoid FK when outside every mapped bone's ancestor chain.
+    # Preserve these in the intermediate GLB and explicitly report exclusion
+    # from the humanoid-only output; never drop scale on a humanoid ancestor.
+    parents = {child: i for i, n in enumerate(data['nodes']) for child in n.get('children', [])}
+    relevant = set()
+    for name in mapping:
+        node = names[name]
+        while node is not None and node not in relevant:
+            relevant.add(node)
+            node = parents.get(node)
+    excluded_prop_scale = [c for c in animation['channels']
+                           if c['target']['path'] == 'scale' and c['target']['node'] not in relevant]
+    animation['channels'] = [c for c in animation['channels'] if c not in excluded_prop_scale]
     blob, report = bake_humanoid(data, bytes(packed), mapping, 100)
     output = research / (args.alias+'.vrma')
     output.write_bytes(blob)
@@ -98,6 +116,8 @@ def main():
                    'translation_sampling': 'Existing FBX-derived translation channels, unchanged',
                    'replaced_rotation_tracks': len(replaced), 'source_paths': replaced,
                    'unmapped_source_curves_absent_from_avatar': absent_from_rig,
+                   'excluded_nonhumanoid_scale_nodes': [data['nodes'][c['target']['node']]['name'] for c in excluded_prop_scale],
+                   'prop_scale_preserved_in': str(intermediate.relative_to(research)),
                    'source_yaml_sha256': hashlib.sha256(yaml_path.read_bytes()).hexdigest(),
                    'source_rig_sha256': hashlib.sha256(rig_path.read_bytes()).hexdigest(),
                    'input_glb_sha256': hashlib.sha256(original.read_bytes()).hexdigest(),
