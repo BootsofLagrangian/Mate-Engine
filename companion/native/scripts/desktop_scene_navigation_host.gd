@@ -15,9 +15,13 @@ var _completion := Callable()
 var ground_latched := false
 func configure(app: Node) -> void: host=app
 func owns_foot() -> bool: return holding and foot_world.is_finite()
-func request(target: Vector3, solids: Array) -> Dictionary:
+func request(target: Vector3, solids: Array, grid: Dictionary = {}) -> Dictionary:
 	if host == null or host.spatial_camera()==null or not host.avatar.has_model(): return {"accepted":false,"reason":"scene_unavailable"}
 	if _blocked(): return {"accepted":false,"reason":"foreground"}
+	if not grid.is_empty():
+		for key in grid:
+			if key not in ["area","cell_size"]:return {"accepted":false,"reason":"invalid_navigation_geometry"}
+		if not grid.get("area") is Rect2 or typeof(grid.get("cell_size")) not in [TYPE_FLOAT,TYPE_INT] or not is_finite(float(grid.cell_size)) or float(grid.cell_size)<.02 or float(grid.cell_size)>.3:return {"accepted":false,"reason":"invalid_navigation_geometry"}
 	if not host.motion.has_method("prepare_scene_locomotion"): return {"accepted":false,"reason":"scene_motion_unavailable"}
 	var original: Vector3=host.avatar.contact_anchors().foot
 	var placement:Dictionary=host.normalize_scene_ground_placement(original)
@@ -27,11 +31,15 @@ func request(target: Vector3, solids: Array) -> Dictionary:
 	var low:=Vector2(minf(start.x,target.x),minf(start.z,target.z))-Vector2.ONE*1.2
 	var high:=Vector2(maxf(start.x,target.x),maxf(start.z,target.z))+Vector2.ONE*1.2
 	var candidate:=DesktopSceneNavigation.new()
-	var geometry:=candidate.configure(Rect2(low,high-low),start.y,solids,.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale,navigation_cell_size(high-low))
+	var area:Rect2=grid.get("area",Rect2(low,high-low))
+	var cell:float=float(grid.get("cell_size",navigation_cell_size(high-low)))
+	var geometry:=candidate.configure(area,start.y,solids,.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale,cell)
 	if not geometry.ok:candidate.dispose();return {"accepted":false,"reason":geometry.reason}
 	_serial+=1
 	var result:=candidate.plan("scene:"+str(_serial),start,target,.35*host._pet_scale)
 	if not result.accepted:candidate.dispose();return result
+	var view := route_view_admission(result.path,host.normalize_scene_ground_placement,host.objects.screen_rects())
+	if not view.accepted:candidate.dispose();return view
 	if holding:cancel("superseded")
 	navigation.dispose();navigation=candidate
 	ground_latched=false
@@ -44,6 +52,25 @@ func request(target: Vector3, solids: Array) -> Dictionary:
 	if not host.motion.prepare_scene_locomotion(atan2(direction.x,direction.z)):
 		cancel("motion_rejected");return {"accepted":false,"reason":"motion_rejected"}
 	return result
+## The all-heading hull encloses turning as well as translation. With positive
+## camera depth, every projected vertex on a straight world segment lies within
+## its endpoint projection envelope; require one workarea for that full envelope.
+static func route_view_admission(path: PackedVector3Array, ground_query: Callable, areas: Array) -> Dictionary:
+	if path.is_empty() or not ground_query.is_valid():return {"accepted":false,"reason":"route_view_unavailable"}
+	var previous := Rect2()
+	for index in path.size():
+		var result: Dictionary = ground_query.call(path[index])
+		if not result.get("ok",false) or result.get("changed",true) or not result.get("bounds") is Rect2:
+			return {"accepted":false,"reason":"route_view_blocked","path_index":index,"point":path[index],"ground_view":result}
+		var bounds: Rect2 = result.bounds
+		var swept: Rect2 = bounds if index==0 else previous.merge(bounds)
+		var fits := false
+		for area in areas:
+			if Rect2(area).encloses(swept):fits=true;break
+		if not fits:return {"accepted":false,"reason":"route_view_blocked","path_index":index,"bounds":swept}
+		previous=bounds
+	return {"accepted":true,"reason":"route_view_clear","path_points":path.size()}
+
 func _blocked() -> bool:
 	var job_active:bool=not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
 	return job_active or not host.autonomy.enabled or host.autonomy._pointer_interaction or host.objects.is_dragging() or host.panel_open or host._drag_active or host._sit_active or ((host.audio.voice_active or host.session.is_foreground_busy() or host.bridge.dialogue_holding(host._now())) and not host.objects.owns_foreground_speech()) or host.mic.is_recording() or host.motion._preview or host.motion._custom_motion
@@ -124,9 +151,9 @@ func shutdown() -> void:
 	if host!=null:cancel("shutdown")
 	navigation.dispose();host=null
 
-func request_owned(target: Vector3, solids: Array, completion: Callable) -> Dictionary:
+func request_owned(target: Vector3, solids: Array, completion: Callable, grid: Dictionary = {}) -> Dictionary:
 	if not completion.is_valid():return {"accepted":false,"reason":"missing_owner"}
-	var result:=request(target,solids)
+	var result:=request(target,solids,grid)
 	if result.accepted:
 		_completion=completion
 		ground_latched=true
@@ -159,11 +186,13 @@ static func navigation_cell_size(size: Vector2) -> float:
 func adopt_ground_placement() -> Dictionary:
 	if host==null or host.spatial_camera()==null or not host.avatar.has_model():return {"ok":false,"reason":"scene_unavailable"}
 	if _blocked() or navigation.active or not host.autonomy.surface_mode:return {"ok":false,"reason":"foreground"}
-	if holding:return {"ok":true,"point":foot_world,"changed":false}
+	if holding:return {"ok":true,"point":foot_world,"original_world":foot_world,"changed":false,"projected_displacement_px":Vector2.ZERO,"reason":"already_owned_ground"}
 	var original:Vector3=host.avatar.contact_anchors().foot
 	var result:Dictionary=host.normalize_scene_ground_placement(original)
 	if not result.get("ok",false):return result
 	if not placement_is_clear(original,result.point,host.objects.scene_obstacle_bounds(),.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale):return {"ok":false,"reason":"blocked_placement"}
+	result["original_world"]=original
+	result["projected_displacement_px"]=host.spatial_camera().unproject_position(result.point)-host.spatial_camera().unproject_position(original)
 	foot_world=result.point;holding=true;ground_latched=true
 	host.autonomy.cancel_target("scene_placement");host.autonomy.set_process(false)
 	host._update_avatar_transform(0);host._update_pet_rect()
@@ -185,3 +214,23 @@ static func placement_is_clear(start: Vector3, target: Vector3, solids: Array, r
 		for i in 4:
 			if Geometry2D.segment_intersects_segment(a,b,corners[i],corners[(i+1)%4])!=null:return false
 	return true
+
+## Successful authored exit already committed this world point. Retain it as
+## idle virtual ground, without a second placement or legacy taskbar approach.
+func contact_exit_token() -> Dictionary:
+	var ids:Array=[]
+	for intent in host.living.director._queue:ids.append(str(intent.id))
+	return {"active":str(host.living.director._active.get("id","")),"queue":ids}
+
+func adopt_contact_exit(point: Vector3, model_id: int, expected_owner: Dictionary, restoring_object_id: String = "") -> Dictionary:
+	if host==null or host.spatial_camera()==null or not host.avatar.has_model() or host.avatar.model.get_instance_id()!=model_id:return {"ok":false,"reason":"stale_model"}
+	var restoring: bool = not restoring_object_id.is_empty() and host.objects._interaction.get("id","")==restoring_object_id and host.objects._interaction.get("stage","")=="chair_restore" and host.objects._interaction.get("completed_foot",Vector3.INF)==point and host.objects._interaction.get("completed_model",0)==model_id
+	if host._drag_active or not host.living.enabled or not host.autonomy.enabled or not host.autonomy.surface_mode or navigation.active or _completion.is_valid() or (not host.objects._interaction.is_empty() and not restoring) or not host.objects._presentation.is_empty() or not host.autonomy._active_target_id.is_empty() or contact_exit_token()!=expected_owner:return {"ok":false,"reason":"ownership_changed"}
+	var fit:Dictionary=host.normalize_scene_ground_placement(point)
+	if not fit.get("ok",false) or bool(fit.get("changed",false)):return {"ok":false,"reason":"exit_ground_does_not_fit"}
+	if not placement_is_clear(point,point,host.objects.scene_obstacle_bounds(),.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale):return {"ok":false,"reason":"exit_ground_blocked"}
+	foot_world=point;holding=true;ground_latched=true
+	host.autonomy.set_process(false)
+	host._update_avatar_transform(0);host._update_pet_rect()
+	diagnostics={"contact_exit_world":point,"reason":"completed_contact_ground"}
+	return {"ok":true,"point":point,"reason":"completed_contact_ground"}

@@ -1,0 +1,10 @@
+{
+  "base": "companion/native/tools/probe_authored_contact_path.gd",
+  "base_sha256": "3dd5cb3d3f3d9f1364fbfabe48965a777aa47b8f5960ce05456da982e6efeaeb",
+  "changes": [
+    "only replace character literal mambo with hachimi and output filename"
+  ],
+  "script_sha256": "678a04e076352bcc74703adbc50fdb5822ea0882225cd89b0c7f54e9c37bd5f7",
+  "command": "CONTACT_MINI=1 companion/tools/Godot_v4.5.2-stable_linux.x86_64 --headless --path companion/native --script /home/hard2251/workspace/mate-engine/Mate-Engine/companion/diagnostics/authored_foot_contacts/hachimi-probe.gd",
+  "executed_command": "CONTACT_MINI=1 companion/tools/Godot_v4.5.2-stable_linux.x86_64 --headless --path companion/native --script /tmp/probe_hachimi_contact_path.gd"
+}

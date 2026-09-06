@@ -1,0 +1,3 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+LIFT_DERIVATIVE_REVIEW={ "failures": 0, "accepted_intervals": 570, "rejected_intervals": 6, "samples_per_interval": 17, "maximum_raw_numeric_overflow_m": 0.00000093709212, "guard_fraction_of_leg_length": 0.00001 }

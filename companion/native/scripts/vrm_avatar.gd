@@ -424,7 +424,10 @@ func _capture_secondary_pose(expected_skeleton: Skeleton3D) -> void:
 		seated_geometry = SeatedGeometryCalibrator.measure(self,_seated_canonical_rotations)
 
 func set_seated_floor(clearance_m: float) -> bool:
-	if not has_model() or not is_finite(clearance_m) or clearance_m<0.25 or clearance_m>1.2: return false
+	if not has_model() or not is_finite(clearance_m): return false
+	# Seat clearance is rig-local: miniature rigs need proportionate limits.
+	var rig_scale:=skeleton.get_bone_global_rest(bone_index.hips).origin.y/0.90387
+	if clearance_m<0.25*rig_scale or clearance_m>1.2*rig_scale: return false
 	if not is_equal_approx(seated_floor.clearance,clearance_m):
 		clear_seated_floor()
 		seated_floor.configure(self,clearance_m)
@@ -644,3 +647,8 @@ func add_pose_offsets(offsets: Dictionary) -> void:
 		var g: Basis = bone_rest_global[idx]
 		var delta := (g.inverse()*canonical_to_basis(offsets[bone])*g).get_rotation_quaternion()
 		skeleton.set_bone_pose_rotation(idx,(skeleton.get_bone_pose_rotation(idx)*delta).normalized())
+
+## Immutable current-pose rig-volume approximation for occupied-support planning.
+## Caller owns continuous swept collision and scoped support exemptions.
+func body_capsule_snapshot()->Dictionary:
+	return preload("res://scripts/rig_body_capsules.gd").snapshot(self)

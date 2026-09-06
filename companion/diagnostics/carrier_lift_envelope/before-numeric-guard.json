@@ -1,0 +1,50 @@
+{
+  "failures": 0,
+  "rows": [
+    {
+      "capsules": 105,
+      "character": "cheval-grand",
+      "max_query_us": 842,
+      "maximum_margin_m": 0.00328783980013497,
+      "overflow_m": 0.000000111274421212004,
+      "pose_mutation": 0.0,
+      "samples": 483
+    },
+    {
+      "capsules": 105,
+      "character": "rice-shower",
+      "max_query_us": 689,
+      "maximum_margin_m": 0.00297701680544499,
+      "overflow_m": 0.0000000344961881629247,
+      "pose_mutation": 0.0,
+      "samples": 483
+    },
+    {
+      "capsules": 105,
+      "character": "eishin-flash",
+      "max_query_us": 750,
+      "maximum_margin_m": 0.00332228200867252,
+      "overflow_m": 0.0000000503659248335397,
+      "pose_mutation": 0.0,
+      "samples": 483
+    },
+    {
+      "capsules": 105,
+      "character": "mambo",
+      "max_query_us": 771,
+      "maximum_margin_m": 0.00108786638895633,
+      "overflow_m": 0.0000000236835330721941,
+      "pose_mutation": 0.0,
+      "samples": 483
+    },
+    {
+      "capsules": 105,
+      "character": "hachimi",
+      "max_query_us": 905,
+      "maximum_margin_m": 0.000925837539602072,
+      "overflow_m": 0.0000000236928462977321,
+      "pose_mutation": 0.0,
+      "samples": 483
+    }
+  ]
+}

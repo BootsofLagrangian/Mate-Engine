@@ -1,0 +1,10 @@
+{
+  "verdict": "APPROVED",
+  "source_sha256": {
+    "companion/native/tools/probe_windows_authored_seating.gd": "aff68767c3a44cf950bc40e8fdac4e8986b22aa907c900f8df7c51e4ab9d21e4",
+    "companion/native/tools/probe_windows_scene_navigation.gd": "e9e4170372de12fef4f8b5f325eb6a537f4027aee93f7b57c39fd845a8ad61c3",
+    "companion/native/tools/probe_foot_markers.gd": "8951267ef311cdc98d03244319782966d149bd599fd73f41128957b51852dbe6",
+    "companion/diagnostics/motion_seams/review_capture_worker.gd": "dc1a7327bf6f7b866021085e312f71d54292099646564195469006c2e25441d0"
+  },
+  "scope": "External diagnostic telemetry/capture lifecycle and fourbasevertex markers; noWindowsruntimeperformanceclaim"
+}

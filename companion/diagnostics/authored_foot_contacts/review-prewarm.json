@@ -1,0 +1,158 @@
+{
+  "failures": 0,
+  "rows": [
+    {
+      "character": "cheval-grand",
+      "order": "clips_first",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 54354,
+        "cache_hit": false,
+        "measure_us": 37150,
+        "pose_us": 14663,
+        "reference_us": 256,
+        "samples": 20,
+        "secondary_us": 2222,
+        "total_us": 54657
+      },
+      "ready_before_sit": true,
+      "warm_us": 168789
+    },
+    {
+      "character": "cheval-grand",
+      "order": "model_first",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 54598,
+        "cache_hit": false,
+        "measure_us": 37825,
+        "pose_us": 14267,
+        "reference_us": 257,
+        "samples": 20,
+        "secondary_us": 2212,
+        "total_us": 54891
+      },
+      "ready_before_sit": true,
+      "warm_us": 3
+    },
+    {
+      "character": "cheval-grand",
+      "order": "replacement",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 53282,
+        "cache_hit": false,
+        "measure_us": 36409,
+        "pose_us": 14529,
+        "reference_us": 266,
+        "samples": 20,
+        "secondary_us": 2020,
+        "total_us": 53581
+      },
+      "ready_before_sit": true,
+      "warm_us": 169100
+    },
+    {
+      "character": "rice-shower",
+      "order": "clips_first",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 45444,
+        "cache_hit": false,
+        "measure_us": 28384,
+        "pose_us": 14482,
+        "reference_us": 275,
+        "samples": 20,
+        "secondary_us": 2251,
+        "total_us": 45758
+      },
+      "ready_before_sit": true,
+      "warm_us": 70747
+    },
+    {
+      "character": "rice-shower",
+      "order": "model_first",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 44575,
+        "cache_hit": false,
+        "measure_us": 28190,
+        "pose_us": 13876,
+        "reference_us": 211,
+        "samples": 20,
+        "secondary_us": 2215,
+        "total_us": 44818
+      },
+      "ready_before_sit": true,
+      "warm_us": 1
+    },
+    {
+      "character": "rice-shower",
+      "order": "replacement",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 44732,
+        "cache_hit": false,
+        "measure_us": 28609,
+        "pose_us": 13538,
+        "reference_us": 249,
+        "samples": 20,
+        "secondary_us": 2277,
+        "total_us": 45015
+      },
+      "ready_before_sit": true,
+      "warm_us": 70160
+    },
+    {
+      "character": "eishin-flash",
+      "order": "clips_first",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 44598,
+        "cache_hit": false,
+        "measure_us": 28950,
+        "pose_us": 13246,
+        "reference_us": 306,
+        "samples": 20,
+        "secondary_us": 2123,
+        "total_us": 44941
+      },
+      "ready_before_sit": true,
+      "warm_us": 132170
+    },
+    {
+      "character": "eishin-flash",
+      "order": "model_first",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 43631,
+        "cache_hit": false,
+        "measure_us": 28751,
+        "pose_us": 12572,
+        "reference_us": 234,
+        "samples": 20,
+        "secondary_us": 2040,
+        "total_us": 43899
+      },
+      "ready_before_sit": true,
+      "warm_us": 2
+    },
+    {
+      "character": "eishin-flash",
+      "order": "replacement",
+      "pose_error": 0.0,
+      "preparation": {
+        "bounds_us": 45482,
+        "cache_hit": false,
+        "measure_us": 30065,
+        "pose_us": 12905,
+        "reference_us": 248,
+        "samples": 20,
+        "secondary_us": 2241,
+        "total_us": 45763
+      },
+      "ready_before_sit": true,
+      "warm_us": 140251
+    }
+  ]
+}

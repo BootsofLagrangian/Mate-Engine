@@ -1886,9 +1886,9 @@ func _exit_tree() -> void:
 	if is_instance_valid(objects):
 		objects.shutdown()
 
-func request_scene_approach(target_world: Vector3, obstacle_bounds: Array) -> Dictionary:
+func request_scene_approach(target_world: Vector3, obstacle_bounds: Array, grid: Dictionary = {}) -> Dictionary:
 	if scene_navigation == null:return {"accepted":false,"reason":"scene_unavailable"}
-	return scene_navigation.request(target_world,obstacle_bounds)
+	return scene_navigation.request(target_world,obstacle_bounds,grid)
 
 func cancel_scene_approach(reason: String = "cancelled") -> void:
 	if scene_navigation != null:scene_navigation.cancel(reason)

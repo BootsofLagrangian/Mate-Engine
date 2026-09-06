@@ -1,0 +1,48 @@
+{
+  "actual_selected_foot_mesh_min_y": -0.0000228732824325562,
+  "avatar_forward": "(0.0, 0.0, 1.0)",
+  "avatar_scale": 0.6,
+  "chair_facing": "(0.0, 0.0, 1.0)",
+  "chair_lowest_vertex_y": -0.00000000810185163402366,
+  "chair_scale": 0.543706059455872,
+  "character": "cheval-grand",
+  "cushion_rays": [
+    {
+      "asset_x": -0.06,
+      "hit": "(-0.032622, 0.265935, 0.043496)",
+      "mesh": "Waterfall upholstered seat",
+      "surface_above_anchor_m": 0.00495651364326477
+    },
+    {
+      "asset_x": 0,
+      "hit": "(0.0, 0.26583, 0.043496)",
+      "mesh": "Waterfall upholstered seat",
+      "surface_above_anchor_m": 0.00485149025917053
+    },
+    {
+      "asset_x": 0.06,
+      "hit": "(0.032622, 0.265935, 0.043496)",
+      "mesh": "Waterfall upholstered seat",
+      "surface_above_anchor_m": 0.00495651364326477
+    }
+  ],
+  "geometry": {
+    "bind_rest_max_error_m": 0.000000137319560167271,
+    "contact_band_vertices": 67,
+    "floor_mesh_clearance": -0.0000646496082481463,
+    "floor_y": 0.368844338681811,
+    "mesh_min_y": {
+      "1089 シュヴァルグラン_mesh": 0.368779689073563
+    },
+    "method": "skinned_pelvis_thigh",
+    "patch_vertices": 528,
+    "secondary_cached": false,
+    "secondary_samples": 0,
+    "vertices": 47333
+  },
+  "pelvis_world": "(0.018217, 0.320973, 0.057147)",
+  "scope": "reconstructed installed source terminal pose; not a replay of the Windows skeleton snapshot",
+  "seat_error_m": 0.0,
+  "seat_world": "(0.0, 0.260979, 0.043496)",
+  "sit_world": "(0.0, 0.260979, 0.043496)"
+}

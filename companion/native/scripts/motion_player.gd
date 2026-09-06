@@ -42,6 +42,9 @@ var _posing_from_previous := false
 var locomotion_clips: Dictionary = {"walk":false,"walk_formal":false}
 var _locomotion_hip_centers: Dictionary = {}
 var locomotion_styles: Dictionary = {}
+var _source_seat_profiles: Dictionary = {}
+var authored_seated_feet:=AuthoredFootContacts.new()
+var seated_carrier:=SeatedCarrier.new()
 var action_overlap := ActionOverlap.new()
 var upper_body := UpperBodyOverlay.new()
 var seated_transition := SeatedTransition.new()
@@ -144,13 +147,33 @@ func clear_seated_transition_registrations() -> void:
 
 func register_seated_transition(kind: String, clip_name: String) -> bool:
 	var registered:=seated_transition.register_clip(kind,clip_name,vrma_clips)
-	if registered: prepare_seated_geometry_inputs()
+	if registered:
+		prepare_seated_geometry_inputs()
+		if kind=="enter": _source_seat_profile(clip_name)
 	return registered
+
+func _source_seat_profile(name:String) -> Dictionary:
+	if avatar==null or not avatar.has_model() or not vrma_clips.has(name):return {}
+	var clip:VrmaClip=vrma_clips[name]
+	var key:=str(avatar.model.get_instance_id())+":"+str(clip.get_instance_id())
+	if _source_seat_profiles.has(key):return _source_seat_profiles[key]
+	# Canonical source endpoint, without floor IK or host root adaptation.
+	var measured:=SeatedGeometryCalibrator.measure(avatar,clip.sample(clip.duration),false,false)
+	if measured.is_empty():return {}
+	var height:=avatar.skeleton.get_bone_global_rest(avatar.bone_index.hips).origin.y
+	var hips:=clip.sample_hips_offset(clip.duration)*height
+	var clearance:float=measured.anchor.y+hips.y-float(avatar.sole_calibration.floor_y)
+	if not is_finite(clearance) or clearance<=0:return {}
+	if _source_seat_profiles.size()>=3:_source_seat_profiles.clear()
+	var profile:Dictionary={"source_seat_clearance_local":clearance,"source_full_endpoint_hips_local":hips}
+	_source_seat_profiles[key]=profile
+	return profile
 
 func prepare_seated_geometry_inputs() -> bool:
 	# Immutable mesh indexing belongs to model/asset preparation, not the
 	# user's sit-down boundary. This never captures a future outgoing pose.
 	if avatar==null or not avatar.has_model():return false
+	authored_seated_feet.prepare(avatar)
 	return not TransitionBoundsMeasure.measure(avatar,true).is_empty()
 
 func seated_transition_requirements(kind: String) -> Dictionary:
@@ -159,7 +182,9 @@ func seated_transition_requirements(kind: String) -> Dictionary:
 	if not vrma_clips.has(name): return {}
 	var clip: VrmaClip = vrma_clips[name]
 	var height := avatar.skeleton.get_bone_global_rest(avatar.bone_index.hips).origin.y
-	return {"clip":name,"duration":clip.duration,"source_root_delta_local":(clip.sample_hips_offset(clip.duration)-clip.sample_hips_offset(0))*height}
+	var requirements:Dictionary={"clip":name,"duration":clip.duration,"source_root_delta_local":(clip.sample_hips_offset(clip.duration)-clip.sample_hips_offset(0))*height}
+	if kind=="enter":requirements.merge(_source_seat_profile(name))
+	return requirements
 
 func start_seated_transition(kind: String, root_delta_local: Vector3 = Vector3.ZERO) -> bool:
 	if not seated_transition.begin(self,kind,root_delta_local): return false
@@ -516,6 +541,7 @@ func _process(delta: float) -> void:
 			gesture_finished.emit(finished)
 		else:
 			var local_time := fmod(time, maxf(clip.duration,0.001))
+			if seated_carrier.active and _vrma_name=="sit_idle":local_time=fmod(seated_carrier.phase_time,maxf(clip.duration,.001))
 			if _vrma_loop and locomotion_clips.has(_vrma_name) and (gait.has_sample() or _travel_intent) and _contact_pose == "foot":
 				local_time = gait.phase*clip.duration
 			var blend := _blend_weight((elapsed-_vrma_start)/TRANSITION_SECONDS)
@@ -556,15 +582,22 @@ func _process(delta: float) -> void:
 	var turn_was_active := turn.active
 	var turn_blocked := _preview or _custom_motion or _contact_pose != "foot"
 	turn.apply(avatar,delta,_facing_target,turn_blocked)
+	seated_carrier.restore_body(self)
 	if is_finite(avatar.seated_floor.clearance) and not seated_transition.active:
 		avatar.seated_floor.set_active(_contact_pose == "sit")
-		if _contact_pose == "sit": avatar.seated_floor.solve_legs(smoothstep(0.0,TRANSITION_SECONDS,elapsed-_transition_start))
+		if _contact_pose == "sit":
+			if authored_seated_feet.active and vrma_clips.has("sit_idle"):
+				var seated_clip:VrmaClip=vrma_clips.sit_idle
+				var seated_time:=fmod(seated_carrier.phase_time if seated_carrier.active else elapsed-_seated_idle_start,maxf(seated_clip.duration,.001))
+				authored_seated_feet.apply_contact(seated_clip.sample(seated_time),seated_clip.sample_hips_offset(seated_time),0,avatar.seated_floor.floor_y)
+			else:avatar.seated_floor.solve_legs(smoothstep(0.0,TRANSITION_SECONDS,elapsed-_transition_start))
 	var completed_turn := turn_was_active and not turn.active and not turn_blocked
 	# A geometrically solvable target is not yet attached while blending in.
 	# Report the rendered wrist's final world-space error (1.5 cm threshold).
 	contact_reachable = contact_solvable and avatar.bone_global_position(_contact_hand+"Hand").distance_to(_contact_target) < 0.015
 
 	seated_transition.apply(self,delta)
+	seated_carrier.apply(self)
 
 	# Expressions: blink, emotion, mouth
 	_update_blink(delta)
@@ -869,6 +902,7 @@ func cancel_heading() -> void:
 	_heading_pending = absf(_facing_velocity) > deg_to_rad(1)
 
 func _update_facing(delta: float) -> void:
+	if seated_carrier.active:return
 	var blocked := _preview or _custom_motion
 	if blocked:
 		turn.cancel()
@@ -892,19 +926,68 @@ func _update_facing(delta: float) -> void:
 
 ## A sit needs the imported sit_idle clip. Lean requires an explicit nearby
 ## surface point; the host must inspect contact_reachable before attaching it.
+## Host supplies a continuous eased lift and the physical chair's current yaw.
+## No standing turn solver runs while the seat owns the body's orientation.
+func set_seated_carrier(lift_weight:float,yaw_world:float)->bool:
+	if avatar==null or not avatar.has_model() or _contact_pose!="sit" or seated_transition.active or _preview or _custom_motion:return false
+	if not is_finite(lift_weight) or not is_finite(yaw_world) or lift_weight<0 or lift_weight>1:return false
+	if not is_finite(avatar.seated_floor.clearance) or not authored_seated_feet.active:return false
+	if absf(angle_difference(avatar.rotation.y,yaw_world))>deg_to_rad(12):return false
+	if not is_equal_approx(seated_carrier.lift,lift_weight):
+		seated_carrier.diagnostics["ready"]=false
+	if not seated_carrier.active:
+		if _vrma_name!="sit_idle" or not vrma_clips.has("sit_idle"):return false
+		seated_carrier.capture(self)
+	seated_carrier.active=true
+	seated_carrier.lift=lift_weight
+	turn.cancel();_heading_pending=false;_facing_velocity=0
+	avatar.rotation.y=wrapf(yaw_world,-PI,PI)
+	_facing_target=avatar.rotation.y
+	return true
+
+func seated_carrier_state()->Dictionary:
+	return seated_carrier.diagnostics.duplicate()
+
+func seated_carrier_lift_envelope()->Dictionary:
+	if not seated_carrier.active or not seated_carrier.valid(self):return {}
+	var envelope:Dictionary=preload("res://scripts/carrier_lift_envelope.gd").build(seated_carrier.lift_reference)
+	if not envelope.is_empty():envelope["transform"]=avatar.global_transform
+	return envelope
+
+func seated_carrier_body_snapshot()->Dictionary:
+	if not seated_carrier.active or not seated_carrier.valid(self) or not seated_carrier.diagnostics.get("ready",false):return {}
+	var snapshot:=avatar.body_capsule_snapshot()
+	if snapshot.is_empty():return {}
+	snapshot["articulation_frozen"]=true
+	snapshot["source_phase"]=seated_carrier.phase_time
+	snapshot["source_clip_id"]=seated_carrier.clip_id
+	return snapshot
+
+func clear_seated_carrier()->void:
+	if seated_carrier.active:_begin_transition()
+	seated_carrier.clear(self)
+	if avatar!=null and avatar.has_model():_facing_target=avatar.rotation.y
+
 func set_seated_floor(clearance_m: float) -> bool:
 	return avatar != null and avatar.set_seated_floor(clearance_m)
 
 func clear_seated_floor() -> void:
+	seated_carrier.clear(self)
+	authored_seated_feet.clear_reference()
 	if avatar != null: avatar.clear_seated_floor()
 
 func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF) -> bool:
+	if seated_carrier.active:return false
 	contact_reachable = false
 	if pose == "sit":
 		if not play_vrma("sit_idle",1.0,true):
 			return false
 		_contact_pose = "sit"
 		_seated_idle_start = elapsed
+		if is_finite(avatar.seated_floor.clearance):
+			authored_seated_feet.prepare(avatar)
+			var clip:VrmaClip=vrma_clips.sit_idle
+			authored_seated_feet.begin_reference(clip.sample(0),clip.sample_hips_offset(0))
 		set_locomotion_direction(Vector2.ZERO)
 		return true
 	if pose == "lean" and world_hand_target.is_finite() and avatar != null and avatar.has_model():
@@ -932,7 +1015,7 @@ func _apply_seated_base() -> void:
 	if _contact_pose != "sit" or not vrma_clips.has("sit_idle"):
 		return
 	var clip: VrmaClip = vrma_clips["sit_idle"]
-	var pose := clip.sample(fmod(elapsed-_seated_idle_start,maxf(clip.duration,0.001)))
+	var pose := clip.sample(fmod(seated_carrier.phase_time if seated_carrier.active else elapsed-_seated_idle_start,maxf(clip.duration,0.001)))
 	for bone in pose.keys():
 		if bone != "hips" and not ("Leg" in bone or "Foot" in bone or "Toes" in bone):
 			pose.erase(bone)
@@ -1129,6 +1212,9 @@ func _check_model_identity() -> void:
 	_transition_hips_velocity = Vector3.ZERO
 	_applied.clear()
 	if replacing:
+		seated_carrier.clear(self)
+		authored_seated_feet.clear_reference()
+		_source_seat_profiles.clear()
 		seated_transition.reset()
 		upper_body.clear()
 		upper_body.contact_locked = false
@@ -1146,6 +1232,10 @@ func _check_model_identity() -> void:
 		_contact_pose = "foot"
 		_contact_target = Vector3.INF
 		contact_reachable = false
+	# Assets can register before the avatar exists. Complete the immutable
+	# mesh-input warmup at model readiness, not the first user sit boundary.
+	if not seated_transition.clips.is_empty():
+		prepare_seated_geometry_inputs()
 
 ## Zero velocity and acceleration at both ends of authored layer ownership.
 static func _blend_weight(value: float) -> float:

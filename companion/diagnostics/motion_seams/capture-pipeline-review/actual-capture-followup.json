@@ -1,0 +1,132 @@
+{
+  "report_sha256": "e9cdf0372aa214af8844851393f5b9fc806f1590d59b4b591307f323975821fc",
+  "queue_failure_preserved": {
+    "drop_ms": 23863,
+    "stage": "seated",
+    "preceding_enqueues": [
+      23796,
+      23851
+    ],
+    "capacity_before": 2,
+    "capacity_candidate": 3,
+    "new_uncompressed_image_bound_bytes": 40550400
+  },
+  "floor_reference_world_y": -1.33028185367584,
+  "marker_ranges": {
+    "entering": {
+      "leftHeel": {
+        "actual_world_height_range_m": [
+          0.0,
+          0.03409636020660001
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          -0.0005521397455595436,
+          0.0015135720837861299
+        ]
+      },
+      "leftToe": {
+        "actual_world_height_range_m": [
+          0.0036156177520700883,
+          0.03828859329223011
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          0.002889121882617474,
+          0.005924252048134806
+        ]
+      },
+      "rightHeel": {
+        "actual_world_height_range_m": [
+          1.1920928999487046e-07,
+          0.03354394435882013
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          -0.000697369873523712,
+          0.001730457460507752
+        ]
+      },
+      "rightToe": {
+        "actual_world_height_range_m": [
+          0.002992630004880148,
+          0.04002726078033003
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          0.00288805849850178,
+          0.00795610975474122
+        ]
+      }
+    },
+    "seated": {
+      "leftHeel": {
+        "actual_world_height_range_m": [
+          0.00013113021850008622,
+          0.03311765193939009
+        ],
+        "raw_source_height_range_m_at_scale06": null
+      },
+      "leftToe": {
+        "actual_world_height_range_m": [
+          0.004876017570490054,
+          0.036959767341609995
+        ],
+        "raw_source_height_range_m_at_scale06": null
+      },
+      "rightHeel": {
+        "actual_world_height_range_m": [
+          0.00013017654419011926,
+          0.03277850151062012
+        ],
+        "raw_source_height_range_m_at_scale06": null
+      },
+      "rightToe": {
+        "actual_world_height_range_m": [
+          0.004883885383599962,
+          0.03883743286133012
+        ],
+        "raw_source_height_range_m_at_scale06": null
+      }
+    },
+    "exiting": {
+      "leftHeel": {
+        "actual_world_height_range_m": [
+          0.0007103681564299968,
+          0.03321099281311013
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          9.97298397123816e-05,
+          0.002304462762549522
+        ]
+      },
+      "leftToe": {
+        "actual_world_height_range_m": [
+          0.0054353475570700915,
+          0.036387205123900035
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          0.002439579740166666,
+          0.00483744163066149
+        ]
+      },
+      "rightHeel": {
+        "actual_world_height_range_m": [
+          0.0007041692733700256,
+          0.034078717231750044
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          -0.0001833762042224406,
+          0.0025835115462541558
+        ]
+      },
+      "rightToe": {
+        "actual_world_height_range_m": [
+          0.005485534667970082,
+          0.041998744010919964
+        ],
+        "raw_source_height_range_m_at_scale06": [
+          0.0022653168998658657,
+          0.00937351416796446
+        ]
+      }
+    }
+  },
+  "finding": "Sourceheels remainabout\u00b12mm; liveheelrise34mm corresponds hostverticalroottranslation~33mmlessthanfullsourcehipsendpoint. Not an authoredheel-lift. Sourceprofile/fixedheightretarget pending."
+}

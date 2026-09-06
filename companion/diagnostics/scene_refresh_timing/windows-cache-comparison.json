@@ -1,0 +1,284 @@
+{
+  "scope": "Single strict Windows before/after runs; several reviewed fixes differ, not isolated randomized attribution. Interior phase gaps only.",
+  "checks": 74,
+  "failures": 0,
+  "phases": [
+    {
+      "sequence": "chair",
+      "stage": "entering",
+      "before_max_gap_ms": 45,
+      "after_max_gap_ms": 30,
+      "after_samples": 79,
+      "after_range_ms": [
+        22093,
+        23369
+      ],
+      "timestamp_selected_window_calls": [
+        {
+          "id": "obj_1",
+          "request_ms": 22134.693,
+          "cache_hits": 16,
+          "fits": 2,
+          "geometry_collections": 4,
+          "last_call_succeeded": true,
+          "last_call_us": 28,
+          "last_collect_us": 11821,
+          "last_fit_at_us": 17189892,
+          "last_fit_us": 26204,
+          "last_lookup_us": 23,
+          "last_request_at_us": 23271693,
+          "timestamp_msec": 23271
+        },
+        {
+          "id": "obj_1",
+          "request_ms": 22651.388,
+          "cache_hits": 17,
+          "fits": 2,
+          "geometry_collections": 4,
+          "last_call_succeeded": true,
+          "last_call_us": 27,
+          "last_collect_us": 11821,
+          "last_fit_at_us": 17189892,
+          "last_fit_us": 26204,
+          "last_lookup_us": 23,
+          "last_request_at_us": 23788388,
+          "timestamp_msec": 23788
+        },
+        {
+          "id": "obj_1",
+          "request_ms": 23168.016,
+          "cache_hits": 18,
+          "fits": 2,
+          "geometry_collections": 4,
+          "last_call_succeeded": true,
+          "last_call_us": 27,
+          "last_collect_us": 11821,
+          "last_fit_at_us": 17189892,
+          "last_fit_us": 26204,
+          "last_lookup_us": 23,
+          "last_request_at_us": 24305016,
+          "timestamp_msec": 24305
+        }
+      ],
+      "interest_refresh_max_us": 57,
+      "interest_refresh_samples": 78,
+      "scene_suppressed_all": true,
+      "scene_rebuild_counts": [
+        1
+      ]
+    },
+    {
+      "sequence": "chair",
+      "stage": "exiting",
+      "before_max_gap_ms": 52,
+      "after_max_gap_ms": 30,
+      "after_samples": 60,
+      "after_range_ms": [
+        23913,
+        24881
+      ],
+      "timestamp_selected_window_calls": [
+        {
+          "id": "obj_1",
+          "request_ms": 24204.677,
+          "cache_hits": 20,
+          "fits": 2,
+          "geometry_collections": 4,
+          "last_call_succeeded": true,
+          "last_call_us": 28,
+          "last_collect_us": 11821,
+          "last_fit_at_us": 17189892,
+          "last_fit_us": 26204,
+          "last_lookup_us": 24,
+          "last_request_at_us": 25341677,
+          "timestamp_msec": 25341
+        },
+        {
+          "id": "obj_1",
+          "request_ms": 24721.462,
+          "cache_hits": 21,
+          "fits": 2,
+          "geometry_collections": 4,
+          "last_call_succeeded": true,
+          "last_call_us": 29,
+          "last_collect_us": 11821,
+          "last_fit_at_us": 17189892,
+          "last_fit_us": 26204,
+          "last_lookup_us": 24,
+          "last_request_at_us": 25858462,
+          "timestamp_msec": 25858
+        }
+      ],
+      "interest_refresh_max_us": 30,
+      "interest_refresh_samples": 59,
+      "scene_suppressed_all": true,
+      "scene_rebuild_counts": [
+        1
+      ]
+    },
+    {
+      "sequence": "computer",
+      "stage": "entering",
+      "before_max_gap_ms": 84,
+      "after_max_gap_ms": 26,
+      "after_samples": 79,
+      "after_range_ms": [
+        44718,
+        45999
+      ],
+      "timestamp_selected_window_calls": [
+        {
+          "id": "obj_2",
+          "request_ms": 44831.417,
+          "cache_hits": 29,
+          "fits": 3,
+          "geometry_collections": 5,
+          "last_call_succeeded": true,
+          "last_call_us": 44,
+          "last_collect_us": 40703,
+          "last_fit_at_us": 33333168,
+          "last_fit_us": 69772,
+          "last_lookup_us": 38,
+          "last_request_at_us": 45968417,
+          "timestamp_msec": 45968
+        },
+        {
+          "id": "obj_2",
+          "request_ms": 45348.002,
+          "cache_hits": 30,
+          "fits": 3,
+          "geometry_collections": 5,
+          "last_call_succeeded": true,
+          "last_call_us": 47,
+          "last_collect_us": 40703,
+          "last_fit_at_us": 33333168,
+          "last_fit_us": 69772,
+          "last_lookup_us": 40,
+          "last_request_at_us": 46485002,
+          "timestamp_msec": 46485
+        },
+        {
+          "id": "obj_2",
+          "request_ms": 45864.683,
+          "cache_hits": 31,
+          "fits": 3,
+          "geometry_collections": 5,
+          "last_call_succeeded": true,
+          "last_call_us": 51,
+          "last_collect_us": 40703,
+          "last_fit_at_us": 33333168,
+          "last_fit_us": 69772,
+          "last_lookup_us": 43,
+          "last_request_at_us": 47001683,
+          "timestamp_msec": 47001
+        }
+      ],
+      "interest_refresh_max_us": 41,
+      "interest_refresh_samples": 78,
+      "scene_suppressed_all": true,
+      "scene_rebuild_counts": [
+        3
+      ]
+    },
+    {
+      "sequence": "computer",
+      "stage": "exiting",
+      "before_max_gap_ms": 77,
+      "after_max_gap_ms": 31,
+      "after_samples": 60,
+      "after_range_ms": [
+        68124,
+        69092
+      ],
+      "timestamp_selected_window_calls": [
+        {
+          "id": "obj_2",
+          "request_ms": 68232.753,
+          "cache_hits": 74,
+          "fits": 3,
+          "geometry_collections": 5,
+          "last_call_succeeded": true,
+          "last_call_us": 45,
+          "last_collect_us": 40703,
+          "last_fit_at_us": 33333168,
+          "last_fit_us": 69772,
+          "last_lookup_us": 38,
+          "last_request_at_us": 69369753,
+          "timestamp_msec": 69369
+        },
+        {
+          "id": "obj_2",
+          "request_ms": 68749.555,
+          "cache_hits": 75,
+          "fits": 3,
+          "geometry_collections": 5,
+          "last_call_succeeded": true,
+          "last_call_us": 76,
+          "last_collect_us": 40703,
+          "last_fit_at_us": 33333168,
+          "last_fit_us": 69772,
+          "last_lookup_us": 68,
+          "last_request_at_us": 69886555,
+          "timestamp_msec": 69886
+        }
+      ],
+      "interest_refresh_max_us": 60,
+      "interest_refresh_samples": 59,
+      "scene_suppressed_all": true,
+      "scene_rebuild_counts": [
+        3
+      ]
+    }
+  ],
+  "provenance": {
+    "logs/windows-full-computer-carrier/samples.json": "634797d524f8aa2f4b08673ffa8f8fcd82feed1d4f8091841e2d7451ab832927",
+    "logs/windows-full-computer-carrier/report.json": "01b127fb987195d3be80f33aba80e105dfbd1b0ca6558d6e622346f0d29a7d2b",
+    "logs/windows-full-computer-restore-cache/samples.json": "a81e56eacfc5cd85ca2ab5c86d68faa3f361686b5e95da150ccb6c95ef429cd9",
+    "logs/windows-full-computer-restore-cache/report.json": "ec64455a7a7245e08dc9ac03efe473ff833c87f356f25d6741533c6aaaddf7bf"
+  },
+  "entry_preparation": {
+    "command_id": "temporal-computer",
+    "ensure_seated_geometry_ms": 0.004,
+    "object_id": "obj_2",
+    "presentation": {
+      "fit_contact_view_ms": 0.037,
+      "kind": "enter",
+      "motion_preparation": {
+        "bounds_us": 50573,
+        "cache_hit": false,
+        "measure_us": 35301,
+        "pose_us": 13021,
+        "reference_us": 225,
+        "samples": 20,
+        "secondary_us": 1898,
+        "total_us": 50829
+      },
+      "motion_start_ms": 50.862,
+      "reason": "ready",
+      "started_usec": 45796942,
+      "total_ms": 50.912
+    },
+    "projection_and_admission_ms": 0.154,
+    "reason": "entering",
+    "release_to_contact_ms": 0.011,
+    "started_usec": 45796753,
+    "total_ms": 51.147
+  },
+  "completed_exit_hold": {
+    "duration_ms": 5016,
+    "expected_world": [
+      1.85932743549347,
+      -1.33028209209442,
+      -0.0157944336533546
+    ],
+    "maximum_xyz_drift_m": 0.0,
+    "ownership_retained": true
+  },
+  "terminal": {
+    "id": "temporal-computer",
+    "ms": 74760,
+    "outcome": "completed",
+    "record_type": "terminal"
+  },
+  "terminal_count": 1
+}

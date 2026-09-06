@@ -1,0 +1,5 @@
+{
+  "companion/native/scripts/seated_carrier.gd": "3e421dd503a1e68484f3c4ab67d60ccc16ee6963b6fe39fcb4cb95997553afe6",
+  "companion/native/scripts/motion_player.gd": "832acd3f45fbb8bbae9d054dbecb4b8dee50a4313a742ceba9bf6bcb02c69367",
+  "companion/native/tools/probe_seated_carrier.gd": "1bc5174c3fc08243c2aad6173abc36bfe95fc074202529707af737cb370fe954"
+}

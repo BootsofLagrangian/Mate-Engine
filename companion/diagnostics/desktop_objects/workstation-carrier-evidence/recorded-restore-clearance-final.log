@@ -1,0 +1,5 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+RECORDED_RESTORE blocked=chair_sweep_hits_actor candidate={ "accepted": true, "reason": "ready", "target_world": (1.819629, -1.330282, -0.00495), "path": [(1.81111, -1.330282, -0.104586), (1.812814, -1.330282, -0.084655), (1.814518, -1.330282, -0.064724), (1.816222, -1.330282, -0.044793), (1.817927, -1.330282, -0.024862), (1.819629, -1.330282, -0.00495)], "distance_m": 0.09999999031425, "offset_m": 0.1, "navigation_geometry": { "area": [P: (1.16111, -0.754586), S: (1.3, 1.3)], "cell_size": 0.02 }, "attempts": 18, "planning_ms": 20.408 } seat=(1.790709, -1.069303, -0.34316)
+RECORDED_RESTORE_ROUTE_REVALIDATED=true
+RECORDED_RESTORE_PASS=true scope=exact_recorded_workstation_and_actor_geometry_without_other_objects_or_camera

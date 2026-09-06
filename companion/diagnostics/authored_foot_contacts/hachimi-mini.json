@@ -1,0 +1,107 @@
+{
+  "cases": [
+    {
+      "character": "hachimi",
+      "clearance": 0.0891020153467252,
+      "fps": 30,
+      "root_delta": "(0.000387, -0.108465, -0.105555)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.000050487149565015,
+          "hold_mesh_min": -0.0000249217446253169,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00444599147886038,
+          "mesh_min": -0.000237404852668988,
+          "peak_motion_us": 781,
+          "planned_residual": 0.0000000567419320418594,
+          "preparation": {
+            "bounds_us": 31037,
+            "cache_hit": false,
+            "measure_us": 20798,
+            "pose_us": 8900,
+            "reference_us": 132,
+            "samples": 20,
+            "secondary_us": 1146,
+            "total_us": 31190
+          }
+        },
+        {
+          "handoff_marker_step": 0.0000133247303892858,
+          "hold_mesh_min": -0.000202931016247021,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00513844471424818,
+          "mesh_min": -0.000234543829719769,
+          "peak_motion_us": 615,
+          "planned_residual": 0.0000000745290833492618,
+          "preparation": {
+            "bounds_us": 30634,
+            "cache_hit": false,
+            "measure_us": 20397,
+            "pose_us": 8674,
+            "reference_us": 122,
+            "samples": 20,
+            "secondary_us": 1369,
+            "total_us": 30775
+          }
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "hachimi",
+      "clearance": 0.0891020153467252,
+      "fps": 60,
+      "root_delta": "(0.000387, -0.108465, -0.105555)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000139762832986889,
+          "hold_mesh_min": -0.0000459323819086421,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00272053107619286,
+          "mesh_min": -0.000237404852668988,
+          "peak_motion_us": 608,
+          "planned_residual": 0.0000000859444710954449,
+          "preparation": {
+            "bounds_us": 31768,
+            "cache_hit": false,
+            "measure_us": 21413,
+            "pose_us": 8867,
+            "reference_us": 164,
+            "samples": 20,
+            "secondary_us": 1271,
+            "total_us": 31960
+          }
+        },
+        {
+          "handoff_marker_step": 0.0000017815257251641,
+          "hold_mesh_min": -0.00020563214275171,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00257626222446561,
+          "mesh_min": -0.000235206931392895,
+          "peak_motion_us": 940,
+          "planned_residual": 0.0000000802884301265294,
+          "preparation": {
+            "bounds_us": 31965,
+            "cache_hit": false,
+            "measure_us": 21258,
+            "pose_us": 9144,
+            "reference_us": 310,
+            "samples": 20,
+            "secondary_us": 1322,
+            "total_us": 32339
+          }
+        }
+      ],
+      "yaw": 0.0
+    }
+  ],
+  "failures": 0
+}

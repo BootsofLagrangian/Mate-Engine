@@ -1,0 +1,8 @@
+{
+  "accepted_intervals": 570,
+  "failures": 0,
+  "guard_fraction_of_leg_length": 0.00001,
+  "maximum_raw_numeric_overflow_m": 0.000000937092117965065,
+  "rejected_intervals": 6,
+  "samples_per_interval": 17
+}

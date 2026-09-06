@@ -1,0 +1,6 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+RAW_PARTS computer 122
+RAW_PARTS chair 34
+UNION_RESULT { "ok": false, "reason": "invalid_geometry" } {  }
+Obstacle union failures=1

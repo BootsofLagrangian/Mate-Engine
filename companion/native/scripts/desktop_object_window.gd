@@ -10,12 +10,17 @@ var _projection_zoom := 1.0
 var _record: Dictionary = {}
 var _native_alpha_id := -1
 const Appearance = preload("desktop_object_appearance.gd")
+const ContactScene = preload("desktop_object_contact_scene.gd")
+var _computer_assembly: DesktopObjectContactScene
 var _shared_world_active := false
 var _private_environment: Environment
 var _shared_camera: Camera3D
 var _shared_desktop_origin := Vector2.ZERO
 var _shared_transform := Transform3D.IDENTITY
 var _shared_crop := Rect2()
+var _shared_projection_key: Array = []
+var _geometry_revision := 0
+var projection_profile: Dictionary = {"fits":0,"cache_hits":0,"geometry_collections":0,"last_fit_us":0,"last_collect_us":0,"last_lookup_us":0,"last_request_at_us":0,"last_fit_at_us":0,"timestamp_msec":0,"last_call_us":0,"last_call_succeeded":false}
 var _model_nodes: Array[Node3D] = []
 var _base_sockets: Dictionary = {}
 var _yaw := INF
@@ -71,15 +76,29 @@ func configure(record: Dictionary, dimensions: Vector2i) -> bool:
 	add_child(_scene)
 	var definitions_path := PACK+"premium/objects.json"
 	var definition: Dictionary = {}
+	var all_definitions: Dictionary = {}
 	if FileAccess.file_exists(definitions_path):
 		var definitions = JSON.parse_string(FileAccess.get_file_as_string(definitions_path))
-		if definitions is Dictionary: definition = definitions.get(object_type,{})
+		if definitions is Dictionary:
+			all_definitions = definitions
+			definition = definitions.get(object_type,{})
 	if not definition.is_empty():
-		loaded = _mesh(PACK+"premium/"+str(definition.asset),Vector3.ZERO)
-		for socket in definition.get("sockets",{}):
-			var xyz: Array = definition.sockets[socket]
-			if xyz.size() == 3: _sockets[socket] = Vector3(float(xyz[0]),float(xyz[1]),float(xyz[2]))
-		_seat_width = float(definition.get("seat_width",0.0))
+		if object_type == "computer":
+			_computer_assembly = ContactScene.new()
+			_scene.add_child(_computer_assembly)
+			loaded = _computer_assembly.configure("computer")
+			if loaded: loaded = _computer_assembly.set_seat_scale(float(record.get("seat_scale",1.0)))
+			error = _computer_assembly.error
+			_computer_assembly.set_meta("object_rest_transform",Transform3D.IDENTITY)
+			_model_nodes.append(_computer_assembly)
+			_sockets = _computer_assembly.socket_catalogue(false)
+			_seat_width = float(all_definitions.get("chair",{}).get("seat_width",0.0))
+		else:
+			loaded = _mesh(PACK+"premium/"+str(definition.asset),Vector3.ZERO)
+			for socket in definition.get("sockets",{}):
+				var xyz: Array = definition.sockets[socket]
+				if xyz.size() == 3: _sockets[socket] = Vector3(float(xyz[0]),float(xyz[1]),float(xyz[2]))
+			_seat_width = float(definition.get("seat_width",0.0))
 	else:
 		_load_legacy()
 	_collect_geometry()
@@ -165,12 +184,31 @@ func _mesh(path: String, offset: Vector3) -> bool:
 	return true
 
 func _collect_geometry() -> void:
+	var started := Time.get_ticks_usec()
+	_geometry_revision += 1
+	_shared_projection_key.clear()
 	_geometry_points.clear()
 	for mesh in _scene.find_children("*","MeshInstance3D",true,false):
 		if mesh.mesh == null: continue
+		if not mesh.mesh.changed.is_connected(_invalidate_projection_geometry): mesh.mesh.changed.connect(_invalidate_projection_geometry)
 		for surface in mesh.mesh.get_surface_count():
 			var arrays: Array = mesh.mesh.surface_get_arrays(surface)
 			for vertex in arrays[Mesh.ARRAY_VERTEX]: _geometry_points.append(mesh.global_transform*vertex)
+	projection_profile.geometry_collections += 1
+	projection_profile.last_collect_us = Time.get_ticks_usec()-started
+
+func _invalidate_projection_geometry() -> void:
+	_geometry_revision += 1
+	_shared_projection_key.clear()
+
+## Imported props are static apart from the declared setup/scale setters. Node
+## and resource identity/transform checks also catch replacement or reparenting;
+## Mesh.changed invalidates in-place resource edits without reading vertex arrays.
+func _projection_fit_key() -> Array:
+	var geometry: Array = []
+	for mesh in _scene.find_children("*","MeshInstance3D",true,false):
+		geometry.append([mesh.get_instance_id(),mesh.global_transform,mesh.mesh.get_instance_id() if mesh.mesh != null else 0])
+	return [_shared_camera.get_instance_id(),_shared_camera.get_camera_transform(),_shared_camera.get_camera_projection(),_shared_camera.get_viewport().get_visible_rect().size,_shared_desktop_origin,_shared_transform,_geometry_revision,geometry,size,position,_camera.get_camera_transform(),_camera.get_camera_projection()]
 
 func pixels_per_metre() -> float:
 	if _camera == null: return 0.0
@@ -247,6 +285,33 @@ func set_projection_zoom(value: float) -> void:
 	_refit()
 	_position_from_record()
 
+## Preserve the real chair's final/interrupted setup when the shared occupied
+## scene hands rendering back to this native viewport. Camera fitting uses the
+## same actual vertices and sockets; no duplicate or decorative chair is added.
+func set_seat_setup(pullout_local_m: float, yaw_delta_deg: float) -> bool:
+	if not is_instance_valid(_computer_assembly) or not _computer_assembly.set_seat_setup(pullout_local_m,yaw_delta_deg): return false
+	_base_sockets = _computer_assembly.socket_catalogue(false)
+	_yaw = INF
+	_apply_visual(_record)
+	_collect_geometry()
+	_refit()
+	_position_from_record()
+	return true
+
+func seat_setup() -> Dictionary:
+	return _computer_assembly.seat_setup() if is_instance_valid(_computer_assembly) else {}
+
+func set_seat_scale(value: float) -> bool:
+	if not is_instance_valid(_computer_assembly) or not _computer_assembly.set_seat_scale(value): return false
+	_record["seat_scale"] = value
+	_base_sockets = _computer_assembly.socket_catalogue(false)
+	_yaw = INF
+	_apply_visual(_record)
+	_collect_geometry()
+	_refit()
+	_position_from_record()
+	return true
+
 func set_editable(value: bool) -> void:
 	editable = value
 	mouse_passthrough = not value
@@ -295,7 +360,13 @@ func _end_drag() -> void:
 func _apply_visual(record: Dictionary) -> bool:
 	var yaw := float(record.get("yaw_deg",0.0))
 	var preset := str(record.get("appearance","default"))
-	if is_equal_approx(yaw,_yaw) and preset == _appearance: return false
+	var seat_changed := false
+	if is_instance_valid(_computer_assembly):
+		var next_seat_scale := float(record.get("seat_scale",1.0))
+		if not is_equal_approx(next_seat_scale,float(_computer_assembly.seat_setup().seat_scale)):
+			seat_changed = _computer_assembly.set_seat_scale(next_seat_scale)
+			if seat_changed: _base_sockets = _computer_assembly.socket_catalogue(false)
+	if is_equal_approx(yaw,_yaw) and preset == _appearance and not seat_changed: return false
 	_yaw = yaw
 	_appearance = preset
 	var rotation := Basis(Vector3.UP,deg_to_rad(yaw+(35.0 if object_type == "computer" else 0.0)))
@@ -338,13 +409,31 @@ func clear_shared_projection() -> void:
 	set_shared_world(null)
 	_shared_camera = null
 	_shared_crop = Rect2()
+	_shared_projection_key.clear()
 	if is_instance_valid(_scene): _scene.transform = Transform3D.IDENTITY
 	_collect_geometry()
 	_refit()
 	_position_from_record()
 
 func _fit_shared_projection() -> bool:
+	var started := Time.get_ticks_usec()
+	var result := _compute_shared_projection()
+	projection_profile.last_call_us = Time.get_ticks_usec()-started
+	projection_profile.timestamp_msec = Time.get_ticks_msec()
+	projection_profile.last_call_succeeded = result
+	return result
+
+func _compute_shared_projection() -> bool:
 	if not is_instance_valid(_shared_camera) or _camera == null or _scene == null: return false
+	var started := Time.get_ticks_usec()
+	projection_profile.last_request_at_us = started
+	var key := _projection_fit_key()
+	projection_profile.last_lookup_us = Time.get_ticks_usec()-started
+	if not _shared_projection_key.is_empty() and key == _shared_projection_key:
+		projection_profile.cache_hits += 1
+		return true
+	_shared_projection_key.clear()
+	projection_profile.fits += 1
 	_scene.transform = _shared_transform
 	# Reproject actual imported vertices, not synthetic cross-corners of an AABB.
 	_collect_geometry()
@@ -373,6 +462,9 @@ func _fit_shared_projection() -> bool:
 		return false
 	# Both the model and socket coordinates must enter the same world transform.
 	error = ""
+	_shared_projection_key = _projection_fit_key()
+	projection_profile.last_fit_us = Time.get_ticks_usec()-started
+	projection_profile.last_fit_at_us = started
 	return true
 
 func spatial_geometry_bounds() -> Rect2:

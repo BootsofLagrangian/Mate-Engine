@@ -1,0 +1,377 @@
+{
+  "cases": [
+    {
+      "character": "cheval-grand",
+      "clearance": 0.434964827272779,
+      "fps": 30,
+      "root_delta": "(0.001318, -0.368882, -0.35973)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.000317321595503017,
+          "hold_mesh_min": -0.0000424170757469255,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.0119104636833072,
+          "mesh_min": -0.0000352943206962664,
+          "peak_motion_us": 933,
+          "planned_residual": 0.00000034914538105113
+        },
+        {
+          "handoff_marker_step": 0.0000841168948682025,
+          "hold_mesh_min": -0.000181576342583867,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.0163018833845854,
+          "mesh_min": -0.0000808024669822771,
+          "peak_motion_us": 902,
+          "planned_residual": 0.000000269974322009148
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "cheval-grand",
+      "clearance": 0.48,
+      "fps": 30,
+      "root_delta": "(0.001318, -0.313871, -0.35973)",
+      "scale": 1.0,
+      "sizing": "fixed",
+      "stages": [
+        {
+          "handoff_marker_step": 0.000339542282745242,
+          "hold_mesh_min": -0.0000424170757469255,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.0119104869663715,
+          "mesh_min": -0.0000351155067619402,
+          "peak_motion_us": 1133,
+          "planned_residual": 0.000000274864845550837
+        },
+        {
+          "handoff_marker_step": 0.000084138366219122,
+          "hold_mesh_min": -0.000181575644091936,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.0163018107414246,
+          "mesh_min": -0.0000806832576927263,
+          "peak_motion_us": 1040,
+          "planned_residual": 0.000000241311425952517
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "cheval-grand",
+      "clearance": 0.434964827272779,
+      "fps": 60,
+      "root_delta": "(0.001318, -0.368882, -0.35973)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000420648029830772,
+          "hold_mesh_min": -0.0000939750934776384,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00763124832883477,
+          "mesh_min": -0.0000352943206962664,
+          "peak_motion_us": 1025,
+          "planned_residual": 0.000000348906809222171
+        },
+        {
+          "handoff_marker_step": 0.0000111486069727107,
+          "hold_mesh_min": -0.000185380358743714,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00817952863872051,
+          "mesh_min": -0.0000808024669822771,
+          "peak_motion_us": 913,
+          "planned_residual": 0.000000254413066613779
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "cheval-grand",
+      "clearance": 0.48,
+      "fps": 60,
+      "root_delta": "(0.001318, -0.313871, -0.35973)",
+      "scale": 1.0,
+      "sizing": "fixed",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000450573861598969,
+          "hold_mesh_min": -0.0000424170757469255,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00763112725690007,
+          "mesh_min": -0.0000351155067619402,
+          "peak_motion_us": 919,
+          "planned_residual": 0.00000033394894671801
+        },
+        {
+          "handoff_marker_step": 0.0000111519466372556,
+          "hold_mesh_min": -0.000185386266821297,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00817957241088152,
+          "mesh_min": -0.0000806534553703386,
+          "peak_motion_us": 1031,
+          "planned_residual": 0.000000298395519848782
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "rice-shower",
+      "clearance": 0.393709893911421,
+      "fps": 30,
+      "root_delta": "(0.001195, -0.334321, -0.326005)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.00025158780044876,
+          "hold_mesh_min": -0.000000182897508693713,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.0107670063152909,
+          "mesh_min": -0.000000212699831081409,
+          "peak_motion_us": 956,
+          "planned_residual": 0.000000245869159698486
+        },
+        {
+          "handoff_marker_step": 0.000064519204897806,
+          "hold_mesh_min": -0.000177696545449635,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.0145441517233849,
+          "mesh_min": -0.000000197798669887561,
+          "peak_motion_us": 1032,
+          "planned_residual": 0.000000268634494204889
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "rice-shower",
+      "clearance": 0.48,
+      "fps": 30,
+      "root_delta": "(0.001195, -0.230246, -0.326005)",
+      "scale": 1.0,
+      "sizing": "fixed",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000212918457691558,
+          "hold_mesh_min": -0.0000000785893803367799,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.0107669206336141,
+          "mesh_min": -0.000000123292863918323,
+          "peak_motion_us": 925,
+          "planned_residual": 0.000000311234572336616
+        },
+        {
+          "handoff_marker_step": 0.000064513209508732,
+          "hold_mesh_min": -0.000177696545449635,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.0171216391026974,
+          "mesh_min": -0.000000197798669887561,
+          "peak_motion_us": 938,
+          "planned_residual": 0.000000224137437498939
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "rice-shower",
+      "clearance": 0.393709893911421,
+      "fps": 60,
+      "root_delta": "(0.001195, -0.334321, -0.326005)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.000037372581573436,
+          "hold_mesh_min": -0.0000350218123799095,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00689853215590119,
+          "mesh_min": -0.000000212699831081409,
+          "peak_motion_us": 878,
+          "planned_residual": 0.000000313367564785949
+        },
+        {
+          "handoff_marker_step": 0.00000854230165714398,
+          "hold_mesh_min": -0.000177978517911015,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00729386694729328,
+          "mesh_min": -0.00000641158288772203,
+          "peak_motion_us": 922,
+          "planned_residual": 0.000000300342492209893
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "rice-shower",
+      "clearance": 0.48,
+      "fps": 60,
+      "root_delta": "(0.001195, -0.230246, -0.326005)",
+      "scale": 1.0,
+      "sizing": "fixed",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000522174304933287,
+          "hold_mesh_min": -0.000000197798669887561,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00689844274893403,
+          "mesh_min": -0.00000025367802436449,
+          "peak_motion_us": 886,
+          "planned_residual": 0.000000322533566077254
+        },
+        {
+          "handoff_marker_step": 0.00000854230165714398,
+          "hold_mesh_min": -0.000177978037697812,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00938743446022272,
+          "mesh_min": -0.000000212699831081409,
+          "peak_motion_us": 1078,
+          "planned_residual": 0.0000598010374233127
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "eishin-flash",
+      "clearance": 0.439450709149241,
+      "fps": 30,
+      "root_delta": "(0.001318, -0.368923, -0.35973)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000203239160327939,
+          "hold_mesh_min": -0.000000180676579475403,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.0121133578941226,
+          "mesh_min": -0.000000270083546638489,
+          "peak_motion_us": 950,
+          "planned_residual": 0.000000303582595506668
+        },
+        {
+          "handoff_marker_step": 0.0000344916406902485,
+          "hold_mesh_min": 0.0,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.0160518195480108,
+          "mesh_min": -0.00000013597309589386,
+          "peak_motion_us": 851,
+          "planned_residual": 0.00072350405389443
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "eishin-flash",
+      "clearance": 0.48,
+      "fps": 30,
+      "root_delta": "(0.001318, -0.326573, -0.35973)",
+      "scale": 1.0,
+      "sizing": "fixed",
+      "stages": [
+        {
+          "handoff_marker_step": 0.000319667684379965,
+          "hold_mesh_min": -0.000000180676579475403,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.0121132414788008,
+          "mesh_min": -0.000000210478901863098,
+          "peak_motion_us": 934,
+          "planned_residual": 0.000000269150604026436
+        },
+        {
+          "handoff_marker_step": 0.0000345032131008338,
+          "hold_mesh_min": 0.0,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.0160517487674952,
+          "mesh_min": -0.000000299885869026184,
+          "peak_motion_us": 903,
+          "planned_residual": 0.000723512377589941
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "eishin-flash",
+      "clearance": 0.439450709149241,
+      "fps": 60,
+      "root_delta": "(0.001318, -0.368923, -0.35973)",
+      "scale": 1.0,
+      "sizing": "source",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000415789327234961,
+          "hold_mesh_min": -0.0000147540122270584,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00784465484321117,
+          "mesh_min": -0.000000270083546638489,
+          "peak_motion_us": 1070,
+          "planned_residual": 0.000000307285660028356
+        },
+        {
+          "handoff_marker_step": 0.00000457330315839499,
+          "hold_mesh_min": 0.0,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00804287102073431,
+          "mesh_min": -0.0000205058604478836,
+          "peak_motion_us": 1008,
+          "planned_residual": 0.000723594799637794
+        }
+      ],
+      "yaw": 0.0
+    },
+    {
+      "character": "eishin-flash",
+      "clearance": 0.48,
+      "fps": 60,
+      "root_delta": "(0.001318, -0.326573, -0.35973)",
+      "scale": 1.0,
+      "sizing": "fixed",
+      "stages": [
+        {
+          "handoff_marker_step": 0.0000424534882768057,
+          "hold_mesh_min": -0.000000180676579475403,
+          "kind": "enter",
+          "limited_frames": 0,
+          "max_marker_step": 0.00784474704414606,
+          "mesh_min": -0.000000270083546638489,
+          "peak_motion_us": 1234,
+          "planned_residual": 0.000000304016566587961
+        },
+        {
+          "handoff_marker_step": 0.00000457399073638953,
+          "hold_mesh_min": 0.0,
+          "kind": "exit",
+          "limited_frames": 0,
+          "max_marker_step": 0.00804295763373375,
+          "mesh_min": -0.000000240281224250793,
+          "peak_motion_us": 1002,
+          "planned_residual": 0.000723619421478361
+        }
+      ],
+      "yaw": 0.0
+    }
+  ],
+  "failures": 0
+}

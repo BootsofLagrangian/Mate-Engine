@@ -1,0 +1,17 @@
+{
+  "verdict": "APPROVED",
+  "source_sha256": {
+    "companion/native/scripts/seated_transition.gd": "499063fd28c7158e049c311325d78ff19ce026303e13db37578163085e8c31bc",
+    "companion/native/tools/probe_authored_contact_path.gd": "3dd5cb3d3f3d9f1364fbfabe48965a777aa47b8f5960ce05456da982e6efeaeb",
+    "companion/diagnostics/authored_foot_contacts/hachimi-probe.gd": "678a04e076352bcc74703adbc50fdb5822ea0882225cd89b0c7f54e9c37bd5f7",
+    "companion/diagnostics/authored_foot_contacts/review_order_bounds.gd": "f37bffff68ef58c21c544f8d321ac1c477167df07b43686875c59459e08ce6a8"
+  },
+  "bounds_restores_contact_diagnostics": true,
+  "rejected_begin_preserves_preparation": true,
+  "phase_query_error_m": 0,
+  "hachimi_fixture_matches_executed_bytes": true,
+  "hachimi_stages": 4,
+  "hachimi_failures": 0,
+  "mambo_strict_contact_failures_retained": 4,
+  "scope": "Narrow source instrumentation/diagnostic restoration and archived Hachimi offline fixture/result validation; not packaged Windows acceptance"
+}

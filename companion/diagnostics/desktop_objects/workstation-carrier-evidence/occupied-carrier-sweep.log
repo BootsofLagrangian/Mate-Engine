@@ -1,0 +1,6 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+CARRY cheval-grand swivel { "accepted": false, "reason": "occupied_sweep_blocked", "blocked_body_id": "left_thigh", "obstacle_index": 6, "obstacle_id": "/root/@Node3D@6/ContactFurnitureGeometry/Workstation/Solid oak edge tabletop", "sweep_segment": 13, "body_bounds_world": [P: (0.085325, 0.265494, 0.008577), S: (0.435275, 0.475157, 0.368749)], "validation_ms": 56.611, "scope": "rig_body_volume_approximation" }
+CARRY rice-shower swivel { "accepted": false, "reason": "occupied_sweep_blocked", "blocked_body_id": "left_thigh", "obstacle_index": 6, "obstacle_id": "/root/@Node3D@10/ContactFurnitureGeometry/Workstation/Solid oak edge tabletop", "sweep_segment": 14, "body_bounds_world": [P: (0.093263, 0.240613, 0.013095), S: (0.374202, 0.428976, 0.343318)], "validation_ms": 57.126, "scope": "rig_body_volume_approximation" }
+CARRY eishin-flash swivel { "accepted": false, "reason": "occupied_sweep_blocked", "blocked_body_id": "left_thigh", "obstacle_index": 6, "obstacle_id": "/root/@Node3D@14/ContactFurnitureGeometry/Workstation/Solid oak edge tabletop", "sweep_segment": 16, "body_bounds_world": [P: (0.123403, 0.267065, 0.022391), S: (0.389238, 0.473292, 0.39184)], "validation_ms": 56.505, "scope": "rig_body_volume_approximation" }
+CARRY_SWEEP_FAILURES=3

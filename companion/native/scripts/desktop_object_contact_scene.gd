@@ -18,6 +18,17 @@ var _sockets: Dictionary = {}
 var _geometry_points := PackedVector3Array()
 var _local_bounds := AABB()
 var _facing_local := Vector3.FORWARD
+var _seat_node: Node3D
+var _seat_native_anchor := Vector3.ZERO
+var _seat_rest_transform := Transform3D.IDENTITY
+var _seat_rest_points := PackedVector3Array()
+var _stationary_points := PackedVector3Array()
+var _seat_rest_bounds := AABB()
+var _stationary_bounds := AABB()
+var _setup_capability: Dictionary = {}
+var _seat_pullout := 0.0
+var _seat_yaw_delta := 0.0
+var _seat_scale := 1.0
 
 func configure(type: String) -> bool:
 	clear()
@@ -53,10 +64,16 @@ func configure(type: String) -> bool:
 		chair.name = "ComputerSeat"
 		chair.transform = Transform3D(Basis(Vector3.UP, PI), COMPUTER_CHAIR_POSITION)
 		_content.add_child(chair)
+		_seat_node = chair
+		_seat_rest_transform = chair.transform
 		var chair_sockets: Variant = chair_definition.get("sockets", {})
 		if not chair_sockets is Dictionary or not _valid_xyz(chair_sockets.get("seat")):
 			return _fail("Computer contact chair has no valid seat")
 		_sockets["seat"] = chair.transform * _xyz(chair_sockets["seat"])
+		_seat_native_anchor = _xyz(chair_sockets["seat"])
+		var capability: Variant = definition.get("seat_setup",{})
+		if capability is Dictionary and capability.get("kind","") == "swivel_chair":
+			_setup_capability = capability.duplicate(true)
 		# Keep actual keyboard names in user-side left/right coordinates. Facing
 		# -Z means a user's left hand is at negative local X, right at positive X.
 		for required in ["use", "keyboard_left", "keyboard_right", "inspect"]:
@@ -72,6 +89,17 @@ func configure(type: String) -> bool:
 	_local_bounds = AABB(_geometry_points[0], Vector3.ZERO)
 	for point in _geometry_points:
 		_local_bounds = _local_bounds.expand(point)
+	if is_instance_valid(_seat_node):
+		_geometry_points.clear()
+		_collect_geometry(primary,Transform3D.IDENTITY)
+		_stationary_points = _geometry_points.duplicate()
+		_stationary_bounds = _points_bounds(_stationary_points)
+		_geometry_points.clear()
+		_collect_geometry(_seat_node,Transform3D.IDENTITY)
+		_seat_rest_points = _geometry_points.duplicate()
+		_seat_rest_bounds = _points_bounds(_seat_rest_points)
+		_geometry_points = _stationary_points.duplicate()
+		_geometry_points.append_array(_seat_rest_points)
 	loaded = true
 	return true
 
@@ -88,6 +116,17 @@ func clear() -> void:
 	_geometry_points.clear()
 	_local_bounds = AABB()
 	_facing_local = Vector3.FORWARD
+	_seat_node = null
+	_seat_native_anchor = Vector3.ZERO
+	_seat_rest_transform = Transform3D.IDENTITY
+	_seat_rest_points.clear()
+	_stationary_points.clear()
+	_seat_rest_bounds = AABB()
+	_stationary_bounds = AABB()
+	_setup_capability.clear()
+	_seat_pullout = 0.0
+	_seat_yaw_delta = 0.0
+	_seat_scale = 1.0
 
 func _fail(message: String) -> bool:
 	clear()
@@ -177,4 +216,48 @@ func get_world_bounds() -> AABB:
 	return global_transform * _local_bounds if loaded else AABB()
 
 func geometry_points_local() -> PackedVector3Array:
+	if supports_seat_setup():
+		var result := _stationary_points.duplicate()
+		var delta := _seat_node.transform*_seat_rest_transform.affine_inverse()
+		for point in _seat_rest_points: result.append(delta*point)
+		return result
 	return _geometry_points.duplicate()
+
+static func _points_bounds(points: PackedVector3Array) -> AABB:
+	if points.is_empty(): return AABB()
+	var result := AABB(points[0],Vector3.ZERO)
+	for point in points: result = result.expand(point)
+	return result
+
+func supports_seat_setup() -> bool:
+	return loaded and is_instance_valid(_seat_node) and _setup_capability.get("kind","") == "swivel_chair"
+
+func seat_setup() -> Dictionary:
+	return {"pullout_local_m":_seat_pullout,"yaw_delta_deg":_seat_yaw_delta,"seat_scale":_seat_scale,"capability":_setup_capability.duplicate(true)}
+
+## Relative adjustable-seat geometry; desk dimensions and the host's global
+## furniture scale remain independent. The physical cushion moves with its mesh.
+func set_seat_scale(value: float) -> bool:
+	var limits: Variant = _setup_capability.get("adjustable_scale",{})
+	if not supports_seat_setup() or not limits is Dictionary or limits.is_empty() or not is_finite(value): return false
+	if value < float(limits.get("min",1.0)) or value > float(limits.get("max",1.0)): return false
+	_seat_scale = value
+	return set_seat_setup(_seat_pullout,_seat_yaw_delta)
+
+## The chair mesh, support socket and facing all share this real transform.
+## Workstation/keyboard geometry never follows chair setup or seated rolling.
+func set_seat_setup(pullout_local_m: float, yaw_delta_deg: float) -> bool:
+	if not supports_seat_setup() or not is_finite(pullout_local_m) or not is_finite(yaw_delta_deg): return false
+	var maximum: float = _setup_capability.get("max_pullout_m",0.0)
+	if pullout_local_m < 0.0 or pullout_local_m > maximum or absf(yaw_delta_deg) > 180.0: return false
+	_seat_pullout = pullout_local_m
+	_seat_yaw_delta = yaw_delta_deg
+	_seat_node.transform = Transform3D(Basis(Vector3.UP,PI+deg_to_rad(yaw_delta_deg)).scaled(Vector3.ONE*_seat_scale),COMPUTER_CHAIR_POSITION+Vector3(0,0,pullout_local_m))
+	_sockets["seat"] = _seat_node.transform*_seat_native_anchor
+	_facing_local = (_seat_node.basis*Vector3.BACK).normalized()
+	var delta := _seat_node.transform*_seat_rest_transform.affine_inverse()
+	_local_bounds = _stationary_bounds.merge(delta*_seat_rest_bounds)
+	return true
+
+func seat_node() -> Node3D:
+	return _seat_node if supports_seat_setup() else null

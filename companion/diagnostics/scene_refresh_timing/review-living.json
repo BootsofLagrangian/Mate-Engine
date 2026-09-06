@@ -1,0 +1,14 @@
+{
+  "diagnostics": {
+    "calls": 4,
+    "last_rebuild_us": 721,
+    "last_refresh_us": 171,
+    "rebuilds": 2,
+    "suppressed": false
+  },
+  "failures": 0,
+  "rejected_stale_intent": {
+    "accepted": false,
+    "reason": "unknown_target"
+  }
+}

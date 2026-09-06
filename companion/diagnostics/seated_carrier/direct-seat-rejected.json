@@ -1,0 +1,55 @@
+{
+  "failures": 85,
+  "rows": [
+    {
+      "carried_minimum_gap": 0.0299401497577492,
+      "character": "cheval-grand",
+      "hips_local_motion": 0.0,
+      "lowered_handoff": 0.00000253163011620927,
+      "max_marker_step": 0.00784902740269899,
+      "minimum_sole_gap": -0.000109442498796852,
+      "reach_error": 0.000165820136317052,
+      "ready_frames": 84
+    },
+    {
+      "carried_minimum_gap": 0.0271496433907146,
+      "character": "rice-shower",
+      "hips_local_motion": 0.0,
+      "lowered_handoff": 0.00000223478923544462,
+      "max_marker_step": 0.00748688820749521,
+      "minimum_sole_gap": -0.0000869672603016625,
+      "reach_error": 0.000150293111801147,
+      "ready_frames": 84
+    },
+    {
+      "carried_minimum_gap": 0.0299409311264753,
+      "character": "eishin-flash",
+      "hips_local_motion": 0.0,
+      "lowered_handoff": 0.00000192149877875636,
+      "max_marker_step": 0.00752752926200628,
+      "minimum_sole_gap": -0.000113369897007942,
+      "reach_error": 0.000165790333994664,
+      "ready_frames": 84
+    },
+    {
+      "carried_minimum_gap": -0.011164576560259,
+      "character": "mambo",
+      "hips_local_motion": 0.0,
+      "lowered_handoff": 0.00000190102355190902,
+      "max_marker_step": 0.00506337638944387,
+      "minimum_sole_gap": -0.0190129287540914,
+      "reach_error": 0.0000432878841820639,
+      "ready_frames": 84
+    },
+    {
+      "carried_minimum_gap": 0.00757780715866829,
+      "character": "hachimi",
+      "hips_local_motion": 0.0,
+      "lowered_handoff": 0.00000175673017110967,
+      "max_marker_step": 0.00500517804175615,
+      "minimum_sole_gap": -0.000246509462158429,
+      "reach_error": 0.0000433176755905151,
+      "ready_frames": 84
+    }
+  ]
+}

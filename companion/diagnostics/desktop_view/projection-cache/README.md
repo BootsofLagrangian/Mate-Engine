@@ -1,0 +1,9 @@
+# Native furniture projection reuse
+
+`DesktopObjectWindow` now reuses a successful shared projection when the actual camera/object/mesh/crop inputs match. The key includes the reference camera's effective transform (including offsets), projection matrix and viewport dimensions, desktop origin, desired world object transform, current imported mesh node/resource identities and transforms, geometry revision, and native crop camera/window state. Owned geometry setters and `Mesh.changed` invalidate the cache; replacement/reparenting changes the identity/transform signature. Failed fits are not cached. Shared-projection teardown clears the cached result.
+
+The purpose is to remove repeated imported-vertex extraction and projection on unchanged periodic synchronization, including an occupied hidden furniture window. It does not defer a changed camera/seat/scale or skip physical fit checks after actual changes.
+
+`projection-cache-test-final.log` has 70 passing checks on the actual complete computer assembly: no extraction on repeated identical requests, exact cached/full crop and socket equality, camera/viewport/object/mesh/setup/height invalidation, hidden occupancy, and teardown/reactivation. Existing actual chair perspective crop tests pass 20 checks; native computer assembly/scale/socket/orthographic margins pass 87. These are Linux headless functional tests, not a Windows frame-time claim.
+
+Each call publishes `projection_profile.timestamp_msec` at completion, `last_call_us`, and success. `last_fit_us` and `last_fit_at_us` retain the most recent full-fit cost/start time and must not be interpreted as the cost of a later cache hit. Cumulative fits/cache_hits/geometry_collections and last lookup/collection times allow attribution. Living copies profiles into its existing interest-refresh diagnostics; the copy can lag a refresh, so use the profile's own timestamp. Actual Windows periodic timing still requires the packaged run.

@@ -76,6 +76,7 @@ var _heading_deadline := 0.0
 var _waiting_for_heading := false
 var _last_frame_position := Vector2.INF
 var last_request_outcome := ""
+var last_seat_admission: Dictionary = {}
 
 
 func configure(host: Window, bounds_callback: Callable = Callable(), anchors_callback: Callable = Callable()) -> void:
@@ -868,20 +869,71 @@ func set_seat_surfaces(lines: Array) -> void:
 	_validate_support()
 
 
+func _seat_admission_result(reason: String) -> bool:
+	last_seat_admission["reason"] = reason
+	last_seat_admission["accepted"] = reason == "accepted"
+	return reason == "accepted"
+
+
 func can_request_seat_contact(id: String, point: Vector2, seat_anchor: Vector2) -> bool:
-	if not enabled or not surface_mode or _blocked or _pointer_interaction or _handoff_braking or not point.is_finite() or not seat_anchor.is_finite(): return false
+	return _can_admit_seat(id,point,seat_anchor)
+
+
+## An authored entry starts at its planned standing pose, before backwards root
+## travel. Its source-derived staging point replaces the instant-contact radius;
+## policy, registered support and the complete desktop path still apply.
+func can_request_authored_seat_entry(id: String, point: Vector2, seat_anchor: Vector2, expected_standing_seat: Vector2, staging_tolerance_px: float = 24.0) -> bool:
+	return _can_admit_seat(id,point,seat_anchor,{"expected_standing_seat":expected_standing_seat,"tolerance_px":staging_tolerance_px})
+
+
+func _can_admit_seat(id: String, point: Vector2, seat_anchor: Vector2, authored: Dictionary = {}) -> bool:
+	last_seat_admission = {"id":id,"point":str(point),"seat_anchor":str(seat_anchor),"position":str(position),
+		"visible_bounds":str(visible_bounds),"workareas":str(workareas),"contact_pose":contact_pose,"state":state,
+		"enabled":enabled,"surface_mode":surface_mode,"blocked":_blocked,"pointer_interaction":_pointer_interaction,
+		"handoff_braking":_handoff_braking,"surface_ids":_seat_surfaces.keys()}
+	if not enabled: return _seat_admission_result("disabled")
+	if not surface_mode: return _seat_admission_result("surface_mode_off")
+	if _blocked: return _seat_admission_result("blocked_context")
+	if _pointer_interaction: return _seat_admission_result("pointer_interaction")
+	if _handoff_braking: return _seat_admission_result("handoff_braking")
+	if not point.is_finite(): return _seat_admission_result("nonfinite_point")
+	if not seat_anchor.is_finite(): return _seat_admission_result("nonfinite_anchor")
 	var seat: Dictionary = _seat_surfaces.get(id,{})
-	if seat.is_empty() or absf(point.y-float(seat.y)) > 0.1: return false
+	last_seat_admission["seat_surface"] = seat.duplicate(true)
+	if seat.is_empty(): return _seat_admission_result("missing_seat_surface")
+	last_seat_admission["surface_y_error_px"] = absf(point.y-float(seat.y))
+	if absf(point.y-float(seat.y)) > 0.1: return _seat_admission_result("seat_surface_y_mismatch")
 	var destination := point-seat_anchor
 	var span := _surface_origin_span(seat,seat_anchor)
-	# Reach the seat horizontally while standing first; this API only performs
-	# the nearby sit/stand contact transition, not navigation between platforms.
-	if absf(destination.x-position.x) > 48 or destination.x < span.x or destination.x > span.y: return false
-	return is_origin_safe(destination) and _path_safe(position,destination)
+	last_seat_admission.merge({"destination":str(destination),"origin_span":str(span),
+		"horizontal_distance_px":absf(destination.x-position.x),"destination_bounds":str(Rect2(destination+visible_bounds.position,visible_bounds.size)),
+		"start_bounds":str(Rect2(position+visible_bounds.position,visible_bounds.size))})
+	if authored.is_empty():
+		if absf(destination.x-position.x) > 48: return _seat_admission_result("seat_too_far_horizontally")
+	else:
+		var expected: Vector2 = authored.expected_standing_seat
+		var tolerance: float = authored.tolerance_px
+		last_seat_admission["mode"] = "authored_entry"
+		last_seat_admission["expected_standing_seat"] = str(expected)
+		if not expected.is_finite() or not is_finite(tolerance) or tolerance < 0.0 or tolerance > 24.0:
+			return _seat_admission_result("invalid_authored_staging")
+		var residual := absf((position+seat_anchor).x-expected.x)
+		last_seat_admission["staging_residual_px"] = residual
+		last_seat_admission["staging_tolerance_px"] = tolerance
+		if residual > tolerance: return _seat_admission_result("authored_staging_misaligned")
+	if destination.x < span.x or destination.x > span.y: return _seat_admission_result("outside_seat_span")
+	last_seat_admission["destination_safe"] = is_origin_safe(destination)
+	if not last_seat_admission.destination_safe: return _seat_admission_result("destination_outside_workareas")
+	last_seat_admission["path_safe"] = _path_safe(position,destination)
+	if not last_seat_admission.path_safe: return _seat_admission_result("path_outside_workareas")
+	return _seat_admission_result("accepted")
 
 
 func request_seat_contact(id: String, point: Vector2) -> bool:
-	if contact_pose != "sit" or not can_request_seat_contact(id,point,_anchor()): return false
+	if contact_pose != "sit":
+		last_seat_admission = {"id":id,"point":str(point),"contact_pose":contact_pose,"reason":"wrong_contact_pose","accepted":false}
+		return false
+	if not can_request_seat_contact(id,point,_anchor()): return false
 	_seat_contact_owner = id
 	_finish_target("superseded")
 	_stop_motion()

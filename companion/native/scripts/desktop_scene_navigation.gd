@@ -5,6 +5,7 @@ extends RefCounted
 ## Furniture obstacles are conservative solid AABBs, expanded by actor radius.
 signal finished(request_id: String, outcome: String)
 const MAX_OBSTACLES := 96
+const MAX_RAW_PARTS := 2048
 const MAX_CELLS := 16384
 var position_world := Vector3.ZERO
 var active := false
@@ -31,7 +32,7 @@ func configure(bounds_xz: Rect2, ground_y: float, obstacle_solids: Array = [],
 		actor_radius_m: float = 0.12, actor_height_m: float = 1.6, cell_size_m: float = 0.08) -> Dictionary:
 	if not bounds_xz.position.is_finite() or not bounds_xz.size.is_finite() or not is_finite(ground_y) or not is_finite(actor_radius_m) or not is_finite(actor_height_m) or not is_finite(cell_size_m):
 		return {"ok":false,"reason":"nonfinite_geometry"}
-	if actor_radius_m < 0 or actor_radius_m > 1 or actor_height_m <= 0 or actor_height_m > 4 or cell_size_m < 0.02 or cell_size_m > 0.3 or obstacle_solids.size() > MAX_OBSTACLES:
+	if actor_radius_m < 0 or actor_radius_m > 1 or actor_height_m <= 0 or actor_height_m > 4 or cell_size_m < 0.02 or cell_size_m > 0.3 or obstacle_solids.size() > MAX_RAW_PARTS:
 		return {"ok":false,"reason":"invalid_geometry"}
 	var bounds := bounds_xz.grow(-actor_radius_m)
 	if bounds.size.x < cell_size_m or bounds.size.y < cell_size_m or bounds.size.x > 20 or bounds.size.y > 20:
@@ -46,6 +47,18 @@ func configure(bounds_xz: Rect2, ground_y: float, obstacle_solids: Array = [],
 		var box: AABB = value
 		if box.end.y <= ground_y or box.position.y >= ground_y+actor_height_m: continue
 		solids.append(Rect2(Vector2(box.position.x,box.position.z),Vector2(box.size.x,box.size.z)).grow(actor_radius_m))
+	# A material may contain hundreds of disconnected keyboard parts. For a
+	# standing capsule these already project inside the expanded tabletop. Keep
+	# the exact obstacle union while bounding the effective navigation geometry.
+	var reduced:Array[Rect2]=[]
+	solids.sort_custom(func(a:Rect2,b:Rect2):return a.get_area()>b.get_area())
+	for rect in solids:
+		var contained:=false
+		for outer in reduced:
+			if outer.encloses(rect):contained=true;break
+		if not contained:reduced.append(rect)
+	if reduced.size()>MAX_OBSTACLES:return {"ok":false,"reason":"too_many_effective_obstacles","raw_parts":obstacle_solids.size(),"effective_obstacles":reduced.size()}
+	solids=reduced
 	cancel("geometry_changed")
 	_dispose_map()
 	_bounds = bounds
@@ -88,7 +101,7 @@ func configure(bounds_xz: Rect2, ground_y: float, obstacle_solids: Array = [],
 	# Synchronize once when geometry changes, never once per rendered frame.
 	NavigationServer3D.map_force_update(_map)
 	_ready = true
-	diagnostics = {"cells":nx*nz,"polygons":kept,"obstacles":solids.size(),"cell_size_m":maxf(dx,dz),"ground_y":ground_y}
+	diagnostics = {"cells":nx*nz,"polygons":kept,"obstacles":solids.size(),"raw_parts":obstacle_solids.size(),"cell_size_m":maxf(dx,dz),"ground_y":ground_y}
 	return {"ok":true,"reason":"ready","polygons":kept}
 
 func plan(id: String, start_world: Vector3, target_world: Vector3, wanted_speed_mps: float = 0.35) -> Dictionary:

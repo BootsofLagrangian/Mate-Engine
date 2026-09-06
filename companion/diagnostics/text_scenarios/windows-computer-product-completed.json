@@ -1,0 +1,297 @@
+{
+  "scope": "Actual Windows exported product-default Cheval: Korean text -> Japanese supplied voice -> computer setup/approach/entry/use/exit/restoration -> one completed terminal and backend acknowledgement. Not every character/layout or acoustic onset guarantee.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\run_text_scenario.gd",
+      "--",
+      "--scenario",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\diagnostics\\text_scenarios\\computer-use.json",
+      "--character",
+      "cheval-grand",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\text-scenario-computer-product-route",
+      "--product-defaults"
+    ],
+    "scope": "exported executable plus external scenario script",
+    "executable_sha256": "a3bb28a4ed97df89b3092f4dc5a74c7649f1eadbc2010e8d919a4acd4c85d18b",
+    "script_sha256": "485b276f5d9e131a07dba0d55c3c15be28619abd32c0074502274cf6a6440783",
+    "parent_script_sha256": "38280eb30e9bc3c4529c13aa9f17803e6137872e0441a27844b410e835233d43",
+    "scenario_sha256": "e8798cc963f083b02756332fc18332c1fdbd636a61de6780ae7dcfe0d2610de4",
+    "started_unix": 1788724158.472594,
+    "character": "cheval-grand",
+    "settings_profile": "product_defaults",
+    "prompt_capture_id": "7c47ca2e722745659aa9f7ef3404cb01",
+    "launcher_child_pid": 4336,
+    "exact_prompt_captured": true,
+    "exit_code": 0,
+    "finished_unix": 1788724234.0253992
+  },
+  "checks": [
+    {
+      "label": "native ready",
+      "ms": 6716,
+      "ok": true
+    },
+    {
+      "label": "actual selected character ready",
+      "ms": 6719,
+      "ok": true
+    },
+    {
+      "label": "real model provider",
+      "ms": 6722,
+      "ok": true
+    },
+    {
+      "label": "scenario step 0 actual reply / playback / intent / native outcome",
+      "ms": 63599,
+      "ok": true
+    },
+    {
+      "label": "capture owned viewport scenario-0",
+      "ms": 64778,
+      "ok": true
+    },
+    {
+      "label": "total object bound respected",
+      "ms": 66759,
+      "ok": true
+    },
+    {
+      "label": "original settings restored after test",
+      "ms": 67787,
+      "ok": true
+    }
+  ],
+  "trial": {
+    "action": {
+      "character": "cheval-grand",
+      "elapsed_ms": 1376.5,
+      "emotion": "neutral",
+      "gesture": "idle",
+      "intensity": 0.8,
+      "intent": {
+        "kind": "furniture",
+        "object_type": "computer",
+        "placement": "near",
+        "verb": "use"
+      },
+      "ms": 8194,
+      "speed": 0.92,
+      "turn_id": "t1-7907",
+      "type": "action"
+    },
+    "action_delivered_ms": 8194,
+    "actual_character": "cheval-grand",
+    "actual_model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "actual_variant": "default",
+    "delivered_action_to_terminal_playback_overlap_ms": 1016,
+    "done": {
+      "audio_url": null,
+      "character": "cheval-grand",
+      "elapsed_ms": 1397.5,
+      "emotion": "neutral",
+      "gesture": "idle",
+      "intensity": 0.8,
+      "intent": {
+        "kind": "furniture",
+        "object_type": "computer",
+        "placement": "near",
+        "verb": "use"
+      },
+      "intent_replay": true,
+      "ms": 8210,
+      "ok": true,
+      "speed": 0.92,
+      "text": "用意してみますね。",
+      "timings": {
+        "first_audio_ms": 1089.8,
+        "first_text_ms": 476.1,
+        "first_token_ms": 475.9,
+        "llm_done_ms": 1376.5,
+        "total_ms": 1397.5
+      },
+      "turn_id": "t1-7907",
+      "type": "done",
+      "voice_error": null
+    },
+    "done_ms": 8210,
+    "failures": [],
+    "feedback": {
+      "accepted": true,
+      "intent_id": "t1-7907:intent",
+      "ms": 63471,
+      "type": "intent_result"
+    },
+    "finished_ms": 63595,
+    "first_pcm_received_ms": 7910,
+    "first_playback_ms": 7927,
+    "first_text_ms": 7294,
+    "index": 0,
+    "native_active_ms": 8198,
+    "overlap_required": false,
+    "pcm_bytes": 81280,
+    "playback_intervals_ms": [
+      [
+        7927,
+        9210
+      ]
+    ],
+    "raw_provider": {
+      "available": true,
+      "record": {
+        "generated_tokens": 35.0,
+        "input_tokens": 4498.0,
+        "modality": "text",
+        "preprocess_ms": 20.4,
+        "raw": "{\"text\":\"用意してみますね。\", \"emotion\":\"neutral\", \"gesture\":\"idle\", \"intent\":{\"kind\":\"furniture\",\"object_type\":\"computer\",\"verb\":\"use\"}}",
+        "request_capabilities": {
+          "appearance_variant_ids": [
+            "default"
+          ],
+          "furniture_catalog": [
+            {
+              "id": "chair",
+              "verbs": [
+                "appearance",
+                "configure",
+                "hide",
+                "inspect",
+                "place",
+                "remove",
+                "sit"
+              ]
+            },
+            {
+              "id": "computer",
+              "verbs": [
+                "appearance",
+                "configure",
+                "hide",
+                "inspect",
+                "place",
+                "remove",
+                "use"
+              ]
+            },
+            {
+              "id": "sofa",
+              "verbs": [
+                "appearance",
+                "configure",
+                "hide",
+                "inspect",
+                "place",
+                "remove",
+                "sit"
+              ]
+            }
+          ],
+          "furniture_types": [],
+          "interests_count": 0.0,
+          "locomotion_ids": [
+            "mambo_goofy_walk",
+            "playful_strut",
+            "uma_walk"
+          ]
+        },
+        "turn_id": "t1-7907"
+      }
+    },
+    "reply": "用意してみますね。",
+    "simultaneous_native_active_playback_samples": 61,
+    "simultaneous_travel_playback_samples": 0,
+    "started_ms": 6764,
+    "text": "컴퓨터를 꺼내서 써 봐. 먼저 짧게 대답해 줘.",
+    "turn_id": "t1-7907"
+  },
+  "terminals": [
+    {
+      "id": "t1-7907:intent",
+      "ms": 62511,
+      "outcome": "completed",
+      "owner": "furniture",
+      "reason": ""
+    }
+  ],
+  "final_objects": [
+    {
+      "appearance": "default",
+      "id": "obj_1",
+      "label": "컴퓨터 책상",
+      "position_m": {
+        "x": 3.71384048461914,
+        "y": -1.31458330154419,
+        "z": -0.864970684051514
+      },
+      "scale": 0.694097384941124,
+      "seat_scale": 0.906176591431814,
+      "spatial_unit_scale": 0.864432013457153,
+      "status": "ready",
+      "status_text": "보임",
+      "type": "computer",
+      "verbs": [
+        "inspect",
+        "use"
+      ],
+      "visible": true,
+      "x": 2253,
+      "y": 1184,
+      "yaw_deg": 0.0
+    }
+  ],
+  "final_navigation": {
+    "active": false,
+    "diagnostics": {
+      "contact_exit_world": "(3.842076, -1.314584, -0.178818)",
+      "interest_refresh": {
+        "calls": 2561,
+        "last_refresh_msec": 64632,
+        "last_refresh_us": 1278,
+        "scene": {
+          "calls": 1,
+          "last_rebuild_us": 787,
+          "last_refresh_us": 1221,
+          "rebuilds": 1,
+          "suppressed": false
+        },
+        "window_projection": {
+          "obj_1": {
+            "cache_hits": 87,
+            "fits": 4,
+            "geometry_collections": 7,
+            "last_call_succeeded": true,
+            "last_call_us": 61492,
+            "last_collect_us": 36900,
+            "last_fit_at_us": 63585054,
+            "last_fit_us": 61487,
+            "last_lookup_us": 24,
+            "last_request_at_us": 63585054,
+            "timestamp_msec": 63646
+          }
+        }
+      },
+      "reason": "completed_contact_ground"
+    },
+    "foot_world_m": "(3.842076, -1.314584, -0.178818)",
+    "ground_latched": true,
+    "holding": true
+  },
+  "setup_plan_ms": 265.64,
+  "workstation_reposition": {
+    "bounds": "[P: (2033.264, 1062.138), S: (517.7349, 291.9917)]",
+    "distance_m": 0.502586781978607,
+    "ground_y": -1.31458330154419,
+    "ok": true,
+    "point": "(3.71384, -1.314583, -0.864971)",
+    "reason": "fits",
+    "validated_candidates": 2
+  },
+  "initial_scene_admission": {}
+}

@@ -1,0 +1,5 @@
+{
+  "native/scripts/desktop_scene_interests.gd": "d4e50199a63f38d833d671e82708d8ece7ad5462591dcab3f40f3270f9af4135",
+  "native/scripts/living_behavior.gd": "d384cb819ff86ebdb1d20c1dd519d82e54381c8078fb9a2f5ae801cc7bf8a62d",
+  "diagnostics/scene_navigation/probe_interest_ownership.gd": "8bc1657a37143f28cd951bceff6960494974091b9ac92b3f6a105d0164168cc1"
+}

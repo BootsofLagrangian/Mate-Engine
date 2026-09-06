@@ -1,0 +1,8 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+PLACEMENT chair desired=(0.42, -0.491169, -0.0) result={ "ok": true, "point": (0.42, -0.491169, -0.264494), "distance_m": 0.26449328660965, "ground_y": -0.49116921424866, "bounds": [P: (1332.884, 1210.994), S: (94.71473, 172.0051)], "reason": "fits" }
+PLACEMENT sofa desired=(0.42, -0.491169, -0.0) result={ "ok": true, "point": (0.636506, -0.491169, -0.27439), "distance_m": 0.34952095150948, "ground_y": -0.49116921424866, "bounds": [P: (1300.548, 1242.784), S: (275.7014, 140.2145)], "reason": "fits" }
+PLACEMENT computer desired=(0.42, -0.491169, -0.0) result={ "ok": true, "point": (0.42, -0.491169, -0.559671), "distance_m": 0.55967044830322, "ground_y": -0.49116921424866, "bounds": [P: (1278.097, 1175.449), S: (198.0762, 207.5504)], "reason": "fits" }
+Ground placement: 29 checks, 0 failures
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2514)

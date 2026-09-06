@@ -1,0 +1,98 @@
+[
+  {
+    "before_ms": 24321,
+    "after_ms": 24373,
+    "gap_ms": 52,
+    "sequence": "chair",
+    "stage": "exiting",
+    "preceding_telemetry_us": 796,
+    "preceding_readback_us": 0,
+    "before_foot_y": -1.55033099651337,
+    "after_foot_y": -1.55012202262878,
+    "scene_holding": false,
+    "support": {
+      "attached": false,
+      "pose": "foot"
+    }
+  },
+  {
+    "before_ms": 45377,
+    "after_ms": 45456,
+    "gap_ms": 79,
+    "sequence": "computer",
+    "stage": "entering",
+    "preceding_telemetry_us": 667,
+    "preceding_readback_us": 0,
+    "before_foot_y": -1.33951151371002,
+    "after_foot_y": -1.34232115745544,
+    "scene_holding": false,
+    "support": {
+      "attached": false,
+      "pose": "foot"
+    }
+  },
+  {
+    "before_ms": 45892,
+    "after_ms": 45957,
+    "gap_ms": 65,
+    "sequence": "computer",
+    "stage": "entering",
+    "preceding_telemetry_us": 675,
+    "preceding_readback_us": 0,
+    "before_foot_y": -1.4885401725769,
+    "after_foot_y": -1.49621164798737,
+    "scene_holding": false,
+    "support": {
+      "attached": false,
+      "pose": "foot"
+    }
+  },
+  {
+    "before_ms": 46394,
+    "after_ms": 46478,
+    "gap_ms": 84,
+    "sequence": "computer",
+    "stage": "entering",
+    "preceding_telemetry_us": 728,
+    "preceding_readback_us": 8759,
+    "before_foot_y": -1.55261373519897,
+    "after_foot_y": -1.55247068405151,
+    "scene_holding": false,
+    "support": {
+      "attached": false,
+      "pose": "foot"
+    }
+  },
+  {
+    "before_ms": 69502,
+    "after_ms": 69579,
+    "gap_ms": 77,
+    "sequence": "computer",
+    "stage": "exiting",
+    "preceding_telemetry_us": 371,
+    "preceding_readback_us": 0,
+    "before_foot_y": -1.54445946216583,
+    "after_foot_y": -1.54275357723236,
+    "scene_holding": false,
+    "support": {
+      "attached": false,
+      "pose": "foot"
+    }
+  },
+  {
+    "before_ms": 70013,
+    "after_ms": 70081,
+    "gap_ms": 68,
+    "sequence": "computer",
+    "stage": "exiting",
+    "preceding_telemetry_us": 684,
+    "preceding_readback_us": 0,
+    "before_foot_y": -1.34163963794708,
+    "after_foot_y": -1.33861064910889,
+    "scene_holding": false,
+    "support": {
+      "attached": false,
+      "pose": "foot"
+    }
+  }
+]

@@ -34,6 +34,11 @@ func _run():
 	h.autonomy._pointer_interaction=false;h.autonomy.enabled=true
 	h.objects._interaction={"id":"obj_1","verb":"sit","stage":"scene_approaching","scene_target":Vector3.ZERO}
 	var start:Vector3=h.avatar.contact_anchors().foot
+	var admitted_ground:Dictionary=adapter.adopt_ground_placement()
+	check(admitted_ground.get("ok",false) and admitted_ground.has("original_world") and admitted_ground.has("projected_displacement_px"),"early ground admission exposes original foot and pixel correction")
+	var admitted_point:Vector3=adapter.foot_world
+	var repeated_ground:Dictionary=adapter.adopt_ground_placement()
+	check(repeated_ground.get("ok",false) and adapter.foot_world==admitted_point and repeated_ground.get("projected_displacement_px")==Vector2.ZERO,"already owned ground remains exact during repeated setup admission")
 	var target:=start+Vector3(.25,0,-.35)
 	h.objects._interaction.scene_target=target
 	var accepted:Dictionary=adapter.request(target,[])
@@ -67,6 +72,8 @@ func _run():
 	check(h.objects._interaction.get("stage","")=="ready","arrival hands off only at exact scene target")
 	adapter.release_to_contact()
 	var saved_windows:Dictionary=h.objects.windows
+	var saved_interaction:Dictionary=h.objects._interaction
+	h.objects._interaction={} # This section tests quiet exploration after ownership release.
 	h.objects.windows={}
 	var interests=load("res://scripts/desktop_scene_interests.gd").new()
 	var first:Array=interests.refresh(h)
@@ -75,6 +82,7 @@ func _run():
 	for i in 20:interests.refresh(h)
 	check(interests.targets==worlds,"quiet repeated refresh preserves stable IDs and world targets")
 	h.objects.windows=saved_windows
+	h.objects._interaction=saved_interaction
 	var callbacks:Array=[]
 	var owner_result:Dictionary=adapter.request_owned(h.avatar.contact_anchors().foot+Vector3(-.12,0,-.1),[],func(outcome:String):callbacks.append(outcome))
 	check(owner_result.accepted,"director-owned route accepted")
@@ -144,7 +152,37 @@ func _run():
 			if frame==8:h.autonomy.state_changed.emit("settle");h._on_locomotion(false,Vector2.ZERO)
 			if not adapter.navigation.active:break
 		check(h.avatar.contact_anchors().foot.distance_to(stage.target_world)<.001 and h.objects._interaction.get("stage","")=="ready","low-FPS chair route survives legacy state/stop callbacks and arrives before timeout")
-	adapter.release_to_contact();chair.free()
+	adapter.release_to_contact();h.objects.windows.obj_1._scene=chair
+	var completed_foot:Vector3=h.avatar.contact_anchors().foot
+	var completed_model:int=h.avatar.model.get_instance_id()
+	h.objects._interaction={}
+	var completed_owner:Dictionary=adapter.contact_exit_token()
+	check(adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner).get("ok",false),"completed authored contact can retain exact committed scene foot")
+	for frame in 300:
+		h.motion._process(1.0/60);h._update_avatar_transform(0);h._follow_standing_projection();adapter.tick(1.0/60)
+	check(h.avatar.contact_anchors().foot.distance_to(completed_foot)<.000001 and adapter.ground_latched,"completed-exit world XYZ stays exact for five seconds")
+	adapter.release_to_contact()
+	check(not adapter.adopt_contact_exit(completed_foot,completed_model+1,completed_owner).get("ok",true) and not adapter.holding,"stale model cannot acquire exit latch")
+	h._drag_active=true
+	check(not adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner).get("ok",true) and not adapter.holding,"drag cannot acquire exit latch")
+	h._drag_active=false
+	h.living.director.request_intent("new-owner","rest","","user")
+	check(not adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner).get("ok",true) and not adapter.holding,"completion callback's newer queued owner prevents stale exit acquisition")
+	h.living.director.cancel_all();completed_owner=adapter.contact_exit_token()
+	h.objects._interaction={"id":"new","stage":"waiting"}
+	check(not adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner).get("ok",true),"new furniture interaction prevents stale exit acquisition")
+	h.objects._interaction={};h.living.enabled=false
+	check(not adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner).get("ok",true),"disabled living prevents exit acquisition")
+	h.living.enabled=true
+	h.objects._interaction={"id":"obj_1","stage":"chair_restore","completed_foot":completed_foot,"completed_model":completed_model}
+	check(not adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner,"different").get("ok",true),"restoration token cannot claim another object's completion")
+	check(adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner,"obj_1").get("ok",false),"same completed object may hold exact foot through empty-chair restoration")
+	for frame in 120:
+		h.motion._process(1.0/60);h._update_avatar_transform(0);adapter.tick(1.0/60)
+	check(h.avatar.contact_anchors().foot.distance_to(completed_foot)<.000001,"restoration ground latch retains world foot while scene remains owned")
+	adapter.release_to_contact();h.objects._interaction.stage="waiting"
+	check(not adapter.adopt_contact_exit(completed_foot,completed_model,completed_owner,"obj_1").get("ok",true),"same object ID cannot bypass ownership after newer interaction stage")
+	h.objects.windows.obj_1._scene=null;chair.free()
 	h.objects._interaction={}
 	check(adapter.request(h.avatar.contact_anchors().foot+Vector3(.2,0,-.1),[]).accepted,"direct route before user stop")
 	for frame in 60:

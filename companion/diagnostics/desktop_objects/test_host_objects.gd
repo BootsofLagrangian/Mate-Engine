@@ -32,6 +32,7 @@ class FacingMotion:
 		return true
 class Furniture:
 	extends Node
+	var _scene:Node3D
 	var visible := true
 	var loaded := true
 	var dragging := false

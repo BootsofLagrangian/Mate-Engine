@@ -2,8 +2,8 @@ extends SceneTree
 ## External, opt-in production Windows temporal probe. Root exclusively launches.
 ## --output ABS_DIR [--character cheval-grand|rice-shower|eishin-flash]
 ## --abort-case none|cancel|support_loss (optional separate finite-entry abort).
-## Samples and saves the owned shared viewport at every rendered frame; timing
-## checks reject finite transitions whose retained samples fall below 20 Hz.
+## Telemetry samples every rendered frame. PNG capture is separately bounded
+## to 8 Hz plus stage edges; timing gates still reject telemetry gaps >50 ms.
 const LIMIT_MS := 180000
 const JOINTS := ["hips","leftUpperLeg","leftLowerLeg","leftFoot","rightUpperLeg","rightLowerLeg","rightFoot"]
 var app
@@ -15,9 +15,78 @@ var started := 0
 var closing := false
 var recording := false
 var sequence := ""
+var foot_markers
 var csv: FileAccess
 var samples: Array = []
 var report := {"checks":[],"commands":[],"phases":[],"sequences":[],"frames":[]}
+
+
+const CAPTURE_INTERVAL_MS := 125
+# One cadence image plus the consecutive entering->seating->seated edges
+# can overlap during an ~80ms PNG save. Three slots retain that measured burst.
+const MAX_CAPTURE_JOBS := 3
+class CaptureWriteJob extends RefCounted:
+	var image:Image
+	var path:String
+	var row:Dictionary
+	var task_id:int
+	var save_us:=0
+	var error:=ERR_BUSY
+	var sha256:=""
+	func run() -> void:
+		var began:=Time.get_ticks_usec()
+		error=image.save_png(path)
+		save_us=Time.get_ticks_usec()-began
+		if error==OK:sha256=FileAccess.get_sha256(path)
+
+var capture_jobs:Array=[]
+var capture_records:Array=[]
+var next_capture_ms:=0
+var capture_queue_skips:=0
+var capture_peak_pending:=0
+var previous_capture_stage:=""
+
+func poll_capture_jobs() -> void:
+	for job in capture_jobs.duplicate():
+		if not WorkerThreadPool.is_task_completed(job.task_id):continue
+		WorkerThreadPool.wait_for_task_completion(job.task_id)
+		job.row.image_error=job.error
+		job.row.capture_save_us=job.save_us
+		job.row.capture_status="saved" if job.error==OK else "save_error"
+		capture_records.append({"image":job.row.image,"ms":job.row.ms,"render_frame":job.row.render_frame,"readback_us":job.row.capture_readback_us,"save_us":job.save_us,"error":job.error,"sha256":job.sha256})
+		job.image=null
+		capture_jobs.erase(job)
+
+func drain_capture_jobs() -> void:
+	while not capture_jobs.is_empty():
+		poll_capture_jobs()
+		if not capture_jobs.is_empty():await process_frame
+
+func capture_frame(row:Dictionary) -> void:
+	row["image"]=""
+	row["image_error"]=null
+	row["capture_readback_us"]=0
+	row["capture_status"]="cadence"
+	row["capture_pending_before"]=capture_jobs.size()
+	var stage_key:=str(row.sequence)+":"+str(row.stage)
+	var due:bool=int(row.ms)>=next_capture_ms or stage_key!=previous_capture_stage
+	previous_capture_stage=stage_key
+	if not due:return
+	next_capture_ms=int(row.ms)+CAPTURE_INTERVAL_MS
+	if capture_jobs.size()>=MAX_CAPTURE_JOBS:
+		capture_queue_skips+=1
+		row.capture_status="queue_full"
+		return
+	var began:=Time.get_ticks_usec()
+	var image:=root.get_texture().get_image()
+	row.capture_readback_us=Time.get_ticks_usec()-began
+	row.image="frames/%06d.png" % samples.size()
+	row.capture_status="queued"
+	var job:=CaptureWriteJob.new()
+	job.image=image;job.path=output.path_join(row.image);job.row=row
+	job.task_id=WorkerThreadPool.add_task(job.run)
+	capture_jobs.append(job)
+	capture_peak_pending=maxi(capture_peak_pending,capture_jobs.size())
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -68,6 +137,9 @@ func knee_angle(points: Dictionary, side: String) -> float:
 	return 180.0-rad_to_deg(thigh.angle_to(shin))
 
 func sample_frame() -> void:
+	poll_capture_jobs()
+	var sample_begin:=Time.get_ticks_usec()
+	var frame_ms:=elapsed()
 	if not recording or closing or not app.avatar.has_model(): return
 	var state: Dictionary = app.motion.seated_transition_state()
 	var joints := {}
@@ -90,13 +162,19 @@ func sample_frame() -> void:
 		rotations[joint] = app.avatar.skeleton.get_bone_pose_rotation(index)
 		if shared: scene_joints[joint] = app.objects._contact_scene.to_local(world)
 	var anchors: Dictionary = app.avatar.contact_anchors()
-	var row := {"ms":elapsed(),"sequence":sequence,"stage":stage(),"window":root.position,
+	var row := {"ms":frame_ms,"render_frame":Engine.get_frames_drawn(),"sequence":sequence,"stage":stage(),"window":root.position,
 		"camera":app.camera.global_transform,"transition":state,"joints_world":joints,
 		"joints_prop_local":scene_joints,"joints_physical_desktop":physical_joints,"joints_desktop_px":pixels,"joint_rotations":rotations,
 		"left_knee_deg":knee_angle(joints,"left"),"right_knee_deg":knee_angle(joints,"right"),
 		"anchors":anchors,"support":app.autonomy.get_support_contact(),"shared":shared,
 		"presentation_offset":app.objects.presentation_offset(),"sit_active":app.is_sitting(),
 		"sit_attached":app._sit_attached,"interaction":app.objects._interaction.duplicate(true)}
+	if foot_markers!=null:
+		row["foot_markers_world"]=foot_markers.live_world()
+		row["authored_foot_contacts"]=app.motion.authored_seated_feet.diagnostics.duplicate(true)
+		row["skeleton_origin_world"]=app.avatar.skeleton.global_transform.origin
+		row["skeleton_basis_world"]=[app.avatar.skeleton.global_transform.basis.x,app.avatar.skeleton.global_transform.basis.y,app.avatar.skeleton.global_transform.basis.z]
+		row["seated_floor_world_y"]=(app.avatar.skeleton.global_transform*Vector3(0,app.avatar.seated_floor.floor_y,0)).y if is_finite(app.avatar.seated_floor.floor_y) else null
 	if shared:
 		row["seat_error_px"] = (Vector2(root.position)+Vector2(app._projected_anchors().sit)).distance_to(app.objects.contact_socket_screen("seat"))
 		row["seat_world"] = app.objects.contact_socket_world("seat")
@@ -105,24 +183,23 @@ func sample_frame() -> void:
 		var clip = app.motion.vrma_clips[clip_name]
 		row["source_hips_normalized"] = clip.sample_hips_offset(float(state.time))
 		row["source_rotations"] = clip.sample(float(state.time))
+		if foot_markers!=null:row["source_foot_markers_local"]=foot_markers.source_local(row.source_rotations,row.source_hips_normalized)
 	if samples.is_empty() or samples[-1].stage != row.stage or samples[-1].sequence != sequence:
 		report.phases.append({"ms":row.ms,"sequence":sequence,"stage":row.stage,"frame":samples.size(),"transition":state})
-	var filename := "frames/%06d.png" % samples.size()
-	var image := root.get_texture().get_image()
-	row["image_error"] = image.save_png(output.path_join(filename))
-	row["image"] = filename
+	capture_frame(row)
+	var filename:String=row.image
 	samples.append(row)
 	csv.store_csv_line(PackedStringArray([str(row.ms),sequence,row.stage,str(root.position.x),str(root.position.y),clip_name,
 		str(state.get("time",0)),str(state.get("duration",0)),str(state.get("root_progress",0)),
 		str(row.left_knee_deg),str(row.right_knee_deg),JSON.stringify(json_safe(joints)),
 		JSON.stringify(json_safe(scene_joints)),JSON.stringify(json_safe(pixels)),JSON.stringify(json_safe(row.get("source_hips_normalized"))),
 		str(row.get("seat_error_px",-1)),filename]))
-	csv.flush()
+	row["sample_main_us"]=Time.get_ticks_usec()-sample_begin
+	row["telemetry_us"]=int(row.sample_main_us)-int(row.capture_readback_us)
 
 func tick() -> void:
 	await process_frame
 	await RenderingServer.frame_post_draw
-	sample_frame()
 
 func wait_for(predicate: Callable, seconds: float) -> bool:
 	var deadline := mini(Time.get_ticks_msec()+int(seconds*1000),started+LIMIT_MS-500)
@@ -190,7 +267,7 @@ func analyze_sequence(label: String) -> void:
 	var rows: Array = samples.filter(func(row): return row.sequence == label)
 	analyze_phase(rows,"entering",label)
 	analyze_phase(rows,"exiting",label)
-	check(rows.any(func(row): return row.stage == "approaching"),label+" captures real approach")
+	check(rows.any(func(row): return row.stage in ["approaching","scene_approaching"]),label+" captures real approach")
 	check(rows.any(func(row): return row.stage == "facing"),label+" captures orientation phase")
 	var seated: Array = rows.filter(func(row): return row.stage in ["seated","using"] and row.sit_attached)
 	check(not seated.is_empty() and seated.all(func(row): return row.get("seat_error_px",1e9)<1.0),label+" terminal support coincides within1px")
@@ -210,7 +287,7 @@ func analyze_sequence(label: String) -> void:
 		# temporal review. This does not assert the clip itself is aesthetically natural.
 		check(gap>0.0 and gap<=.05,label+" "+before.stage+" handoff boundary retained at least20Hz")
 		check(gap>0.0 and gap<=.05 and count == JOINTS.size() and residual<=.025+gap*1.5,label+" "+before.stage+" physical joint handoff continuous")
-	check(rows.all(func(row): return row.image_error == OK),label+" all owned frames retained")
+	check(rows.filter(func(row):return not str(row.image).is_empty()).all(func(row): return row.image_error == OK),label+" all scheduled owned captures saved")
 
 func run_sequence(type: String) -> bool:
 	sequence = type
@@ -226,6 +303,7 @@ func run_sequence(type: String) -> bool:
 		return false
 	await wait_for(func(): return false,.2)
 	recording = false
+	await drain_capture_jobs()
 	analyze_sequence(type)
 	for row in app.objects.rows(): app.objects.remove_object(str(row.id))
 	return check(await wait_for(settled_floor,8.0),type+" returns to normal floor support")
@@ -263,6 +341,7 @@ func run() -> void:
 		"desktop_objects":{"version":1,"next_id":1,"objects":[]}},true)
 	app = load("res://main.tscn").instantiate()
 	root.add_child(app); current_scene = app
+	RenderingServer.frame_post_draw.connect(sample_frame)
 	app.objects.command_finished.connect(func(id: String,outcome: String): report.commands.append({"id":id,"outcome":outcome,"ms":elapsed()}))
 	if not check(await wait_for(func(): return app.session.hello_received and app.avatar.has_model() and app._vrma_pending == 0,40.0),"production backend and avatar ready"):
 		await finish(); return
@@ -270,6 +349,8 @@ func run() -> void:
 	var expected := BackendClient.avatar_cache_path(character).get_file()
 	if not check(await wait_for(func(): return app.session.character_id == character and app.avatar.has_model() and app.avatar.model_path.get_file() == expected and not app.loading_label.visible,15.0),"explicit production rig loaded"):
 		await finish(); return
+	foot_markers=load(get_script().resource_path.get_base_dir().path_join("probe_foot_markers.gd")).new()
+	foot_markers.prepare(app.avatar)
 	report["identity"] = {"character":character,"model_path":app.avatar.model_path,"model_sha256":FileAccess.get_sha256(app.avatar.model_path),"renderer":RenderingServer.get_video_adapter_name(),"transition_clips":app.motion.seated_transition.clips}
 	report["scope"] = "Production direct validated furniture skills; authored temporal evidence, not LM routing. Own Windows viewport. Static support and numeric gates do not alone accept natural choreography."
 	if not check(app.motion.seated_transition.clips.has("enter") and app.motion.seated_transition.clips.has("exit"),"production manifest registered authored enter and exit (no test injection)"):
@@ -285,6 +366,11 @@ func run() -> void:
 func finish() -> void:
 	if closing: return
 	closing = true; recording = false
+	if RenderingServer.frame_post_draw.is_connected(sample_frame):RenderingServer.frame_post_draw.disconnect(sample_frame)
+	await drain_capture_jobs()
+	report["capture"]={"interval_ms":CAPTURE_INTERVAL_MS,"max_pending":MAX_CAPTURE_JOBS,"queue_skips":capture_queue_skips,"peak_pending":capture_peak_pending,"records":capture_records,"telemetry_samples":samples.size()}
+	check(capture_queue_skips==0,"bounded capture queue retained every scheduled image")
+	check(capture_records.all(func(row):return row.error==OK and str(row.sha256).length()==64),"every scheduled image saved and checksummed, including abort tails")
 	if csv != null: csv.flush(); csv = null
 	var data := FileAccess.open(output.path_join("samples.json"),FileAccess.WRITE)
 	if data != null: data.store_string(JSON.stringify(json_safe(samples)))

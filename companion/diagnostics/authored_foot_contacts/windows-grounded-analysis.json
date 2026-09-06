@@ -1,0 +1,124 @@
+{
+  "source": "companion/logs/windows-scene-navigation-contact-grounded",
+  "sha256": {
+    "report.json": "a5f9c716fb4520c6ae559163596aaba3fbf2413ce723af567458af549a425811",
+    "samples.json": "5c5fc17cdcd38d66b22a2f093e0fbbe0841632916c94f644b9e149e36b7cabc3"
+  },
+  "unchanged_failed_interior_gates": [
+    {
+      "from_ms": 23072,
+      "to_ms": 23129,
+      "stage": "entering",
+      "gap_ms": 57,
+      "render_frame_delta": 1,
+      "source_time_delta": 0.01666666666666705,
+      "previous_sample_main_us": 7786,
+      "previous_readback_us": 7399,
+      "next_sample_main_us": 381,
+      "next_readback_us": 0
+    },
+    {
+      "from_ms": 24119,
+      "to_ms": 24171,
+      "stage": "exiting",
+      "gap_ms": 52,
+      "render_frame_delta": 1,
+      "source_time_delta": 0.016668000000000016,
+      "previous_sample_main_us": 594,
+      "previous_readback_us": 0,
+      "next_sample_main_us": 7620,
+      "next_readback_us": 7218
+    }
+  ],
+  "fixed_physical_floor_y": -1.33028185367584,
+  "stages": {
+    "entering": {
+      "count": 73,
+      "helper_gap_min_local_m": -2.00713790088347e-07,
+      "helper_gap_max_local_m": 0.00244654655075061,
+      "limited_count": 0,
+      "max_reach_error_local_m": 3.27910214537042e-07,
+      "heel_height_world_m": {
+        "leftHeel": [
+          -1.33015167713165,
+          -1.32802248001099
+        ],
+        "rightHeel": [
+          -1.33028221130371,
+          -1.32833242416382
+        ]
+      }
+    },
+    "seated": {
+      "count": 27,
+      "helper_gap_min_local_m": -5.7288434618441e-05,
+      "helper_gap_max_local_m": 3.19454556974019e-07,
+      "limited_count": 0,
+      "max_reach_error_local_m": 5.74938458157703e-05,
+      "heel_height_world_m": {
+        "leftHeel": [
+          -1.32969653606415,
+          -1.32961702346802
+        ],
+        "rightHeel": [
+          -1.33030009269714,
+          -1.33025634288788
+        ]
+      }
+    },
+    "exiting": {
+      "count": 58,
+      "helper_gap_min_local_m": -2.06900332089255e-07,
+      "helper_gap_max_local_m": 0.00126454313868341,
+      "limited_count": 0,
+      "max_reach_error_local_m": 2.39579890148889e-07,
+      "heel_height_world_m": {
+        "leftHeel": [
+          -1.32960402965546,
+          -1.32797431945801
+        ],
+        "rightHeel": [
+          -1.33028197288513,
+          -1.32751154899597
+        ]
+      }
+    }
+  },
+  "entry_preparation_boundary_ms": [
+    21996,
+    22252
+  ],
+  "exit_preparation_boundary_ms": [
+    23938,
+    24016
+  ],
+  "entry_first_live_source_time_jump_s": 0.133306,
+  "exit_reframe": {
+    "ms": [
+      24964,
+      25000
+    ],
+    "window": [
+      [
+        757,
+        148
+      ],
+      [
+        787,
+        148
+      ]
+    ],
+    "max_marker_world_step_m": 1.745297510569782e-06,
+    "ankle_desktop_steps_px": {
+      "leftFoot": 0.0,
+      "rightFoot": 0.0
+    }
+  },
+  "limitations": [
+    "Time-zero contact diagnostics leaked last bounds sample in this executable; excluded from live-contact summary and fixed in source by snapshot restoration.",
+    "No trace field identifies actual Motion CPU time, GPU scheduling time, or host preparation duration. Interior57/52ms gates remain failed.",
+    "Entry256ms is a single-render preparation boundary, not inside the phase-only50ms gate. No check/write_report call occurs in this entry interval.",
+    "Exit78ms includes request/diagnostic check work; source timers added for attribution.",
+    "OS30px reframe is not a30px avatar teleport; later legacy floor reclaim is separately owned by Autonomy."
+  ]
+}

@@ -1,0 +1,414 @@
+{
+  "scope": "Actual local Korean request under product perspective defaults after exact obstacle-union reduction. Placement succeeds; authored standing entry is blocked by real desk solids.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\run_text_scenario.gd",
+      "--",
+      "--scenario",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\diagnostics\\text_scenarios\\computer-use.json",
+      "--character",
+      "cheval-grand",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\text-scenario-computer-product-union",
+      "--product-defaults"
+    ],
+    "scope": "exported executable plus external scenario script",
+    "executable_sha256": "56b8ab8e1c071329a2c9f6f765bfe0d1dd9c6ad108d8838524b34dd0cf76fc0b",
+    "script_sha256": "a9d9da95028c60a0bde2c63a4aed5488455487a0ebb13013d7565f4327a91295",
+    "parent_script_sha256": "38280eb30e9bc3c4529c13aa9f17803e6137872e0441a27844b410e835233d43",
+    "scenario_sha256": "e8798cc963f083b02756332fc18332c1fdbd636a61de6780ae7dcfe0d2610de4",
+    "started_unix": 1788719092.834118,
+    "character": "cheval-grand",
+    "settings_profile": "product_defaults",
+    "launcher_child_pid": 4591,
+    "exit_code": 1,
+    "finished_unix": 1788719117.4313943
+  },
+  "checks": [
+    {
+      "label": "native ready",
+      "ms": 6632,
+      "ok": true
+    },
+    {
+      "label": "actual selected character ready",
+      "ms": 6635,
+      "ok": true
+    },
+    {
+      "label": "real model provider",
+      "ms": 6639,
+      "ok": true
+    },
+    {
+      "label": "scenario step 0 actual reply / playback / intent / native outcome",
+      "ms": 18639,
+      "ok": false
+    },
+    {
+      "label": "capture owned viewport scenario-0",
+      "ms": 18730,
+      "ok": true
+    },
+    {
+      "label": "total object bound respected",
+      "ms": 18739,
+      "ok": true
+    },
+    {
+      "label": "original settings restored after test",
+      "ms": 18770,
+      "ok": true
+    }
+  ],
+  "trials": [
+    {
+      "action": {
+        "character": "cheval-grand",
+        "elapsed_ms": 1504.3,
+        "emotion": "neutral",
+        "gesture": "idle",
+        "intensity": 0.8,
+        "intent": {
+          "kind": "furniture",
+          "object_type": "computer",
+          "placement": "near",
+          "verb": "use"
+        },
+        "ms": 8232,
+        "speed": 0.92,
+        "turn_id": "t1-7875",
+        "type": "action"
+      },
+      "action_delivered_ms": 8232,
+      "actual_character": "cheval-grand",
+      "actual_model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+      "actual_variant": "default",
+      "delivered_action_to_terminal_playback_overlap_ms": 867,
+      "done": {
+        "audio_url": null,
+        "character": "cheval-grand",
+        "elapsed_ms": 1575.1,
+        "emotion": "neutral",
+        "gesture": "idle",
+        "intensity": 0.8,
+        "intent": {
+          "kind": "furniture",
+          "object_type": "computer",
+          "placement": "near",
+          "verb": "use"
+        },
+        "intent_replay": true,
+        "ms": 8315,
+        "ok": true,
+        "speed": 0.92,
+        "text": "用意してみますね。",
+        "timings": {
+          "first_audio_ms": 1082.7,
+          "first_text_ms": 609.6,
+          "first_token_ms": 609.5,
+          "llm_done_ms": 1504.3,
+          "total_ms": 1575.1
+        },
+        "turn_id": "t1-7875",
+        "type": "done",
+        "voice_error": null
+      },
+      "done_ms": 8315,
+      "failures": [
+        "native_execution_unsuccessful"
+      ],
+      "feedback": {
+        "accepted": true,
+        "intent_id": "t1-7875:intent",
+        "ms": 18506,
+        "type": "intent_result"
+      },
+      "finished_ms": 18639,
+      "first_pcm_received_ms": 7816,
+      "first_playback_ms": 7832,
+      "first_text_ms": 7349,
+      "index": 0,
+      "native_active_ms": 8237,
+      "native_capabilities_before_publish": {
+        "furniture_catalog": [
+          {
+            "appearances": [
+              "default",
+              "warm",
+              "cool",
+              "porcelain",
+              "flat"
+            ],
+            "bounds": {
+              "scale": [
+                0.5,
+                1.8
+              ],
+              "yaw_deg": [
+                -180.0,
+                180.0
+              ]
+            },
+            "id": "chair",
+            "perception": {
+              "available": true,
+              "mode": "geometry_only",
+              "reachable": "unknown",
+              "reason": "native_geometry"
+            },
+            "sockets": [
+              "seat",
+              "inspect"
+            ],
+            "spatial": {
+              "bounds": {
+                "x": [
+                  -20.0,
+                  20.0
+                ],
+                "y": [
+                  -20.0,
+                  20.0
+                ],
+                "z": [
+                  -20.0,
+                  20.0
+                ]
+              },
+              "frame": "desktop_scene_v1"
+            },
+            "verbs": [
+              "place",
+              "configure",
+              "appearance",
+              "hide",
+              "remove",
+              "inspect",
+              "sit"
+            ],
+            "version": 1
+          },
+          {
+            "appearances": [
+              "default",
+              "warm",
+              "cool",
+              "porcelain",
+              "flat"
+            ],
+            "bounds": {
+              "scale": [
+                0.5,
+                1.8
+              ],
+              "yaw_deg": [
+                -180.0,
+                180.0
+              ]
+            },
+            "id": "sofa",
+            "perception": {
+              "available": true,
+              "mode": "geometry_only",
+              "reachable": "unknown",
+              "reason": "native_geometry"
+            },
+            "sockets": [
+              "seat",
+              "inspect"
+            ],
+            "spatial": {
+              "bounds": {
+                "x": [
+                  -20.0,
+                  20.0
+                ],
+                "y": [
+                  -20.0,
+                  20.0
+                ],
+                "z": [
+                  -20.0,
+                  20.0
+                ]
+              },
+              "frame": "desktop_scene_v1"
+            },
+            "verbs": [
+              "place",
+              "configure",
+              "appearance",
+              "hide",
+              "remove",
+              "inspect",
+              "sit"
+            ],
+            "version": 1
+          },
+          {
+            "appearances": [
+              "default",
+              "warm",
+              "cool",
+              "porcelain",
+              "flat"
+            ],
+            "bounds": {
+              "scale": [
+                0.5,
+                1.8
+              ],
+              "yaw_deg": [
+                -180.0,
+                180.0
+              ]
+            },
+            "id": "computer",
+            "perception": {
+              "available": true,
+              "mode": "geometry_only",
+              "reachable": "unknown",
+              "reason": "native_geometry"
+            },
+            "sockets": [
+              "seat",
+              "keyboard_left",
+              "keyboard_right",
+              "inspect"
+            ],
+            "spatial": {
+              "bounds": {
+                "x": [
+                  -20.0,
+                  20.0
+                ],
+                "y": [
+                  -20.0,
+                  20.0
+                ],
+                "z": [
+                  -20.0,
+                  20.0
+                ]
+              },
+              "frame": "desktop_scene_v1"
+            },
+            "verbs": [
+              "place",
+              "configure",
+              "appearance",
+              "hide",
+              "remove",
+              "inspect",
+              "use"
+            ],
+            "version": 1
+          }
+        ],
+        "furniture_native_available": true,
+        "living_enabled": true
+      },
+      "outcomes": [
+        {
+          "id": "t1-7875:intent",
+          "ms": 18457,
+          "outcome": "blocked_endpoint",
+          "owner": "furniture",
+          "reason": ""
+        }
+      ],
+      "overlap_required": false,
+      "pcm_bytes": 81280,
+      "playback_intervals_ms": [
+        [
+          7832,
+          9099
+        ]
+      ],
+      "raw_provider": {
+        "available": true,
+        "record": {
+          "generated_tokens": 35.0,
+          "input_tokens": 4547.0,
+          "modality": "text",
+          "preprocess_ms": 9.8,
+          "raw": "{\"text\":\"用意してみますね。\", \"emotion\":\"neutral\", \"gesture\":\"idle\", \"intent\":{\"kind\":\"furniture\",\"object_type\":\"computer\",\"verb\":\"use\"}}",
+          "request_capabilities": {
+            "appearance_variant_ids": [
+              "default"
+            ],
+            "furniture_catalog": [
+              {
+                "id": "chair",
+                "verbs": [
+                  "appearance",
+                  "configure",
+                  "hide",
+                  "inspect",
+                  "place",
+                  "remove",
+                  "sit"
+                ]
+              },
+              {
+                "id": "computer",
+                "verbs": [
+                  "appearance",
+                  "configure",
+                  "hide",
+                  "inspect",
+                  "place",
+                  "remove",
+                  "use"
+                ]
+              },
+              {
+                "id": "sofa",
+                "verbs": [
+                  "appearance",
+                  "configure",
+                  "hide",
+                  "inspect",
+                  "place",
+                  "remove",
+                  "sit"
+                ]
+              }
+            ],
+            "furniture_types": [],
+            "interests_count": 0.0,
+            "locomotion_ids": [
+              "mambo_goofy_walk",
+              "playful_strut",
+              "uma_walk"
+            ]
+          },
+          "turn_id": "t1-7875"
+        }
+      },
+      "reply": "用意してみますね。",
+      "simultaneous_native_active_playback_samples": 52,
+      "simultaneous_travel_playback_samples": 0,
+      "started_ms": 6680,
+      "text": "컴퓨터를 꺼내서 써 봐. 먼저 짧게 대답해 줘.",
+      "turn_id": "t1-7875"
+    }
+  ],
+  "native_outcomes": [
+    {
+      "id": "t1-7875:intent",
+      "ms": 18457,
+      "outcome": "blocked_endpoint",
+      "owner": "furniture",
+      "reason": ""
+    }
+  ],
+  "failures": 1
+}

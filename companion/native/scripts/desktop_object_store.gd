@@ -5,6 +5,8 @@ const MAX_OBJECTS := 8
 const MAX_COORD := 100000
 const MIN_SCALE := 0.5
 const MAX_SCALE := 1.8
+const MIN_SEAT_SCALE := .5
+const MAX_SEAT_SCALE := 1.25
 const APPEARANCES := ["default","warm","cool","porcelain","flat"]
 const MAX_ID := 2147483646
 var objects: Array[Dictionary] = []
@@ -94,6 +96,7 @@ func set_data(value: Variant) -> void:
 		if objects.size() < MAX_OBJECTS:
 			objects.append({"id": item.id, "type": type, "label": _label(item.get("label"), _default_label(type)), "x": int(x), "y": int(y), "scale": clampf(float(scale_value), MIN_SCALE, MAX_SCALE), "visible": visible_value,"yaw_deg":clampf(float(item.get("yaw_deg",0.0)),-180.0,180.0) if _number(item.get("yaw_deg",0.0)) else 0.0,"appearance":str(item.get("appearance","default")) if item.get("appearance","default") in APPEARANCES else "default"})
 
+			if type=="computer" and _number(item.get("seat_scale")) and MIN_SEAT_SCALE<=float(item.seat_scale) and float(item.seat_scale)<=MAX_SEAT_SCALE: objects[-1]["seat_scale"]=float(item.seat_scale)
 			if valid_position_m(item.get("position_m")): objects[-1]["position_m"] = item.position_m.duplicate()
 			if _number(item.get("spatial_unit_scale")) and .001 <= float(item.spatial_unit_scale) and float(item.spatial_unit_scale) <= 100.0: objects[-1]["spatial_unit_scale"] = float(item.spatial_unit_scale)
 
@@ -246,6 +249,16 @@ func set_position_m(id: String, value: Vector3) -> bool:
 	for item in objects:
 		if item.id == id:
 			item["position_m"] = position
+			return true
+	return false
+
+## Internal source-compatible adjustable chair size, independent of the user's
+## whole-workstation scale. Existing records without it retain original size.
+func set_seat_scale(id: String, value: float) -> bool:
+	if not is_finite(value) or value<MIN_SEAT_SCALE or value>MAX_SEAT_SCALE:return false
+	for item in objects:
+		if item.id==id and item.type=="computer":
+			item["seat_scale"]=value
 			return true
 	return false
 

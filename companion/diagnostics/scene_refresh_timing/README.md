@@ -1,0 +1,11 @@
+# Periodic contact-frame gap investigation
+
+The preserved Windows run `logs/windows-full-computer-carrier` has repeated computer entry/exit gaps above the unchanged 50 ms limit. `windows-gaps.json` extracts the exact intervals and preceding telemetry/readback costs. No probe check/report writes occur between 44500 and 47000 ms, excluding that specific check path for the three repeated entry gaps.
+
+Initial hypothesis: scene-interest refresh runs every 0.5 s and may rebuild ground routes when an animated contact changes foot height. This is a valid ownership defect to prevent, but not an established timing cause: contact releases the scene ground latch, which may already disable this branch. A local actual-computer-solids fixture measures about 1 ms per rebuild, insufficient evidence for the Windows 65–84 ms gaps.
+
+Stronger source-level candidate: ObjectsHost's 0.5 s window synchronization calls set_shared_projection, whose _fit_shared_projection unconditionally recollects and projects actual imported geometry. This includes unchanged hidden occupied furniture windows. The window geometry owner is investigating/cache-instrumenting that path separately. No Windows timing improvement is claimed here.
+
+The narrow scene-interest change removes actionable scene targets throughout ObjectsHost ownership, independently of exploration-mode changes, and waits for committed scene ground or attached foot support before rebuilding once. Furniture/session publication remains active. Refresh and rebuild cost counters are available in Living.scene_interests.diagnostics. The already sampled scene_navigation.diagnostics.interest_refresh also contains the full Living refresh call count, microsecond cost, timestamp and nested scene counters. `ownership.json/log` cover suspension, release before/after ground, mode-clear preservation, replacement and cached reuse with actual computer obstacle geometry. Independent integration review is separate.
+
+Window projection profiles are copied into `interest_refresh.window_projection`. They describe the last completed window work, which may precede publication by one refresh. Exact monotonic `last_request_at_us` and `last_fit_at_us` plus counters distinguish cached lookups from full fits; `last_fit_us` remains the last full-fit cost on cache hits.

@@ -1,0 +1,13 @@
+# Narrow preparation-counter and Hachimi review
+
+Verdict: **APPROVED**. Source identities are in `review-preparation-hachimi-identity.json`; preparation source manifest hashes match current files.
+
+The counters report elapsed reference-capture/preparation work, bounds computation, overall successful preparation, and summed pose/secondary/geometry-measure work over the actual sampling loop. They do not change sample times, contact correction, source poses or temporal acceptance gates. Component sums need not equal total time because cache-key construction, state restoration and other bookkeeping remain outside the inner component timers. These counters are for the next actual Windows measurement; they do not make the preceding failed timing run pass.
+
+Bounds preparation now snapshots and restores the helper's diagnostic dictionary, preventing its last sampled endpoint from appearing as a live time-zero contact. The independent fixed-reference replay confirms exact diagnostic restoration and zero foot-position difference after bounds queries. A review-discovered instrumentation issue was also corrected: rejecting a new begin request while a transition is active no longer clears that active transition's preparation counters. The independent rejected-begin check passes. Results remain in `review-order-bounds.json`. The retained normal profile reports 24 stages with zero failures; no broad test was repeated for this narrow instrumentation change.
+
+The Hachimi archived fixture differs from the current base contact-path probe only in its two character literals (`mambo`→`hachimi`) and miniature output filename. Its recorded base and script SHA256 values match, and the archived fixture is byte-identical to the executed temporary script. The command explicitly sets `CONTACT_MINI=1`, so the selected rig is Hachimi at 30 and 60 FPS using source-compatible seat height. This is a separate result, not a relabeling of Mambo's measurements.
+
+The four Hachimi entry/exit stages report zero failures and zero capped corrections. Full-shoe penetration is at most 0.237405 mm during motion and 0.205632 mm during hold; maximum planned-contact residual is 0.0000859445 mm and handoff displacement 0.0504871 mm. The base probe's full-shoe, hold, residual, limit and handoff gates are unchanged. Mambo's four strict-contact failures remain separately retained and unapproved as exact-contact passes.
+
+This validates the copied fixture and reported offline result scope. It does not establish every miniature rig, arbitrary furniture height, actual Windows scene placement or rendered temporal naturalness. No Windows process was launched or stopped during this review.

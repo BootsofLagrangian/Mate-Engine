@@ -1,0 +1,8 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+RAW_PARTS computer 122
+RAW_PARTS chair 34
+UNION_RESULT { "ok": true, "reason": "ready", "polygons": 4929 } { "cells": 5265, "polygons": 4929, "obstacles": 26, "raw_parts": 156, "cell_size_m": 0.05995061662462, "ground_y": -1.33028 }
+Exact union: every original rectangle covered; every retained rectangle original
+Dense disjoint rejection { "ok": false, "reason": "too_many_effective_obstacles", "raw_parts": 97, "effective_obstacles": 97 }
+Obstacle union failures=0

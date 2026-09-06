@@ -6,6 +6,8 @@ signal changed
 signal command_finished(id: String, outcome: String)
 signal status_changed(message: String)
 signal interaction_finished(id: String, verb: String, outcome: String)
+const WorkstationSetup = preload("desktop_workstation_setup.gd")
+const GroundPlacement = preload("desktop_object_placement.gd")
 const SceneSolids = preload("desktop_scene_solids.gd")
 const Appearance = preload("desktop_object_appearance.gd")
 const Store = preload("desktop_object_store.gd")
@@ -35,6 +37,8 @@ var _pending_command: Dictionary = {}
 var _command_seen: Dictionary = {}
 var _view_zoom := 1.0
 var command_outcomes: Array[Dictionary] = []
+var _scene_ground_y := NAN
+var _ground_model_id := 0
 
 func configure(app) -> void:
 	host = app
@@ -74,10 +78,15 @@ func rows() -> Array:
 
 func add_object(type: String) -> String:
 	if _closed or host == null: return ""
+	var ground := _ground_context() if _spatial_enabled() else {}
+	if _spatial_enabled() and ground.is_empty():
+		fit_diagnostics["last_creation"]={"type":type,"reason":"ground_not_ready"}
+		return ""
 	var size := Store.base_size(type)
 	var origin := Vector2i(Vector2(host.get_window().position)+host.pet_rect.get_center())-size/2
 	var id: String = store.add_object(type,origin,screen_rects())
 	if id.is_empty(): _status("물건을 둘 공간이 없거나 개수 제한에 도달했습니다"); return ""
+	if type=="computer": store.set_seat_scale(id,_default_workstation_seat_scale())
 	# Furniture and the pet share physical pixels/metre. Seat admission uses the
 	# canonical seated geometry; never inflate a chair to fit standing leg bounds.
 	var sizing_window := FurnitureWindow.new()
@@ -95,9 +104,10 @@ func add_object(type: String) -> String:
 		store.remove_object(id)
 		_status("물건 모델을 준비하지 못했습니다")
 		return ""
-	var physical_ppm: float = host._px_per_m*host._pet_scale/maxf(_view_zoom,.01)
+	var source_fit := _default_source_seat_ratio(type)
+	var physical_ppm: float = host._px_per_m*host._pet_scale*source_fit/maxf(_view_zoom,.01)
 	var default_scale := clampf(physical_ppm/source_ppm,0.5,1.8)
-	fit_diagnostics[id] = {"physical_ppm":physical_ppm,"applied_ratio":1.0,"seat_floor_adaptation":true}
+	fit_diagnostics[id] = {"physical_ppm":physical_ppm,"applied_ratio":source_fit,"seat_floor_adaptation":true}
 
 	if not store.resize_object(id,default_scale,screen_rects()):
 		fit_diagnostics.last_creation.reason="legacy_size_does_not_fit"
@@ -115,11 +125,15 @@ func add_object(type: String) -> String:
 			if Rect2(area).has_point(foot): floor_y = Rect2(area).end.y; break
 	store.move_object(id,Vector2i(roundi(foot.x-dimensions.x*0.5),roundi(floor_y-dimensions.y)),screen_rects())
 	if _spatial_enabled():
-		var world_foot:Vector3=host.avatar.contact_anchors().foot
-		store.set_spatial_unit_scale(id,host._pet_scale/maxf(default_scale,.001))
+		var world_foot:Vector3=ground.point
+		store.set_spatial_unit_scale(id,host._pet_scale*source_fit/maxf(default_scale,.001))
 		store.set_position_m(id,world_foot)
 	fit_diagnostics.last_creation.reason="created"
 	_after_change()
+	if _spatial_enabled() and not _place_command_object(id,"near"):
+		store.remove_object(id);_after_change()
+		fit_diagnostics.last_creation.reason="no_feasible_ground_placement"
+		return ""
 	set_edit_enabled(true)
 	_status("물건을 끌어 놓고 크기를 맞춰 주세요. 좌석 접촉은 미리보기입니다")
 	return id
@@ -185,6 +199,8 @@ func request_intent(intent: Dictionary, source: String, command_id: String) -> D
 	return {"accepted":true,"reason":"queued"}
 
 func _command_outcome(id: String, outcome: String) -> void:
+	if outcome == "no_space":
+		print("FURNITURE_ADMISSION ",JSON.stringify({"command_id":id,"outcome":outcome,"creation":fit_diagnostics.get("last_creation",{}),"placement":fit_diagnostics.get("last_placement",{}),"spatial_rejection":fit_diagnostics.get("last_position_rejection",{})}))
 	command_outcomes.append({"id":id,"outcome":outcome,"time":_clock})
 	if command_outcomes.size() > 64: command_outcomes.pop_front()
 	command_finished.emit(id,outcome)
@@ -208,21 +224,36 @@ func _tick_command() -> void:
 	if host._drag_active or is_dragging(): cancel_commands("dragged"); return
 	var job_active: bool = not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
 	if job_active or host.mic.is_recording() or host.motion._preview or host.motion._custom_motion or ((host.audio.voice_active or host.session.is_foreground_busy() or host.bridge.dialogue_holding(host._now())) and not _owns_command_speech(_pending_command)): return
+	var intent:Dictionary=_pending_command.intent
+	if _spatial_enabled() and _command_needs_ground(intent) and _ground_context().is_empty():
+		fit_diagnostics["ground_wait"]={"reason":"ground_not_ready","command_id":_pending_command.id}
+		return
 	var command := _pending_command.duplicate(true)
 	_pending_command.clear() # callbacks below can cancel/re-enter without losing this dispatch
 	_execute_command(command)
 
 func _place_command_object(id: String, placement: String) -> bool:
+	fit_diagnostics["last_placement"] = {"id":id,"placement":placement,"spatial":_spatial_enabled(),"reason":"checking"}
 	var record: Dictionary = store.get_object(id)
-	if record.is_empty(): return false
+	if record.is_empty():
+		fit_diagnostics.last_placement.reason="missing_object"
+		return false
 	if _spatial_enabled():
-		var foot_world:Vector3=host.avatar.contact_anchors().foot
+		var ground:=_ground_context()
+		if ground.is_empty():fit_diagnostics.last_placement.reason="ground_not_ready";return false
+		var foot_world:Vector3=ground.point
 		var side:Vector3=host.spatial_camera().global_basis.x
 		side.y=0
 		if side.length_squared()<.000001:return false
 		side=side.normalized()*(-1.0 if placement=="left" else 1.0)
-		var distance_m:float=(.7 if placement=="near" else 1.0)*host._pet_scale
-		return configure_spatial_position(id,foot_world+side*distance_m)
+		var desired:Vector3=foot_world+side*(.7 if placement=="near" else 1.0)*host._pet_scale
+		var proposal:=_find_ground_placement(id,desired,foot_world)
+		fit_diagnostics.last_placement.merge({"requested_position_m":str(desired),"proposal":proposal})
+		if not proposal.get("ok",false):fit_diagnostics.last_placement.reason="no_feasible_ground_placement";return false
+		var placed:=configure_spatial_position(id,proposal.point)
+		fit_diagnostics.last_placement.reason="placed" if placed else "spatial_position_rejected"
+		return placed
+
 	var dimensions: Vector2i = store.rect_for(record).size
 	var foot: Vector2 = Vector2(host.get_window().position)+Vector2(host._projected_anchors().get("foot",host.pet_rect.get_center()))
 	var floor_y := foot.y
@@ -233,7 +264,11 @@ func _place_command_object(id: String, placement: String) -> bool:
 			if Rect2(area).has_point(foot): floor_y = Rect2(area).end.y; break
 	var side := -1.0 if placement == "left" else 1.0
 	var distance := maxf(100.0,dimensions.x*.55) if placement != "near" else 100.0
-	return move_object(id,Vector2i(roundi(foot.x+side*distance-dimensions.x*.5),roundi(floor_y-dimensions.y)))
+	var requested := Vector2i(roundi(foot.x+side*distance-dimensions.x*.5),roundi(floor_y-dimensions.y))
+	fit_diagnostics.last_placement.merge({"requested_window_position":str(requested),"window_size":str(dimensions),"workareas":str(screen_rects())})
+	var placed := move_object(id,requested)
+	fit_diagnostics.last_placement.reason = "placed" if placed else "legacy_move_rejected"
+	return placed
 
 func _execute_command(command: Dictionary) -> void:
 	var intent: Dictionary = command.intent
@@ -276,6 +311,7 @@ func _execute_command(command: Dictionary) -> void:
 	if not result.get("accepted",false): _command_outcome(command.id,"unavailable"); return
 	_interaction.command_id = command.id
 	_interaction.source = command.source
+	_interaction.semantic_placement = not intent.has("position_m")
 
 func rename_object(id: String, label: String) -> bool:
 	if not store.rename_object(id,label): return false
@@ -341,7 +377,7 @@ func is_dragging() -> bool:
 	return false
 
 func blocks_roaming() -> bool:
-	return not _interaction.is_empty() and _interaction.stage in ["scene_approaching","facing","pose_wait","entering","exiting","using"]
+	return not _interaction.is_empty() and _interaction.stage in ["scene_approaching","facing","pose_wait","entering","exiting","using","chair_setup","chair_carry","chair_restore","restore_approaching"]
 
 func object_catalog() -> Array:
 	var result: Array = []
@@ -382,6 +418,9 @@ func interact(id: String, verb: String) -> Dictionary:
 	return {"accepted":true,"reason":"queued"}
 
 func cancel_interaction(reason: String = "cancelled") -> void:
+	if reason == "unsafe_seat" and host != null:
+		fit_diagnostics["seat_admission"] = {"stage":_interaction.get("stage",""),"command_id":_interaction.get("command_id",""),"object_id":_interaction.get("id",""),"admission":host.autonomy.last_seat_admission.duplicate(true)}
+		print("FURNITURE_ADMISSION ",JSON.stringify(fit_diagnostics.seat_admission))
 	if reason == "completed" and _interaction.get("stage","") == "using" and request_stand(): return
 	if not _pending_command.is_empty():
 		var pending_id := str(_pending_command.id)
@@ -389,6 +428,7 @@ func cancel_interaction(reason: String = "cancelled") -> void:
 		_command_outcome(pending_id,reason)
 	if _interaction.is_empty(): return
 	var previous := _interaction.duplicate()
+	if host.motion.has_method("clear_seated_carrier"): host.motion.clear_seated_carrier()
 	if not _presentation.is_empty():
 		var foot: Vector3 = host.avatar.contact_anchors().foot-presentation_offset()
 		if _presentation.kind == "exit": foot += Vector3(_presentation.world_delta)
@@ -407,7 +447,7 @@ func cancel_interaction(reason: String = "cancelled") -> void:
 		if host.living != null and previous.has("request_id"):
 			host.living.director.cancel_intent(str(previous.request_id),reason)
 		host.autonomy.cancel_target(reason)
-		if previous.stage in ["pose_wait","entering","exiting","seating","seated","using"] and host.is_sitting(): host._stand_up("")
+		if previous.stage in ["pose_wait","entering","exiting","seating","seated","using","chair_carry"] and host.is_sitting(): host._stand_up("")
 		if previous.stage == "facing": host.motion.cancel_heading()
 		if previous.stage == "using": host.motion.set_ambient_state("rest",0.0)
 	if previous.has("command_id"): _command_outcome(str(previous.command_id),reason)
@@ -421,6 +461,8 @@ func tick(delta: float) -> void:
 	if str(host.session.character_id) != _last_character:
 		cancel_interaction("character_changed")
 		_last_character = str(host.session.character_id)
+		_scene_ground_y=NAN;_ground_model_id=0
+	_ground_context()
 	if contact_scene_active():
 		_refresh_adapters()
 	if _clock >= _refresh_at:
@@ -436,10 +478,18 @@ func tick(delta: float) -> void:
 	var id := str(_interaction.id)
 	if not store.has_object(id) or not windows.has(id) or (not windows[id].visible and id != _contact_id) or is_dragging(): cancel_interaction("object_unavailable"); return
 	if _clock >= float(_interaction.expires) and _interaction.stage != "seated": cancel_interaction("expired"); _status("상호작용 요청 시간이 지나 멈췄습니다"); return
-	if host.panel_open and _interaction.stage not in ["seated","using","exiting"]:
+	if host.panel_open and _interaction.stage not in ["seated","using","exiting","chair_carry","chair_restore"]:
 		cancel_interaction("panel_open"); return
 	var job_active: bool = not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
 	var busy: bool = job_active or host.mic.is_recording() or host._drag_active or host.motion._preview or host.motion._custom_motion or ((host.audio.voice_active or host.session.is_foreground_busy()) and not owns_foreground_speech())
+	if _interaction.stage=="restore_approaching":
+		if busy: cancel_interaction("foreground");return
+		if _clock>=float(_interaction.restore_deadline):cancel_interaction("restore_clearance_timeout")
+		return
+	if _interaction.stage in ["chair_setup","chair_carry","chair_restore"]:
+		if busy: cancel_interaction("foreground"); return
+		_tick_chair_steps(delta)
+		return
 	if _interaction.stage == "using":
 		if not _owns_seat_contact(id): cancel_interaction("contact_lost"); return
 		if busy or (host._dialogue_gesture_active() and not owns_foreground_speech()): cancel_interaction("foreground"); return
@@ -469,6 +519,9 @@ func tick(delta: float) -> void:
 		if not contact.get("attached",false) and not host.autonomy.is_seat_contact_pending("object:"+id+":seat"):
 			cancel_interaction("contact_lost"); return
 		if _owns_seat_contact(id):
+			if _interaction.has("setup_plan") and not _interaction.get("working_setup",false):
+				_start_chair_steps(true,false)
+				return
 			_interaction.stage = "using" if _interaction.verb == "use" else "seated"
 			if _interaction.stage == "using": _interaction.until = _clock+10.0
 			elif _interaction.has("command_id"):
@@ -488,11 +541,16 @@ func tick(delta: float) -> void:
 	var point: Vector2 = contact_socket_screen(socket) if contact_scene_active() else object_window.socket_point(socket)
 	if not point.is_finite(): cancel_interaction("missing_socket"); return
 	if _interaction.stage == "waiting" and _spatial_enabled():
+		if _contact_scene.supports_seat_setup() and not _interaction.has("setup_plan"):
+			if not _prepare_workstation_setup(): return
+			_start_chair_steps(false,false)
+			return
 		var plan := scene_approach_plan(id)
 		if plan.is_empty(): cancel_interaction("missing_scene_plan"); return
 		_interaction.scene_target = plan.target_world
+		_interaction.entry_plan = _capture_entry_plan()
 		_interaction.stage = "scene_approaching"
-		var accepted: Dictionary = host.request_scene_approach(plan.target_world,scene_obstacle_bounds())
+		var accepted: Dictionary = host.request_scene_approach(plan.target_world,scene_obstacle_bounds(),plan.get("navigation_geometry",{}))
 		if not accepted.get("accepted",false): cancel_interaction(str(accepted.get("reason","unreachable")))
 		return
 	if _interaction.stage == "waiting":
@@ -505,6 +563,7 @@ func tick(delta: float) -> void:
 		var entry_basis := Basis(Vector3.UP,atan2(facing.x,facing.z)).scaled(Vector3.ONE*host._pet_scale)
 		var seated_offset: Vector3 = Vector3(host._pivot_local.sit)-Vector3(host._pivot_local.foot)
 		var staged_foot: Vector3 = contact_socket_world("seat")-entry_basis*(seated_offset+Vector3(requirements.source_root_delta_local))
+		_interaction.entry_plan = _capture_entry_plan()
 		point.x = host.camera.unproject_position(staged_foot).x+host.get_window().position.x
 		var foot: Vector2 = Vector2(host.get_window().position)+Vector2(host._projected_anchors().get("foot",host.pet_rect.get_center()))
 		if absf(foot.x-point.x) > 24.0:
@@ -565,6 +624,9 @@ func scene_approach_plan(id: String) -> Dictionary:
 	if not _spatial_enabled() or not contact_scene_active() or id != _contact_id: return {}
 	var requirements: Dictionary = host.motion.seated_transition_requirements("enter")
 	if requirements.is_empty() or not host._ensure_seated_geometry(): return {}
+	if _interaction.has("setup_plan"):
+		var setup: Dictionary = _interaction.setup_plan
+		return {"target_world":setup.target_world,"facing_yaw":setup.entry_facing_yaw,"root_distance_factor":setup.root_distance_factor,"object_id":id,"navigation_geometry":setup.get("navigation_geometry",{})}
 	var facing: Vector3 = _contact_scene.facing_direction_world()
 	var yaw := atan2(facing.x,facing.z)
 	var entry_basis := Basis(Vector3.UP,yaw).scaled(Vector3.ONE*host._pet_scale)
@@ -593,7 +655,7 @@ static func select_authored_staging(start: Vector3, seat: Vector3, basis: Basis,
 		var geometry := nav.configure(Rect2(low,high-low),start.y,solids,radius,height,DesktopSceneNavigationHost.navigation_cell_size(high-low))
 		var result := nav.plan("staging",start,target) if geometry.get("ok",false) else {"accepted":false,"reason":geometry.get("reason","invalid_geometry")}
 		nav.dispose()
-		if result.get("accepted",false):return {"accepted":true,"target_world":target,"factor":factor,"source_delta_local":source,"applied_delta_local":adjusted}
+		if result.get("accepted",false):return {"accepted":true,"target_world":target,"factor":factor,"source_delta_local":source,"applied_delta_local":adjusted,"path":result.path,"navigation_geometry":{"area":Rect2(low,high-low),"cell_size":DesktopSceneNavigationHost.navigation_cell_size(high-low)}}
 		last_reason=str(result.get("reason","unreachable"))
 	return {"accepted":false,"reason":last_reason,"maximum_factor":1.25}
 
@@ -610,23 +672,87 @@ func _owns_seat_contact(id: String) -> bool:
 	var contact: Dictionary = host.autonomy.get_support_contact()
 	return host.is_sitting() and host._sit_attached and contact.get("attached",false) and contact.get("pose","") == "sit" and str(contact.get("surface_id","")) == "object:"+id+":seat"
 
+## Capture the installed rig and source which authored this approach. A later
+## reload, source replacement, seat move or scale edit cannot reuse it.
+## Current camera projections and workarea bounds are checked at admission.
+func _capture_entry_plan() -> Dictionary:
+	var source: Dictionary = host.motion.seated_transition_requirements("enter")
+	if source.is_empty() or not contact_scene_active(): return {}
+	var clip = host.motion.vrma_clips.get(source.clip)
+	if clip == null or not is_instance_valid(host.avatar.skeleton): return {}
+	return {"object_id":_contact_id,"skeleton_instance":host.avatar.skeleton.get_instance_id(),
+		"clip_instance":clip.get_instance_id(),"clip":source.clip,"duration":source.duration,
+		"source_delta_local":source.source_root_delta_local,"pet_scale":host._pet_scale,
+		"facing":_contact_scene.facing_direction_world(),"seat_screen":contact_socket_screen("seat"),
+		"seat_world":contact_socket_world("seat"),"spatial":_spatial_enabled()}
+
+func _authored_entry_admission(id: String, point: Vector2, seat_anchor: Vector2) -> bool:
+	var plan: Dictionary = _interaction.get("entry_plan",{})
+	var current := _capture_entry_plan()
+	var reason := ""
+	if plan.is_empty() or current.is_empty(): reason = "missing_authored_plan"
+	else:
+		for key in ["object_id","skeleton_instance","clip_instance","clip","duration","source_delta_local","pet_scale","facing","spatial"]:
+			if plan.get(key) != current.get(key): reason = "authored_plan_changed"; break
+		if reason.is_empty():
+			var seat_changed: bool = Vector3(plan.seat_world).distance_to(current.seat_world) > .0001 if bool(plan.spatial) else Vector2(plan.seat_screen).distance_to(point) > 1.0
+			if seat_changed: reason = "authored_seat_moved"
+	var support: Dictionary = host.autonomy.get_support_contact()
+	var scene_owned: bool = host.get("scene_navigation") != null and host.scene_navigation.owns_foot()
+	if reason.is_empty() and not scene_owned and not (support.get("attached",false) and support.get("pose","") == "foot"):
+		reason = "authored_ground_support_missing"
+	var expected := Vector2.INF
+	if reason.is_empty():
+		var facing: Vector3 = current.facing
+		var basis := Basis(Vector3.UP,atan2(facing.x,facing.z)).scaled(Vector3.ONE*host._pet_scale)
+		var start_seat: Vector3 = contact_socket_world("seat")-basis*Vector3(current.source_delta_local)
+		if bool(current.spatial):
+			var target: Vector3 = _interaction.get("scene_target",Vector3.INF)
+			var foot: Vector3 = host.avatar.contact_anchors().foot
+			if not scene_owned or not target.is_finite() or Vector2(foot.x-target.x,foot.z-target.z).length() > .015:
+				reason = "authored_staging_misaligned"
+			else:
+				start_seat = target+basis*(Vector3(host._pivot_local.sit)-Vector3(host._pivot_local.foot))
+		expected = Vector2(host.get_window().position)+host.camera.unproject_position(start_seat)
+	if not reason.is_empty():
+		host.autonomy.last_seat_admission = {"id":"object:"+id+":seat","mode":"authored_entry","reason":reason,"accepted":false,"support":str(support),"scene_owned":scene_owned}
+		return false
+	# Keep the existing approach's 24px arrival tolerance, rather than granting
+	# arbitrary additional distance to an immediate seat attachment.
+	return host.autonomy.can_request_authored_seat_entry("object:"+id+":seat",point,seat_anchor,expected,24.0)
+
 func _begin_seat(id: String, point: Vector2) -> void:
-	if not host._ensure_seated_geometry():
+	var prepare_started := Time.get_ticks_usec()
+	var timing := {"object_id":id,"command_id":_interaction.get("command_id",""),"started_usec":prepare_started,"reason":"preparing"}
+	fit_diagnostics["entry_preparation"] = timing
+	var section_started := Time.get_ticks_usec()
+	var geometry_ready: bool = host._ensure_seated_geometry()
+	timing["ensure_seated_geometry_ms"] = (Time.get_ticks_usec()-section_started)/1000.0
+	if not geometry_ready:
+		timing.reason = "missing_seat_geometry"; timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
 		cancel_interaction("missing_seat_geometry"); return
+	section_started = Time.get_ticks_usec()
 	var previous_bounds: Rect2 = host.autonomy.visible_bounds
 	host.autonomy.set_visible_bounds(host._seated_navigation_rect())
 	var anchors: Dictionary = host._projected_anchors()
 	var seat: Vector2 = anchors.get("sit",Vector2.INF)
-	if not host.autonomy.can_request_seat_contact("object:"+id+":seat",point,seat):
+	var admitted := _authored_entry_admission(id,point,seat)
+	timing["projection_and_admission_ms"] = (Time.get_ticks_usec()-section_started)/1000.0
+	if not admitted:
+		timing.reason = "unsafe_seat"; timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
 		host.autonomy.set_visible_bounds(previous_bounds)
 		cancel_interaction("unsafe_seat")
 		_status("좌석이 낮거나 화면 가장자리에 가깝습니다. 물건 높이·위치나 펫 크기를 맞춰 주세요")
 		return
+	section_started = Time.get_ticks_usec()
 	if host.get("scene_navigation") != null: host.scene_navigation.release_to_contact()
+	timing["release_to_contact_ms"] = (Time.get_ticks_usec()-section_started)/1000.0
 	var delta: Vector3 = contact_socket_world("seat")-host.avatar.contact_anchors().sit
 	_interaction["standing_foot_local"] = _contact_scene.to_local(host.avatar.contact_anchors().foot)
 	if not _start_presentation("enter",delta):
+		timing.reason = "missing_authored_transition"; timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
 		cancel_interaction("missing_authored_transition"); return
+	timing["presentation"] = fit_diagnostics.get("presentation_preparation",{}).duplicate(true)
 	host._sit_pending = false
 	host._walk_started = ""
 	host._floating = false
@@ -635,6 +761,8 @@ func _begin_seat(id: String, point: Vector2) -> void:
 	_interaction.stage = "entering"
 	host._push_autonomy_context()
 	host._refresh_sit_button()
+	timing.reason = "entering"
+	timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
 
 func has_presentation_transition() -> bool:
 	return not _presentation.is_empty()
@@ -650,21 +778,323 @@ func presentation_bounds() -> AABB:
 	return state.get("transition_bounds",AABB())
 
 func _start_presentation(kind: String, world_delta: Vector3) -> bool:
-	if not world_delta.is_finite() or not host.motion.has_method("start_seated_transition"): return false
+	var prepare_started := Time.get_ticks_usec()
+	var timing := {"kind":kind,"started_usec":prepare_started,"reason":"preparing"}
+	fit_diagnostics["presentation_preparation"] = timing
+	if not world_delta.is_finite() or not host.motion.has_method("start_seated_transition"):
+		timing.reason = "invalid_transition"; timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
+		return false
 	var local_delta: Vector3 = host.avatar.global_basis.inverse()*world_delta
-	if not host.motion.start_seated_transition(kind,local_delta): return false
+	var section_started := Time.get_ticks_usec()
+	var started: bool = host.motion.start_seated_transition(kind,local_delta)
+	timing["motion_start_ms"] = (Time.get_ticks_usec()-section_started)/1000.0
+	if not started:
+		timing.reason = "motion_rejected"; timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
+		return false
 	_presentation = {"kind":kind,"world_delta":world_delta,"started":_clock}
 	var state: Dictionary = host.motion.seated_transition_state()
+	timing["motion_preparation"] = state.get("preparation",{}).duplicate(true)
 	if not state.get("transition_bounds") is AABB or state.transition_bounds.size.length_squared() <= 0.0:
+		timing.reason = "missing_transition_bounds"; timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
 		_presentation.clear(); host.motion.cancel_seated_transition(); return false
 	# Preframe the complete authored path while the furniture still follows
 	# transparent-frame compensation; freeze its 3D transform only after entry.
-	if not _fit_contact_view():
+	section_started = Time.get_ticks_usec()
+	var fitted := _fit_contact_view()
+	timing["fit_contact_view_ms"] = (Time.get_ticks_usec()-section_started)/1000.0
+	timing["total_ms"] = (Time.get_ticks_usec()-prepare_started)/1000.0
+	if not fitted:
+		timing.reason = "contact_view_rejected"
 		_presentation.clear(); host.motion.cancel_seated_transition(); return false
+	timing.reason = "ready"
 	return true
+
+## Automatic digital chair setup, not an authored hand-pull action. The planner
+## retains every physical furniture part and validates the complete swept setup.
+func _prepare_workstation_setup() -> bool:
+	# Perform the existing one-time ground admission before planning or moving
+	# the chair; the approach must start from the same committed world point.
+	var placement: Dictionary = host.scene_navigation.adopt_ground_placement()
+	fit_diagnostics["setup_ground_placement"]=placement
+	if not placement.get("ok",false):cancel_interaction(str(placement.get("reason","ground_not_ready")));return false
+	if not host._ensure_seated_geometry(): cancel_interaction("missing_seat_geometry"); return false
+	var requirements: Dictionary = host.motion.seated_transition_requirements("enter")
+	if requirements.is_empty(): cancel_interaction("missing_authored_transition"); return false
+	var others: Array = []
+	for id in windows:
+		if id != _contact_id and bool(store.get_object(id).get("visible",false)) and is_instance_valid(windows[id]._scene):
+			_append_scene_solids(windows[id]._scene,others)
+	var plan := _workstation_plan(requirements,others)
+	fit_diagnostics["workstation_setup"] = plan
+	if not plan.get("accepted",false) and plan.get("reason","")=="setup_view_blocked" and _interaction.get("semantic_placement",false):
+		var candidate: Dictionary = plan.get("geometric_candidate",{})
+		var reference: Camera3D = host.spatial_camera()
+		var proposal: Dictionary = WorkstationSetup.reposition(_contact_scene,candidate,reference,host.spatial_desktop_origin(),screen_rects(),host.avatar.contact_anchors().foot,.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale,others,1.5*maxf(host._pet_scale,.6),_workstation_position_fits.bind(requirements,others))
+		fit_diagnostics["workstation_reposition"]=proposal
+		if proposal.get("ok",false):
+			var previous: Dictionary = store.data()
+			if store.set_position_m(_contact_id,proposal.point) and _sync_spatial_window(_contact_id):
+				_update_contact_transform()
+				plan=_workstation_plan(requirements,others)
+				if plan.get("accepted",false): _settings.set_value("desktop_objects",store.data())
+				else: store.set_data(previous);_sync_spatial_window(_contact_id);_update_contact_transform()
+			else: store.set_data(previous);_sync_spatial_window(_contact_id);_update_contact_transform()
+			fit_diagnostics["workstation_setup"]=plan
+	if not plan.get("accepted",false): cancel_interaction(str(plan.get("reason","no_safe_setup"))); return false
+	_interaction.setup_plan = plan
+	# The workstation adds finite setup, two carrier transfers and restoration
+	# around the unchanged 30-second navigation budget and ten-second work.
+	_interaction.expires = maxf(float(_interaction.get("expires",0.0)),_clock+80.0)
+	return true
+
+func _workstation_plan(requirements: Dictionary, others: Array) -> Dictionary:
+	return WorkstationSetup.plan(_contact_scene,host.avatar.contact_anchors().foot,host._pet_scale,Vector3(host._pivot_local.sit)-Vector3(host._pivot_local.foot),requirements.source_root_delta_local,.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale,others,_chair_setup_fits,_approach_route_fits,host._projection_geometry.swept)
+
+func _workstation_position_fits(point: Vector3, requirements: Dictionary, others: Array) -> bool:
+	var previous: Vector3 = _contact_scene.global_position
+	_contact_scene.global_position=point
+	var candidate := _workstation_plan(requirements,others)
+	_contact_scene.global_position=previous
+	return candidate.get("accepted",false)
+
+func _chair_setup_fits(scene: DesktopObjectContactScene, envelope_local: AABB = AABB()) -> bool:
+	var low := Vector2(INF,INF)
+	var high := Vector2(-INF,-INF)
+	# Match contact_bounds(): runtime projects the world-axis-aligned box,
+	# including its perspective cross-corners. Projecting only transformed
+	# local corners can admit a setup that immediately fails during motion.
+	var box: AABB = scene.get_world_bounds()
+	if envelope_local.size.length_squared()>0:
+		box = box.merge(scene.global_transform * envelope_local)
+	for index in 8:
+		var world: Vector3 = box.get_endpoint(index)
+		if host.camera.is_position_behind(world): return false
+		var pixel: Vector2 = host.camera.unproject_position(world)+Vector2(host.get_window().position)
+		low = low.min(pixel); high = high.max(pixel)
+	var rect := Rect2(low,high-low).grow(2.0)
+	if not rect.position.is_finite() or rect.size.x>host.WINDOW_SIZE.x-8 or rect.size.y>host.WINDOW_SIZE.y-8: return false
+	for area in screen_rects():
+		if Rect2(area).encloses(rect): return true
+	return false
+
+func _start_chair_steps(carried: bool, exiting: bool) -> void:
+	var plan: Dictionary = _interaction.setup_plan
+	if carried: host.motion.clear_seated_carrier()
+	var pull: float = plan.pullout_local_m
+	var yaw: float = plan.yaw_delta_deg
+	var steps: Array = []
+	if carried: steps.append({"kind":"lift","pull":float(_contact_scene.seat_setup().pullout_local_m),"yaw":float(_contact_scene.seat_setup().yaw_delta_deg),"lift":1.0})
+	if not carried or exiting:
+		steps.append({"kind":"pull_out","pull":pull,"yaw":float(_contact_scene.seat_setup().yaw_delta_deg),"lift":1.0 if carried else 0.0})
+		steps.append({"kind":"swivel_out","pull":pull,"yaw":yaw,"lift":1.0 if carried else 0.0})
+	else:
+		steps.append({"kind":"swivel_in","pull":pull,"yaw":0.0,"lift":1.0})
+		steps.append({"kind":"roll_in","pull":0.0,"yaw":0.0,"lift":1.0})
+	if carried: steps.append({"kind":"lower","pull":pull if exiting else 0.0,"yaw":yaw if exiting else 0.0,"lift":0.0})
+	_interaction.chair_steps=steps
+	_interaction.chair_step={}
+	_interaction.chair_lift=0.0
+	_interaction.chair_exit=exiting
+	_interaction.stage="chair_carry" if carried else "chair_setup"
+	host.motion.set_upper_body_contact_lock(false)
+	_contact_scene.show(); windows[_contact_id].hide()
+	host._push_autonomy_context()
+	_status("의자를 자동으로 준비합니다" if not carried else "발을 들고 의자를 이동합니다")
+
+static func chair_ease(t: float) -> float:
+	t=clampf(t,0.0,1.0)
+	return t*t*t*(t*(t*6.0-15.0)+10.0)
+
+static func chair_yaw(from: float, to: float, weight: float) -> float:
+	if from==to or weight<=0:return from
+	if weight>=1:return to
+	return wrapf(rad_to_deg(lerp_angle(deg_to_rad(from),deg_to_rad(to),weight)),-180.0,180.0)
+
+func _tick_chair_steps(delta: float) -> void:
+	var carried: bool = _interaction.stage=="chair_carry"
+	if carried and not _owns_seat_contact(_contact_id): cancel_interaction("contact_lost"); return
+	if _interaction.chair_step.is_empty():
+		if _interaction.chair_steps.is_empty():
+			if _interaction.stage=="chair_restore":
+				_complete_contact_exit(_interaction.completed_foot,_interaction.completed_model,_interaction.completed_owner)
+			elif not carried: _interaction.stage="waiting"
+			elif _interaction.chair_exit:
+				host.motion.clear_seated_carrier()
+				if not _start_authored_stand(): cancel_interaction("exit_rejected")
+			else:
+				host.motion.clear_seated_carrier()
+				_interaction.working_setup=true
+				_interaction.stage="using"
+				_interaction.until=_clock+10.0
+			return
+		var step: Dictionary = _interaction.chair_steps.pop_front()
+		if _interaction.stage=="chair_restore":
+			var others: Array = []
+			for object_id in windows:
+				if object_id!=_contact_id and bool(store.get_object(object_id).get("visible",false)) and is_instance_valid(windows[object_id]._scene): _append_scene_solids(windows[object_id]._scene,others)
+			var sweep: Dictionary = WorkstationSetup.validate_setup_sweep(_contact_scene,float(step.pull),float(step.yaw),host.avatar.contact_anchors().foot,.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale,others,_chair_setup_fits)
+			fit_diagnostics["chair_restore_admission"]=sweep
+			if not sweep.get("clear",false):
+				if sweep.get("reason","")=="chair_sweep_hits_actor" and not _interaction.get("restore_step_away_attempted",false):
+					_interaction.chair_steps.push_front(step)
+					_begin_restore_step_away(others)
+				else: cancel_interaction(str(sweep.get("reason","unsafe_chair_restore")))
+				return
+		if carried and str(step.kind) not in ["lift","lower"] and not _admit_carrier_step(step):
+			cancel_interaction(str(fit_diagnostics.get("carrier_admission",{}).get("reason","unsafe_occupied_sweep")));return
+		var setup: Dictionary = _contact_scene.seat_setup()
+		step.from_pull=float(setup.pullout_local_m); step.from_yaw=float(setup.yaw_delta_deg)
+		step.from_lift=float(_interaction.chair_lift); step.elapsed=0.0
+		var distance: float = absf(float(step.pull)-float(step.from_pull))*_contact_scale
+		var angle: float = absf(rad_to_deg(angle_difference(deg_to_rad(float(step.from_yaw)),deg_to_rad(float(step.yaw)))))
+		step.duration=maxf(.6,maxf(1.875*distance/.16,1.875*angle/70.0))
+		_interaction.chair_step=step
+	var step: Dictionary = _interaction.chair_step
+	if carried and str(step.kind) in ["lift","lower"] and not step.get("envelope_ready",false):
+		var facing: Vector3 = _contact_scene.facing_direction_world()
+		if not host.motion.set_seated_carrier(float(step.from_lift),atan2(facing.x,facing.z)): cancel_interaction("carrier_rejected");return
+		var envelope: Dictionary = host.motion.seated_carrier_lift_envelope()
+		if envelope.is_empty():
+			step["envelope_wait"]=float(step.get("envelope_wait",0.0))+maxf(delta,0.0)
+			if float(step.envelope_wait)>.5:cancel_interaction("missing_lift_envelope")
+			return
+		if not _admit_lift_envelope(envelope): cancel_interaction(str(fit_diagnostics.get("carrier_admission",{}).get("reason","unsafe_lift_envelope")));return
+		step.envelope_ready=true
+	step.elapsed=minf(float(step.duration),float(step.elapsed)+clampf(delta,0.0,.05))
+	var t:=chair_ease(float(step.elapsed)/float(step.duration))
+	var lift:=lerpf(float(step.from_lift),float(step.lift),t)
+	var moving: bool = step.kind not in ["lift","lower"]
+	if carried and moving and (not host.motion.seated_carrier_state().get("ready",false) or not _carrier_step_valid(step)): cancel_interaction("carrier_not_ready"); return
+	if not _contact_scene.set_seat_setup(lerpf(float(step.from_pull),float(step.pull),t),chair_yaw(float(step.from_yaw),float(step.yaw),t)):
+		cancel_interaction("chair_setup_rejected"); return
+	if carried:
+		var facing: Vector3 = _contact_scene.facing_direction_world()
+		if not host.motion.set_seated_carrier(lift,atan2(facing.x,facing.z)): cancel_interaction("carrier_rejected"); return
+		_interaction.chair_lift=lift
+		if not _commit_carried_seat():
+			cancel_interaction("unsafe_carrier_contact");return
+	else:
+		if not _fit_contact_view(): cancel_interaction("setup_view_blocked");return
+	_refresh_adapters()
+	fit_diagnostics["chair_phase"]={"kind":step.kind,"progress":t,"carried":carried,"setup":_contact_scene.seat_setup(),"feet":host.motion.seated_carrier_state() if carried else {}}
+	if float(step.elapsed)>=float(step.duration):
+		if carried and step.kind=="lift" and not host.motion.seated_carrier_state().get("ready",false):
+			# The setter is consumed by Motion later in this frame. Require fresh
+			# post-pose clearance before moving, with a bounded wait for failure.
+			step["ready_wait"]=float(step.get("ready_wait",0.0))+maxf(delta,0.0)
+			if float(step.ready_wait)>.5: cancel_interaction("carrier_clearance_failed")
+			return
+		_interaction.chair_step={}
+
+## Standing up can leave the actor inside the empty chair's future swivel.
+## Walk to a checked same-ground clearance point before restoring furniture.
+func _begin_restore_step_away(others: Array) -> void:
+	_interaction.restore_step_away_attempted=true
+	var start: Vector3 = host.avatar.contact_anchors().foot
+	var plan: Dictionary = WorkstationSetup.find_restore_clearance(_contact_scene,start,.12*host._pet_scale,host._model_aabb.size.y*host._pet_scale,others,_chair_setup_fits,_restore_ground_fits,.5*host._pet_scale)
+	fit_diagnostics["restore_step_away"]=plan
+	if not plan.get("accepted",false):cancel_interaction(str(plan.get("reason","no_restore_clearance")));return
+	var token:=Time.get_ticks_usec()
+	_interaction.restore_token=token
+	_interaction.restore_target=plan.target_world
+	_interaction.restore_deadline=_clock+8.0
+	_interaction.authored_exit_foot=start
+	_interaction.stage="restore_approaching"
+	host._push_autonomy_context()
+	var accepted: Dictionary = host.scene_navigation.request_owned(plan.target_world,scene_obstacle_bounds(),_restore_clearance_finished.bind(token),plan.get("navigation_geometry",{}))
+	if not accepted.get("accepted",false):cancel_interaction(str(accepted.get("reason","restore_route_rejected")));return
+	_status("의자를 정리할 공간으로 잠깐 이동합니다")
+
+func _approach_route_fits(path: PackedVector3Array) -> bool:
+	var result := DesktopSceneNavigationHost.route_view_admission(path,host.normalize_scene_ground_placement,screen_rects())
+	fit_diagnostics["approach_view"]=result
+	return result.get("accepted",false)
+
+func _restore_ground_fits(point: Vector3) -> bool:
+	var result: Dictionary = host.normalize_scene_ground_placement(point)
+	return result.get("ok",false) and not result.get("changed",true)
+
+func _restore_clearance_finished(outcome: String, token: int) -> void:
+	if _interaction.get("stage","")!="restore_approaching" or int(_interaction.get("restore_token",-1))!=token:return
+	if outcome!="arrived":cancel_interaction(outcome);return
+	var target: Vector3 = _interaction.restore_target
+	var actual: Vector3 = host.avatar.contact_anchors().foot
+	if not actual.is_finite() or actual.distance_to(target)>.015:
+		cancel_interaction("restore_approach_misaligned");return
+	# This is the result of actual authored walking, not a replacement teleport
+	# for the earlier finite exit endpoint. Both points remain in diagnostics.
+	_interaction.completed_foot=actual
+	_interaction.stage="chair_restore"
+	var adopted: Dictionary = host.scene_navigation.adopt_contact_exit(actual,int(_interaction.completed_model),_interaction.completed_owner,str(_interaction.id))
+	if not adopted.get("ok",false):cancel_interaction(str(adopted.get("reason","restore_ground_rejected")));return
+	fit_diagnostics.restore_step_away["arrived_world"]=actual
+	fit_diagnostics.restore_step_away["outcome"]="arrived"
+	host._push_autonomy_context()
+
+func _admit_lift_envelope(snapshot: Dictionary) -> bool:
+	var helper = load("res://scripts/desktop_seated_carrier_sweep.gd")
+	if helper==null:return false
+	var others: Array = []
+	for id in windows:
+		if id!=_contact_id and bool(store.get_object(id).get("visible",false)) and is_instance_valid(windows[id]._scene): _append_scene_solids(windows[id]._scene,others)
+	var result: Dictionary = helper.check_stationary_envelope(_contact_scene,snapshot,helper.fixed_solids(_contact_scene,others),host.avatar.model.get_instance_id())
+	fit_diagnostics["carrier_admission"]=result
+	if not result.get("accepted",false):return false
+	if not _carrier_envelope_fits(result.get("body_bounds_world",AABB())):
+		result.reason="lift_envelope_outside_view";return false
+	return true
+
+func _admit_carrier_step(step: Dictionary) -> bool:
+	var snapshot: Dictionary = host.motion.seated_carrier_body_snapshot()
+	if snapshot.is_empty():
+		fit_diagnostics["carrier_admission"]={"reason":"missing_frozen_body"};return false
+	var helper = load("res://scripts/desktop_seated_carrier_sweep.gd")
+	if helper==null:
+		fit_diagnostics["carrier_admission"]={"reason":"missing_occupied_sweep"};return false
+	var others: Array = []
+	for id in windows:
+		if id!=_contact_id and bool(store.get_object(id).get("visible",false)) and is_instance_valid(windows[id]._scene): _append_scene_solids(windows[id]._scene,others)
+	var fixed: Array = helper.fixed_solids(_contact_scene,others)
+	var result: Dictionary = helper.check(_contact_scene,snapshot,float(step.pull),float(step.yaw),fixed,host.avatar.model.get_instance_id())
+	fit_diagnostics["carrier_admission"]=result
+	if not result.get("accepted",false): return false
+	if not _carrier_envelope_fits(result.get("body_bounds_world",AABB())):
+		result.reason="occupied_sweep_outside_view";return false
+	step.model_id=snapshot.model_id;step.source_clip_id=snapshot.source_clip_id
+	return true
+
+func _carrier_step_valid(step: Dictionary) -> bool:
+	var state: Dictionary = host.motion.seated_carrier_state()
+	return state.get("body_frozen",false) and state.get("model_id",0)==step.get("model_id",-1) and state.get("source_clip_id",0)==step.get("source_clip_id",-1)
+
+func _carrier_envelope_fits(bounds: AABB) -> bool:
+	if not bounds.position.is_finite() or not bounds.size.is_finite() or bounds.size.length_squared()<=0:return false
+	var rect:=contact_bounds()
+	for index in 8:
+		var point:=bounds.get_endpoint(index)
+		if host.camera.is_position_behind(point):return false
+		rect=rect.expand(host.camera.unproject_position(point))
+	if rect.size.x>host.WINDOW_SIZE.x-8 or rect.size.y>host.WINDOW_SIZE.y-8:return false
+	rect.position+=Vector2(host.get_window().position)
+	for area in screen_rects():
+		if Rect2(area).encloses(rect.grow(2)):return true
+	return false
+
+func _commit_carried_seat() -> bool:
+	var seat:=contact_socket_world("seat")
+	host._camera_pivot_depth=DesktopView.depth(host.camera,seat)
+	host._pivot_px=host.camera.unproject_position(seat);host._pivot_px_target=host._pivot_px
+	host._update_avatar_transform(0.0);host._update_pet_rect()
+	return _fit_contact_view(true) and host.autonomy.refresh_seat_projection("object:"+_contact_id+":seat",contact_socket_screen("seat"),host._projected_anchors(),host._navigation_rect())
 
 func request_stand() -> bool:
 	if _interaction.get("stage","") not in ["seated","using"] or not contact_scene_active(): return false
+	if _interaction.has("setup_plan") and _interaction.get("working_setup",false):
+		_start_chair_steps(true,true)
+		return true
+	return _start_authored_stand()
+
+func _start_authored_stand() -> bool:
 	if not _interaction.has("standing_foot_local"): return false
 	var target: Vector3 = _contact_scene.to_global(Vector3(_interaction.standing_foot_local))
 	var delta: Vector3 = target-host.avatar.contact_anchors().foot
@@ -697,8 +1127,19 @@ func _tick_presentation() -> void:
 	host._update_avatar_transform(0.0)
 	host._update_pet_rect()
 	if not entering:
-		cancel_interaction("completed")
-		host._refresh_sit_button()
+		var completed_foot:Vector3=host.avatar.contact_anchors().foot
+		var completed_model:int=host.avatar.model.get_instance_id()
+		var completed_owner:Dictionary=host.scene_navigation.contact_exit_token() if _spatial_enabled() and host.get("scene_navigation")!=null else {}
+		if _interaction.has("setup_plan"):
+			_interaction.stage="chair_restore"
+			_interaction.completed_foot=completed_foot;_interaction.completed_model=completed_model;_interaction.completed_owner=completed_owner
+			var adopted: Dictionary = host.scene_navigation.adopt_contact_exit(completed_foot,completed_model,completed_owner,str(_interaction.id))
+			if not adopted.get("ok",false): cancel_interaction(str(adopted.get("reason","exit_ground_rejected")));return
+			var setup: Dictionary = _contact_scene.seat_setup()
+			_interaction.chair_steps=[{"kind":"swivel_restore","pull":float(setup.pullout_local_m),"yaw":0.0,"lift":0.0},{"kind":"roll_restore","pull":0.0,"yaw":0.0,"lift":0.0}]
+			_interaction.chair_step={};_interaction.chair_lift=0.0
+			return
+		_complete_contact_exit(completed_foot,completed_model,completed_owner)
 		return
 	_interaction.stage = "seating"
 	_update_contact_transform()
@@ -709,6 +1150,12 @@ func _tick_presentation() -> void:
 	host._push_autonomy_context()
 	if not host.autonomy.request_seat_contact("object:"+str(_interaction.id)+":seat",contact_socket_screen("seat")):
 		cancel_interaction("unsafe_seat")
+	host._refresh_sit_button()
+
+func _complete_contact_exit(foot: Vector3, model_id: int, owner: Dictionary) -> void:
+	cancel_interaction("completed")
+	if _spatial_enabled() and host.get("scene_navigation")!=null:
+		fit_diagnostics["completed_exit_ground"]=host.scene_navigation.adopt_contact_exit(foot,model_id,owner)
 	host._refresh_sit_button()
 
 func _apply_work_contact(_object_window) -> void:
@@ -757,10 +1204,14 @@ func _activate_contact_scene(id: String) -> bool:
 	var scene := ContactScene.new()
 	host.add_child(scene)
 	if not scene.configure(str(store.get_object(id).type)): scene.free(); return false
+	if scene.supports_seat_setup() and not scene.set_seat_scale(float(store.get_object(id).get("seat_scale",1.0))): scene.free();return false
 	Appearance.apply(scene,str(store.get_object(id).get("appearance","default")))
 	_contact_scene = scene
 	_contact_id = id
 	var window = windows[id]
+	if scene.supports_seat_setup() and window.has_method("seat_setup"):
+		var retained: Dictionary = window.seat_setup()
+		if not retained.is_empty(): scene.set_seat_setup(float(retained.pullout_local_m),float(retained.yaw_delta_deg))
 	_contact_floor = Vector2(window.position)+Vector2(window.size.x*0.5,window.size.y-1.0)
 	_contact_scale = window.pixels_per_metre()/host._px_per_m
 	if _spatial_enabled():
@@ -877,6 +1328,9 @@ func _release_contact_scene() -> void:
 	if host != null and host.motion.has_method("set_upper_body_contact_lock"): host.motion.set_upper_body_contact_lock(false)
 	if not is_instance_valid(_contact_scene): return
 	host.motion.clear_seated_floor()
+	if _contact_scene.supports_seat_setup() and windows.has(_contact_id) and windows[_contact_id].has_method("set_seat_setup"):
+		var setup: Dictionary = _contact_scene.seat_setup()
+		windows[_contact_id].set_seat_setup(float(setup.pullout_local_m),float(setup.yaw_delta_deg))
 	_contact_scene.free()
 	_contact_scene = null
 	var id := _contact_id
@@ -1001,6 +1455,11 @@ func occupied_rect() -> Rect2:
 
 func refresh_view() -> void:
 	if _closed or host == null: return
+	# A projection edit invalidates the already admitted support sweep. Stop
+	# its finite motion before recomputing cameras; ordinary occupied viewing
+	# still retains the seat through the existing exact-depth path below.
+	if _interaction.get("stage","") in ["chair_setup","chair_carry","chair_restore","restore_approaching"]:
+		cancel_interaction("view_changed")
 	_view_zoom = float(host._view_settings.get("view_zoom",1.0))
 	for window in windows.values():
 		if window.has_method("set_view_basis"):
@@ -1069,34 +1528,51 @@ func _spatial_transform(record: Dictionary) -> Transform3D:
 	return Transform3D(Basis.IDENTITY.scaled(Vector3.ONE*float(record.scale)*float(record.get("spatial_unit_scale",1.0))),Vector3(value.x,value.y,value.z))
 
 func _sync_spatial_window(id: String) -> bool:
-	if not _spatial_enabled() or not windows.has(id): return false
+	fit_diagnostics["last_spatial_projection"] = {"id":id,"reason":"checking","spatial_enabled":_spatial_enabled(),"window_present":windows.has(id)}
+	if not _spatial_enabled() or not windows.has(id):
+		fit_diagnostics.last_spatial_projection.reason="missing_camera_or_window"
+		return false
 	var window = windows[id]
 	var record: Dictionary = store.get_object(id)
 	var reference: Camera3D = host.spatial_camera()
 	if not record.has("spatial_unit_scale"):
 		var unit: float = window._reference_ppm*maxf(_view_zoom,.01)/maxf(host._px_per_m,1.0)
-		if not store.set_spatial_unit_scale(id,unit): return false
+		if not store.set_spatial_unit_scale(id,unit):
+			fit_diagnostics.last_spatial_projection.reason="invalid_spatial_unit_scale"
+			return false
 	if not Store.valid_position_m(record.get("position_m")):
 		var legacy := store.rect_for(record)
 		var screen := Vector2(legacy.position)+Vector2(legacy.size.x*.5,legacy.size.y-1.0)
 		var world := DesktopView.screen_to_world_at_depth(reference,screen-host.spatial_desktop_origin(),host._camera_pivot_depth)
-		if not store.set_position_m(id,world): return false
+		if not store.set_position_m(id,world):
+			fit_diagnostics.last_spatial_projection.reason="invalid_legacy_world_position"
+			return false
 		record = store.get_object(id)
 	else: record = store.get_object(id)
 	window.set_shared_world(host.get_viewport().world_3d,host.get_viewport())
-	if not window.set_shared_projection(reference,host.spatial_desktop_origin(),_spatial_transform(record)): return false
+	if not window.set_shared_projection(reference,host.spatial_desktop_origin(),_spatial_transform(record)):
+		fit_diagnostics.last_spatial_projection.reason="shared_projection_rejected"
+		return false
 	var projected := Rect2(Vector2(window.position),Vector2(window.size))
+	fit_diagnostics.last_spatial_projection.merge({"projected_window":str(projected),"workareas":str(screen_rects()),"position_m":str(record.get("position_m",{})),"camera_transform":str(reference.global_transform),"projection":reference.projection})
 	for area in screen_rects():
-		if Rect2(area).encloses(projected): return true
+		if Rect2(area).encloses(projected):
+			fit_diagnostics.last_spatial_projection.reason="fits"
+			return true
+	fit_diagnostics.last_spatial_projection.reason="projected_window_outside_single_workarea"
 	return false
 
 func configure_spatial_position(id: String, value: Vector3) -> bool:
 	if not _spatial_enabled() or not windows.has(id): return false
 	var previous: Dictionary = store.data()
-	if not store.set_position_m(id,value): return false
+	if not store.set_position_m(id,value):
+		fit_diagnostics["last_position_rejection"] = {"requested_position_m":str(value),"reason":"invalid_world_position"}
+		return false
 	if not _sync_spatial_window(id):
+		var rejected_projection: Dictionary = fit_diagnostics.get("last_spatial_projection",{}).duplicate(true)
 		store.set_data(previous)
 		_sync_spatial_window(id)
+		fit_diagnostics["last_position_rejection"] = {"requested_position_m":str(value),"candidate":rejected_projection,"restored":fit_diagnostics.get("last_spatial_projection",{}).duplicate(true)}
 		return false
 	cancel_interaction("object_configured")
 	_after_change()
@@ -1113,3 +1589,79 @@ func admits_contact_during_reply() -> bool:
 	if not owns_foreground_speech() or _interaction.get("stage","") not in ["ready_contact","seating"]: return false
 	var job_active:bool=not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
 	return not job_active and not host.motion._preview and not host.motion._custom_motion
+
+## A transient ungrounded pose is never a world-plane definition. Preserve the
+## admitted scene plane across authored contact/exit; reset on drag/model change.
+func _ground_context() -> Dictionary:
+	if not _spatial_enabled():
+		_scene_ground_y=NAN;return {}
+	if host==null or not host.avatar.has_model() or not is_instance_valid(host.avatar.model):return {}
+	var model_id:int=host.avatar.model.get_instance_id()
+	if _ground_model_id!=model_id:
+		_ground_model_id=model_id;_scene_ground_y=NAN
+	if host._drag_active:
+		_scene_ground_y=NAN;return {}
+	var scene=host.get("scene_navigation")
+	var contact:Dictionary=host.autonomy.get_support_contact()
+	var scene_ready:bool=scene!=null and scene.owns_foot()
+	var floor_ready:bool=contact.get("attached",false) and str(contact.get("surface_id","")).begins_with("floor:")
+	if not scene_ready and not floor_ready:return {}
+	var point:Vector3=scene.foot_world if scene_ready else host.avatar.contact_anchors().foot
+	if not point.is_finite():return {}
+	if not is_finite(_scene_ground_y):_scene_ground_y=point.y
+	point.y=_scene_ground_y
+	return {"point":point,"ground_y":_scene_ground_y,"source":"scene" if scene_ready else "attached_floor"}
+
+func _default_workstation_seat_scale() -> float:
+	if not host.motion.has_method("seated_transition_requirements"):return 1.0
+	var source: Dictionary = host.motion.seated_transition_requirements("enter")
+	var clearance:=float(source.get("source_seat_clearance_local",NAN))
+	if not is_finite(clearance) or clearance<=0:return 1.0
+	var scene:=ContactScene.new();add_child(scene)
+	var ratio:=1.0
+	if scene.configure("computer"):
+		var height:float=scene.socket_local("seat").y-scene.get_local_bounds().position.y
+		if height>.01:ratio=clampf(clearance/height,Store.MIN_SEAT_SCALE,Store.MAX_SEAT_SCALE)
+	scene.free()
+	return ratio
+
+func _default_source_seat_ratio(type: String) -> float:
+	if type=="computer":return 1.0
+	if not host.motion.has_method("seated_transition_requirements"):return 1.0
+	var source:Dictionary=host.motion.seated_transition_requirements("enter")
+	var clearance:=float(source.get("source_seat_clearance_local",NAN))
+	if not is_finite(clearance) or clearance<=0:return 1.0
+	var scene:=ContactScene.new();add_child(scene)
+	var ratio:=1.0
+	if scene.configure(type) and scene.has_socket("seat"):
+		var height:float=scene.socket_local("seat").y-scene.get_local_bounds().position.y
+		if height>.01:ratio=clampf(clearance/height,.75,1.25)
+	scene.free()
+	return ratio
+
+func _find_ground_placement(id: String, desired: Vector3, actor: Vector3) -> Dictionary:
+	var record:Dictionary=store.get_object(id)
+	var scene:=ContactScene.new();add_child(scene)
+	if not scene.configure(str(record.type)):scene.free();return {"ok":false,"reason":"missing_geometry"}
+	if scene.supports_seat_setup() and not scene.set_seat_scale(float(record.get("seat_scale",1.0))):scene.free();return {"ok":false,"reason":"invalid_seat_scale"}
+	var yaw:=float(record.get("yaw_deg",0.0))+scene.recommended_yaw_degrees
+	var basis:=Basis(Vector3.UP,deg_to_rad(yaw)).scaled(Vector3.ONE*float(record.scale)*float(record.get("spatial_unit_scale",1.0)))
+	var parts:Array=[];_append_scene_solids(scene,parts)
+	var obstacles:Array=[]
+	for other_id in windows:
+		if other_id!=id and store.has_object(other_id) and store.get_object(other_id).get("visible",false):_append_scene_solids(windows[other_id]._scene,obstacles)
+	var radius:float=.12*host._pet_scale
+	obstacles.append(AABB(actor-Vector3(radius,0,radius),Vector3(radius*2,host._model_aabb.size.y*host._pet_scale,radius*2)))
+	var result:=GroundPlacement.find(host.spatial_camera(),host.spatial_desktop_origin(),screen_rects(),desired,basis,scene.geometry_points_local(),parts,obstacles,1.5*maxf(host._pet_scale,.6))
+	scene.free()
+	return result
+
+func _command_needs_ground(intent: Dictionary) -> bool:
+	if intent.get("verb","") not in ["place","sit","use","inspect"]:return false
+	if not intent.has("position_m"):return true
+	# Existing explicit-coordinate edits do not depend on the actor. Creation
+	# still uses add_object's grounded initialization and must wait for it.
+	if not str(intent.get("target_id","")).is_empty():return false
+	for row in store.rows(screen_rects()):
+		if row.type==intent.get("object_type",""):return false
+	return true

@@ -1,0 +1,56 @@
+{
+  "failures": 0,
+  "rows": [
+    {
+      "character": "cheval-grand",
+      "drop_m": 0.020000011427328,
+      "foot_orientation_dot_error": 0.0,
+      "ground_gap_m": 0.0000000189174897968769,
+      "test": "floating_foot_can_lower"
+    },
+    {
+      "character": "cheval-grand",
+      "error_m": 0.0,
+      "test": "unowned_pose_unchanged"
+    },
+    {
+      "character": "cheval-grand",
+      "error_m": 0.0,
+      "test": "clear_authored_lift_not_pinned"
+    },
+    {
+      "character": "rice-shower",
+      "drop_m": 0.0199999554315582,
+      "foot_orientation_dot_error": 0.0,
+      "ground_gap_m": 0.00000000675208866596222,
+      "test": "floating_foot_can_lower"
+    },
+    {
+      "character": "rice-shower",
+      "error_m": 0.0,
+      "test": "unowned_pose_unchanged"
+    },
+    {
+      "character": "rice-shower",
+      "error_m": 0.0,
+      "test": "clear_authored_lift_not_pinned"
+    },
+    {
+      "character": "eishin-flash",
+      "drop_m": 0.0205589854158461,
+      "foot_orientation_dot_error": 0.0,
+      "ground_gap_m": -0.0000000838190317153931,
+      "test": "floating_foot_can_lower"
+    },
+    {
+      "character": "eishin-flash",
+      "error_m": 0.0,
+      "test": "unowned_pose_unchanged"
+    },
+    {
+      "character": "eishin-flash",
+      "error_m": 0.0,
+      "test": "clear_authored_lift_not_pinned"
+    }
+  ]
+}

@@ -111,6 +111,22 @@ func run() -> void:
 	living.cancel("avatar_changed")
 	check(not host._avatar_variant_command.is_empty(),"internal contact cleanup does not self-cancel appearance")
 	host.cancel_avatar_variant()
+	var original_living: Node = host.living
+	var replay_living = load("res://../diagnostics/avatar_variants/living_fixture.gd").new()
+	replay_living.host = host; replay_living.enabled = true; host.living = replay_living
+	host.session.turn_id = "replayturn"
+	var replay_intent := {"kind":"change_appearance","variant_id":"default"}
+	var requests_before: int = host.client.requests.size()
+	replay_living._event({"type":"action","turn_id":"replayturn","intent":replay_intent})
+	check(host.client.requests.size() == requests_before+1 and not host._avatar_variant_command.is_empty(),"actual Living action dispatch starts loader")
+	host._on_avatar_ready(true,"hachimi",BackendClient.avatar_cache_path("hachimi"),"downloaded")
+	await process_frame
+	var replay_rows: Array = host.avatar_variant_outcomes.filter(func(row): return row.id == "replayturn:intent")
+	check(replay_rows.size() == 1 and replay_rows[0].outcome == "completed" and replay_living.published_count > 0,"actual loader completion republishes world before done")
+	replay_living._event({"type":"done","ok":true,"turn_id":"replayturn","intent":replay_intent,"intent_replay":true})
+	replay_rows = host.avatar_variant_outcomes.filter(func(row): return row.id == "replayturn:intent")
+	check(host.client.requests.size() == requests_before+1 and replay_rows.size() == 1 and host._avatar_variant_command.is_empty(),"actual Living done replay after world publication cannot reload or duplicate completion")
+	host.living = original_living; replay_living.free()
 	living.free(); host.autonomy.free(); host.audio.free()
 	host.loading_label.free(); host.client.free(); host.avatar.free(); host.motion.free(); host.objects.free(); host.living.free(); host.free(); panel.free()
 	settings.data = saved; settings.save_now()

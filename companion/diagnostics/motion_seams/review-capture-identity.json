@@ -1,0 +1,12 @@
+{
+  "verdict": "APPROVED",
+  "source_sha256": {
+    "companion/native/tools/probe_windows_authored_seating.gd": "ef2a0ecd9106dec2d58435cb6235b8447ebabcb186607b03377c7ad3abb70199",
+    "companion/native/tools/probe_windows_scene_navigation.gd": "d632ff1c616af8e2ed9290ee35ec153496c0349ff7ca596c67dced86211570c2",
+    "companion/native/tools/probe_foot_markers.gd": "8951267ef311cdc98d03244319782966d149bd599fd73f41128957b51852dbe6",
+    "companion/diagnostics/motion_seams/review_capture_worker.gd": "dc1a7327bf6f7b866021085e312f71d54292099646564195469006c2e25441d0"
+  },
+  "scope": "External diagnostic telemetry/capture lifecycle and fourbasevertex markers; noWindowsruntimeperformanceclaim",
+  "max_capture_jobs": 3,
+  "narrow_followup": "Observed burst capacity increased from2to3; per-rendertelemetry and temporal/save/queuefailure gates unchanged"
+}

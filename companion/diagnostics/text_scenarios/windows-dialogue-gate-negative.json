@@ -1,0 +1,371 @@
+{
+  "scope": "One actual product-default Korean conversation-only negative after context-motion advertising fix, GPU backend restarted.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\run_text_scenario.gd",
+      "--",
+      "--scenario",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\diagnostics\\text_scenarios\\computer-conversation.json",
+      "--character",
+      "cheval-grand",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\text-scenario-dialogue-gate-negative",
+      "--product-defaults"
+    ],
+    "scope": "exported executable plus external scenario script",
+    "executable_sha256": "f965d3c142cb996a2e486df41ffdaedfd30548165f6f030de9a9d24e879b5612",
+    "script_sha256": "a9d9da95028c60a0bde2c63a4aed5488455487a0ebb13013d7565f4327a91295",
+    "parent_script_sha256": "38280eb30e9bc3c4529c13aa9f17803e6137872e0441a27844b410e835233d43",
+    "scenario_sha256": "49c2ce4bc3e575b7d37b034c71c28a252c963c1d112d1517dc60e419cd0ad778",
+    "started_unix": 1788719772.1206245,
+    "character": "cheval-grand",
+    "settings_profile": "product_defaults",
+    "launcher_child_pid": 10099,
+    "exit_code": 0,
+    "finished_unix": 1788719785.8286226
+  },
+  "checks": [
+    {
+      "label": "native ready",
+      "ms": 6603,
+      "ok": true
+    },
+    {
+      "label": "actual selected character ready",
+      "ms": 6606,
+      "ok": true
+    },
+    {
+      "label": "real model provider",
+      "ms": 6610,
+      "ok": true
+    },
+    {
+      "label": "scenario step 0 actual reply / playback / intent / native outcome",
+      "ms": 10210,
+      "ok": true
+    },
+    {
+      "label": "total object bound respected",
+      "ms": 10218,
+      "ok": true
+    },
+    {
+      "label": "original settings restored after test",
+      "ms": 10243,
+      "ok": true
+    }
+  ],
+  "trials": [
+    {
+      "action": {
+        "character": "cheval-grand",
+        "elapsed_ms": 1199.6,
+        "emotion": "neutral",
+        "gesture": "idle",
+        "intensity": 0.8,
+        "ms": 7906,
+        "speed": 0.92,
+        "turn_id": "t1-7778",
+        "type": "action"
+      },
+      "action_delivered_ms": 7906,
+      "actual_character": "cheval-grand",
+      "actual_model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+      "actual_variant": "default",
+      "delivered_action_to_terminal_playback_overlap_ms": 0,
+      "done": {
+        "audio_url": null,
+        "character": "cheval-grand",
+        "elapsed_ms": 2267.2,
+        "emotion": "neutral",
+        "gesture": "idle",
+        "intensity": 0.8,
+        "ms": 8973,
+        "ok": true,
+        "speed": 0.92,
+        "text": "それはいいですね。",
+        "timings": {
+          "first_audio_ms": 2038.2,
+          "first_text_ms": 691.6,
+          "first_token_ms": 691.1,
+          "llm_done_ms": 1199.6,
+          "total_ms": 2267.2
+        },
+        "turn_id": "t1-7778",
+        "type": "done",
+        "voice_error": null
+      },
+      "done_ms": 8973,
+      "failures": [],
+      "feedback": {},
+      "finished_ms": 10210,
+      "first_pcm_received_ms": 8757,
+      "first_playback_ms": 8773,
+      "first_text_ms": 7407,
+      "index": 0,
+      "native_capabilities_before_publish": {
+        "furniture_catalog": [
+          {
+            "appearances": [
+              "default",
+              "warm",
+              "cool",
+              "porcelain",
+              "flat"
+            ],
+            "bounds": {
+              "scale": [
+                0.5,
+                1.8
+              ],
+              "yaw_deg": [
+                -180.0,
+                180.0
+              ]
+            },
+            "id": "chair",
+            "perception": {
+              "available": true,
+              "mode": "geometry_only",
+              "reachable": "unknown",
+              "reason": "native_geometry"
+            },
+            "sockets": [
+              "seat",
+              "inspect"
+            ],
+            "spatial": {
+              "bounds": {
+                "x": [
+                  -20.0,
+                  20.0
+                ],
+                "y": [
+                  -20.0,
+                  20.0
+                ],
+                "z": [
+                  -20.0,
+                  20.0
+                ]
+              },
+              "frame": "desktop_scene_v1"
+            },
+            "verbs": [
+              "place",
+              "configure",
+              "appearance",
+              "hide",
+              "remove",
+              "inspect",
+              "sit"
+            ],
+            "version": 1
+          },
+          {
+            "appearances": [
+              "default",
+              "warm",
+              "cool",
+              "porcelain",
+              "flat"
+            ],
+            "bounds": {
+              "scale": [
+                0.5,
+                1.8
+              ],
+              "yaw_deg": [
+                -180.0,
+                180.0
+              ]
+            },
+            "id": "sofa",
+            "perception": {
+              "available": true,
+              "mode": "geometry_only",
+              "reachable": "unknown",
+              "reason": "native_geometry"
+            },
+            "sockets": [
+              "seat",
+              "inspect"
+            ],
+            "spatial": {
+              "bounds": {
+                "x": [
+                  -20.0,
+                  20.0
+                ],
+                "y": [
+                  -20.0,
+                  20.0
+                ],
+                "z": [
+                  -20.0,
+                  20.0
+                ]
+              },
+              "frame": "desktop_scene_v1"
+            },
+            "verbs": [
+              "place",
+              "configure",
+              "appearance",
+              "hide",
+              "remove",
+              "inspect",
+              "sit"
+            ],
+            "version": 1
+          },
+          {
+            "appearances": [
+              "default",
+              "warm",
+              "cool",
+              "porcelain",
+              "flat"
+            ],
+            "bounds": {
+              "scale": [
+                0.5,
+                1.8
+              ],
+              "yaw_deg": [
+                -180.0,
+                180.0
+              ]
+            },
+            "id": "computer",
+            "perception": {
+              "available": true,
+              "mode": "geometry_only",
+              "reachable": "unknown",
+              "reason": "native_geometry"
+            },
+            "sockets": [
+              "seat",
+              "keyboard_left",
+              "keyboard_right",
+              "inspect"
+            ],
+            "spatial": {
+              "bounds": {
+                "x": [
+                  -20.0,
+                  20.0
+                ],
+                "y": [
+                  -20.0,
+                  20.0
+                ],
+                "z": [
+                  -20.0,
+                  20.0
+                ]
+              },
+              "frame": "desktop_scene_v1"
+            },
+            "verbs": [
+              "place",
+              "configure",
+              "appearance",
+              "hide",
+              "remove",
+              "inspect",
+              "use"
+            ],
+            "version": 1
+          }
+        ],
+        "furniture_native_available": true,
+        "living_enabled": true
+      },
+      "outcomes": [],
+      "overlap_required": false,
+      "pcm_bytes": 83840,
+      "playback_intervals_ms": [
+        [
+          8773,
+          10089
+        ]
+      ],
+      "raw_provider": {
+        "available": true,
+        "record": {
+          "generated_tokens": 20.0,
+          "input_tokens": 4503.0,
+          "modality": "text",
+          "preprocess_ms": 14.5,
+          "raw": "{\"text\":\"それはいいですね。\", \"emotion\":\"neutral\", \"gesture\":\"idle\", \"intent\":{}}",
+          "request_capabilities": {
+            "appearance_variant_ids": [
+              "default"
+            ],
+            "furniture_catalog": [
+              {
+                "id": "chair",
+                "verbs": [
+                  "appearance",
+                  "configure",
+                  "hide",
+                  "inspect",
+                  "place",
+                  "remove",
+                  "sit"
+                ]
+              },
+              {
+                "id": "computer",
+                "verbs": [
+                  "appearance",
+                  "configure",
+                  "hide",
+                  "inspect",
+                  "place",
+                  "remove",
+                  "use"
+                ]
+              },
+              {
+                "id": "sofa",
+                "verbs": [
+                  "appearance",
+                  "configure",
+                  "hide",
+                  "inspect",
+                  "place",
+                  "remove",
+                  "sit"
+                ]
+              }
+            ],
+            "furniture_types": [],
+            "interests_count": 0.0,
+            "locomotion_ids": [
+              "mambo_goofy_walk",
+              "playful_strut",
+              "uma_walk"
+            ]
+          },
+          "turn_id": "t1-7778"
+        }
+      },
+      "reply": "それはいいですね。",
+      "simultaneous_native_active_playback_samples": 0,
+      "simultaneous_travel_playback_samples": 0,
+      "started_ms": 6651,
+      "text": "컴퓨터를 써 보는 건 어떤 기분일까? 지금은 꺼내지 말고 이야기만 해 줘.",
+      "turn_id": "t1-7778"
+    }
+  ],
+  "failures": 0
+}

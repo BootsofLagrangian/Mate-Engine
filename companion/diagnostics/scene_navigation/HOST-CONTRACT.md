@@ -76,3 +76,19 @@ Corrected fixture: 274/0, including actual imported chair components and a
 90-ms frame cadence. Windows telemetry now additionally records scene heading
 acceptance, actual yaw, target yaw and travel ownership throughout furniture
 approaches so a subsequent runtime failure can distinguish ownership from timing.
+
+### Imported-part union and completed-contact ground
+
+The actual workstation plus prior chair contains 156 raw connected components.
+Navigation now accepts bounded raw input (2048), retaining the existing limit
+of 96 effective obstacles after removing only expanded XZ rectangles fully
+contained by another. The blocked union is unchanged: the fixture reduces to26;
+every original rectangle remains covered and every retained rectangle is an
+original. Ninety-seven disjoint rectangles remain rejected.
+
+A successful authored exit retains its exact committed world foot as idle scene
+ground after contact cleanup. It requires unchanged model and Director ownership
+across completion callbacks, no replacement interaction or legacy/scene route,
+and valid unchanged workarea/collision admission. It never normalizes or snaps
+the exit position. Drag, disabled behavior and character changes cannot acquire
+this latch. Actual-rig fixture281/0; Windows second-interaction acceptance pending.

@@ -1,0 +1,188 @@
+{
+  "scope": "Actual Windows full workstation carrier attempt; NOT accepted. Reached using, but final empty-chair restoration failed against standing actor. Old probe lacked terminal assertion; corrected before next run.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_scene_navigation.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-full-computer-carrier",
+      "--character",
+      "cheval-grand",
+      "--require-computer-use"
+    ],
+    "started": 1788722095.5035262,
+    "exe_sha256": "8456cc0b2746ee03dbcf49527dd2ea079350fa17692a9e9eea5334cf4e38c5cb",
+    "script_sha256": "66549337a976751e5c0553f47503be4263470c85b7f08c889f7fd873d5127dbd",
+    "helper_sha256": "8951267ef311cdc98d03244319782966d149bd599fd73f41128957b51852dbe6",
+    "exit_code": 1,
+    "finished": 1788722180.5029294,
+    "external_sources_stable": true
+  },
+  "check_count": 73,
+  "reported_failures": 3,
+  "computer_terminals": [
+    {
+      "id": "temporal-computer",
+      "ms": 70239,
+      "outcome": "chair_sweep_hits_actor",
+      "record_type": "terminal"
+    }
+  ],
+  "completed_exit_hold": {
+    "duration_ms": 5008,
+    "expected_world": [
+      1.81110954284668,
+      -1.33028185367584,
+      -0.104586124420166
+    ],
+    "maximum_xyz_drift_m": 0.0,
+    "ownership_retained": true
+  },
+  "entry_preparation": {
+    "command_id": "temporal-computer",
+    "ensure_seated_geometry_ms": 0.004,
+    "object_id": "obj_2",
+    "presentation": {
+      "fit_contact_view_ms": 0.038,
+      "kind": "enter",
+      "motion_preparation": {
+        "bounds_us": 50690,
+        "cache_hit": false,
+        "measure_us": 35488,
+        "pose_us": 12887,
+        "reference_us": 231,
+        "samples": 20,
+        "secondary_us": 1900,
+        "total_us": 50948
+      },
+      "motion_start_ms": 50.981,
+      "reason": "ready",
+      "started_usec": 46418569,
+      "total_ms": 51.031
+    },
+    "projection_and_admission_ms": 0.153,
+    "reason": "entering",
+    "release_to_contact_ms": 0.01,
+    "started_usec": 46418380,
+    "total_ms": 51.262
+  },
+  "timing_diagnosis": "Periodic render gaps require instrumentation. Scene interest refresh was an initial hypothesis, not established cause; repeated shared-projection geometry work is being investigated.",
+  "stage_edges": [
+    {
+      "ms": 9620,
+      "sequence": "scene_depth_path",
+      "stage": "idle"
+    },
+    {
+      "ms": 16813,
+      "sequence": "chair",
+      "stage": "waiting"
+    },
+    {
+      "ms": 16867,
+      "sequence": "chair",
+      "stage": "scene_approaching"
+    },
+    {
+      "ms": 20104,
+      "sequence": "chair",
+      "stage": "facing"
+    },
+    {
+      "ms": 22410,
+      "sequence": "chair",
+      "stage": "entering"
+    },
+    {
+      "ms": 23717,
+      "sequence": "chair",
+      "stage": "seating"
+    },
+    {
+      "ms": 23727,
+      "sequence": "chair",
+      "stage": "seated"
+    },
+    {
+      "ms": 24228,
+      "sequence": "chair",
+      "stage": "exiting"
+    },
+    {
+      "ms": 25207,
+      "sequence": "chair",
+      "stage": "idle"
+    },
+    {
+      "ms": 32291,
+      "sequence": "computer",
+      "stage": "waiting"
+    },
+    {
+      "ms": 33082,
+      "sequence": "computer",
+      "stage": "chair_setup"
+    },
+    {
+      "ms": 37775,
+      "sequence": "computer",
+      "stage": "waiting"
+    },
+    {
+      "ms": 37803,
+      "sequence": "computer",
+      "stage": "scene_approaching"
+    },
+    {
+      "ms": 42472,
+      "sequence": "computer",
+      "stage": "facing"
+    },
+    {
+      "ms": 45330,
+      "sequence": "computer",
+      "stage": "entering"
+    },
+    {
+      "ms": 46658,
+      "sequence": "computer",
+      "stage": "seating"
+    },
+    {
+      "ms": 46668,
+      "sequence": "computer",
+      "stage": "chair_carry"
+    },
+    {
+      "ms": 52824,
+      "sequence": "computer",
+      "stage": "using"
+    },
+    {
+      "ms": 62893,
+      "sequence": "computer",
+      "stage": "chair_carry"
+    },
+    {
+      "ms": 69140,
+      "sequence": "computer",
+      "stage": "exiting"
+    },
+    {
+      "ms": 70147,
+      "sequence": "computer",
+      "stage": "chair_restore"
+    },
+    {
+      "ms": 70256,
+      "sequence": "computer",
+      "stage": "idle"
+    }
+  ]
+}

@@ -6,7 +6,30 @@ var targets: Dictionary = {}
 var _key := ""
 var _anchor := Vector3.INF
 var _character := ""
+var suspended:=false
+var diagnostics:Dictionary={"calls":0,"rebuilds":0,"last_refresh_us":0,"last_rebuild_us":0,"suppressed":false}
+func suspend()->void:
+	targets.clear();_key="";_anchor=Vector3.INF;suspended=true;diagnostics.suppressed=true
+func interaction_owned(host:Node)->bool:
+	return host.objects!=null and not host.objects._interaction.is_empty()
+func _ground_ready(host:Node)->bool:
+	if host.scene_navigation.owns_foot() and host.scene_navigation.ground_latched:return true
+	var contact:Dictionary=host.autonomy.get_support_contact()
+	return bool(contact.get("attached",false)) and str(contact.get("pose",""))=="foot"
+
 func refresh(host: Node) -> Array:
+	var started:=Time.get_ticks_usec()
+	diagnostics.calls+=1
+	var result:=_refresh(host)
+	diagnostics.last_refresh_us=Time.get_ticks_usec()-started
+	return result
+func _refresh(host:Node)->Array:
+	if interaction_owned(host):
+		suspend()
+		return []
+	if suspended:
+		if host.scene_navigation==null or not _ground_ready(host):return []
+		suspended=false;diagnostics.suppressed=false
 	if host.spatial_camera()==null or not host.avatar.has_model() or host.scene_navigation==null:
 		targets.clear();_key="";return []
 	var actor:Vector3=host.avatar.contact_anchors().foot
@@ -16,6 +39,8 @@ func refresh(host: Node) -> Array:
 	var camera:Camera3D=host.spatial_camera()
 	var key:=str([_character,host._pet_scale,camera.global_transform,camera.get_camera_projection(),solids,host.objects.screen_rects()])
 	if key!=_key:
+		var rebuild_started:=Time.get_ticks_usec()
+		diagnostics.rebuilds+=1
 		_key=key;targets.clear()
 		var scale:float=host._pet_scale
 		var nav:=DesktopSceneNavigation.new()
@@ -40,6 +65,7 @@ func refresh(host: Node) -> Array:
 				var route:=nav.plan("candidate",actor,point)
 				if route.accepted:targets["scene:ground:"+str(index)]={"world":point,"point":projected,"id":"scene:ground:"+str(index),"kind":"floor","label":"가상 공간 둘러보기 "+str(index+1),"confidence":.55}
 		nav.dispose()
+		diagnostics.last_rebuild_us=Time.get_ticks_usec()-rebuild_started
 	var result:Array=[]
 	for item in targets.values():
 		var row:Dictionary=item.duplicate()
@@ -48,4 +74,6 @@ func refresh(host: Node) -> Array:
 	return result
 func has_target(id: String) -> bool:return targets.has(id)
 func world_target(id: String) -> Vector3:return targets.get(id,{}).get("world",Vector3.INF)
-func clear() -> void:targets.clear();_key="";_anchor=Vector3.INF
+func clear(preserve_suspension:bool=false) -> void:
+	targets.clear();_key="";_anchor=Vector3.INF
+	if not preserve_suspension:suspended=false;diagnostics.suppressed=false

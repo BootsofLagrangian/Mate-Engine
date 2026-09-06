@@ -2,6 +2,8 @@ class_name LivingBehavior
 extends Node
 ## Coordinates local behavior, user points, named LLM intents and presentation.
 ## The director never calls a model; only existing conversation turns may return intents.
+var _scene_contact_owned:=false
+var refresh_diagnostics:Dictionary={"calls":0,"last_refresh_us":0,"last_refresh_msec":0}
 var host
 var director := BehaviorDirector.new()
 var scene_interests = preload("desktop_scene_interests.gd").new()
@@ -119,6 +121,7 @@ func observe_interest(id: String, point: Vector2, confidence: float = 0.5, ttl: 
 
 func _refresh_targets() -> void:
 	if host == null: return
+	var refresh_started:=Time.get_ticks_usec()
 	if _character != host.session.character_id:
 		cancel("character_changed")
 		_character = host.session.character_id
@@ -148,10 +151,12 @@ func _refresh_targets() -> void:
 	for p in points.points():
 		if points.reachable(str(p.id)):
 			available.append({"id":p.id,"point":Vector2(p.x,p.y),"kind":p.kind,"label":p.label,"confidence":0.85})
-	if _scene_exploration_enabled():
+	if scene_interests.interaction_owned(host):
+		scene_interests.suspend()
+	elif _scene_exploration_enabled():
 		available.append_array(scene_interests.refresh(host))
 	else:
-		scene_interests.clear()
+		scene_interests.clear(true)
 		available.append_array(host.autonomy.available_surface_targets())
 	for id in _external.keys():
 		if float(_external[id].expires) <= _clock: _external.erase(id)
@@ -168,6 +173,18 @@ func _refresh_targets() -> void:
 		if not fresh.has(id): director.remove_interest(id)
 	_known = fresh
 	_refresh_at = _clock + 0.5
+	refresh_diagnostics.calls+=1
+	refresh_diagnostics.last_refresh_us=Time.get_ticks_usec()-refresh_started
+	refresh_diagnostics.last_refresh_msec=Time.get_ticks_msec()
+	refresh_diagnostics["scene"]=scene_interests.diagnostics.duplicate()
+	var projection_profiles:Dictionary={}
+	if host.objects!=null:
+		for id in host.objects.windows:
+			var window=host.objects.windows[id]
+			if is_instance_valid(window):projection_profiles[id]=window.projection_profile.duplicate()
+	refresh_diagnostics["window_projection"]=projection_profiles
+	if host.get("scene_navigation")!=null:
+		host.scene_navigation.diagnostics["interest_refresh"]=refresh_diagnostics.duplicate(true)
 
 func is_locomotion_available(id: String) -> bool:
 	return host != null and host._vrma_loaded.has(id) and bool(host._vrma_loaded[id].get("locomotion",false)) and bool(host._vrma_loaded[id].get("loop",false)) and host.motion.locomotion_clips.has(id)
@@ -242,6 +259,10 @@ func tick(delta: float) -> void:
 	_clock += maxf(delta, 0.0)
 	var wanted := bool(_settings.get_value("behavior_enabled", true))
 	if wanted != enabled: _set_enabled(wanted)
+	var contact_owned:bool=scene_interests.interaction_owned(host)
+	if contact_owned!=_scene_contact_owned:
+		_scene_contact_owned=contact_owned
+		_refresh_at=0.0
 	if _clock >= _refresh_at: _refresh_targets()
 	publish_world()
 	# Foreground ownership applies even when autonomous decisions are disabled.

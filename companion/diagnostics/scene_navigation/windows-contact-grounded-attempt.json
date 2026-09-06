@@ -1,0 +1,626 @@
+{
+  "scope": "Production direct validated furniture skills; authored temporal evidence, not LM routing. Own Windows viewport. Static support and numeric gates do not alone accept natural choreography.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_scene_navigation.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-scene-navigation-contact-grounded",
+      "--character",
+      "cheval-grand"
+    ],
+    "started": 1788718519.6044583,
+    "exe_sha256": "bbe8aab5f1399cc2ee84a7104740f59192ff81ae31809e0daac9b52b77246b43",
+    "script_sha256": "261575ec42675934d262d02ae7e0ab9963ca231f6a455f2722518674c8d080a8",
+    "helper_sha256": "8951267ef311cdc98d03244319782966d149bd599fd73f41128957b51852dbe6",
+    "exit_code": 1,
+    "finished": 1788718555.4652815,
+    "external_sources_stable": true
+  },
+  "failures": 3,
+  "checks": [
+    {
+      "label": "production backend and avatar ready",
+      "ms": 6603,
+      "ok": true
+    },
+    {
+      "label": "explicit production rig loaded",
+      "ms": 6617,
+      "ok": true
+    },
+    {
+      "label": "production manifest registered authored enter and exit (no test injection)",
+      "ms": 6755,
+      "ok": true
+    },
+    {
+      "label": "normal policy floor corridor ready",
+      "ms": 9270,
+      "ok": true
+    },
+    {
+      "label": "production perspective scene path accepted",
+      "ms": 9284,
+      "ok": true
+    },
+    {
+      "label": "real rendered avatar traverses scene Z and X",
+      "ms": 14484,
+      "ok": true
+    },
+    {
+      "label": "rendered foot stays outside obstacle expanded by actor radius",
+      "ms": 14497,
+      "ok": true
+    },
+    {
+      "label": "actual body yaw changes at least10degrees during cumulative concurrent travel",
+      "ms": 14509,
+      "ok": true
+    },
+    {
+      "label": "rendered scene endpoint reached",
+      "ms": 14521,
+      "ok": true
+    },
+    {
+      "label": "second production scene request accepted",
+      "ms": 14540,
+      "ok": true
+    },
+    {
+      "label": "actual user stop ends travel and retains virtual ground without drift",
+      "ms": 15196,
+      "ok": true
+    },
+    {
+      "label": "production validated command accepted: temporal-chair",
+      "ms": 15712,
+      "ok": true
+    },
+    {
+      "label": "chair completes authored entry and attaches",
+      "ms": 23519,
+      "ok": true
+    },
+    {
+      "label": "chair normal stand request starts authored exit",
+      "ms": 23991,
+      "ok": true
+    },
+    {
+      "label": "chair normal authored exit completes",
+      "ms": 25006,
+      "ok": true
+    },
+    {
+      "label": "chair captures finite entering",
+      "ms": 25247,
+      "ok": true
+    },
+    {
+      "label": "chair entering retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 25261,
+      "ok": false
+    },
+    {
+      "label": "chair entering actual authored time advances",
+      "ms": 25274,
+      "ok": true
+    },
+    {
+      "label": "chair entering source hips change during finite clip",
+      "ms": 25286,
+      "ok": true
+    },
+    {
+      "label": "chair entering both real knees change before handoff",
+      "ms": 25298,
+      "ok": true
+    },
+    {
+      "label": "chair entering OS window held throughout finite authored phase",
+      "ms": 25311,
+      "ok": true
+    },
+    {
+      "label": "chair entering samples actual registered source clip",
+      "ms": 25323,
+      "ok": true
+    },
+    {
+      "label": "chair entering measured joint coordinates finite",
+      "ms": 25336,
+      "ok": true
+    },
+    {
+      "label": "chair captures finite exiting",
+      "ms": 25349,
+      "ok": true
+    },
+    {
+      "label": "chair exiting retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 25362,
+      "ok": false
+    },
+    {
+      "label": "chair exiting actual authored time advances",
+      "ms": 25374,
+      "ok": true
+    },
+    {
+      "label": "chair exiting source hips change during finite clip",
+      "ms": 25386,
+      "ok": true
+    },
+    {
+      "label": "chair exiting both real knees change before handoff",
+      "ms": 25399,
+      "ok": true
+    },
+    {
+      "label": "chair exiting OS window held throughout finite authored phase",
+      "ms": 25411,
+      "ok": true
+    },
+    {
+      "label": "chair exiting samples actual registered source clip",
+      "ms": 25424,
+      "ok": true
+    },
+    {
+      "label": "chair exiting measured joint coordinates finite",
+      "ms": 25436,
+      "ok": true
+    },
+    {
+      "label": "chair captures real approach",
+      "ms": 25449,
+      "ok": true
+    },
+    {
+      "label": "chair captures orientation phase",
+      "ms": 25461,
+      "ok": true
+    },
+    {
+      "label": "chair terminal support coincides within1px",
+      "ms": 25474,
+      "ok": true
+    },
+    {
+      "label": "chair entering handoff boundary retained at least20Hz",
+      "ms": 25486,
+      "ok": true
+    },
+    {
+      "label": "chair entering physical joint handoff continuous",
+      "ms": 25498,
+      "ok": true
+    },
+    {
+      "label": "chair exiting handoff boundary retained at least20Hz",
+      "ms": 25510,
+      "ok": true
+    },
+    {
+      "label": "chair exiting physical joint handoff continuous",
+      "ms": 25522,
+      "ok": true
+    },
+    {
+      "label": "chair all scheduled owned captures saved",
+      "ms": 25535,
+      "ok": true
+    },
+    {
+      "label": "chair returns to normal floor support",
+      "ms": 28454,
+      "ok": true
+    },
+    {
+      "label": "production validated command accepted: computer-solid-test",
+      "ms": 28469,
+      "ok": true
+    },
+    {
+      "label": "computer either reaches valid contact or explicitly reports physical blockage",
+      "ms": 29752,
+      "ok": false
+    },
+    {
+      "label": "bounded capture queue retained every scheduled image",
+      "ms": 29835,
+      "ok": true
+    },
+    {
+      "label": "every scheduled image saved and checksummed, including abort tails",
+      "ms": 29850,
+      "ok": true
+    },
+    {
+      "label": "original settings restored",
+      "ms": 30181,
+      "ok": true
+    }
+  ],
+  "sequences": [
+    {
+      "label": "chair",
+      "metrics": {
+        "count": 74,
+        "left_knee_spread_deg": 89.2387232799669,
+        "max_gap_ms": 57,
+        "phase": "entering",
+        "right_knee_spread_deg": 88.9597920146419,
+        "source_hips_spread_normalized": 0.523243546485901,
+        "timeline_first": {
+          "active": true,
+          "clip": "sit_enter",
+          "duration": 1.36666667461395,
+          "finished": false,
+          "kind": "enter",
+          "local_root_residual": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "progress": 0.0,
+          "root_delta_local": [
+            -0.00331355794332922,
+            -0.368881672620773,
+            -0.343635201454163
+          ],
+          "root_progress": 0.0,
+          "time": 0.0,
+          "transition_bounds": "[P: (-0.57743, -0.001001, -1.196768), S: (1.087058, 1.666139, 1.518459)]"
+        },
+        "timeline_last": {
+          "active": true,
+          "clip": "sit_enter",
+          "duration": 1.36666667461395,
+          "feet": {
+            "left": {
+              "correction_limit_local": 0.150271761417389,
+              "floor_gap_local": -8.37098929062918e-09,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 3.33200098623365e-08,
+              "requested_correction_local": [
+                -0.0254469215869904,
+                0.000595808029174805,
+                0.0557244718074799
+              ],
+              "residual_local": [
+                -2.98023223876953e-08,
+                0.0,
+                0.0
+              ],
+              "source_height_local": -0.000524165330716642,
+              "target_center_local": [
+                0.101468056440353,
+                0.373121976852417,
+                0.409152507781982
+              ]
+            },
+            "right": {
+              "correction_limit_local": 0.150271731615067,
+              "floor_gap_local": -3.81733116783245e-08,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 4.4703483581543e-08,
+              "requested_correction_local": [
+                0.0541439577937126,
+                0.000182420015335083,
+                0.0591275691986084
+              ],
+              "residual_local": [
+                -1.11758708953857e-07,
+                -1.49011611938477e-07,
+                0.0
+              ],
+              "source_height_local": -0.000111012865090743,
+              "target_center_local": [
+                -0.0693670585751534,
+                0.373995095491409,
+                0.408256709575653
+              ]
+            }
+          },
+          "finished": false,
+          "kind": "enter",
+          "local_root_residual": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "progress": 0.987825360109368,
+          "root_delta_local": [
+            -0.00331355794332922,
+            -0.368881672620773,
+            -0.343635201454163
+          ],
+          "root_progress": 1.0,
+          "time": 1.350028,
+          "transition_bounds": "[P: (-0.574117, 0.367881, -0.853133), S: (1.087058, 1.666139, 1.518459)]"
+        },
+        "window_drift_px": 0.0
+      }
+    },
+    {
+      "label": "chair",
+      "metrics": {
+        "count": 58,
+        "left_knee_spread_deg": 89.2537223753842,
+        "max_gap_ms": 52,
+        "phase": "exiting",
+        "right_knee_spread_deg": 87.4830914557068,
+        "source_hips_spread_normalized": 0.512756705284119,
+        "timeline_first": {
+          "active": true,
+          "clip": "sit_exit",
+          "duration": 1.03333330154419,
+          "feet": {
+            "left": {
+              "correction_limit_local": 0.150271761417389,
+              "floor_gap_local": 9.77669288304561e-08,
+              "limited": false,
+              "ownership": 0.122604008839448,
+              "planned_weight": 1.0,
+              "reach_error_local": 9.45372704563852e-08,
+              "requested_correction_local": [
+                -0.0080256462097168,
+                0.000628381967544556,
+                0.00265485048294067
+              ],
+              "residual_local": [
+                0.00704163312911987,
+                -2.98023223876953e-08,
+                -0.00232940912246704
+              ],
+              "source_height_local": -0.00115128733523306,
+              "target_center_local": [
+                0.0957098603248596,
+                0.372885137796402,
+                0.404247730970383
+              ]
+            },
+            "right": {
+              "correction_limit_local": 0.150271731615067,
+              "floor_gap_local": -5.12446831080204e-08,
+              "limited": false,
+              "ownership": 0.122604008839448,
+              "planned_weight": 1.0,
+              "reach_error_local": 7.02886353565191e-08,
+              "requested_correction_local": [
+                0.00853270292282104,
+                0.00088578462600708,
+                0.00720506906509399
+              ],
+              "residual_local": [
+                -0.00748658180236816,
+                -5.96046447753906e-08,
+                -0.00632172822952271
+              ],
+              "source_height_local": -0.000307014357531443,
+              "target_center_local": [
+                -0.0670783519744873,
+                0.373660862445831,
+                0.407887697219849
+              ]
+            }
+          },
+          "finished": false,
+          "kind": "exit",
+          "local_root_residual": [
+            -0.00076058937702328,
+            0.0,
+            0.000201582908630371
+          ],
+          "progress": 0.0517367757851612,
+          "root_delta_local": [
+            0.00331345875747502,
+            0.368881583213806,
+            0.343635261058807
+          ],
+          "root_progress": 0.00066180466777895,
+          "time": 0.0534613333333321,
+          "transition_bounds": "[P: (-0.580406, 0.363614, -0.81282), S: (1.141286, 1.64358, 1.535334)]"
+        },
+        "timeline_last": {
+          "active": true,
+          "clip": "sit_exit",
+          "duration": 1.03333330154419,
+          "feet": {
+            "left": {
+              "correction_limit_local": 0.150271761417389,
+              "floor_gap_local": -1.58144361772639e-07,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 1.34781387828298e-07,
+              "requested_correction_local": [
+                -0.0256649330258369,
+                -0.0242791883647442,
+                0.0246288366615772
+              ],
+              "residual_local": [
+                1.26659870147705e-07,
+                -1.68569386005402e-07,
+                -3.72529029846191e-09
+              ],
+              "source_height_local": -0.00104938306685654,
+              "target_center_local": [
+                0.0686601921916008,
+                0.00493495631963015,
+                -0.00585424900054932
+              ]
+            },
+            "right": {
+              "correction_limit_local": 0.150271731615067,
+              "floor_gap_local": -1.49966185414296e-07,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 1.20655712976259e-07,
+              "requested_correction_local": [
+                0.0537205561995506,
+                -0.0236465558409691,
+                0.0280251428484917
+              ],
+              "residual_local": [
+                -2.23517417907715e-08,
+                -2.74740159511566e-07,
+                -2.60770320892334e-08
+              ],
+              "source_height_local": -0.00168228594702668,
+              "target_center_local": [
+                -0.0670727863907814,
+                0.00550988968461752,
+                -0.00228667259216309
+              ]
+            }
+          },
+          "finished": false,
+          "kind": "exit",
+          "local_root_residual": [
+            4.8828329454409e-05,
+            -0.000302652973914519,
+            0.000151828877278604
+          ],
+          "progress": 0.98820712717509,
+          "root_delta_local": [
+            0.00331345875747502,
+            0.368881583213806,
+            0.343635261058807
+          ],
+          "root_progress": 0.999250254431943,
+          "time": 1.02114733333333,
+          "transition_bounds": "[P: (-0.583715, -0.004747, -1.15597), S: (1.141286, 1.64358, 1.535334)]"
+        },
+        "window_drift_px": 0.0
+      }
+    },
+    {
+      "dt": 0.024,
+      "handoff": "entering->seating",
+      "joint_count": 7,
+      "label": "chair",
+      "max_joint_step_world_m": 2.4978896817629e-07,
+      "window_delta": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "dt": 0.036,
+      "handoff": "exiting->idle",
+      "joint_count": 7,
+      "label": "chair",
+      "max_joint_step_world_m": 0.00194406870286912,
+      "window_delta": [
+        30.0,
+        0.0
+      ]
+    }
+  ],
+  "computer_observation": {
+    "command_id": "computer-solid-test",
+    "fit_diagnostics": {
+      "last_creation": {
+        "model_error": "",
+        "model_loaded": true,
+        "reason": "created",
+        "reference_ppm": 221.234026112057,
+        "type": "computer"
+      },
+      "last_placement": {
+        "id": "obj_2",
+        "placement": "near",
+        "proposal": {
+          "bounds": "[P: (1714.607, 1139.403), S: (217.8924, 243.5964)]",
+          "distance_m": 0.319041728973389,
+          "ground_y": -1.33028185367584,
+          "ok": true,
+          "point": [
+            1.55191159248352,
+            -1.33028185367584,
+            -0.388746857643127
+          ],
+          "reason": "fits"
+        },
+        "reason": "placed",
+        "requested_position_m": "(1.426912, -1.330282, -0.095212)",
+        "spatial": true
+      },
+      "last_spatial_projection": {
+        "camera_transform": "[X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (-0.698495, 1.334204, 3.6)]",
+        "id": "obj_2",
+        "position_m": "{ \"x\": 1.55191159248352, \"y\": -1.33028185367584, \"z\": -0.38874685764313 }",
+        "projected_window": "[P: (1706.0, 1131.0), S: (181.0, 241.0)]",
+        "projection": 0,
+        "reason": "fits",
+        "spatial_enabled": true,
+        "window_present": true,
+        "workareas": "[[P: (0, 0), S: (2560, 1392)], [P: (2560, 0), S: (1920, 1032)]]"
+      },
+      "obj_1": {
+        "applied_ratio": 0.906176591431814,
+        "physical_ppm": 126.424178501988,
+        "seat_floor_adaptation": true
+      },
+      "obj_2": {
+        "applied_ratio": 0.906176591431814,
+        "physical_ppm": 134.984461069473,
+        "seat_floor_adaptation": true
+      },
+      "scene_staging": {
+        "accepted": false,
+        "maximum_factor": 1.25,
+        "reason": "invalid_geometry"
+      },
+      "view": {
+        "global_bounds_before": "[P: (1615.856, 1165.156), S: (117.3723, 179.2873)]",
+        "local_bounds": "[P: (854.5281, 957.9752), S: (142.1248, 272.163)]",
+        "origin": [
+          757,
+          148
+        ],
+        "reason": "fits",
+        "viewport": [
+          1920.0,
+          1760.0
+        ]
+      }
+    },
+    "observed": true,
+    "stage": "idle",
+    "terminal": {
+      "id": "computer-solid-test",
+      "ms": 29729,
+      "outcome": "invalid_geometry",
+      "record_type": "terminal"
+    }
+  },
+  "capture": {
+    "interval_ms": 125,
+    "max_pending": 3,
+    "peak_pending": 3,
+    "queue_skips": 0,
+    "telemetry_samples": 851
+  },
+  "limitations": [
+    "Two real per-phase frame-gap failures retained (57/52 ms).",
+    "Preparation boundary timing is outside phase-only gates; profiling pending.",
+    "Grounded computer placement fits but raw obstacle part count rejects scene staging; later source fix not in this executable."
+  ]
+}

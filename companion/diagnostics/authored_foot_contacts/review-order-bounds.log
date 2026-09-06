@@ -1,0 +1,3 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+{"bounded":true,"bounds_restored_contact_diagnostics":true,"configured_limit_m":0.150271761417389,"limited_flag":true,"query_order_max_error_m":0.0,"rejected_begin_preserved_preparation":true,"requested_delta_length_m":0.150271773338318,"scope":"Deterministic fixed-reference phase queries and deliberately oversized diagonal contact request; no hostgeometryacceptance"}

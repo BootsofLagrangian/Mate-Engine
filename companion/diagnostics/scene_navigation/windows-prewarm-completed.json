@@ -1,0 +1,760 @@
+{
+  "scope": "Actual Windows Cheval scene movement, authored chair phases, capture and exact completed-ground hold. Computer blocked_endpoint is explicitly preserved; no successful computer use claim.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_scene_navigation.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-scene-navigation-prewarm",
+      "--character",
+      "cheval-grand"
+    ],
+    "started": 1788719564.4254694,
+    "exe_sha256": "f965d3c142cb996a2e486df41ffdaedfd30548165f6f030de9a9d24e879b5612",
+    "script_sha256": "e8a9a49d28b7448e7d2e17b05d4c45b452b33700e21bd07ec1760843711f5b69",
+    "helper_sha256": "8951267ef311cdc98d03244319782966d149bd599fd73f41128957b51852dbe6",
+    "exit_code": 0,
+    "finished": 1788719602.8365662,
+    "external_sources_stable": true
+  },
+  "checks": [
+    {
+      "label": "production backend and avatar ready",
+      "ms": 6606,
+      "ok": true
+    },
+    {
+      "label": "explicit production rig loaded",
+      "ms": 6812,
+      "ok": true
+    },
+    {
+      "label": "production manifest registered authored enter and exit (no test injection)",
+      "ms": 6952,
+      "ok": true
+    },
+    {
+      "label": "normal policy floor corridor ready",
+      "ms": 9450,
+      "ok": true
+    },
+    {
+      "label": "production perspective scene path accepted",
+      "ms": 9464,
+      "ok": true
+    },
+    {
+      "label": "real rendered avatar traverses scene Z and X",
+      "ms": 14664,
+      "ok": true
+    },
+    {
+      "label": "rendered foot stays outside obstacle expanded by actor radius",
+      "ms": 14678,
+      "ok": true
+    },
+    {
+      "label": "actual body yaw changes at least10degrees during cumulative concurrent travel",
+      "ms": 14690,
+      "ok": true
+    },
+    {
+      "label": "rendered scene endpoint reached",
+      "ms": 14702,
+      "ok": true
+    },
+    {
+      "label": "second production scene request accepted",
+      "ms": 14722,
+      "ok": true
+    },
+    {
+      "label": "actual user stop ends travel and retains virtual ground without drift",
+      "ms": 15379,
+      "ok": true
+    },
+    {
+      "label": "production validated command accepted: temporal-chair",
+      "ms": 15902,
+      "ok": true
+    },
+    {
+      "label": "chair completes authored entry and attaches",
+      "ms": 23785,
+      "ok": true
+    },
+    {
+      "label": "chair normal stand request starts authored exit",
+      "ms": 24256,
+      "ok": true
+    },
+    {
+      "label": "chair normal authored exit completes",
+      "ms": 25300,
+      "ok": true
+    },
+    {
+      "label": "chair captures finite entering",
+      "ms": 25522,
+      "ok": true
+    },
+    {
+      "label": "chair entering retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 25535,
+      "ok": true
+    },
+    {
+      "label": "chair entering actual authored time advances",
+      "ms": 25548,
+      "ok": true
+    },
+    {
+      "label": "chair entering source hips change during finite clip",
+      "ms": 25560,
+      "ok": true
+    },
+    {
+      "label": "chair entering both real knees change before handoff",
+      "ms": 25572,
+      "ok": true
+    },
+    {
+      "label": "chair entering OS window held throughout finite authored phase",
+      "ms": 25584,
+      "ok": true
+    },
+    {
+      "label": "chair entering samples actual registered source clip",
+      "ms": 25597,
+      "ok": true
+    },
+    {
+      "label": "chair entering measured joint coordinates finite",
+      "ms": 25609,
+      "ok": true
+    },
+    {
+      "label": "chair captures finite exiting",
+      "ms": 25622,
+      "ok": true
+    },
+    {
+      "label": "chair exiting retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 25635,
+      "ok": true
+    },
+    {
+      "label": "chair exiting actual authored time advances",
+      "ms": 25647,
+      "ok": true
+    },
+    {
+      "label": "chair exiting source hips change during finite clip",
+      "ms": 25660,
+      "ok": true
+    },
+    {
+      "label": "chair exiting both real knees change before handoff",
+      "ms": 25672,
+      "ok": true
+    },
+    {
+      "label": "chair exiting OS window held throughout finite authored phase",
+      "ms": 25684,
+      "ok": true
+    },
+    {
+      "label": "chair exiting samples actual registered source clip",
+      "ms": 25697,
+      "ok": true
+    },
+    {
+      "label": "chair exiting measured joint coordinates finite",
+      "ms": 25709,
+      "ok": true
+    },
+    {
+      "label": "chair captures real approach",
+      "ms": 25722,
+      "ok": true
+    },
+    {
+      "label": "chair captures orientation phase",
+      "ms": 25735,
+      "ok": true
+    },
+    {
+      "label": "chair terminal support coincides within1px",
+      "ms": 25747,
+      "ok": true
+    },
+    {
+      "label": "chair entering handoff boundary retained at least20Hz",
+      "ms": 25760,
+      "ok": true
+    },
+    {
+      "label": "chair entering physical joint handoff continuous",
+      "ms": 25772,
+      "ok": true
+    },
+    {
+      "label": "chair exiting handoff boundary retained at least20Hz",
+      "ms": 25784,
+      "ok": true
+    },
+    {
+      "label": "chair exiting physical joint handoff continuous",
+      "ms": 25797,
+      "ok": true
+    },
+    {
+      "label": "chair all scheduled owned captures saved",
+      "ms": 25810,
+      "ok": true
+    },
+    {
+      "label": "chair completed exit provides an exact scene ground anchor",
+      "ms": 25826,
+      "ok": true
+    },
+    {
+      "label": "chair retains completed virtual floor and XYZ position for five seconds",
+      "ms": 30850,
+      "ok": true
+    },
+    {
+      "label": "production validated command accepted: computer-solid-test",
+      "ms": 30865,
+      "ok": true
+    },
+    {
+      "label": "desk solid blocks physically inaccessible authored staging",
+      "ms": 32273,
+      "ok": true
+    },
+    {
+      "label": "bounded capture queue retained every scheduled image",
+      "ms": 32353,
+      "ok": true
+    },
+    {
+      "label": "every scheduled image saved and checksummed, including abort tails",
+      "ms": 32368,
+      "ok": true
+    },
+    {
+      "label": "original settings restored",
+      "ms": 32721,
+      "ok": true
+    }
+  ],
+  "failures": 0,
+  "sequences": [
+    {
+      "label": "chair",
+      "metrics": {
+        "count": 80,
+        "left_knee_spread_deg": 88.9148630302816,
+        "max_gap_ms": 41,
+        "phase": "entering",
+        "right_knee_spread_deg": 88.313587817267,
+        "source_hips_spread_normalized": 0.523204505443573,
+        "timeline_first": {
+          "active": true,
+          "clip": "sit_enter",
+          "duration": 1.36666667461395,
+          "finished": false,
+          "kind": "enter",
+          "local_root_residual": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "preparation": {
+            "bounds_us": 51279,
+            "cache_hit": false,
+            "measure_us": 35977,
+            "pose_us": 12987,
+            "reference_us": 325,
+            "samples": 20,
+            "secondary_us": 1939,
+            "total_us": 51634
+          },
+          "progress": 0.0,
+          "root_delta_local": [
+            -0.00332422065548599,
+            -0.368881583213806,
+            -0.343634247779846
+          ],
+          "root_progress": 0.0,
+          "time": 0.0,
+          "transition_bounds": "[P: (-0.577993, -0.001001, -1.195826), S: (1.087655, 1.66605, 1.517517)]"
+        },
+        "timeline_last": {
+          "active": true,
+          "clip": "sit_enter",
+          "duration": 1.36666667461395,
+          "feet": {
+            "left": {
+              "correction_limit_local": 0.150271761417389,
+              "floor_gap_local": 5.12336554847614e-08,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 6.70552253723145e-08,
+              "requested_correction_local": [
+                -0.0254360809922218,
+                0.000595897436141968,
+                0.0557234883308411
+              ],
+              "residual_local": [
+                3.72529029846191e-08,
+                2.98023223876953e-08,
+                -2.98023223876953e-08
+              ],
+              "source_height_local": -0.000524263294209959,
+              "target_center_local": [
+                0.101478956639767,
+                0.373121947050095,
+                0.409151583909988
+              ]
+            },
+            "right": {
+              "correction_limit_local": 0.150271731615067,
+              "floor_gap_local": -3.81733116783245e-08,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 1.49011611938477e-08,
+              "requested_correction_local": [
+                0.0547817796468735,
+                0.000182509422302246,
+                0.0604185163974762
+              ],
+              "residual_local": [
+                1.49011611938477e-08,
+                0.0,
+                -8.94069671630859e-08
+              ],
+              "source_height_local": -0.000111066416138783,
+              "target_center_local": [
+                -0.0687292367219925,
+                0.373995065689087,
+                0.409547626972198
+              ]
+            }
+          },
+          "finished": false,
+          "kind": "enter",
+          "local_root_residual": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "preparation": {
+            "bounds_us": 51279,
+            "cache_hit": false,
+            "measure_us": 35977,
+            "pose_us": 12987,
+            "reference_us": 325,
+            "samples": 20,
+            "secondary_us": 1939,
+            "total_us": 51634
+          },
+          "progress": 0.993860482025493,
+          "root_delta_local": [
+            -0.00332422065548599,
+            -0.368881583213806,
+            -0.343634247779846
+          ],
+          "root_progress": 1.0,
+          "time": 1.358276,
+          "transition_bounds": "[P: (-0.574668, 0.367881, -0.852192), S: (1.087655, 1.66605, 1.517517)]"
+        },
+        "window_drift_px": 0.0
+      }
+    },
+    {
+      "label": "chair",
+      "metrics": {
+        "count": 59,
+        "left_knee_spread_deg": 90.2575006361877,
+        "max_gap_ms": 30,
+        "phase": "exiting",
+        "right_knee_spread_deg": 88.1703724107502,
+        "source_hips_spread_normalized": 0.512683629989624,
+        "timeline_first": {
+          "active": true,
+          "clip": "sit_exit",
+          "duration": 1.03333330154419,
+          "feet": {
+            "left": {
+              "correction_limit_local": 0.150271761417389,
+              "floor_gap_local": 7.13536951191251e-08,
+              "limited": false,
+              "ownership": 0.152214402947537,
+              "planned_weight": 1.0,
+              "reach_error_local": 7.45058059692383e-09,
+              "requested_correction_local": [
+                -0.00916858017444611,
+                0.000795483589172363,
+                0.00397962331771851
+              ],
+              "residual_local": [
+                0.00777299702167511,
+                0.0,
+                -0.00337380170822144
+              ],
+              "source_height_local": -0.00123562907174346,
+              "target_center_local": [
+                0.0949926227331162,
+                0.372854113578796,
+                0.403654426336288
+              ]
+            },
+            "right": {
+              "correction_limit_local": 0.150271731615067,
+              "floor_gap_local": 1.0115601750682e-07,
+              "limited": false,
+              "ownership": 0.152214402947537,
+              "planned_weight": 1.0,
+              "reach_error_local": 8.56006536764653e-08,
+              "requested_correction_local": [
+                0.0103562772274017,
+                0.00111973285675049,
+                0.00919285416603088
+              ],
+              "residual_local": [
+                -0.0087798535823822,
+                0.0,
+                -0.0077936053276062
+              ],
+              "source_height_local": -0.000324222637573257,
+              "target_center_local": [
+                -0.066154807806015,
+                0.373630881309509,
+                0.409136772155762
+              ]
+            }
+          },
+          "finished": false,
+          "kind": "exit",
+          "local_root_residual": [
+            -0.000876398873515427,
+            0.0,
+            0.000232607126235962
+          ],
+          "preparation": {
+            "bounds_us": 52857,
+            "cache_hit": false,
+            "measure_us": 36831,
+            "pose_us": 13554,
+            "reference_us": 217,
+            "samples": 20,
+            "secondary_us": 2110,
+            "total_us": 53104
+          },
+          "progress": 0.056449033994645,
+          "root_delta_local": [
+            0.00332402205094695,
+            0.368881970643997,
+            0.343633979558945
+          ],
+          "root_progress": 0.000762963421213874,
+          "time": 0.0583306666666667,
+          "transition_bounds": "[P: (-0.57932, 0.363562, -0.812398), S: (1.140013, 1.643595, 1.534877)]"
+        },
+        "timeline_last": {
+          "active": true,
+          "clip": "sit_exit",
+          "duration": 1.03333330154419,
+          "feet": {
+            "left": {
+              "correction_limit_local": 0.150271761417389,
+              "floor_gap_local": -2.33118348513806e-08,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 3.00342506420748e-08,
+              "requested_correction_local": [
+                -0.0256234854459763,
+                -0.0248259045183659,
+                0.0245090089738369
+              ],
+              "residual_local": [
+                4.4703483581543e-08,
+                -2.65426933765411e-08,
+                2.60770320892334e-08
+              ],
+              "source_height_local": -0.0010493834161025,
+              "target_center_local": [
+                0.0686579495668411,
+                0.00465967925265431,
+                -0.00611037015914917
+              ]
+            },
+            "right": {
+              "correction_limit_local": 0.150271731615067,
+              "floor_gap_local": -5.70431743507349e-08,
+              "limited": false,
+              "ownership": 1.0,
+              "planned_weight": 1.0,
+              "reach_error_local": 4.53201138839177e-08,
+              "requested_correction_local": [
+                0.0543896853923798,
+                -0.0241932719945908,
+                0.029197420924902
+              ],
+              "residual_local": [
+                -2.98023223876953e-08,
+                -2.53785401582718e-07,
+                -2.23517417907715e-08
+              ],
+              "source_height_local": -0.00168228594702668,
+              "target_center_local": [
+                -0.0664475858211517,
+                0.00523473368957639,
+                -0.00125068426132202
+              ]
+            }
+          },
+          "finished": false,
+          "kind": "exit",
+          "local_root_residual": [
+            3.38690881562798e-07,
+            -2.12140594157972e-06,
+            1.03463355571876e-06
+          ],
+          "preparation": {
+            "bounds_us": 52857,
+            "cache_hit": false,
+            "measure_us": 36831,
+            "pose_us": 13554,
+            "reference_us": 217,
+            "samples": 20,
+            "secondary_us": 2110,
+            "total_us": 53104
+          },
+          "progress": 0.99903648234695,
+          "root_delta_local": [
+            0.00332402205094695,
+            0.368881970643997,
+            0.343633979558945
+          ],
+          "root_progress": 0.999994800523804,
+          "time": 1.03233766666667,
+          "transition_bounds": "[P: (-0.582641, -0.005036, -1.155768), S: (1.140013, 1.643595, 1.534877)]"
+        },
+        "window_drift_px": 0.0
+      }
+    },
+    {
+      "dt": 0.02,
+      "handoff": "entering->seating",
+      "joint_count": 7,
+      "label": "chair",
+      "max_joint_step_world_m": 3.42402614705861e-07,
+      "window_delta": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "dt": 0.03,
+      "handoff": "exiting->idle",
+      "joint_count": 7,
+      "label": "chair",
+      "max_joint_step_world_m": 1.44471987368888e-05,
+      "window_delta": [
+        29.0,
+        0.0
+      ]
+    }
+  ],
+  "completed_exit_hold": {
+    "duration_ms": 5012,
+    "expected_world": [
+      1.00502038002014,
+      -1.33028209209442,
+      -0.0819742679595947
+    ],
+    "maximum_xyz_drift_m": 0.0,
+    "ownership_retained": true
+  },
+  "entry_preparation": {
+    "command_id": "temporal-chair",
+    "ensure_seated_geometry_ms": 0.005,
+    "object_id": "obj_1",
+    "presentation": {
+      "fit_contact_view_ms": 0.042,
+      "kind": "enter",
+      "motion_preparation": {
+        "bounds_us": 51279,
+        "cache_hit": false,
+        "measure_us": 35977,
+        "pose_us": 12987,
+        "reference_us": 325,
+        "samples": 20,
+        "secondary_us": 1939,
+        "total_us": 51634
+      },
+      "motion_start_ms": 51.667,
+      "reason": "ready",
+      "started_usec": 23496711,
+      "total_ms": 51.718
+    },
+    "projection_and_admission_ms": 0.224,
+    "reason": "entering",
+    "release_to_contact_ms": 0.01,
+    "started_usec": 23496456,
+    "total_ms": 52.017
+  },
+  "computer_observation": {
+    "command_id": "computer-solid-test",
+    "fit_diagnostics": {
+      "completed_exit_ground": {
+        "ok": true,
+        "point": [
+          1.00502038002014,
+          -1.33028209209442,
+          -0.0819742679595947
+        ],
+        "reason": "completed_contact_ground"
+      },
+      "entry_preparation": {
+        "command_id": "temporal-chair",
+        "ensure_seated_geometry_ms": 0.005,
+        "object_id": "obj_1",
+        "presentation": {
+          "fit_contact_view_ms": 0.042,
+          "kind": "enter",
+          "motion_preparation": {
+            "bounds_us": 51279,
+            "cache_hit": false,
+            "measure_us": 35977,
+            "pose_us": 12987,
+            "reference_us": 325,
+            "samples": 20,
+            "secondary_us": 1939,
+            "total_us": 51634
+          },
+          "motion_start_ms": 51.667,
+          "reason": "ready",
+          "started_usec": 23496711,
+          "total_ms": 51.718
+        },
+        "projection_and_admission_ms": 0.224,
+        "reason": "entering",
+        "release_to_contact_ms": 0.01,
+        "started_usec": 23496456,
+        "total_ms": 52.017
+      },
+      "last_creation": {
+        "model_error": "",
+        "model_loaded": true,
+        "reason": "created",
+        "reference_ppm": 221.234026112057,
+        "type": "computer"
+      },
+      "last_placement": {
+        "id": "obj_2",
+        "placement": "near",
+        "proposal": {
+          "bounds": "[P: (1714.166, 1139.403), S: (217.855, 243.5964)]",
+          "distance_m": 0.331261932849884,
+          "ground_y": -1.33028185367584,
+          "ok": true,
+          "point": [
+            1.55002045631409,
+            -1.33028185367584,
+            -0.388746917247772
+          ],
+          "reason": "fits"
+        },
+        "reason": "placed",
+        "requested_position_m": "(1.42502, -1.330282, -0.081974)",
+        "spatial": true
+      },
+      "last_spatial_projection": {
+        "camera_transform": "[X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (-0.698495, 1.334204, 3.6)]",
+        "id": "obj_2",
+        "position_m": "{ \"x\": 1.55002045631409, \"y\": -1.33028185367584, \"z\": -0.38874691724777 }",
+        "projected_window": "[P: (1706.0, 1131.0), S: (180.0, 241.0)]",
+        "projection": 0,
+        "reason": "fits",
+        "spatial_enabled": true,
+        "window_present": true,
+        "workareas": "[[P: (0, 0), S: (2560, 1392)], [P: (2560, 0), S: (1920, 1032)]]"
+      },
+      "obj_1": {
+        "applied_ratio": 0.906176963960841,
+        "physical_ppm": 126.427980401589,
+        "seat_floor_adaptation": true
+      },
+      "obj_2": {
+        "applied_ratio": 0.906176963960841,
+        "physical_ppm": 135.469849987997,
+        "seat_floor_adaptation": true
+      },
+      "presentation_preparation": {
+        "fit_contact_view_ms": 0.04,
+        "kind": "exit",
+        "motion_preparation": {
+          "bounds_us": 52857,
+          "cache_hit": false,
+          "measure_us": 36831,
+          "pose_us": 13554,
+          "reference_us": 217,
+          "samples": 20,
+          "secondary_us": 2110,
+          "total_us": 53104
+        },
+        "motion_start_ms": 53.14,
+        "reason": "ready",
+        "started_usec": 25318951,
+        "total_ms": 53.195
+      },
+      "scene_staging": {
+        "accepted": false,
+        "maximum_factor": 1.25,
+        "reason": "blocked_endpoint"
+      },
+      "view": {
+        "global_bounds_before": "[P: (1615.42, 1165.17), S: (117.3351, 179.2939)]",
+        "local_bounds": "[P: (836.0385, 968.9877), S: (142.2292, 272.1719)]",
+        "origin": [
+          775,
+          137
+        ],
+        "reason": "fits",
+        "viewport": [
+          1920.0,
+          1760.0
+        ]
+      }
+    },
+    "observed": true,
+    "stage": "idle",
+    "terminal": {
+      "id": "computer-solid-test",
+      "ms": 32254,
+      "outcome": "blocked_endpoint",
+      "record_type": "terminal"
+    }
+  },
+  "capture": {
+    "interval_ms": 125,
+    "max_pending": 3,
+    "peak_pending": 2,
+    "queue_skips": 0,
+    "telemetry_samples": 872
+  },
+  "phase_boundary_limits": "Phase-only50ms gates do not bound acquisition/setup. Observed entering boundary70ms; exit104ms includes diagnostic check/report IO."
+}

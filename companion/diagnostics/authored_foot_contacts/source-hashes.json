@@ -1,0 +1,10 @@
+{
+  "companion/native/scripts/authored_foot_contacts.gd": "a3baef661085c68e1bbfaa63ce7f63600d7e38e79b0eb8841b945606a83b80ce",
+  "companion/native/scripts/motion_player.gd": "a626383b51b3d6d8df581767070070b7dc6090540b3d5ab95b67fffb27b1e160",
+  "companion/native/scripts/seated_transition.gd": "398fe255b1d35d8d2f2dc272c112e9a526ed95a2da71305b2fcc289b3574d0f5",
+  "companion/native/scripts/vrm_avatar.gd": "52a5886bbc09f319b60c16b7c3c9ab77b5b2c967ac5b42cd4d3ea67d4bd19518",
+  "companion/native/tools/probe_authored_contact_path.gd": "927dbb7eb92e99c2d1f57c1e1e0b360475b289cea20ab4c636dd9d6a8e3e869b",
+  "companion/native/tools/render_authored_contact_path.gd": "4e9f36f0f26390bfc438d029dbe37b28bed59ff03d5d541a953a34d2ccc99220",
+  "companion/native/tools/probe_windows_authored_seating.gd": "241b49051d504d6da4be9c80d0e80e16ee9ec5ab7a852db18c3027ff21c31e90",
+  "companion/native/tools/probe_windows_scene_navigation.gd": "261575ec42675934d262d02ae7e0ab9963ca231f6a455f2722518674c8d080a8"
+}

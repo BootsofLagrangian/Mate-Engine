@@ -1,0 +1,8 @@
+{
+  "native/scripts/carrier_lift_envelope.gd": "4927743e2101aa74016835de6338f059b848a204044dbdf9bcf53ed15896cf40",
+  "native/scripts/seated_carrier.gd": "1b9fba4b293e84e3646e27a7943b1de23d4822eada6ce103cadc6dd4b82f627d",
+  "native/scripts/motion_player.gd": "4db42755299819c9b570631fbc79992bd875e04318df1dc64109933ebf04edbc",
+  "native/scripts/rig_body_capsules.gd": "f9f81b657f725843aeffd0043ba54ee953a817a640f25b5e9f8a9287f90e5838",
+  "native/scripts/leg_ik.gd": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+  "native/tools/probe_carrier_lift_envelope.gd": "6a2d89757bd26eb9d6a94539a963f44dc8fe385b876f9ac1506f10a1ae1194bb"
+}

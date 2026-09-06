@@ -1,0 +1,5 @@
+{
+  "companion/native/scripts/living_behavior.gd": "d384cb819ff86ebdb1d20c1dd519d82e54381c8078fb9a2f5ae801cc7bf8a62d",
+  "companion/native/scripts/desktop_scene_interests.gd": "d4e50199a63f38d833d671e82708d8ece7ad5462591dcab3f40f3270f9af4135",
+  "companion/diagnostics/scene_navigation/review_interest_living.gd": "1ce9a882a344b3909d68dc2239276d9cb7ae6f74912118741d33e455d6f13002"
+}

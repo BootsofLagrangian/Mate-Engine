@@ -1,0 +1,8 @@
+{
+  "native/scripts/rig_body_capsules.gd": "f9f81b657f725843aeffd0043ba54ee953a817a640f25b5e9f8a9287f90e5838",
+  "native/scripts/vrm_avatar.gd": "da4680e41ddbbc5652f03ba67c596ecd20ab1734169ffa5e1ce21e235037637e",
+  "native/scripts/seated_carrier.gd": "85be68243d19347ab3d5e2bbaef4479ab8cdb2574ac629b4644a4ef401a3b662",
+  "native/scripts/motion_player.gd": "094402fb9c5ec05d9b14ebf9b275fcb2c9b110bc846438d25cc10cce287c92db",
+  "native/scripts/authored_foot_contacts.gd": "0e11450a61f0480b609a7cfbad9fe1331e48667ad320c8ec38d7d534eb5c9bb3",
+  "native/tools/probe_body_capsules.gd": "080cd2ff13a6acd321aff694296d66952c1dec06557750fe31ed0b7c2de1e8fd"
+}

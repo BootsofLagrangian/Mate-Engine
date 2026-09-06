@@ -1,0 +1,655 @@
+{
+  "scope": "Actual Windows Cheval production perspective full workstation lifecycle; one completed terminal, original settings restored. Per-frame numeric telemetry,8Hz plus phase-edge images. No full costume collision or acoustic onset claim.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_scene_navigation.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-full-computer-restore-cache",
+      "--character",
+      "cheval-grand",
+      "--require-computer-use"
+    ],
+    "started": 1788723002.307021,
+    "exe_sha256": "663d320c485e22a81efe9e6fddcedc1442daacf30a78cecae27e3eb7fd96d2a6",
+    "script_sha256": "324dce1a22f2b379d6ed56db77d41c1ac2dc2a6e3d1ad4955e97720dc0263e57",
+    "helper_sha256": "8951267ef311cdc98d03244319782966d149bd599fd73f41128957b51852dbe6",
+    "exit_code": 0,
+    "finished": 1788723092.6490562,
+    "external_sources_stable": true
+  },
+  "checks": [
+    {
+      "label": "production backend and avatar ready",
+      "ms": 6701,
+      "ok": true
+    },
+    {
+      "label": "explicit production rig loaded",
+      "ms": 6911,
+      "ok": true
+    },
+    {
+      "label": "production manifest registered authored enter and exit (no test injection)",
+      "ms": 7053,
+      "ok": true
+    },
+    {
+      "label": "normal policy floor corridor ready",
+      "ms": 9575,
+      "ok": true
+    },
+    {
+      "label": "production perspective scene path accepted",
+      "ms": 9590,
+      "ok": true
+    },
+    {
+      "label": "real rendered avatar traverses scene Z and X",
+      "ms": 14413,
+      "ok": true
+    },
+    {
+      "label": "rendered foot stays outside obstacle expanded by actor radius",
+      "ms": 14426,
+      "ok": true
+    },
+    {
+      "label": "actual body yaw changes at least10degrees during cumulative concurrent travel",
+      "ms": 14438,
+      "ok": true
+    },
+    {
+      "label": "rendered scene endpoint reached",
+      "ms": 14449,
+      "ok": true
+    },
+    {
+      "label": "second production scene request accepted",
+      "ms": 14469,
+      "ok": true
+    },
+    {
+      "label": "actual user stop ends travel and retains virtual ground without drift",
+      "ms": 15125,
+      "ok": true
+    },
+    {
+      "label": "production validated command accepted: temporal-chair",
+      "ms": 15641,
+      "ok": true
+    },
+    {
+      "label": "chair completes authored entry and attaches",
+      "ms": 23417,
+      "ok": true
+    },
+    {
+      "label": "chair normal stand request starts authored exit",
+      "ms": 23889,
+      "ok": true
+    },
+    {
+      "label": "chair normal authored exit completes",
+      "ms": 24916,
+      "ok": true
+    },
+    {
+      "label": "chair captures finite entering",
+      "ms": 25140,
+      "ok": true
+    },
+    {
+      "label": "chair entering retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 25153,
+      "ok": true
+    },
+    {
+      "label": "chair entering actual authored time advances",
+      "ms": 25165,
+      "ok": true
+    },
+    {
+      "label": "chair entering source hips change during finite clip",
+      "ms": 25178,
+      "ok": true
+    },
+    {
+      "label": "chair entering both real knees change before handoff",
+      "ms": 25190,
+      "ok": true
+    },
+    {
+      "label": "chair entering OS window held throughout finite authored phase",
+      "ms": 25202,
+      "ok": true
+    },
+    {
+      "label": "chair entering samples actual registered source clip",
+      "ms": 25214,
+      "ok": true
+    },
+    {
+      "label": "chair entering measured joint coordinates finite",
+      "ms": 25226,
+      "ok": true
+    },
+    {
+      "label": "chair captures finite exiting",
+      "ms": 25239,
+      "ok": true
+    },
+    {
+      "label": "chair exiting retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 25251,
+      "ok": true
+    },
+    {
+      "label": "chair exiting actual authored time advances",
+      "ms": 25263,
+      "ok": true
+    },
+    {
+      "label": "chair exiting source hips change during finite clip",
+      "ms": 25275,
+      "ok": true
+    },
+    {
+      "label": "chair exiting both real knees change before handoff",
+      "ms": 25287,
+      "ok": true
+    },
+    {
+      "label": "chair exiting OS window held throughout finite authored phase",
+      "ms": 25300,
+      "ok": true
+    },
+    {
+      "label": "chair exiting samples actual registered source clip",
+      "ms": 25312,
+      "ok": true
+    },
+    {
+      "label": "chair exiting measured joint coordinates finite",
+      "ms": 25325,
+      "ok": true
+    },
+    {
+      "label": "chair captures real approach",
+      "ms": 25337,
+      "ok": true
+    },
+    {
+      "label": "chair captures orientation phase",
+      "ms": 25349,
+      "ok": true
+    },
+    {
+      "label": "chair terminal support coincides within1px",
+      "ms": 25361,
+      "ok": true
+    },
+    {
+      "label": "chair entering handoff boundary retained at least20Hz",
+      "ms": 25373,
+      "ok": true
+    },
+    {
+      "label": "chair entering physical joint handoff continuous",
+      "ms": 25386,
+      "ok": true
+    },
+    {
+      "label": "chair exiting handoff boundary retained at least20Hz",
+      "ms": 25398,
+      "ok": true
+    },
+    {
+      "label": "chair exiting physical joint handoff continuous",
+      "ms": 25410,
+      "ok": true
+    },
+    {
+      "label": "chair all scheduled owned captures saved",
+      "ms": 25423,
+      "ok": true
+    },
+    {
+      "label": "chair completed exit provides an exact scene ground anchor",
+      "ms": 25439,
+      "ok": true
+    },
+    {
+      "label": "chair retains completed virtual floor and XYZ position for five seconds",
+      "ms": 30459,
+      "ok": true
+    },
+    {
+      "label": "production validated command accepted: temporal-computer",
+      "ms": 30474,
+      "ok": true
+    },
+    {
+      "label": "computer completes authored entry and attaches",
+      "ms": 52058,
+      "ok": true
+    },
+    {
+      "label": "computer normal authored exit completes",
+      "ms": 74784,
+      "ok": true
+    },
+    {
+      "label": "computer full lifecycle reports completed, not cancellation or failed restoration",
+      "ms": 75007,
+      "ok": true
+    },
+    {
+      "label": "computer captures finite entering",
+      "ms": 75024,
+      "ok": true
+    },
+    {
+      "label": "computer entering retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 75037,
+      "ok": true
+    },
+    {
+      "label": "computer entering actual authored time advances",
+      "ms": 75051,
+      "ok": true
+    },
+    {
+      "label": "computer entering source hips change during finite clip",
+      "ms": 75063,
+      "ok": true
+    },
+    {
+      "label": "computer entering both real knees change before handoff",
+      "ms": 75075,
+      "ok": true
+    },
+    {
+      "label": "computer entering OS window held throughout finite authored phase",
+      "ms": 75088,
+      "ok": true
+    },
+    {
+      "label": "computer entering samples actual registered source clip",
+      "ms": 75100,
+      "ok": true
+    },
+    {
+      "label": "computer entering measured joint coordinates finite",
+      "ms": 75113,
+      "ok": true
+    },
+    {
+      "label": "computer captures finite exiting",
+      "ms": 75126,
+      "ok": true
+    },
+    {
+      "label": "computer exiting retained samples at least20Hz (maximum gap<=50ms)",
+      "ms": 75139,
+      "ok": true
+    },
+    {
+      "label": "computer exiting actual authored time advances",
+      "ms": 75152,
+      "ok": true
+    },
+    {
+      "label": "computer exiting source hips change during finite clip",
+      "ms": 75165,
+      "ok": true
+    },
+    {
+      "label": "computer exiting both real knees change before handoff",
+      "ms": 75178,
+      "ok": true
+    },
+    {
+      "label": "computer exiting OS window held throughout finite authored phase",
+      "ms": 75191,
+      "ok": true
+    },
+    {
+      "label": "computer exiting samples actual registered source clip",
+      "ms": 75203,
+      "ok": true
+    },
+    {
+      "label": "computer exiting measured joint coordinates finite",
+      "ms": 75216,
+      "ok": true
+    },
+    {
+      "label": "computer captures real approach",
+      "ms": 75229,
+      "ok": true
+    },
+    {
+      "label": "computer captures orientation phase",
+      "ms": 75242,
+      "ok": true
+    },
+    {
+      "label": "computer terminal support coincides within1px",
+      "ms": 75256,
+      "ok": true
+    },
+    {
+      "label": "computer entering handoff boundary retained at least20Hz",
+      "ms": 75269,
+      "ok": true
+    },
+    {
+      "label": "computer entering physical joint handoff continuous",
+      "ms": 75282,
+      "ok": true
+    },
+    {
+      "label": "computer exiting handoff boundary retained at least20Hz",
+      "ms": 75296,
+      "ok": true
+    },
+    {
+      "label": "computer exiting physical joint handoff continuous",
+      "ms": 75308,
+      "ok": true
+    },
+    {
+      "label": "computer all scheduled owned captures saved",
+      "ms": 75322,
+      "ok": true
+    },
+    {
+      "label": "computer completed exit provides an exact scene ground anchor",
+      "ms": 75338,
+      "ok": true
+    },
+    {
+      "label": "computer retains completed virtual floor and XYZ position for five seconds",
+      "ms": 80367,
+      "ok": true
+    },
+    {
+      "label": "bounded capture queue retained every scheduled image",
+      "ms": 80381,
+      "ok": true
+    },
+    {
+      "label": "every scheduled image saved and checksummed, including abort tails",
+      "ms": 80399,
+      "ok": true
+    },
+    {
+      "label": "original settings restored",
+      "ms": 84357,
+      "ok": true
+    }
+  ],
+  "failures": 0,
+  "terminal": {
+    "id": "temporal-computer",
+    "ms": 74760,
+    "outcome": "completed",
+    "record_type": "terminal"
+  },
+  "terminal_count": 1,
+  "completed_exit_hold": {
+    "duration_ms": 5016,
+    "expected_world": [
+      1.85932743549347,
+      -1.33028209209442,
+      -0.0157944336533546
+    ],
+    "maximum_xyz_drift_m": 0.0,
+    "ownership_retained": true
+  },
+  "phase_metrics": [
+    {
+      "label": "chair",
+      "count": 79,
+      "left_knee_spread_deg": 88.9150269548216,
+      "max_gap_ms": 30,
+      "phase": "entering",
+      "right_knee_spread_deg": 88.5624184389197,
+      "source_hips_spread_normalized": 0.523204445838928,
+      "window_drift_px": 0.0
+    },
+    {
+      "label": "chair",
+      "count": 60,
+      "left_knee_spread_deg": 89.7732060730879,
+      "max_gap_ms": 30,
+      "phase": "exiting",
+      "right_knee_spread_deg": 87.8904917491306,
+      "source_hips_spread_normalized": 0.513058841228485,
+      "window_drift_px": 0.0
+    },
+    {
+      "label": "computer",
+      "count": 79,
+      "left_knee_spread_deg": 86.2676319721463,
+      "max_gap_ms": 26,
+      "phase": "entering",
+      "right_knee_spread_deg": 85.7072012903685,
+      "source_hips_spread_normalized": 0.523239493370056,
+      "window_drift_px": 0.0
+    },
+    {
+      "label": "computer",
+      "count": 60,
+      "left_knee_spread_deg": 87.2930960835646,
+      "max_gap_ms": 31,
+      "phase": "exiting",
+      "right_knee_spread_deg": 85.1948483101583,
+      "source_hips_spread_normalized": 0.513234317302704,
+      "window_drift_px": 0.0
+    }
+  ],
+  "handoffs": [
+    {
+      "dt": 0.024,
+      "handoff": "entering->seating",
+      "joint_count": 7,
+      "label": "chair",
+      "max_joint_step_world_m": 3.38489314799517e-07,
+      "window_delta": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "dt": 0.029,
+      "handoff": "exiting->idle",
+      "joint_count": 7,
+      "label": "chair",
+      "max_joint_step_world_m": 0.000952584261540324,
+      "window_delta": [
+        33.0,
+        0.0
+      ]
+    },
+    {
+      "dt": 0.027,
+      "handoff": "entering->seating",
+      "joint_count": 7,
+      "label": "computer",
+      "max_joint_step_world_m": 4.5491270839193e-07,
+      "window_delta": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "dt": 0.015,
+      "handoff": "exiting->chair_restore",
+      "joint_count": 7,
+      "label": "computer",
+      "max_joint_step_world_m": 0.000998548464849591,
+      "window_delta": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "stage_edges": [
+    {
+      "ms": 9604,
+      "sequence": "scene_depth_path",
+      "stage": "idle"
+    },
+    {
+      "ms": 16286,
+      "sequence": "chair",
+      "stage": "waiting"
+    },
+    {
+      "ms": 16337,
+      "sequence": "chair",
+      "stage": "scene_approaching"
+    },
+    {
+      "ms": 19773,
+      "sequence": "chair",
+      "stage": "facing"
+    },
+    {
+      "ms": 22093,
+      "sequence": "chair",
+      "stage": "entering"
+    },
+    {
+      "ms": 23393,
+      "sequence": "chair",
+      "stage": "seating"
+    },
+    {
+      "ms": 23402,
+      "sequence": "chair",
+      "stage": "seated"
+    },
+    {
+      "ms": 23913,
+      "sequence": "chair",
+      "stage": "exiting"
+    },
+    {
+      "ms": 24910,
+      "sequence": "chair",
+      "stage": "idle"
+    },
+    {
+      "ms": 31813,
+      "sequence": "computer",
+      "stage": "waiting"
+    },
+    {
+      "ms": 32597,
+      "sequence": "computer",
+      "stage": "chair_setup"
+    },
+    {
+      "ms": 37184,
+      "sequence": "computer",
+      "stage": "waiting"
+    },
+    {
+      "ms": 37212,
+      "sequence": "computer",
+      "stage": "scene_approaching"
+    },
+    {
+      "ms": 41918,
+      "sequence": "computer",
+      "stage": "facing"
+    },
+    {
+      "ms": 44718,
+      "sequence": "computer",
+      "stage": "entering"
+    },
+    {
+      "ms": 46026,
+      "sequence": "computer",
+      "stage": "seating"
+    },
+    {
+      "ms": 46035,
+      "sequence": "computer",
+      "stage": "chair_carry"
+    },
+    {
+      "ms": 52051,
+      "sequence": "computer",
+      "stage": "using"
+    },
+    {
+      "ms": 62060,
+      "sequence": "computer",
+      "stage": "chair_carry"
+    },
+    {
+      "ms": 68124,
+      "sequence": "computer",
+      "stage": "exiting"
+    },
+    {
+      "ms": 69107,
+      "sequence": "computer",
+      "stage": "chair_restore"
+    },
+    {
+      "ms": 69220,
+      "sequence": "computer",
+      "stage": "restore_approaching"
+    },
+    {
+      "ms": 70068,
+      "sequence": "computer",
+      "stage": "chair_restore"
+    },
+    {
+      "ms": 74776,
+      "sequence": "computer",
+      "stage": "idle"
+    }
+  ],
+  "entry_preparation": {
+    "command_id": "temporal-computer",
+    "ensure_seated_geometry_ms": 0.004,
+    "object_id": "obj_2",
+    "presentation": {
+      "fit_contact_view_ms": 0.037,
+      "kind": "enter",
+      "motion_preparation": {
+        "bounds_us": 50573,
+        "cache_hit": false,
+        "measure_us": 35301,
+        "pose_us": 13021,
+        "reference_us": 225,
+        "samples": 20,
+        "secondary_us": 1898,
+        "total_us": 50829
+      },
+      "motion_start_ms": 50.862,
+      "reason": "ready",
+      "started_usec": 45796942,
+      "total_ms": 50.912
+    },
+    "projection_and_admission_ms": 0.154,
+    "reason": "entering",
+    "release_to_contact_ms": 0.011,
+    "started_usec": 45796753,
+    "total_ms": 51.147
+  }
+}

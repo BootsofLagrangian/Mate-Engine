@@ -1,0 +1,9 @@
+{
+  "scope": "Cheval Grand actual Linux viewport, simplified seat, capsule overlays; not desk collision proof",
+  "images": {
+    "logs/diagnostic-traces/body_capsules/render/capsules-049.png": "51436a723c906919330f97f04d257fb24a8a4909da9b27d961ac6813b58f736e",
+    "logs/diagnostic-traces/body_capsules/render/capsules-069.png": "9820a9aec8867ffa85a82ea6309242f1e89a4605c813fd8fdedce244602d8de4",
+    "logs/diagnostic-traces/body_capsules/render/capsules-109.png": "9a6f7021da292999b017df15d137b77b9ae05e6401ddc034bb5dab2770da2185",
+    "logs/diagnostic-traces/body_capsules/render/capsules-090.png": "fb5f1ba97563e9f028b21422088bf1cc6db10e5164173d2775c63a1c1c8e3e8c"
+  }
+}

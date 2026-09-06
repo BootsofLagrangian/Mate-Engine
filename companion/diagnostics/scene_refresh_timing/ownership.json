@@ -1,0 +1,40 @@
+{
+  "failures": 0,
+  "final": {
+    "calls": 15,
+    "last_rebuild_us": 733,
+    "last_refresh_us": 897,
+    "rebuilds": 7,
+    "suppressed": false
+  },
+  "unsuppressed_rebuilds": [
+    {
+      "calls": 2,
+      "last_rebuild_us": 685,
+      "last_refresh_us": 855,
+      "rebuilds": 2,
+      "suppressed": false
+    },
+    {
+      "calls": 3,
+      "last_rebuild_us": 783,
+      "last_refresh_us": 994,
+      "rebuilds": 3,
+      "suppressed": false
+    },
+    {
+      "calls": 4,
+      "last_rebuild_us": 914,
+      "last_refresh_us": 1177,
+      "rebuilds": 4,
+      "suppressed": false
+    },
+    {
+      "calls": 5,
+      "last_rebuild_us": 888,
+      "last_refresh_us": 1080,
+      "rebuilds": 5,
+      "suppressed": false
+    }
+  ]
+}

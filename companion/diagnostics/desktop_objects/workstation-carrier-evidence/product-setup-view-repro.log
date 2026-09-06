@@ -1,0 +1,4 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+PRODUCT_VIEW_REPRO position=(3.98705, -1.314583, -0.709737) anchors={ "foot": (-0.0, 0.000034, -0.034276), "foot_current": (-0.0, 0.000034, -0.062323), "sit": (-0.030361, 0.803881, -0.057027), "hips_current": (-0.0, 0.903871, -0.034276), "lean": (-0.183985, 0.899229, -0.024367), "left_hand": (0.183968, 0.899229, -0.024366), "right_hand": (-0.183985, 0.899229, -0.024367) } workarea=[P: (0.0, 0.0), S: (2560.0, 1392.0)] local_setup_envelope=[P: (2197.227, 1072.263), S: (325.4766, 312.7261)] world_setup_envelope=[P: (2109.599, 1072.263), S: (570.0195, 312.7261)] runtime_rest_bounds=[P: (2111.599, 1074.263), S: (504.7993, 288.0576)]
+PRODUCT_VIEW_REPRO local_plan_fit=true actual_runtime_fit=false exact_position_scope=derived_from_recorded_target_plus_current_installed_calibration

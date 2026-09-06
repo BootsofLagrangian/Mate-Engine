@@ -18,6 +18,7 @@ var _floor_end:=-INF
 var _model_id:=0
 var _bounds:=AABB()
 var _bounds_cache:Dictionary={}
+var preparation:Dictionary={}
 const ACQUIRE:=0.20
 
 func reset() -> void:
@@ -36,6 +37,7 @@ func register_clip(mode:String,name:String,available:Dictionary) -> bool:
 	return true
 
 func begin(player:MotionPlayer,mode:String,delta_local:Vector3) -> bool:
+	var preparation_started:=Time.get_ticks_usec()
 	if active or mode not in clips or not delta_local.is_finite() or player.avatar==null or not player.avatar.has_model():return false
 	if player._preview or player._custom_motion:return false
 	if mode=="enter" and player._contact_pose!="foot":return false
@@ -44,6 +46,7 @@ func begin(player:MotionPlayer,mode:String,delta_local:Vector3) -> bool:
 	clip_name=clips[mode]
 	if not player.vrma_clips.has(clip_name):return false
 	var clip:VrmaClip=player.vrma_clips[clip_name]
+	preparation={}
 	kind=mode
 	time=0
 	duration=clip.duration
@@ -57,11 +60,16 @@ func begin(player:MotionPlayer,mode:String,delta_local:Vector3) -> bool:
 	_from_hips=avatar.get_hips_offset()
 	_from_velocity=player._pose_velocity.duplicate()
 	_from_hips_velocity=player._hips_velocity
+	player.authored_seated_feet.prepare(avatar)
+	player.authored_seated_feet.begin_reference(clip.sample(0),clip.sample_hips_offset(0),root_delta)
+	preparation["reference_us"]=Time.get_ticks_usec()-preparation_started
 	active=true
 	_update_state(clip)
 	if not _build_bounds(player):
+		player.authored_seated_feet.clear_reference()
 		reset()
 		return false
+	preparation["total_us"]=Time.get_ticks_usec()-preparation_started
 	_update_state(clip)
 	return true
 
@@ -89,12 +97,15 @@ func _update_state(clip:VrmaClip) -> void:
 	if time>=duration:
 		root_progress=1
 		residual=Vector3.ZERO
-	diagnostics={"active":active,"finished":time>=duration,"kind":kind,"clip":clip_name,"time":t,"duration":duration,"progress":progress,"root_progress":root_progress,"local_root_residual":residual,"root_delta_local":root_delta,"transition_bounds":AABB(_bounds.position-root_delta*root_progress,_bounds.size)}
+	diagnostics={"active":active,"finished":time>=duration,"kind":kind,"clip":clip_name,"time":t,"duration":duration,"progress":progress,"root_progress":root_progress,"local_root_residual":residual,"root_delta_local":root_delta,"transition_bounds":AABB(_bounds.position-root_delta*root_progress,_bounds.size),"preparation":preparation.duplicate()}
 
 func apply(player:MotionPlayer,delta:float) -> void:
 	if not active:return
 	var avatar:=player.avatar
-	if avatar.model.get_instance_id()!=_model_id or not player.vrma_clips.has(clip_name):reset();return
+	if avatar.model.get_instance_id()!=_model_id or not player.vrma_clips.has(clip_name):
+		player.authored_seated_feet.clear_reference()
+		reset()
+		return
 	time=minf(time+delta,duration)
 	var clip:VrmaClip=player.vrma_clips[clip_name]
 	_update_state(clip)
@@ -114,7 +125,10 @@ func apply(player:MotionPlayer,delta:float) -> void:
 		var progress:float=diagnostics.root_progress
 		avatar.seated_floor.floor_y=_floor_end+root_delta.y*(1-progress) if kind=="enter" else _floor_end-root_delta.y*progress
 		avatar.seated_floor.set_active(true)
-		avatar.seated_floor.solve_legs(1.0,true)
+		if player.authored_seated_feet.active:
+			player.authored_seated_feet.apply_contact(clip.sample(time),clip.sample_hips_offset(time),progress,avatar.seated_floor.floor_y,weight)
+		else:avatar.seated_floor.solve_legs(1.0,true)
+		diagnostics["feet"]=player.authored_seated_feet.diagnostics.duplicate(true)
 
 func finish(player:MotionPlayer) -> bool:
 	if not active or time<duration:return false
@@ -128,14 +142,18 @@ func finish(player:MotionPlayer) -> bool:
 
 func _build_bounds(player:MotionPlayer) -> bool:
 	var avatar:=player.avatar
+	var bounds_started:=Time.get_ticks_usec()
 	var key:=str(_model_id)+":"+clip_name+":"+str(root_delta)+":"+str(avatar.seated_floor.clearance)+":"+str(_from.hash())+":"+str(_from_hips)+":"+str(avatar._secondary_pose_cache.hash())+":"+str(_from_velocity.hash())+":"+str(_from_hips_velocity)
 	if _bounds_cache.has(key):
 		_bounds=_bounds_cache[key]
+		preparation["cache_hit"]=true
+		preparation["bounds_us"]=Time.get_ticks_usec()-bounds_started
 		return true
 	var sk:=avatar.skeleton
 	var saved:=[]
 	for idx in sk.get_bone_count():saved.append([sk.get_bone_pose_position(idx),sk.get_bone_pose_rotation(idx),sk.get_bone_pose_scale(idx)])
 	var ownership:=avatar._posed_bones.duplicate()
+	var contact_diagnostics:=player.authored_seated_feet.diagnostics.duplicate(true)
 	var springs:=avatar.seated_floor.snapshot_springs()
 	var floor_active:=avatar.seated_floor.active
 	var floor_y:=avatar.seated_floor.floor_y
@@ -156,7 +174,9 @@ func _build_bounds(player:MotionPlayer) -> bool:
 	for sample_index in acquisition_samples+1:
 		sample_times.append(minf(ACQUIRE,duration)*sample_index/maxi(1,acquisition_samples))
 	sample_times.sort()
+	var pose_us:=0;var secondary_us:=0;var measure_us:=0
 	for sample_time in sample_times:
+		var sample_started:=Time.get_ticks_usec()
 		time=sample_time
 		avatar.apply_pose({})
 		for idx in avatar._secondary_pose_cache:
@@ -166,8 +186,13 @@ func _build_bounds(player:MotionPlayer) -> bool:
 				sk.set_bone_pose_rotation(idx,cached[1])
 				sk.set_bone_pose_scale(idx,cached[2])
 		apply(player,0)
+		pose_us+=Time.get_ticks_usec()-sample_started
+		sample_started=Time.get_ticks_usec()
 		if is_finite(floor_y):avatar.seated_floor.solve_secondary_pose()
+		secondary_us+=Time.get_ticks_usec()-sample_started
+		sample_started=Time.get_ticks_usec()
 		var measured:=TransitionBoundsMeasure.measure(avatar,true)
+		measure_us+=Time.get_ticks_usec()-sample_started
 		if not measured.is_empty():
 			var bound:AABB=measured.bounds
 			bound.position+=root_delta*float(diagnostics.root_progress)
@@ -178,6 +203,7 @@ func _build_bounds(player:MotionPlayer) -> bool:
 		sk.set_bone_pose_rotation(idx,saved[idx][1])
 		sk.set_bone_pose_scale(idx,saved[idx][2])
 	avatar._posed_bones=ownership
+	player.authored_seated_feet.diagnostics=contact_diagnostics
 	avatar.seated_floor.set_active(floor_active)
 	avatar.seated_floor.restore_springs(springs)
 	avatar.seated_floor.floor_y=floor_y
@@ -189,6 +215,7 @@ func _build_bounds(player:MotionPlayer) -> bool:
 	_bounds=_bounds.grow(0.001)
 	if _bounds_cache.size()>=4:_bounds_cache.clear()
 	_bounds_cache[key]=_bounds
+	preparation.merge({"cache_hit":false,"samples":sample_times.size(),"pose_us":pose_us,"secondary_us":secondary_us,"measure_us":measure_us,"bounds_us":Time.get_ticks_usec()-bounds_started})
 	return true
 
 static func _ease(value:float) -> float:

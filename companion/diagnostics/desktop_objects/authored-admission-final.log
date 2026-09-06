@@ -1,0 +1,7 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+AUTHORED_ADMISSION_GEOMETRY source=(-0.003033, -0.342931, -0.312394) projected_distance_px=60.4002685546875
+ACTUAL_ADMISSION { "id": "object:obj_1:seat", "point": "(1059.165, 1062.039)", "seat_anchor": "(998.7651, 948.0214)", "position": "(0.0, 0.0)", "visible_bounds": "[P: (700.0, 500.0), S: (450.0, 650.0)]", "workareas": "[[P: (-10000.0, -10000.0), S: (20000.0, 20000.0)]]", "contact_pose": "foot", "state": "settle", "enabled": true, "surface_mode": true, "blocked": false, "pointer_interaction": false, "handoff_braking": false, "surface_ids": ["object:obj_1:seat"], "seat_surface": { "id": "object:obj_1:seat", "kind": "object_seat", "x1": 1047.16540527344, "x2": 1071.16540527344, "y": 1062.03918457031, "anchor_only": true }, "surface_y_error_px": 0.0, "destination": "(60.40027, 114.0178)", "origin_span": "(52.40027, 68.40027)", "horizontal_distance_px": 60.4002685546875, "destination_bounds": "[P: (760.4003, 614.0178), S: (450.0, 650.0)]", "start_bounds": "[P: (700.0, 500.0), S: (450.0, 650.0)]", "mode": "authored_entry", "expected_standing_seat": "(998.7651, 948.0214)", "staging_residual_px": 0.0, "staging_tolerance_px": 24.0, "destination_safe": true, "path_safe": true, "reason": "accepted", "accepted": true }
+Authored admission: 10 checks, 0 failures
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2514)

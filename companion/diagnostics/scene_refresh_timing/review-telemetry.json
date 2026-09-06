@@ -1,0 +1,36 @@
+{
+  "diagnostics": {
+    "calls": 4,
+    "last_rebuild_us": 711,
+    "last_refresh_us": 166,
+    "rebuilds": 2,
+    "suppressed": false
+  },
+  "failures": 0,
+  "rejected_stale_intent": {
+    "accepted": false,
+    "reason": "unknown_target"
+  },
+  "telemetry": {
+    "calls": 7,
+    "last_refresh_msec": 339,
+    "last_refresh_us": 171,
+    "scene": {
+      "calls": 4,
+      "last_rebuild_us": 711,
+      "last_refresh_us": 166,
+      "rebuilds": 2,
+      "suppressed": false
+    },
+    "window_projection": {
+      "computer": {
+        "cache_hits": 4,
+        "fits": 3,
+        "geometry_collections": 2,
+        "last_fit_at_us": 80,
+        "last_fit_us": 23,
+        "last_request_at_us": 100
+      }
+    }
+  }
+}

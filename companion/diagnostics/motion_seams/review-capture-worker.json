@@ -1,0 +1,25 @@
+{
+  "checks": 4,
+  "failures": 0,
+  "records": [
+    {
+      "error": 0,
+      "image": "/tmp/mate-independent-capture-worker/valid.png",
+      "ms": 0,
+      "readback_us": 0,
+      "render_frame": 0,
+      "save_us": 197,
+      "sha256": "8c40e74fea3cb4f7e92fccc91ffcfdd5b55b2beca7f5459cdb3551ac90ec326e"
+    },
+    {
+      "error": 7,
+      "image": "/tmp/mate-independent-capture-worker/missing-directory/invalid.png",
+      "ms": 1,
+      "readback_us": 0,
+      "render_frame": 1,
+      "save_us": 103,
+      "sha256": ""
+    }
+  ],
+  "scope": "Concurrent valid/invalid PNG writes; failure is deliberate and must remain visible"
+}

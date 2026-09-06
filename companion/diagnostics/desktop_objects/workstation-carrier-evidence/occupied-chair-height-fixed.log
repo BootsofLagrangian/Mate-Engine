@@ -1,0 +1,12 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Preload file "res://scripts/carrier_lift_envelope.gd" does not exist.
+          at: GDScript::reload (res://scripts/motion_player.gd:953)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://../diagnostics/desktop_objects/probe_occupied_carrier.gd:0)
+ERROR: Failed to load script "res://../diagnostics/desktop_objects/probe_occupied_carrier.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript.cpp:3041)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+          at: run (res://../diagnostics/desktop_objects/probe_occupied_carrier.gd:19)
+          GDScript backtrace (most recent call first):
+              [0] run (res://../diagnostics/desktop_objects/probe_occupied_carrier.gd:19)

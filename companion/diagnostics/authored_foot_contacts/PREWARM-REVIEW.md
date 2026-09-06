@@ -1,0 +1,9 @@
+# Model-readiness preparation review
+
+Verdict: **APPROVED**, scoped to the four-line `_check_model_identity()` preparation addition. Exact reviewed source hashes are in `review-prewarm-identity.json`; the author's `prewarm-source-hashes.json` matches current source.
+
+Model readiness now completes immutable foot and bounds mesh inputs when clips registered before the model existed. The existing registration call covers model-first loading. Replacement ownership/reference cleanup occurs before preparing the new model. The unchanged-identity early return prevents repeated preparation on ordinary frames. Neither input helper writes bone poses or acquires a live contact reference during preparation; source-relative reference capture remains at transition start.
+
+An independent execution of the author's current fixture, changing only the output filename, passes all nine cases: Cheval, Rice and Eishin each with clips-first loading, model-first loading and model replacement. Both caches are ready before sit, and every skeleton origin and all three basis columns remain exactly unchanged (maximum difference zero). Results and complete process output are `review-prewarm.json` and `review-prewarm.log`. The earlier incorrect quaternion self-angle diagnostic is retained separately in the author's rejected artifacts.
+
+The independent run measures first-sit reference preparation at at most 306 microseconds. Overall first-sit preparation remains 43.899–54.891 milliseconds, while initial model-readiness warmup reaches 169.100 milliseconds. The patch moves immutable indexing to loading; it does not eliminate loading cost, cache eviction, or dynamic bounds work. There is no claim of a 30 or 50 millisecond maximum frame gap. Actual Windows scene timing remains a separate acceptance check. No geometry, source motion, temporal thresholds, or Windows processes were changed by this review.

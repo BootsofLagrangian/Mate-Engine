@@ -103,6 +103,15 @@
     "ground_y": 0.0,
     "triangles": 27998,
     "material_count": 10,
-    "bytes": 926752
+    "bytes": 926752,
+    "seat_setup": {
+      "kind": "swivel_chair",
+      "max_pullout_m": 1.2,
+      "adjustable_scale": {
+        "min": 0.5,
+        "max": 1.25,
+        "default": 1.0
+      }
+    }
   }
 }
