@@ -85,11 +85,11 @@ func tick(delta: float) -> void:
 		foot_world=before;host.get_window().position=old_origin;host.autonomy.position=Vector2(old_origin)
 		host._refresh_spatial_crop();host._pivot_px=host.camera.unproject_position(foot_world);host._pivot_px_target=host._pivot_px;host._update_avatar_transform(0)
 		cancel("outside_workarea");return
-	host.motion.update_scene_heading(float(frame.heading_world))
+	var heading_accepted:bool=host.motion.update_scene_heading(float(frame.heading_world))
 	var world_delta:=foot_world-before
 	var pixels:Vector2=host.spatial_camera().unproject_position(foot_world)-host.spatial_camera().unproject_position(before)
 	host.motion.set_scene_locomotion_sample(world_delta/maxf(delta,.001),world_delta,float(frame.heading_world),true,float(frame.distance_m))
-	diagnostics=frame.duplicate();diagnostics["committed_world_delta"]=world_delta
+	diagnostics=frame.duplicate();diagnostics["committed_world_delta"]=world_delta;diagnostics["heading_accepted"]=heading_accepted;diagnostics["avatar_yaw"]=host.avatar.rotation.y
 	if frame.arrived:
 		_stop_scene_motion()
 		if _completion.is_valid() and not ground_latched: release_to_contact()
@@ -102,8 +102,9 @@ func release_to_contact(reason: String="contact_handoff", notify_owner: bool=tru
 	if notify_owner:_completion=Callable()
 	if holding:
 		_stop_scene_motion()
-		host._pivot_px=host.camera.unproject_position(foot_world);host._pivot_px_target=host._pivot_px
-		host._camera_pivot_depth=DesktopView.depth(host.camera,foot_world)
+		if is_instance_valid(host.camera) and host.camera.is_inside_tree():
+			host._pivot_px=host.camera.unproject_position(foot_world);host._pivot_px_target=host._pivot_px
+			host._camera_pivot_depth=DesktopView.depth(host.camera,foot_world)
 		holding=false;ground_latched=false;navigation.cancel(reason);host.autonomy.set_process(true)
 	if callback.is_valid():callback.call(reason)
 func cancel(reason: String="cancelled") -> void:

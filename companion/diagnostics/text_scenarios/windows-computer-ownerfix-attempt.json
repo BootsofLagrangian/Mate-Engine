@@ -1,0 +1,100 @@
+{
+  "scope": "Actual Korean request: correct localLM intent and dedicatedJapanesevoice, legacy approach arrived, native final unsafe_seat; no full-use pass",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\run_text_scenario.gd",
+      "--",
+      "--scenario",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\diagnostics\\text_scenarios\\computer-use.json",
+      "--character",
+      "cheval-grand",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\text-scenario-computer-ownerfix-ko-01"
+    ],
+    "scope": "exported executable plus external scenario script",
+    "executable_sha256": "d9029b0e00fb85e12998243dd90128fb57eb26765ac48c7e2051ea40e441ccdd",
+    "script_sha256": "389d7491453b4f753e0c591d0e48779d47bd2401ecf816a19d4c0b831981f211",
+    "parent_script_sha256": "38280eb30e9bc3c4529c13aa9f17803e6137872e0441a27844b410e835233d43",
+    "scenario_sha256": "e8798cc963f083b02756332fc18332c1fdbd636a61de6780ae7dcfe0d2610de4",
+    "started_unix": 1788715352.811946,
+    "character": "cheval-grand",
+    "prompt_capture_id": "d4fe39d004e1406585d2699ca0d83dc0",
+    "launcher_child_pid": 31682,
+    "exact_prompt_captured": true,
+    "exit_code": 1,
+    "finished_unix": 1788715380.2725923
+  },
+  "raw": "{\"text\":\"用意してみますね。\", \"emotion\":\"neutral\", \"gesture\":\"idle\", \"intent\":{\"kind\":\"furniture\",\"object_type\":\"computer\",\"verb\":\"use\"}}",
+  "action": {
+    "character": "cheval-grand",
+    "elapsed_ms": 1410.9,
+    "emotion": "neutral",
+    "gesture": "idle",
+    "intensity": 0.8,
+    "intent": {
+      "kind": "furniture",
+      "object_type": "computer",
+      "placement": "near",
+      "verb": "use"
+    },
+    "ms": 8224,
+    "speed": 0.92,
+    "turn_id": "t1-7904",
+    "type": "action"
+  },
+  "done": {
+    "audio_url": null,
+    "character": "cheval-grand",
+    "elapsed_ms": 1411.5,
+    "emotion": "neutral",
+    "gesture": "idle",
+    "intensity": 0.8,
+    "intent": {
+      "kind": "furniture",
+      "object_type": "computer",
+      "placement": "near",
+      "verb": "use"
+    },
+    "intent_replay": true,
+    "ms": 8224,
+    "ok": true,
+    "speed": 0.92,
+    "text": "用意してみますね。",
+    "timings": {
+      "first_audio_ms": 1131.9,
+      "first_text_ms": 518.5,
+      "first_token_ms": 518.3,
+      "llm_done_ms": 1410.9,
+      "total_ms": 1411.5
+    },
+    "turn_id": "t1-7904",
+    "type": "done",
+    "voice_error": null
+  },
+  "outcomes": [
+    {
+      "id": "object-use:obj_2:18199",
+      "ms": 20235,
+      "outcome": "arrived",
+      "owner": "director",
+      "reason": ""
+    },
+    {
+      "id": "t1-7904:intent",
+      "ms": 23657,
+      "outcome": "unsafe_seat",
+      "owner": "furniture",
+      "reason": ""
+    }
+  ],
+  "failures": [
+    "native_execution_unsuccessful"
+  ],
+  "pcm_bytes": 81280
+}

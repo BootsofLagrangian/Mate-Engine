@@ -1,0 +1,6 @@
+{
+  "native/scripts/projected_avatar_geometry.gd": "87dba5bf2e9b8ea3d15598669ed5cfdc9933cf17cfe229f4b8af013c69922f9d",
+  "native/scripts/main.gd": "c9dbf9445dc78c51bc86e1ca5d0343585f035ac813c78ea88ea8549a9a314708",
+  "diagnostics/desktop_view/probe_scene_ground_normalization.gd": "ca7c8754041ab9fad9ac793d3c2d27f2c3d11c4ad4d8ee280edf2d5d734ee51d",
+  "diagnostics/desktop_view/independent-spatial-review/test_ground_admission.gd": "ff9680f6d93c1c4aedbf8a535e2cb0ad205bdacd19ae60c7a032a513f48131cc"
+}

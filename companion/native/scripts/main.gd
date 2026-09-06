@@ -339,6 +339,7 @@ func _setup_ui() -> void:
 func _wire() -> void:
 	# Register before living behavior's post-move foot correction.
 	autonomy.frame_moved.connect(func(_displacement: Vector2, _velocity: Vector2):
+		if scene_navigation != null and scene_navigation.owns_foot():return
 		if spatial_camera() != null:
 			_refresh_spatial_crop()
 			_update_avatar_transform(0.0))
@@ -368,15 +369,7 @@ func _wire() -> void:
 	client.motion_assets_loaded.connect(_on_motion_assets_loaded)
 	client.motion_asset_ready.connect(_on_motion_asset_ready)
 
-	autonomy.state_changed.connect(func(s: String):
-		_autonomy_state = s
-		if s in ["paused", "settle", "no_surface", "no_space"]:
-			motion.finish_locomotion()
-			motion.cancel_heading()
-		if s == "no_surface" and _sit_active and not _sit_attached:
-			# The seated pose fits no safe support (would clip the work area): stand back up.
-			_stand_up("앉을 자리가 맞지 않아 다시 일어섭니다")
-		_refresh_autonomy_label())
+	autonomy.state_changed.connect(_on_autonomy_state_changed)
 	autonomy.locomotion_changed.connect(_on_locomotion)
 	autonomy.support_changed.connect(_on_support_changed)
 	world_source.snapshot_changed.connect(func(snapshot: Dictionary): autonomy.set_world_snapshot(snapshot))
@@ -1625,6 +1618,7 @@ func _dialogue_gesture_active() -> bool:
 
 
 func _on_locomotion(moving: bool, velocity: Vector2) -> void:
+	if scene_navigation != null and scene_navigation.owns_foot():return
 	# Surface mode: grounded walk only while the module is in "walk" on an attached support; an
 	# "approach" glide toward a support floats/idles instead. Facing follows real walking only and
 	# holds its heading on stop; explicit interaction may request a stepped return to front.
@@ -1898,3 +1892,12 @@ func request_scene_approach(target_world: Vector3, obstacle_bounds: Array) -> Di
 
 func cancel_scene_approach(reason: String = "cancelled") -> void:
 	if scene_navigation != null:scene_navigation.cancel(reason)
+
+func _on_autonomy_state_changed(s: String) -> void:
+	_autonomy_state = s
+	if s in ["paused", "settle", "no_surface", "no_space"] and not (scene_navigation != null and scene_navigation.owns_foot()):
+		motion.finish_locomotion()
+		motion.cancel_heading()
+	if s == "no_surface" and _sit_active and not _sit_attached:
+		_stand_up("앉을 자리가 맞지 않아 다시 일어섭니다")
+	_refresh_autonomy_label()

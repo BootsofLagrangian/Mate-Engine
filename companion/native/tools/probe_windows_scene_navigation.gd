@@ -96,7 +96,9 @@ func sample_frame() -> void:
 		"left_knee_deg":knee_angle(joints,"left"),"right_knee_deg":knee_angle(joints,"right"),
 		"anchors":anchors,"support":app.autonomy.get_support_contact(),"shared":shared,
 		"presentation_offset":app.objects.presentation_offset(),"sit_active":app.is_sitting(),
-		"sit_attached":app._sit_attached,"interaction":app.objects._interaction.duplicate(true)}
+		"sit_attached":app._sit_attached,"interaction":app.objects._interaction.duplicate(true),
+		"scene_navigation":app.scene_navigation.diagnostics.duplicate(true),"scene_holding":app.scene_navigation.holding,
+		"avatar_yaw":app.avatar.rotation.y,"heading_target":app.motion._facing_target,"travel_intent":app.motion._travel_intent}
 	if shared:
 		row["seat_error_px"] = (Vector2(root.position)+Vector2(app._projected_anchors().sit)).distance_to(app.objects.contact_socket_screen("seat"))
 		row["seat_world"] = app.objects.contact_socket_world("seat")

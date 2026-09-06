@@ -1,0 +1,256 @@
+{
+  "behavior_style": {
+    "curiosity": 0.4,
+    "gaze_hold_s": 2.2,
+    "idle_interval_s": 14.0,
+    "posture_strength": 0.45,
+    "response_delay_s": 0.35
+  },
+  "checks": [
+    {
+      "label": "actual requested rig loaded",
+      "ms": 6614,
+      "ok": true
+    },
+    {
+      "label": "actual product-default camera is perspective",
+      "ms": 6650,
+      "ok": true
+    },
+    {
+      "label": "actual default local behavior enabled in collapsed mode",
+      "ms": 6650,
+      "ok": true
+    },
+    {
+      "label": "normal floor policy settles",
+      "ms": 9393,
+      "ok": true
+    },
+    {
+      "label": "Living automatically admits measured scene placement",
+      "ms": 9412,
+      "ok": true
+    },
+    {
+      "label": "production measured scene ground placement admitted",
+      "ms": 9412,
+      "ok": true
+    },
+    {
+      "label": "actual stable scene interests are available by default",
+      "ms": 9809,
+      "ok": true
+    },
+    {
+      "label": "at least one unprompted autonomous scene-depth trip",
+      "ms": 159825,
+      "ok": true
+    },
+    {
+      "label": "depth trip has matching local director arrival terminal",
+      "ms": 159825,
+      "ok": true
+    },
+    {
+      "label": "five-second XYZ hold after depth trip without taskbar reclamation",
+      "ms": 159825,
+      "ok": true
+    },
+    {
+      "label": "no chat turns or model conversation events observed",
+      "ms": 159825,
+      "ok": true
+    },
+    {
+      "label": "periodic owned viewport captures saved",
+      "ms": 159825,
+      "ok": true
+    },
+    {
+      "label": "original settings restored on disk",
+      "ms": 159853,
+      "ok": true
+    }
+  ],
+  "conversation_events": [],
+  "corridor": {
+    "area": "[P: (0, 0), S: (2560, 1392)]",
+    "cursor": [
+      1052,
+      1022
+    ],
+    "foot": [
+      1664.0,
+      1392.0
+    ],
+    "policy": "own window placement with normal drag-release ownership/settle; pointer policy unchanged",
+    "scene_placement": {
+      "bounds": "[P: (1559.729, 1111.893), S: (214.6134, 280.1056)]",
+      "changed": true,
+      "correction_m": [
+        0.0,
+        0.0,
+        -0.0133712431415915
+      ],
+      "distance_m": 0.0133712431415915,
+      "ok": true,
+      "point": [
+        0.804978489875793,
+        -1.33028173446655,
+        -0.00526954140514135
+      ],
+      "reason": "normalized"
+    }
+  },
+  "declared_defaults": {
+    "autonomy_enabled": true,
+    "autonomy_speed": 75.0,
+    "backend_url": "",
+    "behavior_enabled": true,
+    "character": "cheval-grand",
+    "desktop_objects": {
+      "next_id": 1,
+      "objects": [],
+      "version": 1
+    },
+    "idle_clip": "auto",
+    "idle_gaze": true,
+    "interest_points": {
+      "next_id": 1,
+      "points": []
+    },
+    "mic_device": "",
+    "mic_target_rate": 0,
+    "motion_intensity": 1.0,
+    "motion_repeat": 1,
+    "motion_speed": 1.0,
+    "panel_open": false,
+    "pet_scale": 0.6,
+    "show_subtitles": true,
+    "surface_roam": true,
+    "vad_enabled": false,
+    "vad_threshold": 0.035,
+    "view_distance_m": 3.6,
+    "view_fov_deg": 45.0,
+    "view_height": 0.0,
+    "view_pitch_deg": 0.0,
+    "view_projection": "perspective",
+    "view_yaw_deg": 0.0,
+    "view_zoom": 1.0,
+    "volume_db": 0.0,
+    "window_pos_saved": false,
+    "window_x": -1,
+    "window_y": -1
+  },
+  "failures": 0,
+  "holds": [
+    {
+      "always_latched": true,
+      "end_ms": 45392,
+      "max_drift_m": 0.0,
+      "start": [
+        0.414978474378586,
+        -1.33028173446655,
+        -0.335269540548325
+      ],
+      "start_ms": 40391,
+      "trip_index": 0
+    },
+    {
+      "always_latched": true,
+      "end_ms": 129537,
+      "max_drift_m": 0.0,
+      "start": [
+        1.19497847557068,
+        -1.33028173446655,
+        -0.335269540548325
+      ],
+      "start_ms": 124532,
+      "trip_index": 1
+    }
+  ],
+  "identity": {
+    "character": "cheval-grand",
+    "model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+    "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "renderer": "forward_plus"
+  },
+  "observe_start_ms": 9809,
+  "outcomes": [
+    {
+      "id": "local:3",
+      "ms": 40385,
+      "outcome": "arrived"
+    },
+    {
+      "id": "local:9",
+      "ms": 124527,
+      "outcome": "arrived"
+    }
+  ],
+  "scope": "No chat/model/direct-move request is issued by this probe. Conversation event/turn counters observed; HTTP/WS capability and asset traffic is expected. Outbound network packets are not independently intercepted.",
+  "seconds": 150.0,
+  "trips": [
+    {
+      "depth_m": 0.329999999143183,
+      "director_id": "local:3",
+      "end": [
+        0.414978474378586,
+        -1.33028173446655,
+        -0.335269540548325
+      ],
+      "end_ms": 40391,
+      "id": "scene:1",
+      "owned": true,
+      "start": [
+        0.804978489875793,
+        -1.33028173446655,
+        -0.00526954140514135
+      ],
+      "start_ms": 36523
+    },
+    {
+      "depth_m": 0.0,
+      "director_id": "local:9",
+      "end": [
+        1.19497847557068,
+        -1.33028173446655,
+        -0.335269540548325
+      ],
+      "end_ms": 124532,
+      "id": "scene:2",
+      "owned": true,
+      "start": [
+        0.414978474378586,
+        -1.33028173446655,
+        -0.335269540548325
+      ],
+      "start_ms": 119444
+    }
+  ],
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_default_scene_idle.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-default-scene-idle-admission",
+      "--character",
+      "cheval-grand",
+      "--seconds",
+      "150"
+    ],
+    "started": 1788715156.2898445,
+    "exe_sha256": "d9029b0e00fb85e12998243dd90128fb57eb26765ac48c7e2051ea40e441ccdd",
+    "script_sha256": "4124728adf0abcc307740f7d484497b68b158c2f2d358ff806badc2239d97a2b",
+    "exit_code": 0,
+    "finished": 1788715321.7022564
+  },
+  "status": "Actual Windows150-second default idle PASS; no chat/direct move/direct adoption by observer, matching local arrival and five-second XYZ hold."
+}

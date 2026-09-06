@@ -7,7 +7,7 @@ class TimelineObjects:
 	func _fit_contact_view(_preserve=false)->bool:return true
 func _run():
 	host_script=GDScript.new()
-	host_script.source_code='extends "res://scripts/main.gd"\nvar scene_view_enabled=true\nfunc _ready():\n\tset_process(false)\nfunc _update_passthrough(_force):\n\tpass\nfunc _save_window_position():\n\tpass\nfunc spatial_camera():\n\treturn camera if scene_view_enabled else null\nfunc spatial_desktop_origin():\n\treturn Vector2.ZERO\nfunc _refresh_spatial_crop():\n\tpass\n'
+	host_script.source_code='extends "res://scripts/main.gd"\nvar scene_view_enabled=true\nfunc _ready():\n\tset_process(false)\nfunc _update_passthrough(_force):\n\tpass\nfunc _refresh_autonomy_label():\n\tpass\nfunc _save_window_position():\n\tpass\nfunc spatial_camera():\n\treturn camera if scene_view_enabled else null\nfunc spatial_desktop_origin():\n\treturn Vector2.ZERO\nfunc _refresh_spatial_crop():\n\tpass\n'
 	if host_script.reload()!=OK:quit(1);return
 	var blocker:=[AABB(Vector3(-.01,0,-.02),Vector3(.02,1,.04))]
 	check(not DesktopSceneNavigationHost.placement_is_clear(Vector3(-.1,0,0),Vector3(.1,0,0),blocker,.01,1),"placement cannot cross solid even with free endpoints")
@@ -38,8 +38,14 @@ func _run():
 	h.objects._interaction.scene_target=target
 	var accepted:Dictionary=adapter.request(target,[])
 	check(accepted.accepted,"true scene path accepted")
+	h.autonomy.state_changed.connect(h._on_autonomy_state_changed)
 	var total:=0.0;var depth:=0.0;var overlap:=false;var rear_distance:=0.0;var turning_travel:=0.0
 	for frame in 600:
+		if frame==30:
+			h.autonomy.state_changed.emit("settle")
+			check(h.motion._travel_intent,"legacy state callback cannot revoke scene heading owner")
+			h._on_locomotion(false,Vector2.ZERO)
+			check(h.motion.current_gesture()==h._walk_started and not h._walk_started.is_empty(),"legacy stop callback cannot stop scene-owned walk clip")
 		var prior_yaw:float=h.avatar.rotation.y
 		h.motion._process(1.0/60)
 		h._update_avatar_transform(0)
@@ -123,6 +129,22 @@ func _run():
 		check(terminal==["disabled"] and not adapter.holding and not adapter.has_completion_owner(),"active mode exit clears route/owner immediately: "+mode)
 		check(h.avatar.contact_anchors().foot.distance_to(stopped_mode)<.00001,"active mode exit has zero world drift: "+mode)
 		h.scene_view_enabled=true;h.autonomy.surface_mode=true;h.autonomy.enabled=true
+	var chair:=DesktopObjectContactScene.new();h.add_child(chair);chair.configure("chair")
+	var chair_start:Vector3=h.avatar.contact_anchors().foot
+	chair.transform=Transform3D(Basis.IDENTITY.scaled(Vector3.ONE*.6),chair_start+Vector3(.42,0,0))
+	var chair_solids:Array=[];DesktopObjectsHost._append_scene_solids(chair,chair_solids)
+	var source_delta:Vector3=h.motion.seated_transition_requirements("enter").source_root_delta_local
+	var stage:=DesktopObjectsHost.select_authored_staging(chair_start,chair.socket_world("seat"),chair.basis,h._pivot_local.sit-h._pivot_local.foot,source_delta,chair_solids,.072,h._model_aabb.size.y*.6)
+	check(stage.get("accepted",false),"actual rig chair staging admitted before low-FPS route")
+	if stage.get("accepted",false):
+		h.objects._interaction={"id":"obj_1","verb":"sit","stage":"scene_approaching","scene_target":stage.target_world}
+		check(adapter.request(stage.target_world,chair_solids).accepted,"actual imported chair route starts with all components")
+		for frame in 600:
+			h.motion._process(.09);h._update_avatar_transform(0);adapter.tick(.09)
+			if frame==8:h.autonomy.state_changed.emit("settle");h._on_locomotion(false,Vector2.ZERO)
+			if not adapter.navigation.active:break
+		check(h.avatar.contact_anchors().foot.distance_to(stage.target_world)<.001 and h.objects._interaction.get("stage","")=="ready","low-FPS chair route survives legacy state/stop callbacks and arrives before timeout")
+	adapter.release_to_contact();chair.free()
 	h.objects._interaction={}
 	check(adapter.request(h.avatar.contact_anchors().foot+Vector3(.2,0,-.1),[]).accepted,"direct route before user stop")
 	for frame in 60:

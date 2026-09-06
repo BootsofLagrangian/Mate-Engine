@@ -1,0 +1,28 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+ERROR: legacy state callback cannot revoke scene heading owner
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/probe_host_lifecycle.gd:88)
+       [1] _run (res://../diagnostics/desktop_objects/probe_scene_host.gd:46)
+ERROR: actual avatar travels depth and full measured world distance
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/probe_host_lifecycle.gd:88)
+       [1] _run (res://../diagnostics/desktop_objects/probe_scene_host.gd:61)
+ERROR: translation overlaps unfinished body yaw
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/probe_host_lifecycle.gd:88)
+       [1] _run (res://../diagnostics/desktop_objects/probe_scene_host.gd:62)
+ERROR: actual body rotates at least ten degrees while translating
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/probe_host_lifecycle.gd:88)
+       [1] _run (res://../diagnostics/desktop_objects/probe_scene_host.gd:64)
+ERROR: arrival hands off only at exact scene target
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/probe_host_lifecycle.gd:88)
+       [1] _run (res://../diagnostics/desktop_objects/probe_scene_host.gd:65)
+Scene host: 636 checks, 5 failures

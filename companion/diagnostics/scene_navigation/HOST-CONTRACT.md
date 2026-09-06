@@ -60,3 +60,19 @@ Placement admission additionally rejects any full standing-capsule segment cross
 actual furniture solids, including corrections with individually free endpoints.
 The idle observer only awaits automatic Living placement after its disclosed
 normal drag-release corridor setup; it does not invoke adoption or movement.
+
+### Legacy callback ownership correction
+
+The Windows chair attempt admitted staging but its yaw stopped changing after
+initial travel and the route expired. Legacy source/support callbacks remained
+connected while their process loop was suspended. The production state callback
+unconditionally revoked Motion's scene turning owner. Injecting that callback
+into an actual-rig scene route reproduced five failures, including no arrival.
+Legacy state cleanup, locomotion and frame-move callbacks now defer while scene
+navigation owns the foot. Explicit cancellation still passes through the scene
+adapter. The original timeout and geometry gates are unchanged.
+
+Corrected fixture: 274/0, including actual imported chair components and a
+90-ms frame cadence. Windows telemetry now additionally records scene heading
+acceptance, actual yaw, target yaw and travel ownership throughout furniture
+approaches so a subsequent runtime failure can distinguish ownership from timing.

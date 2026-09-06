@@ -353,6 +353,7 @@ func apply_attention() -> bool:
 	return true
 
 func _frame_moved(displacement: Vector2, velocity: Vector2) -> void:
+	if host.get("scene_navigation") != null and host.scene_navigation.owns_foot():return
 	var supported: bool = bool(host.autonomy.get_support_contact().get("attached", false)) and not host.is_sitting() and host.autonomy.state in ["anticipate", "walk", "arrive"] and not host._dialogue_gesture_active()
 	var world_delta: Variant = null
 	if host.avatar.has_model():

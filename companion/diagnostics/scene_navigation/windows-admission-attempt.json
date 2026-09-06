@@ -1,0 +1,185 @@
+{
+  "checks": [
+    {
+      "label": "production backend and avatar ready",
+      "ms": 6631,
+      "ok": true
+    },
+    {
+      "label": "explicit production rig loaded",
+      "ms": 6646,
+      "ok": true
+    },
+    {
+      "label": "production manifest registered authored enter and exit (no test injection)",
+      "ms": 6684,
+      "ok": true
+    },
+    {
+      "label": "normal policy floor corridor ready",
+      "ms": 9266,
+      "ok": true
+    },
+    {
+      "label": "production perspective scene path accepted",
+      "ms": 9282,
+      "ok": true
+    },
+    {
+      "label": "real rendered avatar traverses scene Z and X",
+      "ms": 14493,
+      "ok": true
+    },
+    {
+      "label": "rendered foot stays outside obstacle expanded by actor radius",
+      "ms": 14498,
+      "ok": true
+    },
+    {
+      "label": "actual body yaw changes at least10degrees during cumulative concurrent travel",
+      "ms": 14503,
+      "ok": true
+    },
+    {
+      "label": "rendered scene endpoint reached",
+      "ms": 14507,
+      "ok": true
+    },
+    {
+      "label": "second production scene request accepted",
+      "ms": 14519,
+      "ok": true
+    },
+    {
+      "label": "actual user stop ends travel and retains virtual ground without drift",
+      "ms": 15237,
+      "ok": true
+    },
+    {
+      "label": "production validated command accepted: temporal-chair",
+      "ms": 15749,
+      "ok": true
+    },
+    {
+      "label": "chair completes authored entry and attaches",
+      "ms": 50794,
+      "ok": false
+    },
+    {
+      "label": "original settings restored",
+      "ms": 50896,
+      "ok": true
+    }
+  ],
+  "commands": [
+    {
+      "id": "temporal-chair",
+      "intent": {
+        "kind": "furniture",
+        "object_type": "chair",
+        "placement": "near",
+        "verb": "sit"
+      },
+      "ms": 15749,
+      "result": {
+        "accepted": true,
+        "reason": "queued"
+      }
+    },
+    {
+      "id": "temporal-chair",
+      "ms": 30059,
+      "outcome": "timeout",
+      "record_type": "terminal"
+    }
+  ],
+  "controlled_route_obstacle": "[P: (0.389606, -1.330282, -0.209709), S: (0.08, 0.8, 0.08)]",
+  "corridor": {
+    "area": "[P: (0, 0), S: (2560, 1392)]",
+    "cursor": [
+      1052,
+      1022
+    ],
+    "foot": [
+      1536.0,
+      1392.0
+    ],
+    "policy": "own window only; no cursor injection or pointer policy bypass"
+  },
+  "elapsed_ms": 50901,
+  "failed_creation_diagnostics": {
+    "last_creation": {
+      "model_error": "",
+      "model_loaded": true,
+      "reason": "created",
+      "reference_ppm": 256.990119372572,
+      "type": "chair"
+    },
+    "obj_1": {
+      "applied_ratio": 1.0,
+      "physical_ppm": 139.500915527344,
+      "seat_floor_adaptation": true
+    },
+    "scene_staging": {
+      "accepted": true,
+      "applied_delta_local": [
+        -0.00363914552144706,
+        -0.34293121099472,
+        -0.374872535467148
+      ],
+      "factor": 1.2,
+      "source_delta_local": [
+        -0.00303262122906744,
+        -0.34293121099472,
+        -0.31239378452301
+      ],
+      "target_world": [
+        0.994901537895203,
+        -1.33028185367584,
+        -0.0711658447980881
+      ]
+    }
+  },
+  "failures": 1,
+  "identity": {
+    "character": "cheval-grand",
+    "model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+    "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "renderer": "NVIDIA GeForce RTX 4090",
+    "transition_clips": {
+      "enter": "sit_enter",
+      "exit": "sit_exit"
+    }
+  },
+  "sample_count": 420,
+  "scope": "Production direct validated furniture skills; authored temporal evidence, not LM routing. Own Windows viewport. Static support and numeric gates do not alone accept natural choreography.",
+  "sequences": [],
+  "turning_overlap": {
+    "angle_radians": 3.02078082374646,
+    "max_heading_error": 3.12259361827013,
+    "seconds": 3.653
+  },
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_scene_navigation.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-scene-navigation-admission",
+      "--character",
+      "cheval-grand"
+    ],
+    "started": 1788715012.570526,
+    "exe_sha256": "f9c890748edad4aa3625ff1559742b84245da4f20a8a670fb8a11a1e1db00fc7",
+    "script_sha256": "0e745a16966114ddf410ea3d47954df4d56439e137652cd1fe76ae7582276a58",
+    "scope": "Approved normal runtime geometry; independent helper invalid-input guard followup pending",
+    "exit_code": 1,
+    "finished": 1788715069.0642269
+  },
+  "status": "Partial actual Windows acceptance: depth, concurrent turning and stop pass; chair staging accepted at1.20 but approach timed out before authored entry."
+}
