@@ -212,5 +212,13 @@ def available_motions(bank, assets):
     """Native VRMA and local procedural gestures share a name namespace; bank wins duplicates."""
     motions = bank.bank()['motions']
     names = {motion['name'] for motion in motions}
-    return motions + [entry for entry, _ in assets.entries() if entry['name'] not in names and entry['name'] != 'sit_idle'
-                     and not entry.get('seated_transition') and not entry.get('locomotion_style')]
+    # These legacy names remain host-owned even in old catalogs without metadata.
+    context_names = {'walk', 'walk_formal', 'sit_idle', 'sit_enter', 'sit_exit'}
+    asset_entries = [entry for entry, _ in assets.entries()]
+    # Native capability guards also inspect the VRMA catalog when a bank clip
+    # shadows its name, so context ownership must survive name deduplication.
+    context_names.update(entry['name'] for entry in motions + asset_entries
+                         if entry.get('seated_transition') or entry.get('locomotion')
+                         or entry.get('locomotion_style'))
+    candidates = motions + [entry for entry in asset_entries if entry['name'] not in names]
+    return [entry for entry in candidates if entry['name'] not in context_names]

@@ -1,0 +1,41 @@
+{
+  "scope": "installed local catalog and dialogue allowlist; no running backend reload or Windows/model test",
+  "catalog_count": 33,
+  "everyday_advertised": [
+    "authored_think",
+    "authored_bow",
+    "authored_breathe",
+    "authored_read",
+    "authored_drink",
+    "authored_phone",
+    "authored_wave",
+    "authored_stretch",
+    "authored_overhead_stretch",
+    "authored_type"
+  ],
+  "context_catalogued_not_advertised": [
+    "walk",
+    "walk_formal",
+    "sit_idle",
+    "uma_walk",
+    "sit_enter",
+    "sit_exit",
+    "playful_strut",
+    "mambo_goofy_walk"
+  ],
+  "excluded_assets_readable": true,
+  "focused_tests": {
+    "passed": 86,
+    "failed": 0
+  },
+  "independent_review": {
+    "reviewer": "/root/spatial_review",
+    "verdict": "APPROVED",
+    "independent_tests_passed": 86,
+    "resolved_finding": "Collect context metadata names before bank/VRMA name deduplication"
+  },
+  "source_sha256": {
+    "companion/engine/motion_assets.py": "504865b0d00ff282e0e686a8c0134928bcf5bf1d935ec4730285e5ad5b47431d",
+    "companion/engine/tests/test_motion_assets.py": "ec2092e35144de8d70a9561e1edc0e253f6b840203266be60f4886893ceadfda"
+  }
+}

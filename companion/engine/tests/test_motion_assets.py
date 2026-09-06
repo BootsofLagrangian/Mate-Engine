@@ -105,16 +105,17 @@ def test_non_animation_binary_and_broken_manifest_are_ignored(client, companion_
 
 
 def test_installed_vrma_names_join_llm_allow_list(client, companion_root):
-    install(companion_root)
+    install(companion_root, name='authored_wave', loop=False, description='One friendly hand wave')
     with client.websocket_connect('/ws') as ws:
         ws.receive_json()
         ws.send_json({'type': 'chat', 'turn_id': 'motions', 'character': 'alpha', 'text': '歩いて', 'voice': False})
         collect(ws, lambda e: e['type'] == 'done' and e.get('turn_id') == 'motions')
         request = next(iter(client.app.state.connections)).turn.req
-        assert 'walk' in request.gestures and 'wave' in request.gestures
-        assert request.motion_descriptions['walk'] == 'Walk naturally'
+        assert 'authored_wave' in request.gestures and 'wave' in request.gestures
+        assert 'walk' not in request.gestures
+        assert request.motion_descriptions['authored_wave'] == 'One friendly hand wave'
     # Procedural /motions keeps its existing shape; binary clips have their own catalog.
-    assert all(m['name'] != 'walk' for m in client.get('/motions').json()['motions'])
+    assert all(m['name'] != 'authored_wave' for m in client.get('/motions').json()['motions'])
 
 
 def test_replacement_during_download_does_not_serve_wrong_etag(client, companion_root, monkeypatch):
@@ -176,15 +177,17 @@ def test_context_phases_remain_catalogued_but_not_standalone_gestures(companion_
     assets = MotionAssets(companion_root)
     for overrides in [
         {'seated_transition': 'enter'},
+        {'seated_transition': 'exit'},
+        {'locomotion': True},
         {'locomotion': True, 'locomotion_style': {'version': 1, 'cycle_stride_leg_lengths': 1.8,
           'contacts': {'left': [0.05, 0.45], 'right': [0.55, 0.95]}}},
     ]:
-        install(companion_root, **overrides)
+        install(companion_root, name='context_action', **overrides)
         assert len(assets.catalog()['motions']) == 1
-        assert assets.resolve('walk') is not None
+        assert assets.resolve('context_action') is not None
         assert available_motions(EmptyBank(), assets) == []
-    install(companion_root)
-    assert [x['name'] for x in available_motions(EmptyBank(), assets)] == ['walk']
+    install(companion_root, name='everyday_wave', loop=False)
+    assert [x['name'] for x in available_motions(EmptyBank(), assets)] == ['everyday_wave']
 
 
 def test_internal_seated_idle_is_not_a_standalone_gesture(companion_root):
@@ -196,3 +199,36 @@ def test_internal_seated_idle_is_not_a_standalone_gesture(companion_root):
     assert assets.catalog()['motions'][0]['name'] == 'sit_idle'
     assert assets.resolve('sit_idle') is not None
     assert available_motions(EmptyBank(), assets) == []
+
+
+@pytest.mark.parametrize('name', ['walk', 'walk_formal', 'sit_enter', 'sit_exit', 'sit_idle'])
+def test_reserved_context_names_cannot_leak_from_old_catalog_or_bank(companion_root, name):
+    from engine.motion_assets import available_motions
+    install(companion_root, name=name)
+    assets = MotionAssets(companion_root)
+    class Bank:
+        def bank(self):
+            return {'motions': [{'name': name}, {'name': 'everyday_custom', 'description': 'Small upper-body wave'}]}
+    assert assets.read(name) is not None
+    assert [entry['name'] for entry in available_motions(Bank(), assets)] == ['everyday_custom']
+
+
+def test_finite_everyday_metadata_is_preserved_for_dialogue(companion_root):
+    from engine.motion_assets import available_motions
+    install(companion_root, name='authored_wave', loop=False, ambient=False, contact_mode='foot',
+            description='One friendly hand wave')
+    class Bank:
+        def bank(self): return {'motions': []}
+    assets = MotionAssets(companion_root)
+    assert available_motions(Bank(), assets) == assets.catalog()['motions']
+
+
+@pytest.mark.parametrize('metadata', [{'locomotion': True}, {'seated_transition': 'enter'}, {'seated_transition': 'exit'}])
+def test_bank_shadow_cannot_strip_installed_context_ownership(companion_root, metadata):
+    from engine.motion_assets import available_motions
+    install(companion_root, name='portable_context', **metadata)
+    class Bank:
+        def bank(self): return {'motions': [{'name': 'portable_context'}, {'name': 'wave'}]}
+    assets = MotionAssets(companion_root)
+    assert assets.read('portable_context') is not None
+    assert available_motions(Bank(), assets) == [{'name': 'wave'}]
