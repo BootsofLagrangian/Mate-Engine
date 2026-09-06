@@ -80,7 +80,7 @@ class PhraseChunker:
 def conversation_stream(brain,req,root,cancelled=None):
     start=time.perf_counter();cancelled=cancelled if cancelled is not None else threading.Event()
     events=queue.Queue(maxsize=128);phrases=queue.Queue()
-    metrics={};result={};audio_parts=[];errors=[]
+    metrics={};result={};audio_parts=[];errors=[];llm_failed=threading.Event()
     def ms():return round((time.perf_counter()-start)*1000,1)
     def emit(kind,**data):
         event={'type':kind,'elapsed_ms':ms(),**data}
@@ -90,7 +90,10 @@ def conversation_stream(brain,req,root,cancelled=None):
     def llm_worker():
         chunker=PhraseChunker();previous='';count=0
         try:
-            for kind,value in brain.stream_reply(req.text.strip(),req.session,cancelled):
+            # Engine providers receive the whole request (text or audio); legacy brains take text.
+            if hasattr(brain,'stream_turn'):stream=brain.stream_turn(req,cancelled)
+            else:stream=brain.stream_reply(req.text.strip(),req.session,cancelled)
+            for kind,value in stream:
                 if cancelled.is_set():break
                 if kind=='token':metrics.setdefault('first_token_ms',ms())
                 elif kind=='text':
@@ -104,37 +107,41 @@ def conversation_stream(brain,req,root,cancelled=None):
                     result.update(value);metrics['llm_done_ms']=ms()
                     for phrase in chunker.push('',final=True):
                         phrases.put((count,phrase));emit('phrase',index=count,text=phrase);count+=1
-                    emit('action',gesture=value['gesture'],emotion=value['emotion'])
+                    emit('action',**{k:value[k] for k in ('gesture','emotion','intensity','speed','repeat') if k in value})
         except Exception as exc:
+            llm_failed.set();result.clear()
             errors.append(str(exc));emit('error',message=str(exc))
         finally:
             phrases.put(None);emit('_llm_finished')
     def audio_worker():
         try:
-            config=json.loads((root/'config.json').read_text())
-            with httpx.Client(timeout=60) as client:
+            # Per-profile voice reference when the request carries one; legacy single-character default otherwise.
+            ref_audio=getattr(req,'ref_audio_path',None) or str(root/'assets/reference.wav')
+            prompt_text=getattr(req,'reference_text',None)
+            with httpx.Client(timeout=httpx.Timeout(60, connect=3, read=10, pool=3)) as client:
                 sequence=0
                 while not cancelled.is_set():
                     try:item=phrases.get(timeout=.1)
                     except queue.Empty:continue
                     if item is None:break
                     index,text=item
-                    if not req.voice:continue
-                    payload={'text':text,'text_lang':'all_ja','ref_audio_path':str(root/'assets/reference.wav'),'prompt_lang':'all_ja','prompt_text':config['reference_text'],'text_split_method':'cut0','batch_size':1,'media_type':'raw','streaming_mode':True,'fragment_interval':.03,'seed':42,'parallel_infer':False,'split_bucket':False}
+                    if not req.voice or llm_failed.is_set():continue
+                    if prompt_text is None:prompt_text=json.loads((root/'config.json').read_text())['reference_text']
+                    payload={'text':text,'text_lang':'all_ja','ref_audio_path':str(ref_audio),'prompt_lang':'all_ja','prompt_text':prompt_text,'text_split_method':'cut0','batch_size':1,'media_type':'raw','streaming_mode':True,'fragment_interval':.03,'seed':42,'parallel_infer':False,'split_bucket':False}
                     with TTS_LOCK:
-                        if cancelled.is_set():break
+                        if cancelled.is_set() or llm_failed.is_set():break
                         emit('tts_start',index=index,text=text)
                         with client.stream('POST',os.getenv('MATE_TTS_URL','http://127.0.0.1:9880')+'/tts',json=payload) as response:
                             response.raise_for_status()
                             pending=b'';received=0
                             for block in response.iter_bytes(chunk_size=1280):
-                                if cancelled.is_set():return
+                                if cancelled.is_set() or llm_failed.is_set():return
                                 pending+=block
                                 n=len(pending)//2*2
                                 if not n:continue
                                 pcm=pending[:n];pending=pending[n:];received+=len(pcm)
                                 metrics.setdefault('first_audio_ms',ms())
-                                audio_parts.append(pcm)
+                                if getattr(req,'save_audio',True):audio_parts.append(pcm)
                                 emit('audio',pcm=base64.b64encode(pcm).decode(),sample_rate=32000,sequence=sequence,phrase=index)
                                 sequence+=1
                             if pending:raise ValueError('Odd-length PCM frame')
@@ -155,10 +162,11 @@ def conversation_stream(brain,req,root,cancelled=None):
                 continue
             if event['type'].startswith('_'):
                 finished.add(event['type']);continue
+            if llm_failed.is_set() and event['type'] in ('audio','tts_start','tts_end','action','phrase'):continue
             yield json.dumps(event,ensure_ascii=False)+'\n'
         if cancelled.is_set():return
         audio_url=None
-        if audio_parts:
+        if audio_parts and getattr(req,'save_audio',True):
             name=uuid.uuid4().hex+'.wav';out=root/'output'/name
             with wave.open(str(out),'wb') as wav:
                 wav.setnchannels(1);wav.setsampwidth(2);wav.setframerate(32000);wav.writeframes(b''.join(audio_parts))
