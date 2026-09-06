@@ -162,7 +162,13 @@ func run() -> void:
 	report["trials"] = []; report["native_outcomes"] = []
 	report["scope"] = "Actual native session text input, real local LM/PCM, native execution outcomes and backend feedback. No injected intent or fabricated world catalogue. Overlap measured separately; short actions need not overlap speech."
 	settings_node = root.get_node("Settings"); original = settings_node.data.duplicate(true)
+	var product_defaults := OS.get_cmdline_user_args().has("--product-defaults")
+	if product_defaults:
+		settings_node.data = settings_node.DEFAULTS.duplicate(true)
+		settings_node.data["backend_url"] = original.get("backend_url","")
 	settings_node.data.merge({"vad_enabled":false,"panel_open":false,"character":requested_character,"behavior_enabled":true,"autonomy_enabled":true},true)
+	report["settings_profile"] = "product_defaults" if product_defaults else "saved_settings"
+	report["initial_settings"] = settings_node.data.duplicate(true)
 	create_timer(float(scenario_limit)/1000.0).timeout.connect(func():
 		if not closing: check(false,"scenario watchdog"); finish())
 	app = load("res://main.tscn").instantiate(); root.add_child(app); current_scene=app
@@ -184,6 +190,12 @@ func run() -> void:
 	if not check(str(app.session.capabilities.get("provider","")) not in ["","stub"],"real model provider"):
 		await finish(); return
 	report["identity"]={"character":requested_character,"model_path":app.avatar.model_path,"model_sha256":FileAccess.get_sha256(app.avatar.model_path),"renderer":RenderingServer.get_video_adapter_name(),"scenario_sha256":FileAccess.get_sha256(argument("--scenario"))}
+	var actual_camera: Camera3D = app.spatial_camera()
+	var camera_role := "canonical_reference"
+	if actual_camera == null:
+		actual_camera = app.camera
+		camera_role = "root_viewport"
+	report["actual_view"] = {"settings":app._view_settings.duplicate(true),"camera_role":camera_role,"projection":actual_camera.projection,"camera_transform":str(actual_camera.global_transform),"fov_deg":actual_camera.fov}
 	for index in scenario.steps.size():
 		await trial(scenario.steps[index],index)
 		if closing: return

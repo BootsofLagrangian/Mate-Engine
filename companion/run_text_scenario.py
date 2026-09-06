@@ -65,6 +65,7 @@ def main():
     parser.add_argument('--character',required=True,help='Installed generic character ID')
     parser.add_argument('--output',required=True,type=Path,help='New output directory; previous attempts are never overwritten')
     parser.add_argument('--capture-prompt',action='store_true',help='One-shot exact first-text fixture capture; requires a backend with local diagnostic hook')
+    parser.add_argument('--product-defaults',action='store_true',help='Start from product settings defaults, preserving the configured backend endpoint; restore original settings on exit')
     parser.add_argument('--dry-run',action='store_true',help='Validate and print launch command; no native app starts')
     args=parser.parse_args()
     try:scenario=validate_scenario(json.loads(args.scenario.read_text(encoding='utf-8')))
@@ -74,11 +75,13 @@ def main():
     cmd=[str(args.native_exe.resolve()),'--rendering-driver','d3d12','--rendering-method','forward_plus']
     if args.project:cmd+=['--path',win_path(ROOT/'native')]
     cmd+=['--script',win_path(SCRIPT),'--','--scenario',win_path(args.scenario),'--character',args.character,'--output',win_path(args.output)]
+    if args.product_defaults:cmd+=['--product-defaults']
     if args.dry_run:print(json.dumps(cmd,ensure_ascii=False,indent=2));return 0
     args.output.mkdir(parents=True)
     identity={'command':cmd,'scope':'source editor' if args.project else 'exported executable plus external scenario script',
               'executable_sha256':sha(args.native_exe),'script_sha256':sha(SCRIPT),'parent_script_sha256':sha(PARENT),
-              'scenario_sha256':sha(args.scenario),'started_unix':time.time(),'character':args.character}
+              'scenario_sha256':sha(args.scenario),'started_unix':time.time(),'character':args.character,
+              'settings_profile':'product_defaults' if args.product_defaults else 'saved_settings'}
     (args.output/'launch.json').write_text(json.dumps(identity,indent=2)+'\n')
     capture=None
     if args.capture_prompt:

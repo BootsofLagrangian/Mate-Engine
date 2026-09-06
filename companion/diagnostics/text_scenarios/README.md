@@ -89,3 +89,7 @@ from legacy `furniture_types`; an empty legacy list does not imply an empty rich
 catalogue. Exact-turn provider diagnostics contain the capability IDs/verbs actually
 forwarded on the request. Use these layers before attributing an omitted skill to
 model behavior rather than missing capability delivery.
+
+## Reproducible product settings
+
+Pass `--product-defaults` to test the product default perspective scene, scale and empty furniture layout instead of inheriting saved user preferences. The configured backend endpoint and requested character are retained. Both modes disable microphone capture and close the settings panel for the text fixture, record the effective initial settings and profile, and restore the complete original settings on exit. This changes the fixture environment only: scenario expectations are still never sent to the model, and every intent must originate from its real response. Existing saved-settings attempts remain valid evidence for their recorded environment.
