@@ -1,0 +1,149 @@
+{
+  "scope": "Actual native _start_job, real Codex process, native playback signals and read-back. PCM receipt is not acoustic onset. No ordinary LM request.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_job.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-native-job-current",
+      "--workspace",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\user-data\\workspace",
+      "--character",
+      "cheval-grand"
+    ],
+    "started": 1788720747.9543805,
+    "exe_sha256": "f965d3c142cb996a2e486df41ffdaedfd30548165f6f030de9a9d24e879b5612",
+    "script_sha256": "fcefef3215315c0b1bd3469f89ac08228efe63889d1718a3e6ee7b08c8f1fd66",
+    "parent_sha256": "38280eb30e9bc3c4529c13aa9f17803e6137872e0441a27844b410e835233d43",
+    "process_log": "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/logs/windows-native-job-current.process.log",
+    "exit_code": 0,
+    "finished": 1788720777.9006267,
+    "external_sources_stable": true
+  },
+  "checks": [
+    {
+      "label": "fresh fixture; no overwrite",
+      "ms": 0,
+      "ok": true
+    },
+    {
+      "label": "native ready",
+      "ms": 6714,
+      "ok": true
+    },
+    {
+      "label": "selected rig ready",
+      "ms": 6717,
+      "ok": true
+    },
+    {
+      "label": "authorized workspace-write job capability",
+      "ms": 6756,
+      "ok": true
+    },
+    {
+      "label": "native job submission owns ID",
+      "ms": 6760,
+      "ok": true
+    },
+    {
+      "label": "job and result playback finished within deadline",
+      "ms": 26249,
+      "ok": true
+    },
+    {
+      "label": "real job completed",
+      "ms": 26254,
+      "ok": true
+    },
+    {
+      "label": "native received tool progress",
+      "ms": 26260,
+      "ok": true
+    },
+    {
+      "label": "native session status and job log updated",
+      "ms": 26265,
+      "ok": true
+    },
+    {
+      "label": "ack actual PCM and playback start/drain",
+      "ms": 26270,
+      "ok": true
+    },
+    {
+      "label": "ack speech generation succeeded",
+      "ms": 26275,
+      "ok": true
+    },
+    {
+      "label": "result actual PCM and playback start/drain",
+      "ms": 26279,
+      "ok": true
+    },
+    {
+      "label": "result speech generation succeeded",
+      "ms": 26284,
+      "ok": true
+    },
+    {
+      "label": "ack PCM received before job starting event",
+      "ms": 26289,
+      "ok": true
+    },
+    {
+      "label": "ack playback began before first tool progress",
+      "ms": 26294,
+      "ok": true
+    },
+    {
+      "label": "actual workspace file bytes verified independently",
+      "ms": 26306,
+      "ok": true
+    },
+    {
+      "label": "original settings restored",
+      "ms": 26331,
+      "ok": true
+    },
+    {
+      "label": "original serialized settings restored on disk",
+      "ms": 26336,
+      "ok": true
+    }
+  ],
+  "failures": 0,
+  "submitted_ms": 6759,
+  "relative_timings_ms": {
+    "ack_first_pcm_ms": 517,
+    "ack_playback_ms": 534,
+    "first_tool_ms": 11683,
+    "job_start_ms": 538,
+    "result_first_pcm_ms": 15917,
+    "result_playback_ms": 15933,
+    "terminal_ms": 15566
+  },
+  "terminal": {
+    "character": "cheval-grand",
+    "detail": "Exclusively created mate-native-job-smoke.txt and verified its exact bytes are `MATE_NATIVE_JOB_OK\\n`.",
+    "job_id": "job-7897-3786",
+    "message": "Exclusively created mate-native-job-smoke.txt and verified its exact bytes are `MATE_NATIVE_JOB_OK\\n`.",
+    "sandbox": "workspace-write",
+    "status": "completed",
+    "type": "job",
+    "workspace": "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/user-data/workspace"
+  },
+  "fixture": "mate-native-job-smoke.txt",
+  "ack_playback_before_job_start": true,
+  "ack_playback_before_first_tool": true,
+  "playback_ended_ms": {
+    "ack": 10059,
+    "result": 26242
+  }
+}

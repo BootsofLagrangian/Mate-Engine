@@ -1,0 +1,14 @@
+{
+  "verdict": "APPROVED",
+  "reviewer": "/root/spatial_review",
+  "scope": "test design and actual Godot check-only; no Windows/job/GPU launch",
+  "resolved_findings": [
+    "Abort on output mkdir/write preflight failure before job",
+    "Label session log assertion without claiming panel widget inspection"
+  ],
+  "additional_check": "Original settings verified on disk against identical JSON serialization roundtrip",
+  "source_sha256": {
+    "companion/native/tools/probe_windows_job.gd": "fcefef3215315c0b1bd3469f89ac08228efe63889d1718a3e6ee7b08c8f1fd66",
+    "companion/native/tools/probe_windows_space_skills.gd": "38280eb30e9bc3c4529c13aa9f17803e6137872e0441a27844b410e835233d43"
+  }
+}
