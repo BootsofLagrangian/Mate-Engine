@@ -72,6 +72,12 @@ func wait_for(predicate: Callable,seconds: float) -> bool:
 		await process_frame
 		await sample()
 	return false
+func moving_owned_walk() -> bool:
+	# State "walk" is emitted before the first locomotion sample starts its
+	# clip. Dispatch only after production has acquired that loop and moved
+	# past the existing 20 px/s interruption threshold.
+	return app.autonomy.state == "walk" and absf(app.autonomy.velocity.x) > 20.0 \
+		and not app._walk_started.is_empty() and app.motion.current_gesture() == app._walk_started
 func arrived(id: String) -> bool:
 	return app.living.outcomes.any(func(row): return row.id == id and row.outcome == "arrived")
 func request(id: String,target: String) -> bool:
@@ -86,6 +92,8 @@ func run() -> void:
 	var settings = root.get_node("Settings")
 	original = settings.data.duplicate(true)
 	settings.data.merge({"vad_enabled":false,"panel_open":false,"autonomy_enabled":true,"surface_roam":true,"behavior_enabled":true,"character":"cheval-grand","pet_scale":0.6,"idle_clip":"auto"},true)
+	for option in [["--view-yaw","view_yaw_deg"],["--view-pitch","view_pitch_deg"]]:
+		if not argument(option[0]).is_empty(): settings.data[option[1]] = float(argument(option[0]))
 	started = Time.get_ticks_msec()
 	app = load("res://main.tscn").instantiate()
 	root.add_child(app)
@@ -132,9 +140,14 @@ func run() -> void:
 	check((Vector2(root.position)+Vector2(app._projected_anchors().foot)).distance_to(foot+Vector2(240,0)) < 2.0,"rendered foot actually reaches right point")
 	phase = "stop_and_settle"
 	check(request("chain:stop","chain_left"),"trip for interruption accepted")
-	check(await wait_for(func(): return app.autonomy.state == "walk",12),"interruption begins during actual walk")
-	await wait_for(func(): return false,1.5)
-	check(app.autonomy.state == "walk" and absf(app.autonomy.velocity.x) > 20.0,"stop is issued during moving gait")
+	check(await wait_for(moving_owned_walk,12),"interruption begins during actual walk")
+	var upper_start := root.position
+	app._play_dialogue_action({"gesture":"wave","emotion":"neutral","intensity":1.0,"speed":1.0})
+	await wait_for(func(): return false,0.5)
+	check(app.motion.is_upper_body_active() and app.motion.current_gesture() == app._walk_started and not app._walk_started.is_empty(),"native action dispatcher layers upper body over the owned walk")
+	check(abs(root.position.x-upper_start.x)>10 and app.autonomy.state == "walk","upper-body action preserves actual window travel")
+	await wait_for(func(): return false,1.0)
+	check(await wait_for(moving_owned_walk,3),"stop is issued during moving gait")
 	app.living.cancel("user_stop")
 	var stop_position := root.position
 	var until := Time.get_ticks_msec()+2200
@@ -143,6 +156,7 @@ func run() -> void:
 		await sample()
 		max_stop_drift = maxf(max_stop_drift,Vector2(root.position-stop_position).length())
 	check(max_stop_drift == 0.0,"user stop freezes the native window while the body settles")
+	app.motion.stop_upper_body_gesture()
 	app._set_panel_open(true,false)
 	for pair in [["wave","nod"],["nod","wave"],["wave","wave"]]:
 		await preview_pair(str(pair[0]),str(pair[1]))
@@ -189,7 +203,7 @@ func finish() -> void:
 	settings.save_now()
 	if csv: csv.close()
 	var report := {"checks":checks,"frames":frames,"transitions":transitions,"outcomes":app.living.outcomes,"pairs":pairs,
-		"renderer":RenderingServer.get_video_adapter_name(),"character_identity":character_identity,"stop_drift_px":max_stop_drift,
+		"renderer":RenderingServer.get_video_adapter_name(),"character_identity":character_identity,"view":app._view_settings.duplicate(),"camera_basis":str(app.camera.basis),"stop_drift_px":max_stop_drift,
 		"failures":checks.filter(func(row):return not row.ok).size(),
 		"scope":"Normal production native scene, actual Windows placement/movement, user intentions, moving reversal, repeated turns/walks, user stop and three overlapping gesture pairs through the panel button; own viewport only; capture overhead included."}
 	FileAccess.open(output.path_join("report.json"),FileAccess.WRITE).store_string(JSON.stringify(report,"  "))

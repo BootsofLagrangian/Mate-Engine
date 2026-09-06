@@ -1,0 +1,19 @@
+# Native appearance variants
+
+The conversation tab has an optional **외형** selector populated only from the selected character's installed `avatar_variants` catalogue. Labels, descriptions and mood tags are declarative display data. Changing an outfit keeps the same character, dialogue session and voice. It does not automatically change the character's persona or execute package code.
+
+`request_avatar_variant(variant_id, intent_id = "", source = "user")` is the shared UI/LM path. Living routes `{kind:"change_appearance", variant_id:"wet"}` with the stable `<turn_id>:intent` identifier; action/done duplicates do not restart the request. Unknown or missing variants are rejected. Pending requests are cancelled by supersession, local Stop/new chat, behavior cancellation, disconnect or a character change. Internal `avatar_changed` motion cleanup is explicitly exempt from cancelling itself. Catalogue refresh preserves the requested pending variant while available; removal cancels it.
+
+The existing avatar-ready callback and actual `load_from_file` path produce `completed` only after successful loading and framing. Failed download/load emits `failed`; a cancelled deferred callback cannot apply later. Completion also checks the pending character/variant identity. Preferences are committed per character only after success. Native world context publishes `appearance_supported` and committed `active_variant_id`, included in its fingerprint; unsupported mode publishes the default ID.
+
+Default avatar cache paths remain compatible. Variants use a separate `avatars/variants/SHA256(character + newline + variant).vrm` namespace, avoiding filename sanitization collisions. The catalogued HTTP URL includes the validated variant query. Cancellation stops the actual HTTPRequest and removes its partial file. Variant catalogues currently lack content hashes, so their avatar loads refresh the local download rather than accidentally retaining a former wet default when a dry default is installed.
+
+Validation:
+
+- `test_avatar_variants.gd`: **32/0**. Real main transaction methods with simulated HTTP/VRM loading and framing; catalogue validation, UI events, isolated cache/query construction, deduplication, success/failure timing, session preservation, supersession, stale callback, queued apply after Stop, catalogue-refresh race, disabled/disconnect cancellation and internal cleanup exemption. Two additional checks keep seating transition/styled locomotion assets loaded for their owners while excluding them from ordinary gesture preview.
+- Full native import/selftest: **622/0**, `/tmp/mate-selftest-avatar-variants-final`.
+- Existing view UI test: **38/0** before the two contextual-preview-only checks were added.
+- `native-avatar-variants.png`: inspected actual 380×720 Linux native settings window. The selector, description and mood label fit. Preview uses the existing Windows Korean font read-only; no font is copied or bundled.
+- Independent review: `INDEPENDENT-REVIEW.md`, **APPROVED** for the native appearance transaction. It records the original Stop and catalogue-refresh race findings and their fixes. The subsequent contextual-preview filter is a separate small follow-up requested by root/Motion.
+
+These tests do not prove actual Windows avatar-byte reload, LM command generation or natural seating choreography. Root exclusively launches Windows integration probes. The authored seating temporal probe is separate and retains failures; static endpoint success is insufficient to accept the user-rejected sit-down transition.

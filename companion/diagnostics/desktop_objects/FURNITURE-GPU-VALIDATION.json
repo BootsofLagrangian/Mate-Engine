@@ -1,0 +1,485 @@
+{
+  "scope": "Actual GPU provider via WebSocket; native execution not performed; fixture existing-chair target and simulated user_stop terminal feedback. All24 attempts retained.",
+  "rounds": [
+    {
+      "round": "furniture-gpu-v1",
+      "report_sha256": "0e23c921b35ecdbf375a82a86f7a4376972a928790bd3c08713b7625187a54c8",
+      "catalog_sha256": "321670f5694be458125bac253147ffe02404c73263066499ea76e6686286b747",
+      "exact": 3,
+      "attempts": 6,
+      "runs": [
+        {
+          "character": "cheval-grand",
+          "case": "computer",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "computer",
+            "verb": "use",
+            "placement": "near"
+          },
+          "timings": {
+            "first_token_ms": 1054.7,
+            "first_text_ms": 1055.2,
+            "llm_done_ms": 2207.3,
+            "first_audio_ms": 3216.1,
+            "total_ms": 4038.3
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "cheval-grand",
+          "case": "configure",
+          "intent_exact": false,
+          "ok": false,
+          "intent": null,
+          "timings": {
+            "first_token_ms": 246.6,
+            "first_text_ms": 246.8,
+            "total_ms": 803.4
+          },
+          "failure": "Non-Japanese script in spoken output; suppressed before TTS",
+          "feedback_acknowledged": false
+        },
+        {
+          "character": "rice-shower",
+          "case": "computer",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "computer",
+            "verb": "use",
+            "placement": "near"
+          },
+          "timings": {
+            "first_token_ms": 196.8,
+            "first_text_ms": 197.0,
+            "llm_done_ms": 1472.9,
+            "total_ms": 1474.4
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "rice-shower",
+          "case": "configure",
+          "intent_exact": false,
+          "ok": false,
+          "intent": null,
+          "timings": {
+            "first_token_ms": 176.9,
+            "first_text_ms": 177.1,
+            "total_ms": 780.8
+          },
+          "failure": "Non-Japanese script in spoken output; suppressed before TTS",
+          "feedback_acknowledged": false
+        },
+        {
+          "character": "eishin-flash",
+          "case": "computer",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "computer",
+            "verb": "use",
+            "placement": "near"
+          },
+          "timings": {
+            "first_token_ms": 182.2,
+            "first_text_ms": 182.4,
+            "llm_done_ms": 1480.8,
+            "total_ms": 1481.7
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "eishin-flash",
+          "case": "configure",
+          "intent_exact": false,
+          "ok": false,
+          "intent": null,
+          "timings": {
+            "first_token_ms": 172.9,
+            "first_text_ms": 173.1,
+            "total_ms": 767.3
+          },
+          "failure": "Non-Japanese script in spoken output; suppressed before TTS",
+          "feedback_acknowledged": false
+        }
+      ]
+    },
+    {
+      "round": "furniture-gpu-v2",
+      "report_sha256": "3089cf170d03e0815e60a9574f46a2986da2369f2a19dfdecc14cc6cd10c3dbb",
+      "catalog_sha256": "7dde84a1e3397918e967dddbbab76dc9138430cac3657cff91e740d7b113bb08",
+      "exact": 3,
+      "attempts": 6,
+      "runs": [
+        {
+          "character": "cheval-grand",
+          "case": "computer",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "computer",
+            "verb": "use",
+            "placement": "near"
+          },
+          "timings": {
+            "first_token_ms": 432.3,
+            "first_text_ms": 432.7,
+            "llm_done_ms": 1758.6,
+            "first_audio_ms": 1978.3,
+            "total_ms": 3350.7
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "cheval-grand",
+          "case": "configure",
+          "intent_exact": false,
+          "ok": false,
+          "intent": null,
+          "timings": {
+            "first_token_ms": 177.1,
+            "first_text_ms": 177.3,
+            "total_ms": 619.3
+          },
+          "failure": "Non-Japanese script in spoken output; suppressed before TTS",
+          "feedback_acknowledged": false
+        },
+        {
+          "character": "rice-shower",
+          "case": "computer",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "computer",
+            "verb": "use",
+            "placement": "near"
+          },
+          "timings": {
+            "first_token_ms": 168.1,
+            "first_text_ms": 168.3,
+            "llm_done_ms": 1000.6,
+            "total_ms": 1001.6
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "rice-shower",
+          "case": "configure",
+          "intent_exact": false,
+          "ok": false,
+          "intent": null,
+          "timings": {
+            "first_token_ms": 175.9,
+            "first_text_ms": 176.1,
+            "total_ms": 736.9
+          },
+          "failure": "Non-Japanese script in spoken output; suppressed before TTS",
+          "feedback_acknowledged": false
+        },
+        {
+          "character": "eishin-flash",
+          "case": "computer",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "computer",
+            "verb": "use",
+            "placement": "near"
+          },
+          "timings": {
+            "first_token_ms": 165.6,
+            "first_text_ms": 165.9,
+            "llm_done_ms": 1291.3,
+            "total_ms": 1292.3
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "eishin-flash",
+          "case": "configure",
+          "intent_exact": false,
+          "ok": false,
+          "intent": null,
+          "timings": {
+            "first_token_ms": 164.9,
+            "first_text_ms": 165.1,
+            "total_ms": 589.7
+          },
+          "failure": "Non-Japanese script in spoken output; suppressed before TTS",
+          "feedback_acknowledged": false
+        }
+      ]
+    },
+    {
+      "round": "furniture-gpu-v2-natural",
+      "report_sha256": "7c23a7c6d81705b477a188bf474f60b281aed2c5703f096c88b768ceb4ae482d",
+      "catalog_sha256": "7dde84a1e3397918e967dddbbab76dc9138430cac3657cff91e740d7b113bb08",
+      "exact": 3,
+      "attempts": 3,
+      "runs": [
+        {
+          "character": "cheval-grand",
+          "case": "configure",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "prop:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 489.7,
+            "first_text_ms": 489.9,
+            "llm_done_ms": 2109.7,
+            "total_ms": 2110.8
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "rice-shower",
+          "case": "configure",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "prop:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 189.6,
+            "first_text_ms": 189.8,
+            "llm_done_ms": 1685.2,
+            "total_ms": 1687.0
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "eishin-flash",
+          "case": "configure",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "prop:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 185.6,
+            "first_text_ms": 185.8,
+            "llm_done_ms": 1965.4,
+            "total_ms": 1966.6
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        }
+      ]
+    },
+    {
+      "round": "furniture-gpu-v2-korean",
+      "report_sha256": "1e57c6b0185876bf8080a75906ff28f844a2c5bcb52b1e8cbaa0e8f5fd802ff3",
+      "catalog_sha256": "7dde84a1e3397918e967dddbbab76dc9138430cac3657cff91e740d7b113bb08",
+      "exact": 2,
+      "attempts": 3,
+      "runs": [
+        {
+          "character": "cheval-grand",
+          "case": "configure",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "prop:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 346.1,
+            "first_text_ms": 346.3,
+            "llm_done_ms": 2002.0,
+            "total_ms": 2003.8
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "rice-shower",
+          "case": "configure",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "prop:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 206.8,
+            "first_text_ms": 207.0,
+            "llm_done_ms": 1922.4,
+            "total_ms": 1923.3
+          },
+          "failure": null,
+          "feedback_acknowledged": true
+        },
+        {
+          "character": "eishin-flash",
+          "case": "configure",
+          "intent_exact": false,
+          "ok": true,
+          "intent": null,
+          "timings": {
+            "first_token_ms": 182.9,
+            "first_text_ms": 183.1,
+            "llm_done_ms": 2028.6,
+            "total_ms": 2030.3
+          },
+          "failure": null,
+          "feedback_acknowledged": false
+        }
+      ]
+    },
+    {
+      "round": "furniture-gpu-v3-korean",
+      "report_sha256": "14446c7fa40a3f4958860c69f659051b6608ca2c49f42ff02527d84ee14d47be",
+      "exact": 0,
+      "attempts": 3,
+      "scope": "After removing all fictional target examples; malformed scalar fields and missing target IDs rejected.",
+      "runs": [
+        {
+          "character": "cheval-grand",
+          "intent_exact": false,
+          "ok": true,
+          "raw": "{\"text\":\"はい、トレーナーさん。椅子を45度回転させ、サイズを80%に縮小し、冷たい色調に変更します。\", \"emotion\": \"neutral\", \"gesture\": \"idle\", \"intent\": {\"kind\": \"furniture\", \"object_type\": \"chair\", \"verb\": \"configure\", \"scale\": [0.8, 0.8], \"yaw_deg\": [45.0]}}"
+        },
+        {
+          "character": "rice-shower",
+          "intent_exact": false,
+          "ok": true,
+          "raw": "{\"text\":\"45度に回して、80%に縮めて、冷たい色調に変更しますね。\", \"emotion\": \"neutral\", \"gesture\": \"think\", \"intent\": {\"kind\": \"furniture\", \"object_type\": \"chair\", \"verb\": \"configure\", \"scale\": [0.8, 0.8], \"yaw_deg\": [-45.0]}}"
+        },
+        {
+          "character": "eishin-flash",
+          "intent_exact": false,
+          "ok": true,
+          "raw": "{\"text\":\"よろしくお願いします。\", \"emotion\": \"neutral\", \"gesture\": \"nod\", \"intent\": {\"kind\": \"furniture\", \"object_type\": \"chair\", \"verb\": \"configure\", \"scale\": [0.8, 0.5], \"appearance\": \"cool\"}}"
+        }
+      ]
+    },
+    {
+      "round": "furniture-gpu-v4-korean",
+      "report_sha256": "55b5577a0ab006c78122afdc0c59d061c335f21fa3c9bb21b47bb392e6b078a0",
+      "exact": 3,
+      "attempts": 3,
+      "scope": "Actual typed native-schema prop metadata and grounded compatible configure example; one Korean attempt per profile.",
+      "runs": [
+        {
+          "character": "cheval-grand",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "object:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 439.2,
+            "first_text_ms": 439.6,
+            "llm_done_ms": 2187.8,
+            "total_ms": 2189.0
+          }
+        },
+        {
+          "character": "rice-shower",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "object:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 185.6,
+            "first_text_ms": 185.8,
+            "llm_done_ms": 2006.5,
+            "total_ms": 2007.7
+          }
+        },
+        {
+          "character": "eishin-flash",
+          "intent_exact": true,
+          "ok": true,
+          "intent": {
+            "kind": "furniture",
+            "object_type": "chair",
+            "verb": "configure",
+            "target_id": "object:obj_1",
+            "scale": 0.8,
+            "yaw_deg": 45.0,
+            "appearance": "cool"
+          },
+          "timings": {
+            "first_token_ms": 196.4,
+            "first_text_ms": 196.5,
+            "llm_done_ms": 2123.2,
+            "total_ms": 2124.3
+          }
+        }
+      ]
+    }
+  ],
+  "v2_source_sha256": {
+    "engine/intent.py": "28feedf7bab04f1e0cc2e3290bd945d8a0c635148936a643ecc4359706487751",
+    "engine/furniture.py": "6767681b5a71cbf704b482750077c58994d071171940e7e43c189c3a8c443904",
+    "engine/providers/omni.py": "bcb1c0d15629599c341f55582531aff2a6e1f07ff16c48f2dc68efe3a3593ef3",
+    "engine/server.py": "4e20c16550a4c05dbd8868d55e48314d2eb71ca0949061db33ed395a8f4ccb26"
+  },
+  "final_v4_source_hashes": {
+    "engine/intent.py": "0eb5c67802e397e6a12ebb2ac0955e3f8cf134471b4f22cec2cfdf45e70e5c5e",
+    "engine/furniture.py": "6767681b5a71cbf704b482750077c58994d071171940e7e43c189c3a8c443904",
+    "engine/providers/omni.py": "bcb1c0d15629599c341f55582531aff2a6e1f07ff16c48f2dc68efe3a3593ef3",
+    "engine/server.py": "6bcfb81ffabf80de1bd79236714732a4e2544996680582a059c302305c656c88"
+  }
+}

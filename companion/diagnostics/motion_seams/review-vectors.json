@@ -1,0 +1,113 @@
+{
+  "failures": 0,
+  "rows": [
+    {
+      "direction_cosine": 0.999944388866425,
+      "fps": 60,
+      "incoming_deg_s": 458.068166649279,
+      "mode": "clip_clip",
+      "outgoing_deg_s": 473.851313141831,
+      "relative_vector_error": 0.0348837197569834,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999944448471069,
+      "fps": 60,
+      "incoming_deg_s": 458.068958951223,
+      "mode": "clip_idle",
+      "outgoing_deg_s": 473.851313141831,
+      "relative_vector_error": 0.0348819720348312,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999638438224792,
+      "fps": 60,
+      "incoming_deg_s": 127.425074665268,
+      "mode": "walking_upper",
+      "outgoing_deg_s": 127.400431342743,
+      "relative_vector_error": 0.0268973372967597,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.99847424030304,
+      "fps": 60,
+      "incoming_deg_s": 436.774041043767,
+      "mode": "seated_entry",
+      "outgoing_deg_s": 473.851313141831,
+      "relative_vector_error": 0.0945270408724537,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999986052513123,
+      "fps": 120,
+      "incoming_deg_s": 465.381496080422,
+      "mode": "clip_clip",
+      "outgoing_deg_s": 473.768749815144,
+      "relative_vector_error": 0.0184584251774207,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999986171722412,
+      "fps": 120,
+      "incoming_deg_s": 465.380621816208,
+      "mode": "clip_idle",
+      "outgoing_deg_s": 473.768749815144,
+      "relative_vector_error": 0.01846062192441,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999963045120239,
+      "fps": 120,
+      "incoming_deg_s": 126.699927141466,
+      "mode": "walking_upper",
+      "outgoing_deg_s": 127.771474539215,
+      "relative_vector_error": 0.0119829059342471,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999904096126556,
+      "fps": 120,
+      "incoming_deg_s": 454.644110856082,
+      "mode": "seated_entry",
+      "outgoing_deg_s": 473.768749815144,
+      "relative_vector_error": 0.0425851459853888,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999995827674866,
+      "fps": 240,
+      "incoming_deg_s": 469.401636142865,
+      "mode": "clip_clip",
+      "outgoing_deg_s": 473.723779849649,
+      "relative_vector_error": 0.00956286168484191,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.99999588727951,
+      "fps": 240,
+      "incoming_deg_s": 469.399231916277,
+      "mode": "clip_idle",
+      "outgoing_deg_s": 473.723779849649,
+      "relative_vector_error": 0.00956787827688442,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999995350837708,
+      "fps": 240,
+      "incoming_deg_s": 127.048130185354,
+      "mode": "walking_upper",
+      "outgoing_deg_s": 127.859542998373,
+      "relative_vector_error": 0.00702566875034656,
+      "upper_active": false
+    },
+    {
+      "direction_cosine": 0.999992370605469,
+      "fps": 240,
+      "incoming_deg_s": 463.99611515069,
+      "mode": "seated_entry",
+      "outgoing_deg_s": 473.723779849649,
+      "relative_vector_error": 0.020890814028288,
+      "upper_active": false
+    }
+  ]
+}

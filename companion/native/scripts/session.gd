@@ -144,7 +144,7 @@ func handle(event: Dictionary) -> bool:
 			return _accept(event)
 		"job":
 			return _handle_job(event)
-		"pong", "ping", "reset", "character_selected", "world_context":
+		"pong", "ping", "reset", "character_selected", "world_context", "intent_result":
 			return _accept(event)
 		"error":
 			if str(event.get("turn_id", "")).is_empty():

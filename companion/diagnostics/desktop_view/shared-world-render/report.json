@@ -1,0 +1,8 @@
+{
+  "failures": [],
+  "front_blue_samples": 110448,
+  "max_rgb_difference": 0.0,
+  "mismatches": 0,
+  "opaque_samples": 150822,
+  "scope": "Actual intersecting imported chair meshes in one World3D, root and two off-axis crops. Linux renderer; native desktop alpha overdraw not covered."
+}

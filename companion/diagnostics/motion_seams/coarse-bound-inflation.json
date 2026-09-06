@@ -1,0 +1,83 @@
+[
+  {
+    "character": "cheval-grand",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.106485, 0.0, 0.102576)",
+    "extra_upper": "(0.049728, 0.043813, 0.048953)",
+    "fps": 60,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "rice-shower",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.044121, 0.0, 0.069486)",
+    "extra_upper": "(0.057875, 0.020065, 0.03866)",
+    "fps": 60,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "eishin-flash",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.070212, 0.0, 0.044022)",
+    "extra_upper": "(0.040629, 0.049882, 0.037714)",
+    "fps": 60,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "cheval-grand",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.107076, 0.0, 0.102982)",
+    "extra_upper": "(0.049948, 0.043813, 0.048846)",
+    "fps": 90,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "rice-shower",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.044314, 0.0, 0.069636)",
+    "extra_upper": "(0.058129, 0.020065, 0.03866)",
+    "fps": 90,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "eishin-flash",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.07052, 0.0, 0.044124)",
+    "extra_upper": "(0.040807, 0.049882, 0.038149)",
+    "fps": 90,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "cheval-grand",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.107426, 0.0, 0.103232)",
+    "extra_upper": "(0.050114, 0.044195, 0.048792)",
+    "fps": 144,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "rice-shower",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.04438, 0.0, 0.069714)",
+    "extra_upper": "(0.058226, 0.020199, 0.038659)",
+    "fps": 144,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "eishin-flash",
+    "duration_s": 1.36666667461395,
+    "extra_lower": "(0.070671, 0.0, 0.044154)",
+    "extra_upper": "(0.040901, 0.050082, 0.038523)",
+    "fps": 144,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  }
+]

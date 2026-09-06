@@ -1,0 +1,83 @@
+{
+  "failures": [
+    "reset"
+  ],
+  "max_pixel_error": 0.0,
+  "observations": [
+    {
+      "actual_mesh_below_anchor_px": 0.0,
+      "actual_sole_below_anchor_px": 0.0,
+      "bottom_below_anchor_px": 0.0,
+      "bounds": "[P: (389.4881, 388.8), S: (257.0238, 331.2)]",
+      "floor_placement_safe": true,
+      "foot_px": "(518.0, 720.0)",
+      "rig": "cheval-grand",
+      "safe_origin_shift": "(0.0, 0.0)",
+      "view_pitch": 0.0
+    },
+    {
+      "actual_mesh_below_anchor_px": -0.552978515625,
+      "actual_sole_below_anchor_px": -1.04559326171875,
+      "bottom_below_anchor_px": 0.0,
+      "bounds": "[P: (389.4881, 448.7607), S: (257.0238, 293.4555)]",
+      "floor_placement_safe": true,
+      "foot_px": "(518.0, 742.2162)",
+      "rig": "cheval-grand",
+      "safe_origin_shift": "(0.0, 0.0)",
+      "view_pitch": 45.0
+    },
+    {
+      "actual_mesh_below_anchor_px": 0.0,
+      "actual_sole_below_anchor_px": 0.0,
+      "bottom_below_anchor_px": 0.0,
+      "bounds": "[P: (396.156, 388.8), S: (243.6881, 331.2)]",
+      "floor_placement_safe": true,
+      "foot_px": "(518.0001, 720.0)",
+      "rig": "rice-shower",
+      "safe_origin_shift": "(0.0, 0.0)",
+      "view_pitch": 0.0
+    },
+    {
+      "actual_mesh_below_anchor_px": -26.5662841796875,
+      "actual_sole_below_anchor_px": -26.7222900390625,
+      "bottom_below_anchor_px": 0.0,
+      "bounds": "[P: (396.156, 466.171), S: (243.688, 299.2772)]",
+      "floor_placement_safe": true,
+      "foot_px": "(518.0001, 765.4482)",
+      "rig": "rice-shower",
+      "safe_origin_shift": "(0.0, 0.0)",
+      "view_pitch": 45.0
+    },
+    {
+      "actual_mesh_below_anchor_px": 0.0,
+      "actual_sole_below_anchor_px": 0.0,
+      "bottom_below_anchor_px": 0.0,
+      "bounds": "[P: (388.6211, 388.8), S: (258.7579, 331.2)]",
+      "floor_placement_safe": true,
+      "foot_px": "(518.0, 720.0)",
+      "rig": "eishin-flash",
+      "safe_origin_shift": "(0.0, 0.0)",
+      "view_pitch": 0.0
+    },
+    {
+      "actual_mesh_below_anchor_px": -0.573974609375,
+      "actual_sole_below_anchor_px": -12.8333129882812,
+      "bottom_below_anchor_px": 0.0,
+      "bounds": "[P: (388.621, 446.7125), S: (258.758, 295.9214)]",
+      "floor_placement_safe": true,
+      "foot_px": "(518.0001, 742.6339)",
+      "rig": "eishin-flash",
+      "safe_origin_shift": "(0.0, 0.0)",
+      "view_pitch": 45.0
+    }
+  ],
+  "pivot_cases": 0,
+  "scope": "Actual main camera/frame/pivot methods with networking, UI, autonomy and props setup suppressed; three real rigs. No native panel-focus or seating contact claim.",
+  "source_hashes": {
+    "backend_client": "b6f6358e818c0515b4c1a86c590d16b7a23889f3f71c79f75f2c362a86d1c2ec",
+    "companion_panel_window": "c864130e87dd9105b4113d2d067a9c9ed3f06d37662e58de79fa8924b4bb6a4d",
+    "desktop_view": "c78277b56d24ccce7eeae51ad684ab3658f57e8ffcf387510865bc69b685e407",
+    "main": "10fc3d26522b4b52c4d8233db1b91ab855f63a6299c60fb64bb9e642cc9423d7",
+    "settings": "34c6b958eab72a718841f2fe65dafca523c6e6e253b1f2f5e0c5938ee84edb60"
+  }
+}

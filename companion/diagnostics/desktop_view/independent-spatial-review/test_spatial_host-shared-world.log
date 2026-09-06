@@ -1,0 +1,9 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+{"checks":9,"failures":[],"scope":"Host canonical migration and rollback, actual imported chair geometry, headless"}
+ERROR: Parameter "scenario" is null.
+   at: scenario_remove_viewport_visibility_mask (servers/rendering/renderer_scene_cull.cpp:488)
+   GDScript backtrace (most recent call first):
+       [0] set_shared_world (res://scripts/desktop_object_window.gd:388)
+       [1] _sync_spatial_window (res://scripts/desktop_objects_host.gd:958)
+       [2] run (/home/hard2251/workspace/mate-engine/Mate-Engine/companion/diagnostics/desktop_view/test_spatial_host.gd:38)

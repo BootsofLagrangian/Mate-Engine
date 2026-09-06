@@ -1,0 +1,148 @@
+{
+  "scope": "Post-inspection source calibration; raw Mambo FK before gait/contact corrections",
+  "trace_path": "assets/research/playful-walk/contact-traces.json",
+  "rows": [
+    {
+      "name": "playful_strut",
+      "source_alias": "uma_homewalk03_loop",
+      "source_duration_s": 1.29999995231628,
+      "reference_rig": "Mambo mini",
+      "rest_leg_length_m": 0.19608956575394,
+      "intervals": [
+        {
+          "side": "left",
+          "phase_interval": [
+            0.31,
+            0.59
+          ],
+          "samples": 67,
+          "estimated_full_period_travel_m": 0.31103046711301446,
+          "fit_residual_rms_m": 0.002904139703435528
+        },
+        {
+          "side": "right",
+          "phase_interval": [
+            0.81,
+            0.09
+          ],
+          "samples": 67,
+          "estimated_full_period_travel_m": 0.29274920927968257,
+          "fit_residual_rms_m": 0.0020537143671871916
+        }
+      ],
+      "estimated_full_period_travel_m": 0.3018898381963485,
+      "estimated_cycle_stride_leg_lengths": 1.539550750880699,
+      "installed_style": {
+        "version": 1,
+        "cycle_stride_leg_lengths": 1.539550751,
+        "contacts": {
+          "left": [
+            0.31,
+            0.59
+          ],
+          "right": [
+            0.81,
+            0.09
+          ]
+        },
+        "contact_blend_phase": 0.04,
+        "preserve_source_hip_height": true,
+        "hip_translation_limit_leg_lengths": 0.15
+      },
+      "source_hips_mean_m": [
+        -0.00011355152540393939,
+        -0.006801360486133489,
+        0.023454722389578818
+      ],
+      "source_hips_peak_centered_xz_absolute_y_m": 0.026736585818621112,
+      "source_hips_peak_leg_lengths": 0.13634884505874786
+    },
+    {
+      "name": "mambo_goofy_walk",
+      "source_alias": "uma_walkunique09_loop",
+      "source_duration_s": 4.03333330154419,
+      "reference_rig": "Mambo mini",
+      "rest_leg_length_m": 0.19608956575394,
+      "intervals": [
+        {
+          "side": "left",
+          "phase_interval": [
+            0.37,
+            0.52
+          ],
+          "samples": 36,
+          "estimated_full_period_travel_m": 0.806886099911794,
+          "fit_residual_rms_m": 0.002953851502752712
+        },
+        {
+          "side": "left",
+          "phase_interval": [
+            0.88,
+            0.01
+          ],
+          "samples": 31,
+          "estimated_full_period_travel_m": 0.8173048350238994,
+          "fit_residual_rms_m": 0.001989340417330975
+        },
+        {
+          "side": "right",
+          "phase_interval": [
+            0.06,
+            0.3
+          ],
+          "samples": 58,
+          "estimated_full_period_travel_m": 0.8151051527318758,
+          "fit_residual_rms_m": 0.0038591241010883753
+        },
+        {
+          "side": "right",
+          "phase_interval": [
+            0.645,
+            0.835
+          ],
+          "samples": 46,
+          "estimated_full_period_travel_m": 0.8283096312111886,
+          "fit_residual_rms_m": 0.003052247044987267
+        }
+      ],
+      "estimated_full_period_travel_m": 0.8169014297196895,
+      "estimated_cycle_stride_leg_lengths": 4.16596072605294,
+      "installed_style": {
+        "version": 1,
+        "cycle_stride_leg_lengths": 4.165960726,
+        "contacts": {
+          "left": [
+            [
+              0.37,
+              0.52
+            ],
+            [
+              0.88,
+              0.01
+            ]
+          ],
+          "right": [
+            [
+              0.06,
+              0.3
+            ],
+            [
+              0.645,
+              0.835
+            ]
+          ]
+        },
+        "contact_blend_phase": 0.025,
+        "preserve_source_hip_height": true,
+        "hip_translation_limit_leg_lengths": 0.25
+      },
+      "source_hips_mean_m": [
+        -0.001056850719699771,
+        -0.006917576581031426,
+        0.008113502503450337
+      ],
+      "source_hips_peak_centered_xz_absolute_y_m": 0.04329576150164812,
+      "source_hips_peak_leg_lengths": 0.2207958456901126
+    }
+  ]
+}

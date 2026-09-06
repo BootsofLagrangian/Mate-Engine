@@ -1,0 +1,13 @@
+{
+	"failures": [],
+	"max_pixel_error": 0.0000863167442730628,
+	"pivot_cases": 756,
+	"scope": "Actual main camera/frame/pivot methods with networking, UI, autonomy and props setup suppressed; three real rigs. No native panel-focus or seating contact claim.",
+	"source_hashes": {
+		"backend_client": "b6f6358e818c0515b4c1a86c590d16b7a23889f3f71c79f75f2c362a86d1c2ec",
+		"companion_panel_window": "c864130e87dd9105b4113d2d067a9c9ed3f06d37662e58de79fa8924b4bb6a4d",
+		"desktop_view": "69b319cc7f8a5bf7d8b055f57895d41f8ea6fbe2c4c1a55ccd5e70aadec27ca6",
+		"main": "bef0eb5b6ca847cff9765b1e09e429203ff877fff1e7e7bb8082a1afb94edab1",
+		"settings": "1c6923b64512eb2960c5f97f363c45b1c649f7608bc74480c834e7b3d6f7e823"
+	}
+}

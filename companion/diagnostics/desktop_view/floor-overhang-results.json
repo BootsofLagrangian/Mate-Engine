@@ -1,0 +1,69 @@
+{
+	"failures": [],
+	"max_pixel_error": 0.0,
+	"observations": [
+		{
+			"bottom_below_anchor_px": 0.0,
+			"bounds": "[P: (358.3286, 388.8), S: (319.3428, 331.2)]",
+			"floor_placement_safe": true,
+			"foot_px": "(518.0, 720.0)",
+			"rig": "cheval-grand",
+			"safe_origin_shift": "(0.0, 0.0)",
+			"view_pitch": 0.0
+		},
+		{
+			"bottom_below_anchor_px": 80.7415161132812,
+			"bounds": "[P: (358.3286, 374.0535), S: (319.3428, 426.688)]",
+			"floor_placement_safe": false,
+			"foot_px": "(518.0, 720.0)",
+			"rig": "cheval-grand",
+			"safe_origin_shift": "(0.0, -84.74146)",
+			"view_pitch": 45.0
+		},
+		{
+			"bottom_below_anchor_px": 0.0,
+			"bounds": "[P: (367.0998, 388.8), S: (301.8005, 331.2)]",
+			"floor_placement_safe": true,
+			"foot_px": "(518.0001, 720.0)",
+			"rig": "rice-shower",
+			"safe_origin_shift": "(0.0, 0.0)",
+			"view_pitch": 0.0
+		},
+		{
+			"bottom_below_anchor_px": 86.3008422851562,
+			"bounds": "[P: (367.0998, 380.2649), S: (301.8005, 426.036)]",
+			"floor_placement_safe": false,
+			"foot_px": "(518.0001, 720.0)",
+			"rig": "rice-shower",
+			"safe_origin_shift": "(0.0, -90.3009)",
+			"view_pitch": 45.0
+		},
+		{
+			"bottom_below_anchor_px": 0.0,
+			"bounds": "[P: (352.6417, 388.8), S: (330.7167, 331.2)]",
+			"floor_placement_safe": true,
+			"foot_px": "(518.0, 720.0)",
+			"rig": "eishin-flash",
+			"safe_origin_shift": "(0.0, 0.0)",
+			"view_pitch": 0.0
+		},
+		{
+			"bottom_below_anchor_px": 87.1834716796875,
+			"bounds": "[P: (352.6417, 369.5464), S: (330.7167, 437.6371)]",
+			"floor_placement_safe": false,
+			"foot_px": "(518.0, 720.0)",
+			"rig": "eishin-flash",
+			"safe_origin_shift": "(0.0, -91.18347)",
+			"view_pitch": 45.0
+		}
+	],
+	"pivot_cases": 0,
+	"scope": "Actual main camera/frame/pivot methods with networking, UI, autonomy and props setup suppressed; three real rigs. No native panel-focus or seating contact claim.",
+	"source_hashes": {
+		"backend_client": "b6f6358e818c0515b4c1a86c590d16b7a23889f3f71c79f75f2c362a86d1c2ec",
+		"companion_panel_window": "c864130e87dd9105b4113d2d067a9c9ed3f06d37662e58de79fa8924b4bb6a4d",
+		"desktop_view": "69b319cc7f8a5bf7d8b055f57895d41f8ea6fbe2c4c1a55ccd5e70aadec27ca6",
+		"main": "900f8a774b3a1a07cbe7ee1de0b423582ef155b2c01f2fddc4b4827218f584ba",
+		"settings": "1c6923b64512eb2960c5f97f363c45b1c649f7608bc74480c834e7b3d6f7e823"
+	}
+}

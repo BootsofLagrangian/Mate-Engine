@@ -1,5 +1,7 @@
 class_name DesktopAutonomy
 extends Node
+var _projection_displacement_pending := Vector2.ZERO
+var projection_commit_callback := Callable()
 ## Desktop geometry only: no screen capture, recognition, input injection or file access.
 ## Positions use Godot DisplayServer desktop pixels; visible_bounds is window-local.
 signal state_changed(state: String)
@@ -214,6 +216,7 @@ func _process(delta: float) -> void:
 	advance(delta)
 	if enabled and not _blocked and not _pointer_interaction and _time >= _settle_until:
 		_window.position = Vector2i(position.round())
+	if projection_commit_callback.is_valid(): projection_commit_callback.call()
 	var actual := Vector2(_window.position)
 	var displacement := actual - _last_frame_position if _last_frame_position.is_finite() else Vector2.ZERO
 	_last_frame_position = actual
@@ -251,9 +254,12 @@ func _refresh_monitors() -> void:
 
 
 func advance(delta: float) -> void:
-	var before := position.round()
+	var before := position.round() - _projection_displacement_pending
+	_projection_displacement_pending = Vector2.ZERO
 	_advance_state(delta)
 	if _simulation:
+		if projection_commit_callback.is_valid(): projection_commit_callback.call()
+		_projection_displacement_pending = Vector2.ZERO
 		frame_moved.emit(position.round() - before, velocity if state == "walk" and not _blocked and not _pointer_interaction else Vector2.ZERO)
 
 
@@ -575,6 +581,34 @@ func set_contact_anchors(anchors: Dictionary) -> void:
 		_detach_support()
 
 
+## Explicit host-only correction for a changed rest-heading projection. Unlike
+## generic anchor changes this preserves a known standing surface, provided its
+## complete new visible geometry remains safe. No user stop/drag is overridden.
+func refresh_foot_projection(bounds: Rect2, anchor: Vector2) -> bool:
+	if not enabled or _blocked or _pointer_interaction or _time < _settle_until or not surface_mode or contact_pose != "foot" or _support.is_empty(): return false
+	if not anchor.is_finite() or not bounds.position.is_finite() or not bounds.size.is_finite() or not bounds.has_area(): return false
+	var previous_bounds := visible_bounds
+	visible_bounds = bounds
+	var wanted := Vector2(position.x, float(_support.y)-anchor.y)
+	var span := _surface_origin_span(_support,anchor)
+	if wanted.x < span.x or wanted.x > span.y or not is_origin_safe(wanted) or not is_origin_safe(wanted.round()):
+		visible_bounds = previous_bounds
+		return false
+	var shift := wanted-position
+	var anchor_changed := anchor != _locked_anchor
+	if _simulation: _projection_displacement_pending += wanted.round()-position.round()
+	position = wanted
+	target += shift
+	_locked_anchor = anchor
+	_anchors["foot"] = anchor
+	_needs_clamp = false
+	# The normal _process emits the complete committed movement once, using
+	# _last_frame_position. This also prevents it mistaking this change for drag.
+	if not _simulation and is_instance_valid(_window): _window.position = Vector2i(position.round())
+	if anchor_changed: _emit_support()
+	return true
+
+
 func set_contact_pose(pose: String) -> void:
 	if pose not in ["foot", "sit", "lean"] or pose == contact_pose:
 		return
@@ -870,3 +904,21 @@ func request_seat_contact(id: String, point: Vector2) -> bool:
 
 func is_seat_contact_pending(id: String) -> bool:
 	return not _pending_support.is_empty() and bool(_pending_support.get("anchor_only",false)) and str(_pending_support.id) == id
+
+## Explicit camera-only re-projection of an already owned seat; no OS movement.
+## This cannot acquire arbitrary support or bypass full visible-body workarea safety.
+func refresh_seat_projection(id: String, point: Vector2, anchors: Dictionary, bounds: Rect2) -> bool:
+	if not bounds.position.is_finite() or not bounds.size.is_finite() or bounds.size.x <= 0 or bounds.size.y <= 0: return false
+	if contact_pose != "sit" or _seat_contact_owner != id or _support.get("id","") != id or not _support.get("anchor_only",false): return false
+	var anchor: Vector2 = anchors.get("sit",Vector2.INF)
+	if not point.is_finite() or not anchor.is_finite() or (position+anchor).distance_to(point) > .5: return false
+	var previous := visible_bounds
+	visible_bounds = bounds
+	if not is_origin_safe(position): visible_bounds = previous; return false
+	_anchors = anchors.duplicate()
+	_locked_anchor = anchor
+	_support = {"id":id,"kind":"object_seat","anchor_only":true,"x1":point.x-12.0,"x2":point.x+12.0,"y":point.y}
+	_seat_surfaces[id] = _support.duplicate()
+	target = position
+	_emit_support()
+	return true

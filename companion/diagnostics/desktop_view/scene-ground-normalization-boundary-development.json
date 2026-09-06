@@ -1,0 +1,324 @@
+{
+	"cells": [
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1559.722, 1111.883), S: (214.6067, 280.0976)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.013465)",
+				"distance_m": 0.013464936055243,
+				"ok": true,
+				"point": "(0.804978, -1.330282, -0.005363)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "cheval-grand",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1580.823, 1136.624), S: (237.574, 265.4276)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.110338)",
+				"distance_m": 0.110337741672993,
+				"ok": true,
+				"point": "(0.804978, -1.148007, 0.561819)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "cheval-grand",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"changed": false,
+				"correction_m": "(0.0, 0.0, 0.0)",
+				"distance_m": 0.0,
+				"ok": false,
+				"point": "(0.574935, -1.330282, -0.563477)",
+				"reason": "no_bounded_safe_ground"
+			},
+			"ok": false,
+			"pitch": 0.0,
+			"rig": "cheval-grand",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1581.457, 1138.629), S: (238.2168, 266.3081)]",
+				"changed": true,
+				"correction_m": "(-0.071893, 0.0, -0.071893)",
+				"distance_m": 0.101672664284706,
+				"ok": true,
+				"point": "(0.972599, -1.148007, -0.165812)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "cheval-grand",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1559.237, 1111.144), S: (214.1422, 279.5424)]",
+				"changed": true,
+				"correction_m": "(-0.019992, 0.0, 0.0)",
+				"distance_m": 0.0199918188154697,
+				"ok": true,
+				"point": "(-0.01189, -1.330282, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "cheval-grand",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1587.327, 1157.208), S: (244.2064, 274.5375)]",
+				"changed": true,
+				"correction_m": "(-0.023062, 0.0, 0.0)",
+				"distance_m": 0.0230623371899128,
+				"ok": true,
+				"point": "(0.649095, -1.148007, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "cheval-grand",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1562.679, 1111.884), S: (188.716, 276.5706)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.099962)",
+				"distance_m": 0.0999619141221046,
+				"ok": true,
+				"point": "(0.804978, -1.330282, -0.09186)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "rice-shower",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1586.283, 1147.855), S: (206.0815, 248.8555)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.15944)",
+				"distance_m": 0.159440070390701,
+				"ok": true,
+				"point": "(0.804978, -1.148007, 0.512717)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "rice-shower",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1563.694, 1113.398), S: (189.5218, 277.8268)]",
+				"changed": true,
+				"correction_m": "(-0.061006, 0.0, -0.061006)",
+				"distance_m": 0.0862753018736839,
+				"ok": true,
+				"point": "(0.513929, -1.330282, -0.624483)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "rice-shower",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1587.077, 1150.369), S: (206.7691, 249.6954)]",
+				"changed": true,
+				"correction_m": "(-0.105037, 0.0, -0.105037)",
+				"distance_m": 0.14854533970356,
+				"ok": true,
+				"point": "(0.939455, -1.148007, -0.198956)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "rice-shower",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1562.481, 1111.588), S: (188.5589, 276.3259)]",
+				"changed": true,
+				"correction_m": "(-0.102643, 0.0, 0.0)",
+				"distance_m": 0.102643013000488,
+				"ok": true,
+				"point": "(-0.094541, -1.330282, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "rice-shower",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1587.01, 1150.157), S: (206.7113, 249.6249)]",
+				"changed": true,
+				"correction_m": "(-0.149458, 0.0, 0.0)",
+				"distance_m": 0.149458065629005,
+				"ok": true,
+				"point": "(0.522699, -1.148007, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "rice-shower",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1559.721, 1113.189), S: (214.8066, 278.7105)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.012625)",
+				"distance_m": 0.0126245925202966,
+				"ok": true,
+				"point": "(0.804978, -1.330282, -0.004523)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "eishin-flash",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1584.24, 1136.591), S: (234.17, 268.0793)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.109673)",
+				"distance_m": 0.109672844409943,
+				"ok": true,
+				"point": "(0.804978, -1.148007, 0.562484)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "eishin-flash",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1560.536, 1114.431), S: (215.5874, 279.6433)]",
+				"changed": true,
+				"correction_m": "(-0.001221, 0.0, -0.001221)",
+				"distance_m": 0.00172667065635324,
+				"ok": true,
+				"point": "(0.573714, -1.330282, -0.564698)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "eishin-flash",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"changed": false,
+				"correction_m": "(0.0, 0.0, 0.0)",
+				"distance_m": 0.0,
+				"ok": false,
+				"point": "(1.044493, -1.148007, -0.093919)",
+				"reason": "no_bounded_safe_ground"
+			},
+			"ok": false,
+			"pitch": 30.0,
+			"rig": "eishin-flash",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1558.259, 1110.96), S: (213.4076, 277.038)]",
+				"changed": true,
+				"correction_m": "(-0.032348, 0.0, 0.0)",
+				"distance_m": 0.0323484428226948,
+				"ok": true,
+				"point": "(-0.024247, -1.330282, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "eishin-flash",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1582.224, 1130.214), S: (232.1358, 265.4469)]",
+				"changed": true,
+				"correction_m": "(-0.137447, 0.0, 0.0)",
+				"distance_m": 0.137447208166122,
+				"ok": true,
+				"point": "(0.53471, -1.148007, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "eishin-flash",
+			"yaw": 90.0
+		}
+	],
+	"failures": [
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"changed": false,
+				"correction_m": "(0.0, 0.0, 0.0)",
+				"distance_m": 0.0,
+				"ok": false,
+				"point": "(0.574935, -1.330282, -0.563477)",
+				"reason": "no_bounded_safe_ground"
+			},
+			"ok": false,
+			"pitch": 0.0,
+			"rig": "cheval-grand",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"changed": false,
+				"correction_m": "(0.0, 0.0, 0.0)",
+				"distance_m": 0.0,
+				"ok": false,
+				"point": "(1.044493, -1.148007, -0.093919)",
+				"reason": "no_bounded_safe_ground"
+			},
+			"ok": false,
+			"pitch": 30.0,
+			"rig": "eishin-flash",
+			"yaw": 45.0
+		}
+	],
+	"scope": "18 exact swept-hull ground-placement cells,181 actual hull headings each; fixed worldY, safe idempotence, bound rejection. Geometry helper only; production admission is separate.",
+	"source_sha256": "413d8fdb62320be37cacb21a21497fcfd80bdb51d2c739fd6854964fa9689ff2"
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "character": "cheval-grand",
+    "duration_s": 1.36666667461395,
+    "first_nonzero_bound_sample_s": 0.113888889551163,
+    "max_acquisition_bounds_overflow_m": 0.0
+  },
+  {
+    "character": "rice-shower",
+    "duration_s": 1.36666667461395,
+    "first_nonzero_bound_sample_s": 0.113888889551163,
+    "max_acquisition_bounds_overflow_m": 0.00669503211975098
+  },
+  {
+    "character": "eishin-flash",
+    "duration_s": 1.36666667461395,
+    "first_nonzero_bound_sample_s": 0.113888889551163,
+    "max_acquisition_bounds_overflow_m": 0.0036502480506897
+  }
+]

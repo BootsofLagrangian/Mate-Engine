@@ -1,0 +1,10 @@
+{
+  "patches/mtoon-screen-outline-depth.patch": "094258942ab31662f8631629ac417a3034389382a339039ce04e9303d87adba2",
+  "native/addons/Godot-MToon-Shader/mtoon_common.gdshaderinc": "00858e5fc62c275d3ef1cbc8cfaa002c8b06c6c46e2862f0905e877e229408e7",
+  "native/scripts/desktop_view.gd": "abe7ac7f3bfebe3944a67c563229c08cda36feb5db819d58a7f2f9b37d5b2175",
+  "native/scripts/desktop_object_window.gd": "090ae7949cd99345f6d03057070d3ee4262e9038460151daac2a09c1ce37594a",
+  "native/scripts/desktop_objects_host.gd": "3206085f0e8c7ffd67c3b1def3b8e23e1b5a3a9d79661806beb9be3d484dd177",
+  "native/scripts/main.gd": "547893d4686f9058dacc074b9c4ef1b8bb809ac934055751d790dd14651d539f",
+  "diagnostics/desktop_view/test_shared_world_render.gd": "aa321557e4076fc8a9b36ceb77f3de3d2ffacf6fcc484ff6d13aead33e4f9ed7",
+  "diagnostics/desktop_view/test_spatial_window.gd": "94c8d31710f33b55dc0c6a7af0d5792beb7c68a0d98fec8b3b2d0a2e0a85b714"
+}

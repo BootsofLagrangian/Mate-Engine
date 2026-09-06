@@ -4,7 +4,7 @@ For Windows setup, build and launch, see [Windows 실행](../windows/README.md).
 Current measured acceptance and limitations are in [VALIDATION.md](../VALIDATION.md).
 
 Desktop pet host for `companion/engine` (FastAPI, port 8876): transparent always-on-top window,
-VRM pet on the right, collapsible Korean control panel on the left, WebSocket conversation,
+VRM pet with a separate modeless Korean settings window, WebSocket conversation,
 push-to-talk / VAD microphone, streamed PCM playback, motion bank gestures, imported VRMA
 clips and desktop roaming.
 
@@ -15,15 +15,51 @@ probe_protocol.gd,run_protocol_probe.sh}`. Motion (`motion_player`, `vrm_avatar`
 `platform/windows_world.ps1` are Astra-owned; `addons/`, setup/export/launchers and the backend are
 root-owned. The desktop-world architecture and future tool plan are in `companion/DESKTOP-WORLD.md`.
 
+## Presentation and space skills
+
+Windows selects Direct3D 12 / Forward+; Vulkan on the tested Windows/NVIDIA setup
+rendered black inside otherwise transparent native windows. The retained
+[compositor investigation](../diagnostics/presentation/COMPOSITOR-REVIEW.md)
+distinguishes true alpha composition from a clipped-out mouse region.
+
+Normal startup opens only the pet; `--panel` explicitly opens settings for diagnostics.
+F8/right-click opens a separate modeless window placed beside the visible arrangement.
+Closing it does not quit the pet. F9 remains push-to-talk in either window, and hiding
+or losing focus of the settings window cancels a held manual recording.
+
+The 시점 tab controls yaw −180..180°, pitch −60..70°, eye height offset ±0.5 m,
+and zoom 0.6..1.6. Camera yaw/pitch and object yaw are independent. Projection uses
+camera depth, avoiding a singular fixed-world-Z inverse at a 90° view. The physical
+seat and both hand sockets use the same shared scene. Large combinations that cannot
+fit a safe contact arrangement report a failure instead of silently detaching.
+
+The model receives installed declarative furniture skills and typed object targets;
+no manual placement is required. It can place, inspect, sit/use, configure, hide or
+remove supported objects. Appearance IDs include authored/default, warm, cool,
+porcelain and flat (unshaded while retaining texture). Scale and rotation are bounded;
+shader source is not part of a model call. See the
+[versioned protocol](../diagnostics/desktop_objects/FURNITURE-INTENT-CONTRACT.md)
+and [native lifecycle](../diagnostics/desktop_objects/SKILL-CONTRACT.md).
+
+Default local behavior schedules idle and occasional walks without model calls.
+`uma_walk` remains the preferred installed locomotion clip. Existing bank/VRMA upper-body
+gestures can overlap walking without replacing hips/legs; contact ownership protects
+hands during computer use. See [motion layer API](../diagnostics/upper_body_overlay/README.md).
+
 ## Pet size (settings `pet_scale`, 0.35..1.25, default 0.6)
 
 - Slider "펫 크기" in the settings tab and the mouse wheel over the pet (one notch = 0.05,
   `AutonomyBridge.wheel_scale`; ignored while dragging or over the panel, which consumes its own
   wheel events). Smoothed like the Unity `AvatarScaleController` (factor 0.1 per 60 Hz frame),
   persisted, and mirrored back into the slider without re-emitting.
-- The orthographic camera is fixed per model (`AutonomyBridge.pet_camera`): it looks down -Z and a
-  model is `reference_height_px` = (760 − 40 − 30)/1.25 = 552 px tall at scale 1, so 1.25 still
-  fits the window. The avatar node is scaled about a **pivot held at a fixed window pixel**
+- New settings default to perspective; saved camera preferences are preserved.
+  `DesktopView` controls orbit, zoom, field of view and distance. The orthographic
+  option retains `reference_height_px` = (760 − 40 − 30)/1.25 = 552 px at scale 1.
+  The transparent render canvas is 1920×1760, independently of that original camera
+  reference, so adding animation room does not enlarge the character or its outline.
+  Saved global foot anchors keep render padding from moving the pet on the desktop.
+  See [actual render-room attempts and coverage](../diagnostics/native_presentation/RENDER-ROOM.md).
+  The avatar node is scaled about a **pivot held at a fixed window pixel**
   (`pivot_transform`): the measured rest-mesh sole anchor at the bottom of the pet zone while standing,
   the seat anchor while sitting. Scaling or turning therefore never slides the contact point, so
   the desktop support stays attached. The projected pet rect, passthrough polygon and contact
@@ -91,9 +127,11 @@ input preemption remain. Departure speed builds over one second.
 `DesktopGait` owns both angular and linear travel, alternating planted contacts
 and lifted feet along X/Z arcs while compensating stance contact with leg IK.
 `TurnStepper` handles explicit in-place `face_front()` requests. The two solvers
-never compete for travelling legs. This uses 3D rig geometry within the existing fixed
-orthographic projection; it does not create arbitrary 3D navigation or perspective
-depth scaling. Support, scale changes, preview ownership and cancellation remain
+never compete for travelling legs. Legacy window-top and taskbar routes use desktop
+surface geometry. Perspective world-ground routes use `DesktopSceneNavigationHost`
+and `NavigationServer3D` with actual X/Z distance, furniture solids and exact camera
+crops. They share the authored walk and contact layer. Support, scale changes,
+preview ownership and cancellation remain
 separate from decorative posture. See the measured scope and retained development
 attempts in [`diagnostics/transition_chain`](../diagnostics/transition_chain/README.md).
 
@@ -188,7 +226,7 @@ persists the data, publishes the catalog to the backend and decides every moveme
   `DisplayServer.FEATURE_SUBWINDOWS` **and** the root viewport not embedding sub-windows.
   **Required host setting:** the project ships `display/window/subwindows/embed_subwindows=true`,
   and Godot embeds every descendant `Window` of an embedding viewport, so markers would be trapped
-  inside the 680×760 pet window. The host must set `get_tree().root.gui_embed_subwindows = false`
+  inside the pet render window. The host must set `get_tree().root.gui_embed_subwindows = false`
   (or the project setting) before showing markers; popups (OptionButton lists, tooltips) then
   become native OS popups, as in the editor. Until then `marker_status().reason` is shown in the
   panel hint and the pins are not created as OS windows. Headless Linux reports unavailable.

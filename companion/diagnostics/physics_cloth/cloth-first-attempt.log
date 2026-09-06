@@ -1,0 +1,6 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-0ubuntu0.24.04.2 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 20.1.2, 256 bits)
+
+{"adapter":"llvmpipe (LLVM 20.1.2, 256 bits)","baseline":{"physics_frames":120,"physics_ms_mean":29.3374583333333,"physics_ms_p95":61.361,"render_cpu_ms_mean":1.22521666362882,"render_frames":307,"render_gpu_ms_mean":2.26410833597183,"wall_ms":1991.524},"cloth":{"physics_frames":360,"physics_ms_mean":3.12122222222222,"physics_ms_p95":11.529,"render_cpu_ms_mean":1.16043889423211,"render_frames":1781,"render_gpu_ms_mean":1.65583610898919,"wall_ms":5840.076},"engine":{"build":"official","hash":"6ce3de25aa58466e14ef354703ba8d9791a417da","hex":263426,"major":4,"minor":5,"patch":2,"status":"stable","string":"4.5.2-stable (official)","timestamp":0},"finite":true,"max_deformation_m":0.487997978925705,"max_y":1.14999985694885,"min_y":0.52051568031311,"physics_engine":"Jolt Physics","pinned_max_error_m":0.466375648975372,"pinned_vertices":32,"scope":"new 288-vertex skirt proxy, not imported character garment; matched scene baseline excludes cloth","triangles":512,"vertices":288}

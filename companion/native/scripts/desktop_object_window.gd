@@ -3,6 +3,25 @@ extends Window
 ## One non-focus-stealing native furniture viewport. All interactions are on our own window.
 signal drag_started(id: String)
 signal drag_finished(id: String, position: Vector2i)
+const Store = preload("desktop_object_store.gd")
+var _reference_ppm := 100.0
+var _object_scale := 1.0
+var _projection_zoom := 1.0
+var _record: Dictionary = {}
+var _native_alpha_id := -1
+const Appearance = preload("desktop_object_appearance.gd")
+var _shared_world_active := false
+var _private_environment: Environment
+var _shared_camera: Camera3D
+var _shared_desktop_origin := Vector2.ZERO
+var _shared_transform := Transform3D.IDENTITY
+var _shared_crop := Rect2()
+var _model_nodes: Array[Node3D] = []
+var _base_sockets: Dictionary = {}
+var _yaw := INF
+var _appearance := ""
+var _view_basis := Basis.IDENTITY
+var _view_configured := false
 var object_id := ""
 var object_type := ""
 var dragging := false
@@ -25,6 +44,9 @@ const PARTS := {
 
 func _init() -> void:
 	visible = false
+	force_native = true
+	minimize_disabled = true
+	maximize_disabled = true
 	borderless = true
 	always_on_top = true
 	transparent = true
@@ -36,6 +58,7 @@ func _init() -> void:
 	msaa_3d = Viewport.MSAA_4X
 	focus_exited.connect(_end_drag)
 	close_requested.connect(_end_drag)
+	visibility_changed.connect(_sync_shared_visibility)
 
 func configure(record: Dictionary, dimensions: Vector2i) -> bool:
 	object_id = str(record.id)
@@ -59,6 +82,14 @@ func configure(record: Dictionary, dimensions: Vector2i) -> bool:
 		_seat_width = float(definition.get("seat_width",0.0))
 	else:
 		_load_legacy()
+	_collect_geometry()
+	var reference := _bounds()
+	var base := Store.base_size(object_type)
+	_reference_ppm = float(base.y)/maxf(reference.size.y,reference.size.x/(float(base.x)/base.y))/1.14
+	_record = record.duplicate(true)
+	_object_scale = float(record.get("scale",float(dimensions.y)/base.y))
+	_base_sockets = _sockets.duplicate(true)
+	_apply_visual(record)
 	_collect_geometry()
 	_camera = Camera3D.new()
 	_scene.add_child(_camera)
@@ -88,6 +119,7 @@ func configure(record: Dictionary, dimensions: Vector2i) -> bool:
 	_label.add_theme_constant_override("shadow_offset_y",1)
 	_overlay.add_child(_label)
 	_refit()
+	_position_from_record()
 	set_editable(false)
 	return loaded
 
@@ -128,6 +160,8 @@ func _mesh(path: String, offset: Vector3) -> bool:
 	if node == null: return false
 	node.position = offset
 	_scene.add_child(node)
+	node.set_meta("object_rest_transform",node.transform)
+	_model_nodes.append(node)
 	return true
 
 func _collect_geometry() -> void:
@@ -140,7 +174,7 @@ func _collect_geometry() -> void:
 
 func pixels_per_metre() -> float:
 	if _camera == null: return 0.0
-	return _camera.unproject_position(Vector3.RIGHT).distance_to(_camera.unproject_position(Vector3.ZERO))
+	return _camera.unproject_position(_camera.global_basis.x).distance_to(_camera.unproject_position(Vector3.ZERO))
 
 func seat_clearance() -> float:
 	return socket_clearance("seat")
@@ -162,18 +196,25 @@ func _bounds() -> AABB:
 
 func _refit() -> void:
 	if _camera == null: return
+	if is_instance_valid(_shared_camera):
+		_fit_shared_projection()
+		return
 	var box := _bounds()
 	var center := box.get_center()
 	_camera.position = center+Vector3(0.0,0.55,3.0)
 	_camera.look_at(center,Vector3.UP)
+	if _view_configured:
+		_camera.transform = Transform3D(_view_basis,center+_view_basis.z*3.0)
 	var low := Vector2(INF,INF)
 	var high := Vector2(-INF,-INF)
-	for i in 8:
-		var local := _camera.to_local(box.get_endpoint(i))
+	for point in _geometry_points:
+		var local := _camera.to_local(point)
 		low = low.min(Vector2(local.x,local.y))
 		high = high.max(Vector2(local.x,local.y))
-	var ratio := float(size.x)/maxf(size.y,1)
-	_camera.size = maxf(high.y-low.y,(high.x-low.x)/ratio)*1.14
+	var fixed_ppm := maxf(1.0,_reference_ppm*_object_scale*_projection_zoom)
+	size = Vector2i(maxi(32,ceili((high.x-low.x)*fixed_ppm*1.14)),maxi(32,ceili((high.y-low.y)*fixed_ppm*1.14)))
+	_camera.size = float(size.y)/fixed_ppm
+	_camera.position += _camera.basis.x*((low.x+high.x)*.5)
 	_camera.near = 0.01
 	_camera.far = 20.0
 	# Ground the actual mesh envelope rather than the transparent viewport margin.
@@ -184,12 +225,27 @@ func _refit() -> void:
 		var ppm := absf(_camera.unproject_position(center+_camera.basis.y).y-_camera.unproject_position(center).y)
 		if ppm > 0.001: _camera.position += _camera.basis.y*((float(size.y)-1.0-bottom)/ppm)
 
-func apply_record(record: Dictionary, dimensions: Vector2i) -> void:
-	if not dragging: position = Vector2i(int(record.x),int(record.y))
-	if size != dimensions:
-		size = dimensions
+func apply_record(record: Dictionary, _dimensions: Vector2i) -> void:
+	_record = record.duplicate(true)
+	var visual_changed := _apply_visual(record)
+	var next_scale := float(record.get("scale",1.0))
+	if visual_changed: _collect_geometry()
+	if visual_changed or not is_equal_approx(next_scale,_object_scale):
+		_object_scale = next_scale
 		_refit()
+	_position_from_record()
 	if _label != null: _label.text = str(record.label)+" · 끌어서 배치"
+
+func _position_from_record() -> void:
+	if is_instance_valid(_shared_camera): return
+	if dragging or _record.is_empty(): return
+	var base := Vector2(Store.base_size(object_type))*_object_scale
+	position = Vector2i(roundi(float(_record.x)+base.x*.5-float(size.x)*.5),roundi(float(_record.y)+base.y-float(size.y)))
+
+func set_projection_zoom(value: float) -> void:
+	_projection_zoom = clampf(value,.6,1.6)
+	_refit()
+	_position_from_record()
 
 func set_editable(value: bool) -> void:
 	editable = value
@@ -200,7 +256,7 @@ func set_editable(value: bool) -> void:
 
 func socket_point(name: String) -> Vector2:
 	if _camera == null or not _sockets.has(name): return Vector2.INF
-	return Vector2(position)+_camera.unproject_position(_sockets[name])
+	return Vector2(position)+_camera.unproject_position(_scene.global_transform*_sockets[name] if is_instance_valid(_shared_camera) else _sockets[name])
 
 func socket_catalogue() -> Dictionary:
 	var out := {}
@@ -210,6 +266,9 @@ func socket_catalogue() -> Dictionary:
 func seat_surface() -> Dictionary:
 	if not _sockets.has("seat") or _camera == null: return {}
 	var seat: Vector3 = _sockets.seat
+	if is_instance_valid(_shared_camera):
+		var center := socket_point("seat")
+		return {"id":"object:"+object_id+":seat","x1":center.x-12.0,"x2":center.x+12.0,"y":center.y}
 	var left := Vector2(position)+_camera.unproject_position(seat-Vector3(_seat_width*0.5,0,0))
 	var right := Vector2(position)+_camera.unproject_position(seat+Vector3(_seat_width*0.5,0,0))
 	return {"id":"object:"+object_id+":seat","x1":minf(left.x,right.x),"x2":maxf(left.x,right.x),"y":socket_point("seat").y}
@@ -232,3 +291,119 @@ func _end_drag() -> void:
 	if not dragging: return
 	dragging = false
 	drag_finished.emit(object_id,position)
+
+func _apply_visual(record: Dictionary) -> bool:
+	var yaw := float(record.get("yaw_deg",0.0))
+	var preset := str(record.get("appearance","default"))
+	if is_equal_approx(yaw,_yaw) and preset == _appearance: return false
+	_yaw = yaw
+	_appearance = preset
+	var rotation := Basis(Vector3.UP,deg_to_rad(yaw+(35.0 if object_type == "computer" else 0.0)))
+	for model in _model_nodes:
+		model.transform = Transform3D(rotation,Vector3.ZERO)*Transform3D(model.get_meta("object_rest_transform"))
+	_sockets.clear()
+	for socket in _base_sockets: _sockets[socket] = rotation*Vector3(_base_sockets[socket])
+	Appearance.apply(_scene,preset)
+	return true
+
+func set_view_basis(value: Basis) -> void:
+	_view_basis = value.orthonormalized()
+	_view_configured = true
+	if _camera != null:
+		_refit()
+		_position_from_record()
+
+func show_native() -> void:
+	show()
+	if DisplayServer.get_name() == "headless": return
+	var id := get_window_id()
+	if id == _native_alpha_id or id < 0: return
+	_native_alpha_id = id
+	# Window properties set before HWND creation do not always update the
+	# compositor swapchain. Reassert on this owned native window after show.
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_TRANSPARENT,false,id)
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_TRANSPARENT,true,id)
+
+## Both scenes use identical world axes/metres. Record yaw is already applied
+## to model roots; object_world_transform supplies physical scale + translation.
+## reference_desktop_origin anchors the fixed virtual viewport on the desktop.
+func set_shared_projection(reference: Camera3D, reference_desktop_origin: Vector2, object_world_transform: Transform3D) -> bool:
+	if not is_instance_valid(reference) or not reference.is_inside_tree() or not reference_desktop_origin.is_finite() or not object_world_transform.is_finite(): return false
+	_shared_camera = reference
+	_shared_desktop_origin = reference_desktop_origin
+	_shared_transform = object_world_transform
+	return _fit_shared_projection()
+
+func clear_shared_projection() -> void:
+	set_shared_world(null)
+	_shared_camera = null
+	_shared_crop = Rect2()
+	if is_instance_valid(_scene): _scene.transform = Transform3D.IDENTITY
+	_collect_geometry()
+	_refit()
+	_position_from_record()
+
+func _fit_shared_projection() -> bool:
+	if not is_instance_valid(_shared_camera) or _camera == null or _scene == null: return false
+	_scene.transform = _shared_transform
+	# Reproject actual imported vertices, not synthetic cross-corners of an AABB.
+	_collect_geometry()
+	var low := Vector2(INF,INF)
+	var high := Vector2(-INF,-INF)
+	for point in _geometry_points:
+		var depth := DesktopView.depth(_shared_camera,point)
+		if not is_finite(depth) or depth <= _shared_camera.near or depth >= _shared_camera.far:
+			error = "spatial_geometry_outside_clip_range"
+			return false
+		var pixel := _shared_camera.unproject_position(point)
+		low = low.min(pixel)
+		high = high.max(pixel)
+	if not low.is_finite() or not high.is_finite(): return false
+	var start := (low-Vector2(8,8)).floor()
+	var finish := (high+Vector2(8,8)).ceil()
+	var dimensions := Vector2i(finish-start)
+	if dimensions.x < 1 or dimensions.y < 1 or dimensions.x > 4096 or dimensions.y > 4096:
+		error = "spatial_viewport_too_large"
+		return false
+	size = dimensions
+	_shared_crop = Rect2(start,Vector2(dimensions))
+	position = Vector2i((_shared_desktop_origin+start).round())
+	if not DesktopView.configure_crop(_camera,_shared_camera,_shared_crop):
+		error = "spatial_crop_failed"
+		return false
+	# Both the model and socket coordinates must enter the same world transform.
+	error = ""
+	return true
+
+func spatial_geometry_bounds() -> Rect2:
+	return Rect2(Vector2(position),Vector2(size)) if is_instance_valid(_shared_camera) else Rect2()
+
+## Every perspective camera renders one shared World3D. Thus avatar/prop and
+## prop/prop depth tests use the same scene, even where native crops overlap.
+## Native alpha compositing remains a separate edge-coverage consideration.
+func set_shared_world(shared_world: World3D, reference_viewport: Viewport = null) -> void:
+	var enabled := shared_world != null
+	if enabled and reference_viewport != null:
+		msaa_3d = reference_viewport.msaa_3d
+		screen_space_aa = reference_viewport.screen_space_aa
+		use_taa = reference_viewport.use_taa
+	if enabled == _shared_world_active and (not enabled or world_3d == shared_world): return
+	var previous_world := world_3d # Keep old scenario alive until the viewport detaches.
+	_shared_world_active = enabled
+	if not enabled: world_3d = World3D.new()
+	if _scene == null:
+		if enabled: world_3d = shared_world
+		return
+	for light in _scene.find_children("*","Light3D",true,false): light.visible = not enabled
+	for node in _scene.find_children("*","WorldEnvironment",true,false):
+		if enabled:
+			_private_environment = node.environment
+			node.environment = null
+		else: node.environment = _private_environment
+	if enabled: world_3d = shared_world
+	_sync_shared_visibility()
+	previous_world = null
+
+func _sync_shared_visibility() -> void:
+	for model in _model_nodes:
+		model.visible = visible if _shared_world_active else true

@@ -1,0 +1,13 @@
+# Independent cape-spread audit
+
+**APPROVED as a read-only diagnosis of the supplied rig/source-pose fixture.** This does not approve the full Windows off-axis camera or claim that the cape already behaves like cloth.
+
+Inspected the actual-modifier probe, recorded source/asset identities, orthographic overhead-stretch physics-off/on images, the arms-down reference, and centered oblique perspective physics-off/on images. The cape is already broadly spread in the physics-disabled overhead pose. The enabled modifier bends the outer tips downward while the broad shoulder-driven span remains. This supports the conclusion that the spread is present in the imported rig following the supplied source pose; the comparison does not prove the original game's cape simulation or binding is identical.
+
+The probe uses two avatars at the same origin, actual enabled SkeletonModifier callbacks for the active condition, and a disabled modifier for the baseline. Source poses are held while sequential readbacks occur. It does not rely on the previously invalid manual spring-reset comparison. The recorded 2,244 callbacks and sequential-readback scope are correctly disclosed. Nominal sample time is source-clip time, not a claim that physics and source playback progressed one-to-one with wall time during readback.
+
+Independently recomputed 504 internal cape-chain segment comparisons from nonzero-time snapshots: maximum absolute segment-length difference is **0.000000224569 m**, maximum scale-component difference is **0.000000476837**, and maximum global bone-rotation difference is **31.570575°**. Results are in `independent-recompute.json`. These lengths exclude each chain's attachment-root-to-shoulder/chest segment, since the parent shoulder/chest transforms are absent from the cape-only snapshot. No triangle strain or mesh-clipping claim follows from this measurement.
+
+The original VRM JSON independently confirms the two shoulder-root and two chest-root cape chains, with stiffness 2.5, gravity power approximately 0.2 and drag 0.5. Their spring group also contains the tail. The installed stretch curation manifest contains no Mantle path, supporting the limited statement that this installed clip provides no recovered explicit cape track. It does not establish that the game has no garment-specific secondary configuration.
+
+The centered perspective fixture looks upright in the inspected views. The separate Windows camera crop/placement remains outside this audit. No runtime configuration or physics code was changed by this reviewer; source identities are retained in `identity.json` and the diagnostic result is tied to that snapshot.

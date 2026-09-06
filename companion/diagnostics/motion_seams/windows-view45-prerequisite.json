@@ -1,0 +1,79 @@
+{
+  "classification": "Failed moving-owned-walk prerequisite; original three failures retained, not converted to passes",
+  "source_report": "companion/logs/windows-motion-view45-current/report.json",
+  "report_sha256": "49d2fb7eea277cf9374e5bb50d5c969a836dd7d77fa0d4c4fbe37afffe7a3c5d",
+  "failed_checks": [
+    {
+      "label": "native action dispatcher layers upper body over the owned walk",
+      "ok": false
+    },
+    {
+      "label": "upper-body action preserves actual window travel",
+      "ok": false
+    },
+    {
+      "label": "stop is issued during moving gait",
+      "ok": false
+    }
+  ],
+  "transitions": [
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 31474,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "stop_and_settle",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "anticipate",
+      "voice": false,
+      "window": "(1200, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 33139,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "stop_and_settle",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "walk",
+      "voice": false,
+      "window": "(1200, 157)"
+    },
+    {
+      "blocked": true,
+      "foreground": false,
+      "gesture": "wave",
+      "listening": false,
+      "ms": 33155,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "stop_and_settle",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "paused",
+      "voice": false,
+      "window": "(1200, 157)"
+    }
+  ],
+  "outcome": [
+    {
+      "id": "chain:stop",
+      "outcome": "interrupted",
+      "time": 31.6333333333331
+    }
+  ],
+  "evidence": "33139ms: walk state, velocity0, owned_walk empty, gestureidle;33155ms: standalonewave,blockedtrue,paused,windowunchanged. The probe dispatched before ownedlocomotion acquired, not afterarrival.",
+  "fix": "Await statewalk AND absvelocity>20px/s AND currentgesture equals nonempty production_walk_started before dispatch andstop. Existing travel>10px/.5s and upperownership gates unchanged.",
+  "probe_sha256": "f6e1213cec57c570cac9d01cee388b4bba35a0120be78437fd7ba90ac67961af"
+}

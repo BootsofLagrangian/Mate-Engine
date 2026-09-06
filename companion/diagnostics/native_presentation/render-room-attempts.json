@@ -1,0 +1,104 @@
+[
+  {
+    "directory": "logs/windows-render-room-padding-first",
+    "identity": {
+      "exe_sha256": "7cc455644cc35776b48bcd7dc8b2b8c90a346b8c815121f56e2a2499c3e0617c",
+      "probe_sha256": "c5600f2bf5f5264ce5560d819dde729a236d117699289e875c2355056be5bad7"
+    },
+    "checks": 13,
+    "failures": 1,
+    "canvas": [
+      1160,
+      1120
+    ],
+    "scale": 1.0,
+    "sample_count": 96,
+    "minimum_margin_px": 0,
+    "scope": "Actual exported Windows viewport alpha bounds during authored motion, two camera projections. Finite sampled coverage, not all possible poses/scales or OS compositor alpha proof."
+  },
+  {
+    "directory": "logs/windows-render-room-centered",
+    "identity": {
+      "exe_sha256": "90d6902d4455b2eee30e5a8db6d4fcffaba38c2999f3fd585254baf3c71aa7e8",
+      "probe_sha256": "220943f8b9822575c641fef7e24ed552c720193341fa716b44b8069db9220dd0"
+    },
+    "checks": 13,
+    "failures": 2,
+    "canvas": [
+      1160,
+      1120
+    ],
+    "scale": 1.0,
+    "sample_count": 96,
+    "minimum_margin_px": 0,
+    "scope": "Actual exported Windows viewport alpha bounds during authored motion, two camera projections. Finite sampled coverage, not all possible poses/scales or OS compositor alpha proof."
+  },
+  {
+    "directory": "logs/windows-render-room-large",
+    "identity": {
+      "exe_sha256": "26d9fb9bf8d2df9e28999a159f89a558235250c9210452a1354e1c458d411797",
+      "probe_sha256": "b8a25e3ba04f7932170311749e14702c099c4fbf8fa15024a1f63c9c160d29bc"
+    },
+    "checks": 13,
+    "failures": 0,
+    "canvas": [
+      1600,
+      1440
+    ],
+    "scale": 1.0,
+    "sample_count": 96,
+    "minimum_margin_px": 105,
+    "scope": "Actual exported Windows viewport alpha bounds during authored motion, two camera projections. Finite sampled coverage, not all possible poses/scales or OS compositor alpha proof."
+  },
+  {
+    "directory": "logs/windows-render-room-large-maxscale",
+    "identity": {
+      "exe_sha256": "26d9fb9bf8d2df9e28999a159f89a558235250c9210452a1354e1c458d411797",
+      "probe_sha256": "b8a25e3ba04f7932170311749e14702c099c4fbf8fa15024a1f63c9c160d29bc"
+    },
+    "checks": 13,
+    "failures": 2,
+    "canvas": [
+      1600,
+      1440
+    ],
+    "scale": 1.25,
+    "sample_count": 96,
+    "minimum_margin_px": 0,
+    "scope": "Actual exported Windows viewport alpha bounds during authored motion, two camera projections. Finite sampled coverage, not all possible poses/scales or OS compositor alpha proof."
+  },
+  {
+    "directory": "logs/windows-render-room-reserved-maxscale",
+    "identity": {
+      "exe_sha256": "77b027deb7dc82e943968156ddd627aaa6fd801f28d81a1bdaceeddb3c641d0f",
+      "probe_sha256": "39d4593df86289e536d619c0d1b095874c95693e25af056546e0776d642d8a96"
+    },
+    "checks": 13,
+    "failures": 1,
+    "canvas": [
+      1920,
+      1760
+    ],
+    "scale": 1.25,
+    "sample_count": 96,
+    "minimum_margin_px": 0,
+    "scope": "Actual exported Windows viewport alpha bounds during authored motion, two camera projections. Finite sampled coverage, not all possible poses/scales or OS compositor alpha proof."
+  },
+  {
+    "directory": "logs/windows-render-room-anchor-maxscale",
+    "identity": {
+      "exe_sha256": "fa92702de4b5c63b08cd70da3c0a77f6a767f95e9367d66331fade9f6916736a",
+      "probe_sha256": "39d4593df86289e536d619c0d1b095874c95693e25af056546e0776d642d8a96"
+    },
+    "checks": 13,
+    "failures": 0,
+    "canvas": [
+      1920,
+      1760
+    ],
+    "scale": 1.25,
+    "sample_count": 96,
+    "minimum_margin_px": 113,
+    "scope": "Actual exported Windows viewport alpha bounds during authored motion, two camera projections. Finite sampled coverage, not all possible poses/scales or OS compositor alpha proof."
+  }
+]

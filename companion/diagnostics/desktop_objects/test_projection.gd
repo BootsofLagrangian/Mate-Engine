@@ -28,8 +28,8 @@ func run():
    for vertex in w._geometry_points:
     var projected: Vector2 = w._camera.unproject_position(vertex)
     bottom = maxf(bottom,projected.y)
-    all_inside = all_inside and Rect2(Vector2.ZERO,Vector2(dimensions)).has_point(projected)
-   check(absf(bottom-(dimensions.y-1.0))<0.01,type+" actual mesh ground aligns one pixel above viewport floor")
+    all_inside = all_inside and Rect2(Vector2.ZERO,Vector2(w.size)).has_point(projected)
+   check(absf(bottom-(w.size.y-1.0))<0.01,type+" actual mesh ground aligns one pixel above viewport floor")
    check(all_inside,type+" all actual mesh vertices remain inside safe viewport after ground alignment")
    w.free()
  print("Object projection: %d checks, %d failures" % [checks,failures])

@@ -1,0 +1,21 @@
+{
+  "files": {
+    "native/scripts/vrm_spring_contacts.gd": "fc5e7df211844db6c86f2b6deb9c8d61d5218adce7343d451b34fb3a7eb30c5e",
+    "native/tools/probe_spring_contacts.gd": "2d666eaaddbd7a656a318f83f73ef0608a5e3ea21920a4cf96a437c5f48b0705",
+    "native/tools/probe_spring_contact_motion.gd": "6e5045dc694ebbcecb9ccdf965ca52dce62d4e4f9248e5b7ccf94610fbee2734",
+    "native/tools/probe_mini_springs.gd": "8219b5faf852c662606520aadb8c94ad7d84222a26bcdd5195ac3d26abef671f",
+    "native/tools/probe_cloth_physics.gd": "6d34f37107227702330baa522e9f13302443af922845d5aade5f840955e1be03",
+    "diagnostics/physics_cloth/author_mini_springs.py": "ec0a7e16d35cc25ebf926f971f72d2098336e95e0882f2416573414a18a40c5a",
+    "diagnostics/physics_cloth/spring-contacts.json": "4564308d0529df018049182b1b78adf10b4e598c6f2e41ba6be408b4c2b7f0fa",
+    "diagnostics/physics_cloth/authored-motion-contact.json": "60710ff1a539131743899dcc20aa05520ba7164952200eec41f19cee4302037b",
+    "diagnostics/physics_cloth/mini-springs.json": "10de4b489e354ffe6fb7b5c9180d1d7a942e41d764b6a35cefd3064272e9417a",
+    "diagnostics/physics_cloth/cloth-d3d12.json": "20361a661ef480e68beb30d79c9888a2b635723ed078e1de11bd934dc0b65abb",
+    "assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "assets/rice-shower.vrm": "50ede37cd75029d8d00d17472588b4820408557243b6b2ee058570c7c451035a",
+    "assets/eishin-flash.vrm": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+    "assets/mambo.vrm": "01f0e5b3165fc5d525f7e5bb73512bce0d8ea63a9b8fae31926655aba99017cd",
+    "assets/hachimi.vrm": "b9bd8e8693e12e17f91856f156f82a0e68bae6b647f94587809134dc66d870d1"
+  },
+  "mini_probe_executed_sha256": "76afbc7214d9159cfa02830736bd3fbd2efcde6231a563df8cd06f47ff7af04e",
+  "mini_probe_postrun_edit": "Only scope-label wording clarified to head yaw18deg and roll8deg; numeric results and raw log retained unchanged."
+}

@@ -1,0 +1,1936 @@
+{
+  "failures": [],
+  "scope": "Deterministic actual MotionPlayer final world pose, three rigs at30/60Hz, continuous UMA walking; no main, contact acquisition solver or rendered naturalness claim.",
+  "source_hashes": {
+    "arm_ik": "76c6e1fdac637743834f094f4c92406baa78afa167034ae732e12df0d82de865",
+    "desktop_gait": "5f96d5edb9bd6fca974ed42d7ec6b8c9f7eb3b0232638f1e3536b98164876414",
+    "leg_ik": "7dc55f7340056f757594dd9da812d82c2f439006015f856fec1a902606de5fc4",
+    "motion_player": "54a0eafa6e3f49f0bf3fbe560c5076d95e88a6b5000a0522d9d40dcc9af59eee",
+    "probe": "9120d8b39673fe9c0d403fcfd65afa663421cecc33d7c88dd65027a6b2a4523d",
+    "turn_stepper": "e8972c41472aa65f4a2376229e0dff382018fa81c1b22a078c9135ac090d5741",
+    "upper_body_overlay": "f30521e6b5cb0d0d0cc6994f09a70f916d6d8d7baeccdad5c280676964447795",
+    "vrm_avatar": "768685848a866af3f3073be4dc7cabb8a9f232c8a59bf32706b486c96366e740"
+  },
+  "full_evidence": {
+    "original_name": "results.json",
+    "repo_relative_path": "companion/logs/diagnostic-traces/upper_body_review/results.json",
+    "sha256": "d1a9f49dbb42d96cfdec579a4ebeb2b1abbcfdef55642e81703fdc55ca6e66f3",
+    "bytes": 478256
+  },
+  "results": [
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_hand_difference_m": 0.0,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.44024258852005,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06167030334473,
+        "rightFoot": 0.125094145536423,
+        "rightHand": 5.86654138565063,
+        "rightLowerArm": 5.32793664932251,
+        "rightUpperArm": 3.64146947860718
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "baseline",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00491335242986679,
+          "speed_deg_s": 63.9146161079407,
+          "step_deg": 2.13048720359802,
+          "velocity_change_deg_s": 14.7535352706909
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00529782753437757,
+          "speed_deg_s": 64.2907547950745,
+          "step_deg": 2.14302515983582,
+          "velocity_change_deg_s": 21.735424041748
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00697244517505169,
+          "speed_deg_s": 66.9173526763916,
+          "step_deg": 2.23057842254639,
+          "velocity_change_deg_s": 25.3092460632324
+        }
+      ],
+      "peak_hand": {
+        "actions": [],
+        "frame": 208,
+        "speed_deg_s": 175.996241569519,
+        "time": 6.93333333333333,
+        "velocity_change_deg_s": 18.9788455963135
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_hand_difference_m": 0.512548506259918,
+      "max_joint_step_deg": {
+        "chest": 0.510133564472198,
+        "head": 1.93538463115692,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06167030334473,
+        "rightFoot": 0.125094145536423,
+        "rightHand": 17.5133113861084,
+        "rightLowerArm": 16.4224510192871,
+        "rightUpperArm": 8.89789962768555
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 15,
+      "scenario": "replace",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.0040422473102808,
+          "speed_deg_s": 84.1698217391968,
+          "step_deg": 2.80566072463989,
+          "velocity_change_deg_s": 45.9986953735352
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00372977438382804,
+          "speed_deg_s": 104.661326408386,
+          "step_deg": 3.48871088027954,
+          "velocity_change_deg_s": 42.0162010192871
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00840316712856293,
+          "speed_deg_s": 146.943826675415,
+          "step_deg": 4.89812755584717,
+          "velocity_change_deg_s": 46.1244850158691
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 0.317440000000004
+          },
+          {
+            "arm_weight": 0.682559999999996,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "nod",
+            "source": "bank",
+            "time": 0.299999999999999,
+            "weight": 0.682559999999996
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 525.399341583252,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 46.3919944763184
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_hand_difference_m": 0.512548506259918,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.758581817150116,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06167030334473,
+        "rightFoot": 0.125094145536423,
+        "rightHand": 17.45290184021,
+        "rightLowerArm": 16.3596477508545,
+        "rightUpperArm": 8.86672592163086
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "stop",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.0040422473102808,
+          "speed_deg_s": 84.1698217391968,
+          "step_deg": 2.80566072463989,
+          "velocity_change_deg_s": 45.9986953735352
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00372982467524707,
+          "speed_deg_s": 104.661254882812,
+          "step_deg": 3.48870849609375,
+          "velocity_change_deg_s": 42.0164833068848
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.0084020234644413,
+          "speed_deg_s": 146.948103904724,
+          "step_deg": 4.89827013015747,
+          "velocity_change_deg_s": 46.1335144042969
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 0.317440000000004
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 523.587055206299,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 45.3416404724121
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_hand_difference_m": 0.512548506259918,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.532039165496826,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06167030334473,
+        "rightFoot": 0.125094145536423,
+        "rightHand": 17.45290184021,
+        "rightLowerArm": 16.3596477508545,
+        "rightUpperArm": 8.86672592163086
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "lock",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.0040422473102808,
+          "speed_deg_s": 84.1698217391968,
+          "step_deg": 2.80566072463989,
+          "velocity_change_deg_s": 45.9986953735352
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00372982467524707,
+          "speed_deg_s": 104.661254882812,
+          "step_deg": 3.48870849609375,
+          "velocity_change_deg_s": 42.0164833068848
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.0084020234644413,
+          "speed_deg_s": 146.948103904724,
+          "step_deg": 4.89827013015747,
+          "velocity_change_deg_s": 46.1335144042969
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 1.0
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 523.587055206299,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 45.3416404724121
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_hand_difference_m": 0.567693412303925,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.532039165496826,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06167030334473,
+        "rightFoot": 0.125094145536423,
+        "rightHand": 18.752082824707,
+        "rightLowerArm": 19.4372711181641,
+        "rightUpperArm": 9.52848815917969
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "finite",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.0040422473102808,
+          "speed_deg_s": 84.1698217391968,
+          "step_deg": 2.80566072463989,
+          "velocity_change_deg_s": 45.9986953735352
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.0029206823091954,
+          "speed_deg_s": 100.30604839325,
+          "step_deg": 3.34353494644165,
+          "velocity_change_deg_s": 45.6173362731934
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00197657640092075,
+          "speed_deg_s": 127.111086845398,
+          "step_deg": 4.23703622817993,
+          "velocity_change_deg_s": 41.3062286376953
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.790123456790144,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 3.66666666666666,
+            "weight": 0.790123456790144
+          }
+        ],
+        "frame": 139,
+        "speed_deg_s": 562.562484741211,
+        "time": 4.63333333333333,
+        "velocity_change_deg_s": 67.1179580688477
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_hand_difference_m": 0.0,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.220558330416679,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634990215301514,
+        "rightFoot": 0.0459695532917976,
+        "rightHand": 2.94447135925293,
+        "rightLowerArm": 2.66978693008423,
+        "rightUpperArm": 1.87987899780273
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "baseline",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00251358677633107,
+          "speed_deg_s": 63.7951183319092,
+          "step_deg": 1.06325197219849,
+          "velocity_change_deg_s": 4.10691452026367
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00266332784667611,
+          "speed_deg_s": 65.6449127197266,
+          "step_deg": 1.09408187866211,
+          "velocity_change_deg_s": 21.8722076416016
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00305484235286713,
+          "speed_deg_s": 64.6822428703308,
+          "step_deg": 1.07803738117218,
+          "velocity_change_deg_s": 5.99185752868652
+        }
+      ],
+      "peak_hand": {
+        "actions": [],
+        "frame": 416,
+        "speed_deg_s": 176.668281555176,
+        "time": 6.93333333333333,
+        "velocity_change_deg_s": 8.51074981689453
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_hand_difference_m": 0.512156963348389,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.962185442447662,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634990215301514,
+        "rightFoot": 0.0459695532917976,
+        "rightHand": 8.88075351715088,
+        "rightLowerArm": 8.24516201019287,
+        "rightUpperArm": 4.44168472290039
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 30,
+      "scenario": "replace",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00208342773839831,
+          "speed_deg_s": 87.6245856285095,
+          "step_deg": 1.46040976047516,
+          "velocity_change_deg_s": 24.0635623931885
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00190117594320327,
+          "speed_deg_s": 106.435661315918,
+          "step_deg": 1.77392768859863,
+          "velocity_change_deg_s": 25.644718170166
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00223902077414095,
+          "speed_deg_s": 116.650886535645,
+          "step_deg": 1.94418144226074,
+          "velocity_change_deg_s": 15.4993276596069
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 0.261599012345683
+          },
+          {
+            "arm_weight": 0.738400987654317,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "nod",
+            "source": "bank",
+            "time": 0.316666666666666,
+            "weight": 0.738400987654317
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 532.845211029053,
+        "time": 2.5,
+        "velocity_change_deg_s": 9.79925155639648
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_hand_difference_m": 0.512156963348389,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.379520297050476,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634990215301514,
+        "rightFoot": 0.0459695532917976,
+        "rightHand": 8.84556293487549,
+        "rightLowerArm": 8.2161283493042,
+        "rightUpperArm": 4.42576599121094
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "stop",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00208342773839831,
+          "speed_deg_s": 87.6245856285095,
+          "step_deg": 1.46040976047516,
+          "velocity_change_deg_s": 24.0635623931885
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00190117978490889,
+          "speed_deg_s": 106.435582637787,
+          "step_deg": 1.77392637729645,
+          "velocity_change_deg_s": 25.6447467803955
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00223900750279427,
+          "speed_deg_s": 116.651523113251,
+          "step_deg": 1.94419205188751,
+          "velocity_change_deg_s": 15.5004396438599
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 0.261599012345683
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 530.733776092529,
+        "time": 2.5,
+        "velocity_change_deg_s": 9.23663997650146
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_hand_difference_m": 0.512156963348389,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.265330791473389,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634990215301514,
+        "rightFoot": 0.0459695532917976,
+        "rightHand": 8.84556293487549,
+        "rightLowerArm": 8.2161283493042,
+        "rightUpperArm": 4.42576599121094
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "lock",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00208342773839831,
+          "speed_deg_s": 87.6245856285095,
+          "step_deg": 1.46040976047516,
+          "velocity_change_deg_s": 24.0635623931885
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00190117978490889,
+          "speed_deg_s": 106.435582637787,
+          "step_deg": 1.77392637729645,
+          "velocity_change_deg_s": 25.6447467803955
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00223900750279427,
+          "speed_deg_s": 116.651523113251,
+          "step_deg": 1.94419205188751,
+          "velocity_change_deg_s": 15.5004396438599
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 1.0
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 530.733776092529,
+        "time": 2.5,
+        "velocity_change_deg_s": 9.23663997650146
+      }
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_hand_difference_m": 0.567439377307892,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.265330791473389,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634990215301514,
+        "rightFoot": 0.0459695532917976,
+        "rightHand": 9.32244300842285,
+        "rightLowerArm": 9.7474889755249,
+        "rightUpperArm": 4.79291534423828
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "finite",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00208342773839831,
+          "speed_deg_s": 87.6245856285095,
+          "step_deg": 1.46040976047516,
+          "velocity_change_deg_s": 24.0635623931885
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.0018095470732078,
+          "speed_deg_s": 104.953150749207,
+          "step_deg": 1.74921917915344,
+          "velocity_change_deg_s": 25.6268730163574
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00151454599108547,
+          "speed_deg_s": 109.165098667145,
+          "step_deg": 1.81941831111908,
+          "velocity_change_deg_s": 22.3423480987549
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.790123456790161,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 3.66666666666665,
+            "weight": 0.790123456790161
+          }
+        ],
+        "frame": 279,
+        "speed_deg_s": 559.346580505371,
+        "time": 4.65,
+        "velocity_change_deg_s": 25.6517086029053
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_hand_difference_m": 0.0,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.44024258852005,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06166386604309,
+        "rightFoot": 0.12504942715168,
+        "rightHand": 5.86654138565063,
+        "rightLowerArm": 5.32793664932251,
+        "rightUpperArm": 3.64146947860718
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "baseline",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00441562477499247,
+          "speed_deg_s": 63.9146161079407,
+          "step_deg": 2.13048720359802,
+          "velocity_change_deg_s": 14.7535352706909
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00471602054312825,
+          "speed_deg_s": 64.2907547950745,
+          "step_deg": 2.14302515983582,
+          "velocity_change_deg_s": 21.735424041748
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00618474511429667,
+          "speed_deg_s": 66.9173526763916,
+          "step_deg": 2.23057842254639,
+          "velocity_change_deg_s": 25.3092460632324
+        }
+      ],
+      "peak_hand": {
+        "actions": [],
+        "frame": 208,
+        "speed_deg_s": 175.996241569519,
+        "time": 6.93333333333333,
+        "velocity_change_deg_s": 18.9788455963135
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_hand_difference_m": 0.475248157978058,
+      "max_joint_step_deg": {
+        "chest": 0.510133564472198,
+        "head": 1.93538463115692,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06166386604309,
+        "rightFoot": 0.12504942715168,
+        "rightHand": 17.8493270874023,
+        "rightLowerArm": 16.7562828063965,
+        "rightUpperArm": 9.19257545471191
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 15,
+      "scenario": "replace",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00365832331590354,
+          "speed_deg_s": 79.447181224823,
+          "step_deg": 2.64823937416077,
+          "velocity_change_deg_s": 45.897819519043
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00340024614706635,
+          "speed_deg_s": 99.7869229316711,
+          "step_deg": 3.32623076438904,
+          "velocity_change_deg_s": 41.8625869750977
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00784167274832726,
+          "speed_deg_s": 142.458271980286,
+          "step_deg": 4.74860906600952,
+          "velocity_change_deg_s": 46.3214569091797
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 0.317440000000004
+          },
+          {
+            "arm_weight": 0.682559999999996,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "nod",
+            "source": "bank",
+            "time": 0.299999999999999,
+            "weight": 0.682559999999996
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 535.47981262207,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 45.1891250610352
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_hand_difference_m": 0.475248277187347,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.758581817150116,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06166386604309,
+        "rightFoot": 0.12504942715168,
+        "rightHand": 17.7895832061768,
+        "rightLowerArm": 16.6941452026367,
+        "rightUpperArm": 9.16315174102783
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "stop",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00365832331590354,
+          "speed_deg_s": 79.447181224823,
+          "step_deg": 2.64823937416077,
+          "velocity_change_deg_s": 45.897819519043
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00340022356249392,
+          "speed_deg_s": 99.7868299484253,
+          "step_deg": 3.32622766494751,
+          "velocity_change_deg_s": 41.8628807067871
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00784074608236551,
+          "speed_deg_s": 142.462105751038,
+          "step_deg": 4.74873685836792,
+          "velocity_change_deg_s": 46.3297920227051
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 0.317440000000004
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 533.687496185303,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 44.1348838806152
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_hand_difference_m": 0.475248277187347,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.532039165496826,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06166386604309,
+        "rightFoot": 0.12504942715168,
+        "rightHand": 17.7895832061768,
+        "rightLowerArm": 16.6941452026367,
+        "rightUpperArm": 9.16315174102783
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "lock",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00365832331590354,
+          "speed_deg_s": 79.447181224823,
+          "step_deg": 2.64823937416077,
+          "velocity_change_deg_s": 45.897819519043
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00340022356249392,
+          "speed_deg_s": 99.7868299484253,
+          "step_deg": 3.32622766494751,
+          "velocity_change_deg_s": 41.8628807067871
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00784074608236551,
+          "speed_deg_s": 142.462105751038,
+          "step_deg": 4.74873685836792,
+          "velocity_change_deg_s": 46.3297920227051
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 1.0
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 533.687496185303,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 44.1348838806152
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_hand_difference_m": 0.523052215576172,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.532039165496826,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.06166386604309,
+        "rightFoot": 0.12504942715168,
+        "rightHand": 18.8497486114502,
+        "rightLowerArm": 19.6330757141113,
+        "rightUpperArm": 9.67028617858887
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "finite",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00365832331590354,
+          "speed_deg_s": 79.447181224823,
+          "step_deg": 2.64823937416077,
+          "velocity_change_deg_s": 45.897819519043
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00264168996363878,
+          "speed_deg_s": 95.5284547805786,
+          "step_deg": 3.18428182601929,
+          "velocity_change_deg_s": 45.7672805786133
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00178610102739185,
+          "speed_deg_s": 123.374576568604,
+          "step_deg": 4.11248588562012,
+          "velocity_change_deg_s": 41.7242774963379
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.790123456790144,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 3.66666666666666,
+            "weight": 0.790123456790144
+          }
+        ],
+        "frame": 139,
+        "speed_deg_s": 565.492458343506,
+        "time": 4.63333333333333,
+        "velocity_change_deg_s": 68.6586303710938
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_hand_difference_m": 0.0,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.220558330416679,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634989142417908,
+        "rightFoot": 0.0459649786353111,
+        "rightHand": 2.94447135925293,
+        "rightLowerArm": 2.66978693008423,
+        "rightUpperArm": 1.87987899780273
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "baseline",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00224481383338571,
+          "speed_deg_s": 63.7951183319092,
+          "step_deg": 1.06325197219849,
+          "velocity_change_deg_s": 4.10691452026367
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00236959522590041,
+          "speed_deg_s": 65.6449127197266,
+          "step_deg": 1.09408187866211,
+          "velocity_change_deg_s": 21.8722076416016
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00271093379706144,
+          "speed_deg_s": 64.6822428703308,
+          "step_deg": 1.07803738117218,
+          "velocity_change_deg_s": 5.99185752868652
+        }
+      ],
+      "peak_hand": {
+        "actions": [],
+        "frame": 416,
+        "speed_deg_s": 176.668281555176,
+        "time": 6.93333333333333,
+        "velocity_change_deg_s": 8.51074981689453
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_hand_difference_m": 0.47485476732254,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.962185442447662,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634989142417908,
+        "rightFoot": 0.0459649786353111,
+        "rightHand": 9.02983570098877,
+        "rightLowerArm": 8.41754722595215,
+        "rightUpperArm": 4.59572601318359
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 30,
+      "scenario": "replace",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00188543123658746,
+          "speed_deg_s": 82.5718188285828,
+          "step_deg": 1.37619698047638,
+          "velocity_change_deg_s": 24.0500507354736
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00172259868122637,
+          "speed_deg_s": 101.432905197144,
+          "step_deg": 1.69054841995239,
+          "velocity_change_deg_s": 25.7116527557373
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00205072038806975,
+          "speed_deg_s": 111.740391254425,
+          "step_deg": 1.86233985424042,
+          "velocity_change_deg_s": 15.2678394317627
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 0.261599012345683
+          },
+          {
+            "arm_weight": 0.738400987654317,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "nod",
+            "source": "bank",
+            "time": 0.316666666666666,
+            "weight": 0.738400987654317
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 541.790142059326,
+        "time": 2.5,
+        "velocity_change_deg_s": 9.52502346038818
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_hand_difference_m": 0.47485476732254,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.379520297050476,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634989142417908,
+        "rightFoot": 0.0459649786353111,
+        "rightHand": 8.99511241912842,
+        "rightLowerArm": 8.38882637023926,
+        "rightUpperArm": 4.58077144622803
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "stop",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00188543123658746,
+          "speed_deg_s": 82.5718188285828,
+          "step_deg": 1.37619698047638,
+          "velocity_change_deg_s": 24.0500507354736
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00172259868122637,
+          "speed_deg_s": 101.433205604553,
+          "step_deg": 1.69055342674255,
+          "velocity_change_deg_s": 25.7118625640869
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00205075996927917,
+          "speed_deg_s": 111.740455627441,
+          "step_deg": 1.86234092712402,
+          "velocity_change_deg_s": 15.2684869766235
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 0.261599012345683
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 539.706745147705,
+        "time": 2.5,
+        "velocity_change_deg_s": 8.95237922668457
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_hand_difference_m": 0.47485476732254,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.265330791473389,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634989142417908,
+        "rightFoot": 0.0459649786353111,
+        "rightHand": 8.99511241912842,
+        "rightLowerArm": 8.38882637023926,
+        "rightUpperArm": 4.58077144622803
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "lock",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00188543123658746,
+          "speed_deg_s": 82.5718188285828,
+          "step_deg": 1.37619698047638,
+          "velocity_change_deg_s": 24.0500507354736
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00172259868122637,
+          "speed_deg_s": 101.433205604553,
+          "step_deg": 1.69055342674255,
+          "velocity_change_deg_s": 25.7118625640869
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00205075996927917,
+          "speed_deg_s": 111.740455627441,
+          "step_deg": 1.86234092712402,
+          "velocity_change_deg_s": 15.2684869766235
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 1.0
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 539.706745147705,
+        "time": 2.5,
+        "velocity_change_deg_s": 8.95237922668457
+      }
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_hand_difference_m": 0.522868812084198,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.265330791473389,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634989142417908,
+        "rightFoot": 0.0459649786353111,
+        "rightHand": 9.38866329193115,
+        "rightLowerArm": 9.85601997375488,
+        "rightUpperArm": 4.86344718933105
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "finite",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00188543123658746,
+          "speed_deg_s": 82.5718188285828,
+          "step_deg": 1.37619698047638,
+          "velocity_change_deg_s": 24.0500507354736
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00163740408606827,
+          "speed_deg_s": 99.9544715881348,
+          "step_deg": 1.66590785980225,
+          "velocity_change_deg_s": 25.7696285247803
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00136973359622061,
+          "speed_deg_s": 104.435584545135,
+          "step_deg": 1.74059307575226,
+          "velocity_change_deg_s": 22.4417190551758
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.738400987654362,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 3.68333333333332,
+            "weight": 0.738400987654362
+          }
+        ],
+        "frame": 280,
+        "speed_deg_s": 563.319797515869,
+        "time": 4.66666666666667,
+        "velocity_change_deg_s": 21.4833087921143
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_hand_difference_m": 0.0,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.44024258852005,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.0616729259491,
+        "rightFoot": 0.128313049674034,
+        "rightHand": 5.86654138565063,
+        "rightLowerArm": 5.32793664932251,
+        "rightUpperArm": 3.64146947860718
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "baseline",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00486324494704604,
+          "speed_deg_s": 63.9146161079407,
+          "step_deg": 2.13048720359802,
+          "velocity_change_deg_s": 14.7535352706909
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.0051925191655755,
+          "speed_deg_s": 64.2907547950745,
+          "step_deg": 2.14302515983582,
+          "velocity_change_deg_s": 21.735424041748
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00681205978617072,
+          "speed_deg_s": 66.9173526763916,
+          "step_deg": 2.23057842254639,
+          "velocity_change_deg_s": 25.3092460632324
+        }
+      ],
+      "peak_hand": {
+        "actions": [],
+        "frame": 208,
+        "speed_deg_s": 175.996241569519,
+        "time": 6.93333333333333,
+        "velocity_change_deg_s": 18.9788455963135
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_hand_difference_m": 0.524753510951996,
+      "max_joint_step_deg": {
+        "chest": 0.510133564472198,
+        "head": 1.93538463115692,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.0616729259491,
+        "rightFoot": 0.128313049674034,
+        "rightHand": 17.895299911499,
+        "rightLowerArm": 16.8009243011475,
+        "rightUpperArm": 9.18174743652344
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 15,
+      "scenario": "replace",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00403096387162805,
+          "speed_deg_s": 79.9528956413269,
+          "step_deg": 2.66509652137756,
+          "velocity_change_deg_s": 45.8721504211426
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00374649139121175,
+          "speed_deg_s": 100.320954322815,
+          "step_deg": 3.3440318107605,
+          "velocity_change_deg_s": 41.7786598205566
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00864011608064175,
+          "speed_deg_s": 143.024010658264,
+          "step_deg": 4.76746702194214,
+          "velocity_change_deg_s": 46.4352035522461
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 0.317440000000004
+          },
+          {
+            "arm_weight": 0.682559999999996,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "nod",
+            "source": "bank",
+            "time": 0.299999999999999,
+            "weight": 0.682559999999996
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 536.858997344971,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 45.3384246826172
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_hand_difference_m": 0.524753510951996,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.758581817150116,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.0616729259491,
+        "rightFoot": 0.128313049674034,
+        "rightHand": 17.8359813690186,
+        "rightLowerArm": 16.7392520904541,
+        "rightUpperArm": 9.15270805358887
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "stop",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00403096387162805,
+          "speed_deg_s": 79.9528956413269,
+          "step_deg": 2.66509652137756,
+          "velocity_change_deg_s": 45.8721504211426
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00374652747996151,
+          "speed_deg_s": 100.321061611176,
+          "step_deg": 3.34403538703918,
+          "velocity_change_deg_s": 41.7789993286133
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.0086389547213912,
+          "speed_deg_s": 143.027801513672,
+          "step_deg": 4.76759338378906,
+          "velocity_change_deg_s": 46.4435043334961
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 0.317440000000004
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 535.079441070557,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 44.2870025634766
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_hand_difference_m": 0.524753510951996,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.532039165496826,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.0616729259491,
+        "rightFoot": 0.128313049674034,
+        "rightHand": 17.8359813690186,
+        "rightLowerArm": 16.7392520904541,
+        "rightUpperArm": 9.15270805358887
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "lock",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00403096387162805,
+          "speed_deg_s": 79.9528956413269,
+          "step_deg": 2.66509652137756,
+          "velocity_change_deg_s": 45.8721504211426
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00374652747996151,
+          "speed_deg_s": 100.321061611176,
+          "step_deg": 3.34403538703918,
+          "velocity_change_deg_s": 41.7789993286133
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.0086389547213912,
+          "speed_deg_s": 143.027801513672,
+          "step_deg": 4.76759338378906,
+          "velocity_change_deg_s": 46.4435043334961
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.317440000000004,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.5,
+            "weight": 1.0
+          }
+        ],
+        "frame": 74,
+        "speed_deg_s": 535.079441070557,
+        "time": 2.46666666666667,
+        "velocity_change_deg_s": 44.2870025634766
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_hand_difference_m": 0.577302753925323,
+      "max_joint_step_deg": {
+        "chest": 0.510133624076843,
+        "head": 0.532039165496826,
+        "hips": 1.02824640274048,
+        "leftFoot": 2.0616729259491,
+        "rightFoot": 0.128313049674034,
+        "rightHand": 18.9514408111572,
+        "rightLowerArm": 19.794153213501,
+        "rightUpperArm": 9.72030735015869
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "finite",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 65,
+          "position_step_m": 0.00403096387162805,
+          "speed_deg_s": 79.9528956413269,
+          "step_deg": 2.66509652137756,
+          "velocity_change_deg_s": 45.8721504211426
+        },
+        {
+          "bone": "rightHand",
+          "frame": 66,
+          "position_step_m": 0.00291044660843909,
+          "speed_deg_s": 96.0325527191162,
+          "step_deg": 3.20108509063721,
+          "velocity_change_deg_s": 45.6632614135742
+        },
+        {
+          "bone": "rightHand",
+          "frame": 67,
+          "position_step_m": 0.00197012047283351,
+          "speed_deg_s": 123.670349121094,
+          "step_deg": 4.12234497070312,
+          "velocity_change_deg_s": 41.5631446838379
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.790123456790144,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 3.66666666666666,
+            "weight": 0.790123456790144
+          }
+        ],
+        "frame": 139,
+        "speed_deg_s": 568.543224334717,
+        "time": 4.63333333333333,
+        "velocity_change_deg_s": 69.8500137329102
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_hand_difference_m": 0.0,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.220558330416679,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634976506233215,
+        "rightFoot": 0.046659529209137,
+        "rightHand": 2.94447135925293,
+        "rightLowerArm": 2.66978693008423,
+        "rightUpperArm": 1.87987899780273
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "baseline",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00247205933555961,
+          "speed_deg_s": 63.7951183319092,
+          "step_deg": 1.06325197219849,
+          "velocity_change_deg_s": 4.10691452026367
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00260824034921825,
+          "speed_deg_s": 65.6449127197266,
+          "step_deg": 1.09408187866211,
+          "velocity_change_deg_s": 21.8722076416016
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.0029853128362447,
+          "speed_deg_s": 64.6822428703308,
+          "step_deg": 1.07803738117218,
+          "velocity_change_deg_s": 5.99185752868652
+        }
+      ],
+      "peak_hand": {
+        "actions": [],
+        "frame": 416,
+        "speed_deg_s": 176.668281555176,
+        "time": 6.93333333333333,
+        "velocity_change_deg_s": 8.51074981689453
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_hand_difference_m": 0.524301767349243,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.962185442447662,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634976506233215,
+        "rightFoot": 0.046659529209137,
+        "rightHand": 9.05109214782715,
+        "rightLowerArm": 8.43996715545654,
+        "rightUpperArm": 4.58984756469727
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 30,
+      "scenario": "replace",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00207779416814446,
+          "speed_deg_s": 83.1346392631531,
+          "step_deg": 1.38557732105255,
+          "velocity_change_deg_s": 24.0557231903076
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00189965649042279,
+          "speed_deg_s": 101.974575519562,
+          "step_deg": 1.69957625865936,
+          "velocity_change_deg_s": 25.6040382385254
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00226110336370766,
+          "speed_deg_s": 112.271754741669,
+          "step_deg": 1.87119591236115,
+          "velocity_change_deg_s": 15.274356842041
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 0.261599012345683
+          },
+          {
+            "arm_weight": 0.738400987654317,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "nod",
+            "source": "bank",
+            "time": 0.316666666666666,
+            "weight": 0.738400987654317
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 543.065528869629,
+        "time": 2.5,
+        "velocity_change_deg_s": 9.59386348724365
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_hand_difference_m": 0.524301767349243,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.379520297050476,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634976506233215,
+        "rightFoot": 0.046659529209137,
+        "rightHand": 9.01657390594482,
+        "rightLowerArm": 8.41148281097412,
+        "rightUpperArm": 4.57510089874268
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "stop",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00207779416814446,
+          "speed_deg_s": 83.1346392631531,
+          "step_deg": 1.38557732105255,
+          "velocity_change_deg_s": 24.0557231903076
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00189966033212841,
+          "speed_deg_s": 101.974582672119,
+          "step_deg": 1.69957637786865,
+          "velocity_change_deg_s": 25.6041641235352
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00226115249097347,
+          "speed_deg_s": 112.272055149078,
+          "step_deg": 1.87120091915131,
+          "velocity_change_deg_s": 15.2749071121216
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 0.261599012345683
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 540.994434356689,
+        "time": 2.5,
+        "velocity_change_deg_s": 9.03020286560059
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_hand_difference_m": 0.524301767349243,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.265330791473389,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634976506233215,
+        "rightFoot": 0.046659529209137,
+        "rightHand": 9.01657390594482,
+        "rightLowerArm": 8.41148281097412,
+        "rightUpperArm": 4.57510089874268
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "lock",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00207779416814446,
+          "speed_deg_s": 83.1346392631531,
+          "step_deg": 1.38557732105255,
+          "velocity_change_deg_s": 24.0557231903076
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00189966033212841,
+          "speed_deg_s": 101.974582672119,
+          "step_deg": 1.69957637786865,
+          "velocity_change_deg_s": 25.6041641235352
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00226115249097347,
+          "speed_deg_s": 112.272055149078,
+          "step_deg": 1.87120091915131,
+          "velocity_change_deg_s": 15.2749071121216
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.261599012345683,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 1.51666666666666,
+            "weight": 1.0
+          }
+        ],
+        "frame": 150,
+        "speed_deg_s": 540.994434356689,
+        "time": 2.5,
+        "velocity_change_deg_s": 9.03020286560059
+      }
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_hand_difference_m": 0.577097177505493,
+      "max_joint_step_deg": {
+        "chest": 0.275801479816437,
+        "head": 0.265330791473389,
+        "hips": 0.514135301113129,
+        "leftFoot": 0.634976506233215,
+        "rightFoot": 0.046659529209137,
+        "rightHand": 9.45589733123779,
+        "rightLowerArm": 9.93920993804932,
+        "rightUpperArm": 4.88802671432495
+      },
+      "max_lower_position_difference_m": 0.0,
+      "overlap_frames": 0,
+      "scenario": "finite",
+      "event_hand_frames": [
+        {
+          "bone": "rightHand",
+          "frame": 131,
+          "position_step_m": 0.00207779416814446,
+          "speed_deg_s": 83.1346392631531,
+          "step_deg": 1.38557732105255,
+          "velocity_change_deg_s": 24.0557231903076
+        },
+        {
+          "bone": "rightHand",
+          "frame": 132,
+          "position_step_m": 0.00180564995389432,
+          "speed_deg_s": 100.488724708557,
+          "step_deg": 1.67481207847595,
+          "velocity_change_deg_s": 25.6506671905518
+        },
+        {
+          "bone": "rightHand",
+          "frame": 133,
+          "position_step_m": 0.00150994944851846,
+          "speed_deg_s": 104.904527664185,
+          "step_deg": 1.74840879440308,
+          "velocity_change_deg_s": 22.4169807434082
+        }
+      ],
+      "peak_hand": {
+        "actions": [
+          {
+            "arm_weight": 0.738400987654362,
+            "channels": [
+              "head",
+              "arms",
+              "torso"
+            ],
+            "name": "wave",
+            "source": "bank",
+            "time": 3.68333333333332,
+            "weight": 0.738400987654362
+          }
+        ],
+        "frame": 280,
+        "speed_deg_s": 567.353839874268,
+        "time": 4.66666666666667,
+        "velocity_change_deg_s": 21.4169750213623
+      }
+    }
+  ]
+}

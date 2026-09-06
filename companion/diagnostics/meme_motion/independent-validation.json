@@ -1,0 +1,301 @@
+{
+  "cells": [
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.578783880325387,
+      "motion": "mambo_sway",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 1.02945614354467,
+      "motion": "hachimi_peek",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.936281691095113,
+      "motion": "playful_shrug",
+      "scope": "asset"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "head_accel_deg_s2": 737.528171539307,
+      "head_accel_peak_frame": 39,
+      "head_speed_deg_s": 117.831649780273,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.222514599561691,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "head_accel_deg_s2": 810.871067047119,
+      "head_accel_peak_frame": 77,
+      "head_speed_deg_s": 118.164253234863,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.217294305562973,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "head_accel_deg_s2": 388.243188858032,
+      "head_accel_peak_frame": 101,
+      "head_speed_deg_s": 86.7078475952148,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.266167253255844,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "head_accel_deg_s2": 1052.89054870605,
+      "head_accel_peak_frame": 78,
+      "head_speed_deg_s": 117.580093383789,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.222514599561691,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "head_accel_deg_s2": 777.584209442139,
+      "head_accel_peak_frame": 78,
+      "head_speed_deg_s": 105.765075683594,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.217294290661812,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "head_accel_deg_s2": 726.689071655273,
+      "head_accel_peak_frame": 204,
+      "head_speed_deg_s": 86.7269821166992,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.266179919242859,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 4.22652192355599e-07,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 3.60968897439307e-07,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 3.60488002115744e-07,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "head_accel_deg_s2": 737.528171539307,
+      "head_accel_peak_frame": 39,
+      "head_speed_deg_s": 117.831649780273,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.206713452935219,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "head_accel_deg_s2": 810.871067047119,
+      "head_accel_peak_frame": 77,
+      "head_speed_deg_s": 118.164253234863,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.202110677957535,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "head_accel_deg_s2": 388.243188858032,
+      "head_accel_peak_frame": 101,
+      "head_speed_deg_s": 86.7078475952148,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.236171200871468,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "head_accel_deg_s2": 1052.89054870605,
+      "head_accel_peak_frame": 78,
+      "head_speed_deg_s": 117.580093383789,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.206713438034058,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "head_accel_deg_s2": 777.584209442139,
+      "head_accel_peak_frame": 78,
+      "head_speed_deg_s": 105.765075683594,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.202110663056374,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "head_accel_deg_s2": 726.689071655273,
+      "head_accel_peak_frame": 204,
+      "head_speed_deg_s": 86.7269821166992,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.236202880740166,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "max_foot_error_m": 4.18908854271649e-07,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "rice-shower",
+      "max_foot_error_m": 3.5998721159558e-07,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "rice-shower",
+      "max_foot_error_m": 3.59967913254877e-07,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "head_accel_deg_s2": 737.528171539307,
+      "head_accel_peak_frame": 39,
+      "head_speed_deg_s": 117.831649780273,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.228236705064774,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "head_accel_deg_s2": 810.871067047119,
+      "head_accel_peak_frame": 77,
+      "head_speed_deg_s": 118.164253234863,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.223393887281418,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "head_accel_deg_s2": 388.243188858032,
+      "head_accel_peak_frame": 101,
+      "head_speed_deg_s": 86.7078475952148,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.260549485683441,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "head_accel_deg_s2": 1052.89054870605,
+      "head_accel_peak_frame": 78,
+      "head_speed_deg_s": 117.580093383789,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.228236719965935,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "head_accel_deg_s2": 777.584209442139,
+      "head_accel_peak_frame": 78,
+      "head_speed_deg_s": 105.765075683594,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.223393887281418,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "head_accel_deg_s2": 726.689071655273,
+      "head_accel_peak_frame": 204,
+      "head_speed_deg_s": 86.7269821166992,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.260585725307465,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "max_foot_error_m": 2.99602277209488e-07,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "eishin-flash",
+      "max_foot_error_m": 3.29535566834238e-07,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "eishin-flash",
+      "max_foot_error_m": 3.29535566834238e-07,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    }
+  ],
+  "characters": [
+    "cheval-grand",
+    "rice-shower",
+    "eishin-flash"
+  ],
+  "checks": 366,
+  "failures": [],
+  "scope": "Deterministic real-rig source harness; not packaged Windows visual acceptance",
+  "source_hashes": {
+    "companion/diagnostics/meme_motion/motions.json": "961c8f0231faddfba695b8b1c8cbb5f50a47cc0d3a045e8a6e9aa537cdf74d6e",
+    "companion/diagnostics/meme_motion/build_motions.gd": "3e904134190c7f503ab9c050da99048b32728c483fc56d14c206e5622d60ca94",
+    "companion/diagnostics/meme_motion/probe_motions.gd": "0682d41ff9a1df20fd1920e2d2ede5028c082e26ecfce241f6d81ebfe0e2573b",
+    "companion/diagnostics/meme_motion/independent_head_probe.gd": "84b20c69308296ab0959ebcc1cd6261b7938512395a4a513df1e28c0df30e1ef",
+    "companion/native/scripts/motion_player.gd": "54a0eafa6e3f49f0bf3fbe560c5076d95e88a6b5000a0522d9d40dcc9af59eee",
+    "companion/native/scripts/upper_body_overlay.gd": "f30521e6b5cb0d0d0cc6994f09a70f916d6d8d7baeccdad5c280676964447795",
+    "companion/native/scripts/vrma_clip.gd": "04eafa493030b74bff2d6bace64903d4924407e1d02ab652a97d3784e040b0fb",
+    "companion/native/scripts/vrm_avatar.gd": "768685848a866af3f3073be4dc7cabb8a9f232c8a59bf32706b486c96366e740",
+    "companion/native/scripts/desktop_gait.gd": "5f96d5edb9bd6fca974ed42d7ec6b8c9f7eb3b0232638f1e3536b98164876414",
+    "companion/native/scripts/ambient_motion.gd": "1332a1bc37bb14c49e0e2b1dcbc9e35224d15fd5b37178a10c19a190107fff75",
+    "companion/assets/motions/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "companion/assets/motions/mambo_sway.vrma": "157bc0436f19b02a46a21f2190281b8f03e2c098fe3b5661546acdafe7c7d409",
+    "companion/assets/motions/hachimi_peek.vrma": "6bd9ec4df22c453a76d403f240f5421130d029103156ddf6dde85dd0cbd38edf",
+    "companion/assets/motions/playful_shrug.vrma": "a31a8d428d1c16117c6f74b783d1940cf79cedf22afd27f6c10b886a00ee15c4"
+  },
+  "derivative_scope": "World head angular velocity vector and vector acceleration at30/60Hz, after overlay starts on continuous walk; acquisition/action/release all included, initial base startup excluded. Descriptive only, no new derivative pass threshold.",
+  "previous_catalog_preserved": true,
+  "previous_catalog_count": 16
+}

@@ -1,0 +1,11 @@
+{
+  "engine/furniture.py": "5b9da265a46ebbda0eabe1e4661efc008ca8e3fe319c9ca30279f3252ad38ce9",
+  "engine/intent.py": "71c94b4014150ec704883fe6652e0fa5a39bc2abccbb53a8aa32537d24090647",
+  "engine/server.py": "1fda429f7926e158f126f763b670f6d2b9a5c7a1abe3ae00db6a0f246783fda9",
+  "engine/profiles.py": "bcb8b49590a3ced4b9a7c961a39e3817cb16f3700e3e12ce34a7ce32f12f7f2d",
+  "engine/providers/base.py": "666cd0630ff9d786f957904768fe6511c5a6f07f515194d6a016302bdfe4c35f",
+  "engine/providers/omni.py": "3c58b64e7c5658f4d77ceb902248f0264de4472f2ea2bd12667fd4e42df6a184",
+  "engine/turns.py": "49f74a601e3d550193bebefc0e58c157f7c292dd11f520470c216f3927b0eb3d",
+  "engine/tests/test_spatial_locomotion.py": "88c7c289461e91eafbb5181499ab0a3a9ea2b1e172c2fa00a0afcdace70b9997",
+  "engine/tests/test_avatar_variant_route.py": "c5f8d7faba4e960b71f4835b3b0f8b28ee0b4cb0a58d9c652a738e51fdacb6dc"
+}

@@ -1,0 +1,11 @@
+{
+  "native/scripts/vrm_spring_contacts.gd": "fc5e7df211844db6c86f2b6deb9c8d61d5218adce7343d451b34fb3a7eb30c5e",
+  "native/scripts/vrm_avatar.gd": "c083fca3f77e0ef6c1b1891901968ac922ad9ecccd54a35aa96897dd9e025a44",
+  "native/addons/vrm/vrm_secondary.gd": "cc5b78de0523a372fa93f5f28685542aa3348caef35c8a43e838f6c2b367756e",
+  "diagnostics/physics_cloth/review_modifier_equivalence.gd": "1dfd18cdeb15709238b1691909869ee5ffb8e69b95583a3b5cc75011cd80e92c",
+  "diagnostics/physics_cloth/review-modifier-equivalence.json": "959794483e0e7ce5cfdf043fac6d6a725cc6f0bcf106e2a6d600b1dcb4e044de",
+  "assets/rice-shower.vrm": "50ede37cd75029d8d00d17472588b4820408557243b6b2ee058570c7c451035a",
+  "assets/eishin-flash.vrm": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+  "assets/motions/uma_walk.vrma": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+  "assets/motions/sit_idle.vrma": "0e39233152825252f022dbbe6a34e0a4978545602083502293b788b58e3792ff"
+}

@@ -163,7 +163,7 @@ func _run() -> void:
 	var tabs: Array = []
 	for i in panel._tabs.get_tab_count():
 		tabs.append(panel._tabs.get_tab_title(i))
-	check(tabs == ["대화", "행동", "공간", "모션", "작업", "설정"], "공간 tab added, existing tabs intact (%s)" % str(tabs))
+	check(tabs == ["대화", "행동", "공간", "시점", "모션", "작업", "설정"], "공간 tab present next to the existing tabs and 시점 (%s)" % str(tabs))
 	# Inherited controls untouched.
 	check(panel._point_list != null and panel._idle_clip_option != null and panel._idle_clip_option.item_count >= 2 and panel._markers_check != null, "interest-point and idle controls still present")
 	var settings_got: Array = []
@@ -208,7 +208,7 @@ func _run() -> void:
 			space_text += (n as Button).text + "\n"
 		for c in n.get_children():
 			stack.append(c)
-	check(space_text.contains("실험 기능") and space_text.contains("앞으로 (아직 없음)") and space_text.contains("도구 꽂이"), "tab marked experimental; hold/tool socket described as future, not a button")
+	check(space_text.contains("대화로 가구를 놓거나") and space_text.contains("직접 배치 · 선택 사항") and space_text.contains("앞으로 (아직 없음)") and space_text.contains("도구 꽂이") and not space_text.contains("Windows에서 확인 중"), "conversation-first wording, manual section optional; hold/tool socket described as future, not a button")
 	for b in _verb_buttons(panel):
 		check((b as Button).text != "들기" and (b as Button).text != "도구", "no hold/tool button exists")
 

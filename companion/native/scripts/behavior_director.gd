@@ -36,6 +36,7 @@ var _outcomes: Array[Dictionary] = []
 var _preempted := false
 var _pending_cancel: Dictionary = {}
 var _posture_allowed := true
+var _changing_character := false
 
 func configure_style(values: Dictionary) -> void:
 	for key in STYLE_DEFAULTS:
@@ -50,8 +51,9 @@ func configure_style(values: Dictionary) -> void:
 		style[key] = value
 
 func set_character(value: String) -> void:
-	if value == character_id:
+	if value == character_id or _changing_character:
 		return
+	_changing_character = true
 	cancel_all("character_changed")
 	_handoff_queue_id = ""
 	character_id = value
@@ -65,6 +67,7 @@ func set_character(value: String) -> void:
 	_phase_until = _time + float(style.idle_interval_s)
 	_next_move = _phase_until
 	state = "rest"
+	_changing_character = false
 
 func observe_interest(id: String, point: Vector2, confidence: float = 0.5,
 		ttl: float = 30.0, kind: String = "point", label: String = "") -> bool:
@@ -91,10 +94,14 @@ func interest_catalogue() -> Array[Dictionary]:
 	return result
 
 func request_intent(id: String, kind: String, target_id: String = "", source: String = "user",
-		ttl: float = 30.0, duration_s: float = 6.0, for_character: String = "") -> Dictionary:
+		ttl: float = 30.0, duration_s: float = 6.0, for_character: String = "", locomotion_id: String = "") -> Dictionary:
+	if _changing_character:
+		return {"accepted": false, "reason": "stale_character"}
 	_expire()
 	if id.is_empty() or id.length() > 160 or kind not in ["move_to", "inspect", "rest"] or source not in ["user", "llm", "local"]:
 		return {"accepted": false, "reason": "invalid"}
+	if not locomotion_id.is_empty() and kind != "move_to":
+		return {"accepted":false,"reason":"invalid_locomotion"}
 	if not for_character.is_empty() and for_character != character_id:
 		return {"accepted": false, "reason": "stale_character"}
 	if not is_finite(ttl) or ttl <= 0.0 or not is_finite(duration_s):
@@ -111,15 +118,22 @@ func request_intent(id: String, kind: String, target_id: String = "", source: St
 			return {"accepted": false, "reason": "duplicate"}
 		if _source_priority(source) > _source_priority(str(_active.source)) or (source == "user" and _active.source == "user"):
 			cancel_intent(str(_active.id), "superseded")
-	for i in range(_queue.size() - 1, -1, -1):
-		if _source_priority(source) > _source_priority(str(_queue[i].source)) or (source == "user" and _queue[i].source == "user"):
-			_record_outcome(str(_queue[i].id), "superseded")
-			_queue.remove_at(i)
+	# Outcome listeners can synchronously cancel or enqueue other intentions.
+	# Iterate a snapshot; cancel_intent detaches ownership before emitting.
+	for queued in _queue.duplicate():
+		if _source_priority(source) > _source_priority(str(queued.source)) or (source == "user" and queued.source == "user"):
+			cancel_intent(str(queued.id), "superseded")
+	# A supersession listener can itself submit this incoming ID.
+	if _history.has(id) or (not _active.is_empty() and _active.id == id):
+		return {"accepted": false, "reason": "duplicate"}
+	for queued in _queue:
+		if queued.id == id:
+			return {"accepted": false, "reason": "duplicate"}
 	if _queue.size() >= MAX_INTENTS:
 		return {"accepted": false, "reason": "queue_full"}
 	_queue.append({"id": id, "kind": kind, "target_id": target_id, "source": source,
 		"expires": _time + minf(ttl, MAX_INTENT_TTL), "duration_s": clampf(duration_s, 1.0, 30.0),
-		"character": character_id, "queued_at": _time})
+		"character": character_id, "queued_at": _time, "locomotion_id":locomotion_id})
 	return {"accepted": true, "reason": "queued"}
 
 func cancel_intent(id: String, reason: String = "cancelled") -> bool:
@@ -130,17 +144,21 @@ func cancel_intent(id: String, reason: String = "cancelled") -> bool:
 		return true
 	for i in _queue.size():
 		if _queue[i].id == id:
-			_record_outcome(id, reason)
 			_queue.remove_at(i)
+			_record_outcome(id, reason)
 			return true
 	return false
 
 func cancel_all(reason: String = "cancelled") -> void:
+	var queued := _queue.duplicate()
+	_queue.clear()
+	# Retired IDs stay deduplicated even before their individual notifications.
+	for intent in queued:
+		_history[str(intent.id)] = _time + 180.0
 	if not _active.is_empty():
 		cancel_intent(str(_active.id), reason)
-	for intent in _queue:
+	for intent in queued:
 		_record_outcome(str(intent.id), reason)
-	_queue.clear()
 
 func resolve_intent(id: String, outcome: String) -> bool:
 	_expire()
@@ -232,7 +250,7 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 			if intent.kind == "move_to":
 				var interest: Dictionary = _interests[intent.target_id]
 				action = {"type": "move_interest", "id": intent.id, "target_id": intent.target_id,
-					"point": interest.point, "kind": interest.kind, "ttl": maxf(0.1, float(intent.expires) - _time)}
+					"point": interest.point, "kind": interest.kind, "locomotion_id":intent.get("locomotion_id",""), "ttl": maxf(0.1, float(intent.expires) - _time)}
 				_attention = interest.point
 				state = "anticipate"
 				_next_move = _time + MOVE_COOLDOWN
@@ -265,8 +283,14 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 				_last_attention[target_id] = _time
 				_phase_until = _time + float(style.gaze_hold_s)
 				# Local exploration is intermittent and explicit, never an LLM call.
-				if _cycle % 3 == 0 and _time >= _next_move and bool(context.get("can_move", false)) and target_id != _last_move_target and _interests[target_id].kind in ["surface", "floor"]:
-					request_intent("local:%d" % _cycle, "move_to", target_id, "local", 30.0)
+				if _cycle % 3 == 0 and _time >= _next_move and bool(context.get("can_move", false)) and _interests[target_id].kind in ["surface", "floor"]:
+					var move_target := target_id
+					if move_target == _last_move_target:
+						var choices := _interests.keys();choices.sort()
+						for candidate in choices:
+							if candidate != _last_move_target and _interests[candidate].kind in ["surface","floor"]:
+								move_target=candidate;break
+					if move_target != _last_move_target:request_intent("local:%d" % _cycle, "move_to", move_target, "local", 30.0)
 			else:
 				state = "sleepy" if _cycle % 5 == 0 else "rest"
 				_attention = Vector2.INF
@@ -303,13 +327,14 @@ func _source_priority(source: String) -> int:
 func _finish_active(outcome: String) -> void:
 	if _active.is_empty():
 		return
-	_record_outcome(str(_active.id), outcome)
+	var id := str(_active.id)
 	_active.clear()
 	state = "rest"
 	_attention = Vector2.INF
 	_attention_id = ""
 	_phase_until = _time + float(style.idle_interval_s)
 	_next_dispatch = _time + float(style.response_delay_s)
+	_record_outcome(id, outcome)
 
 func _record_outcome(id: String, outcome: String) -> void:
 	_history[id] = _time + 180.0
@@ -326,11 +351,9 @@ func _expire() -> void:
 			_interests.erase(id)
 			_last_attention.erase(id)
 			interest_revision += 1
-	for i in range(_queue.size() - 1, -1, -1):
-		var intent := _queue[i]
+	for intent in _queue.duplicate():
 		if float(intent.expires) <= _time or (intent.kind != "rest" and not _interests.has(intent.target_id)):
-			_record_outcome(str(intent.id), "expired")
-			_queue.remove_at(i)
+			cancel_intent(str(intent.id), "expired")
 	if not _active.is_empty() and (float(_active.get("navigation_deadline", _active.expires)) <= _time or (_active.kind != "rest" and not _interests.has(_active.target_id))):
 		cancel_intent(str(_active.id), "expired")
 	for id: String in _history.keys():
@@ -356,3 +379,11 @@ func remove_interest(id: String) -> bool:
 		_attention = Vector2.INF
 		_attention_id = ""
 	return true
+
+## Cross-owner arbitration: furniture may not displace an explicit user intention.
+func has_user_intent() -> bool:
+	_expire()
+	if not _active.is_empty() and _active.get("source","") == "user": return true
+	for intent in _queue:
+		if intent.get("source","") == "user": return true
+	return false

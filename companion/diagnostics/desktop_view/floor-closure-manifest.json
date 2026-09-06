@@ -1,0 +1,24 @@
+{
+  "scope": "Final bounded standing rest-geometry closure; no live skinned sole or naturalness claim",
+  "source_hashes": {
+    "main": "58575cb4f297a935fc177e4fb461f10bd08d21fa42360b3801accd441e6b67b4",
+    "projected_avatar_geometry": "73cd26be7a659cb9312055aeb61692996517f7e87dcda17718fe3fa787554300",
+    "desktop_autonomy": "4a596d3abe0f2811ac3f086f56802853de0ec395b3d59f10ae04856614dbb500",
+    "desktop_view": "abe7ac7f3bfebe3944a67c563229c08cda36feb5db819d58a7f2f9b37d5b2175",
+    "living_behavior": "0e1bd4164ddad4911752f825ed52ec8f105acf0952f2b791d6cbb80e96efd7a4",
+    "motion_player": "eed63ece04ffdc5ef91cc7187eb049b94f5f3af4579eae13e8535b5c9d08d403",
+    "desktop_gait": "7fd5d787a4cb3092346ddf62377f4683442eb4efd139dc3709f87c11f2d3cbb6"
+  },
+  "reports": {
+    "floor-support-commit-results.json": {
+      "sha256": "98371fbfd17a2fba4ce4b790466fa19f2974fab5c6e588977dc6ae9f2792da47",
+      "cells": 54,
+      "failures": 0
+    },
+    "floor-support-perspective-commit-results.json": {
+      "sha256": "4ea048b72cfb9f542773f5c6b58ae50ea4e4168c9927288afb497742cb576ac7",
+      "cells": 18,
+      "failures": 0
+    }
+  }
+}

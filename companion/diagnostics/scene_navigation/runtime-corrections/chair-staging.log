@@ -1,0 +1,4 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+CHAIR_STAGING { "accepted": true, "target_world": (1.004275, -1.330282, -0.101863), "factor": 1.2, "source_delta_local": (-0.003033, -0.342931, -0.312394), "applied_delta_local": (-0.003639, -0.342931, -0.374873) } solids=34
+Chair physical staging: 2 checks, 0 failures

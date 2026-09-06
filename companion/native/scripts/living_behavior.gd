@@ -4,8 +4,10 @@ extends Node
 ## The director never calls a model; only existing conversation turns may return intents.
 var host
 var director := BehaviorDirector.new()
+var scene_interests = preload("desktop_scene_interests.gd").new()
 var points: InterestPoints
 var last_output: Dictionary = {}
+var selected_locomotion_id := ""
 var outcomes: Array[Dictionary] = []
 var enabled := true
 var _settings: Node
@@ -49,6 +51,7 @@ func configure(app) -> void:
 	host.session.character_changed.connect(func(_id: String): _refresh_at = 0.0; _published = "")
 	host.client.disconnected.connect(func(_why: String): cancel("disconnected"); _published = "")
 	director.intent_outcome.connect(func(id: String, outcome: String):
+		object_command_result(id,outcome)
 		outcomes.append({"id": id, "outcome": outcome, "time": _clock})
 		if outcomes.size() > 64: outcomes.pop_front()
 		if not id.begins_with("local:"):
@@ -87,8 +90,21 @@ func request_intent(intent: Dictionary, source: String = "user", id: String = ""
 	if id.is_empty():
 		_request_counter += 1
 		id = "%s:%d:%d" % [source, Time.get_ticks_msec(), _request_counter]
+	if str(intent.get("kind", "")) == "furniture":
+		return host.objects.request_intent(intent,source,id) if host.objects != null else {"accepted":false,"reason":"furniture_unavailable"}
+	if str(intent.get("kind", "")) == "change_appearance":
+		return host.request_avatar_variant(str(intent.get("variant_id","")),id,source) if host.has_method("request_avatar_variant") else {"accepted":false,"reason":"appearance_unavailable"}
+	if intent.has("locomotion_id") and not intent.locomotion_id is String:
+		return {"accepted":false,"reason":"invalid_locomotion"}
+	var locomotion_id := str(intent.get("locomotion_id",""))
+	if not locomotion_id.is_empty() and (str(intent.get("kind","")) != "move_to" or not is_locomotion_available(locomotion_id)):
+		return {"accepted":false,"reason":"unknown_locomotion"}
+	if source == "user" and not id.begins_with("object-use:") and host.objects != null:
+		host.objects.cancel_commands("superseded")
+	if str(intent.get("kind","")) == "move_to" and not scene_interests.has_target(str(intent.get("target_id",""))) and host.get("scene_navigation") != null and host.scene_navigation.ground_latched:
+		host.scene_navigation.release_to_contact("superseded")
 	return director.request_intent(id, str(intent.get("kind", "")), str(intent.get("target_id", "")), source,
-		30.0, float(intent.get("duration_s", 6.0)), host.session.character_id)
+		30.0, float(intent.get("duration_s", 6.0)), host.session.character_id, locomotion_id)
 
 func observe_interest(id: String, point: Vector2, confidence: float = 0.5, ttl: float = 30.0, kind: String = "point", label: String = "") -> void:
 	if not InterestPoints.is_valid_id(id) or not point.is_finite() or not is_finite(ttl) or ttl <= 0: return
@@ -132,7 +148,11 @@ func _refresh_targets() -> void:
 	for p in points.points():
 		if points.reachable(str(p.id)):
 			available.append({"id":p.id,"point":Vector2(p.x,p.y),"kind":p.kind,"label":p.label,"confidence":0.85})
-	available.append_array(host.autonomy.available_surface_targets())
+	if _scene_exploration_enabled():
+		available.append_array(scene_interests.refresh(host))
+	else:
+		scene_interests.clear()
+		available.append_array(host.autonomy.available_surface_targets())
 	for id in _external.keys():
 		if float(_external[id].expires) <= _clock: _external.erase(id)
 		else: available.append(_external[id])
@@ -149,14 +169,39 @@ func _refresh_targets() -> void:
 	_known = fresh
 	_refresh_at = _clock + 0.5
 
+func is_locomotion_available(id: String) -> bool:
+	return host != null and host._vrma_loaded.has(id) and bool(host._vrma_loaded[id].get("locomotion",false)) and bool(host._vrma_loaded[id].get("loop",false)) and host.motion.locomotion_clips.has(id)
+
+func locomotion_catalog() -> Array:
+	var result: Array = []
+	var ids: Array = host._vrma_loaded.keys()
+	ids.sort()
+	var pattern := RegEx.create_from_string("^[a-z0-9][a-z0-9_-]{0,31}$")
+	for id in ids:
+		if result.size() >= 32: break
+		if not is_locomotion_available(str(id)) or pattern.search(str(id)) == null: continue
+		var description := str(host._vrma_loaded[id].get("description",host._vrma_loaded[id].get("label",id))).left(240).replace("\n"," ").replace("\r"," ").replace("\t"," ")
+		result.append({"id":id,"description":description})
+	return result
+
 func publish_world(force: bool = false) -> void:
 	if host.client.state != "open" or not host.session.hello_received or not bool(host.session.capabilities.get("world_context", false)): return
 	if host._selection_announced != host.session.character_id: return
+	if force: _refresh_targets()
 	var entries: Array = director.interest_catalogue() if enabled else []
+	if host.objects != null:
+		for entry in entries:
+			if entry.get("kind","") == "prop" and str(entry.id).begins_with("object:"):
+				var record: Dictionary = host.objects.store.get_object(str(entry.id).trim_prefix("object:"))
+				if not record.is_empty() and str(record.type) in host.objects.furniture_types(): entry["object_type"] = str(record.type)
 	entries.sort_custom(func(a, b): return str(a.id) < str(b.id))
-	var fingerprint: String = JSON.stringify(entries) + str(host.session.character_id)
+	var furniture: Array = host.objects.furniture_catalog() if enabled and host.objects != null else []
+	var locomotion := locomotion_catalog() if enabled else []
+	var appearance_supported: bool = enabled and host.has_method("request_avatar_variant")
+	var active_variant: String = host.active_avatar_variant() if appearance_supported and host.has_method("active_avatar_variant") else "default"
+	var fingerprint: String = JSON.stringify([entries,furniture,locomotion,appearance_supported,active_variant]) + str(host.session.character_id)
 	if not force and fingerprint == _published and _clock < _publish_at: return
-	if host.client.send({"type":"world_context","character_id":host.session.character_id,"interests":entries}):
+	if host.client.send({"type":"world_context","character_id":host.session.character_id,"interests":entries,"furniture_catalog":furniture,"locomotion_catalog":locomotion,"appearance_supported":appearance_supported,"active_variant_id":active_variant}):
 		_published = fingerprint
 		_publish_at = _clock + 20.0
 
@@ -166,15 +211,28 @@ func _event(event: Dictionary) -> void:
 		_refresh_targets()
 		publish_world(true)
 	elif type == "done" and not bool(event.get("ok", true)):
+		if host.has_method("cancel_avatar_variant"): host.cancel_avatar_variant(str(event.get("turn_id",""))+":intent","failed","turn_failed")
 		director.cancel_intent(str(event.get("turn_id", "")) + ":intent", "failed")
+		if host.objects != null: host.objects.cancel_commands("failed",str(event.get("turn_id", "")) + ":intent")
 	elif type in ["action", "done"] and typeof(event.get("intent")) == TYPE_DICTIONARY:
-		request_intent(event.intent, "llm", str(event.get("turn_id", "")) + ":intent")
+		var intent_id := str(event.get("turn_id", "")) + ":intent"
+		var accepted := request_intent(event.intent, "llm", intent_id)
+		if not accepted.get("accepted",false) and accepted.get("reason","") != "duplicate" and not accepted.get("feedback_sent",false): object_command_result(intent_id,"rejected")
 	elif type in ["error", "cancelled"]:
+		if host.has_method("cancel_avatar_variant"): host.cancel_avatar_variant(str(event.get("turn_id",""))+":intent","failed" if type == "error" else "cancelled","turn_failed" if type == "error" else "turn_cancelled")
 		director.cancel_intent(str(event.get("turn_id", "")) + ":intent", type)
+		if host.objects != null: host.objects.cancel_commands(type,str(event.get("turn_id", "")) + ":intent")
 
 func cancel(reason: String = "cancelled") -> void:
+	# The appearance loader itself clears locomotion with avatar_changed;
+	# every external cancellation must also revoke its pending/deferred load.
+	if reason != "avatar_changed" and host != null and host.has_method("cancel_avatar_variant"):
+		host.cancel_avatar_variant("","interrupted" if reason == "disconnected" else "cancelled","disconnected" if reason == "disconnected" else "behavior_cancelled")
+	selected_locomotion_id = ""
 	director.cancel_all(reason)
 	if host != null:
+		if host.get("scene_navigation") != null: host.scene_navigation.cancel(reason)
+		if host.objects != null: host.objects.cancel_commands(reason)
 		host.autonomy.cancel_target(reason)
 		host.motion.finish_locomotion()
 		host.motion.cancel_heading()
@@ -200,22 +258,47 @@ func tick(delta: float) -> void:
 	var speaking: bool = host.audio.voice_active
 	var listening: bool = host.mic.is_recording()
 	var thinking: bool = host.session.is_foreground_busy() and not speaking
-	var can_move: bool = host.autonomy.can_request_move() and not host.bridge.dialogue_holding(host._now()) and not host.is_sitting()
+	if _scene_exploration_enabled() and not host.scene_navigation.holding and host.autonomy.can_request_move():
+		host.scene_navigation.adopt_ground_placement()
+	var scene_moving:bool=host.get("scene_navigation") != null and host.scene_navigation.navigation.active
+	var scene_ground:bool=host.get("scene_navigation") != null and host.scene_navigation.ground_latched
+	var furniture_busy:bool=host.objects != null and not host.objects._interaction.is_empty()
+	var can_move: bool = (scene_ground or host.autonomy.can_request_move()) and not host.bridge.dialogue_holding(host._now()) and not host.is_sitting() and not scene_moving and (not furniture_busy or _owns_legacy_furniture_approach())
 	last_output = director.tick(delta, {"character_id":host.session.character_id,"panel_open":host.panel_open,
 		"dragging":host._drag_active or is_marker_dragging(),"speaking":speaking,"listening":listening,"thinking":thinking,"working":job_active,
 		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move,
-		"autonomy_enabled":host.autonomy.enabled,"autonomy_state":host.autonomy.state,
-		"moving":host.autonomy.state == "walk", "pointer_point":pointer,
+		"autonomy_enabled":host.autonomy.enabled,"autonomy_state":"walk" if scene_moving else ("rest" if scene_ground else host.autonomy.state),
+		"moving":scene_moving or host.autonomy.state == "walk", "pointer_point":pointer,
 		"actor_point":Vector2(host.get_window().position) + host.pet_rect.get_center(),
 		"preview_active":host.motion._preview or host.motion._custom_motion,
 		"dialogue_gesture_active":host._dialogue_gesture_active()})
 	var action: Dictionary = last_output.get("action", {})
 	match str(action.get("type", "")):
 		"move_interest":
+			var requested := str(action.get("locomotion_id",""))
+			if not requested.is_empty() and not is_locomotion_available(requested):
+				director.resolve_intent(str(action.id),"locomotion_revoked")
+				return
+			if scene_interests.has_target(str(action.target_id)) and _scene_exploration_enabled():
+				var target_id:=str(action.target_id)
+				var callback:=func(outcome:String):
+					selected_locomotion_id=""
+					director.navigation_result(target_id,outcome)
+				var result:Dictionary=host.scene_navigation.request_owned(scene_interests.world_target(target_id),host.objects.scene_obstacle_bounds(),callback)
+				selected_locomotion_id=requested if result.get("accepted",false) else ""
+				director.resolve_intent(str(action.id),"started" if result.get("accepted",false) else str(result.get("reason","unreachable")))
+				return
 			host.autonomy.observe_interest(str(action.target_id), Vector2(action.point), 1.0, float(action.ttl), str(action.kind))
 			var accepted: bool = host.autonomy.move_to_interest(str(action.target_id))
+			# move_to_interest synchronously finishes its previous native target.
+			# Install the new selection after those old terminal callbacks return.
+			selected_locomotion_id = requested if accepted and host.autonomy.last_request_outcome == "started" else ""
 			director.resolve_intent(str(action.id), "started" if accepted else host.autonomy.last_request_outcome)
-		"cancel_move": host.autonomy.cancel_target(str(action.get("reason", "cancelled")), Vector2(action.get("replacement_point", Vector2.INF)))
+			if not accepted: selected_locomotion_id = ""
+		"cancel_move":
+			if host.get("scene_navigation") != null and host.scene_navigation.has_completion_owner():host.scene_navigation.cancel(str(action.get("reason","cancelled")))
+			selected_locomotion_id = ""
+			host.autonomy.cancel_target(str(action.get("reason", "cancelled")), Vector2(action.get("replacement_point", Vector2.INF)))
 	# User attention is brief and has a refractory period, rather than cursor tracking forever.
 	_look = Vector2(last_output.get("attention_point", Vector2.INF))
 	if speaking or listening or thinking or host._drag_active:
@@ -271,9 +354,28 @@ func apply_attention() -> bool:
 
 func _frame_moved(displacement: Vector2, velocity: Vector2) -> void:
 	var supported: bool = bool(host.autonomy.get_support_contact().get("attached", false)) and not host.is_sitting() and host.autonomy.state in ["anticipate", "walk", "arrive"] and not host._dialogue_gesture_active()
-	host.motion.set_locomotion_sample(velocity, displacement, maxf(host._px_per_m * host.pet_scale(), 1.0), supported)
+	var world_delta: Variant = null
+	if host.avatar.has_model():
+		var placement_delta: Variant = host.take_projection_world_delta()
+		if host.spatial_camera() != null:
+			# A moved perspective crop changes the avatar's canonical world
+			# placement. Measure that change once before correcting cached feet.
+			if placement_delta is Vector3:
+				world_delta = placement_delta
+			else:
+				var local_foot: Vector3 = host._pivot_local.get("foot", Vector3.ZERO)
+				var before: Vector3 = host.avatar.global_transform * local_foot
+				host._update_avatar_transform(0.0)
+				world_delta = host.avatar.global_transform * local_foot - before
+		else:
+			# Orthographic windows carry their local scene with the OS origin;
+			# convert the desktop displacement through the actual tilted camera.
+			world_delta = DesktopView.screen_delta_to_world(host.camera, displacement, host._camera_pivot_depth)
+			if placement_delta is Vector3: world_delta += placement_delta
+	host.motion.set_locomotion_sample(velocity, displacement, maxf(host._px_per_m * host.pet_scale(), 1.0), supported, world_delta)
 
 func _navigation_finished(target_id: String, outcome: String) -> void:
+	selected_locomotion_id = ""
 	if outcome == "heading_timeout":
 		host.motion.cancel_heading()
 	director.navigation_result(target_id, outcome)
@@ -284,3 +386,32 @@ func is_marker_dragging() -> bool:
 		var marker := points.marker_for(str(p.id))
 		if marker != null and bool(marker.get("dragging")): return true
 	return false
+
+## Terminal execution feedback is attached to future user turns; it never calls a model.
+func object_command_result(id: String, outcome: String) -> void:
+	if not id.ends_with(":intent") or host.client.state != "open": return
+	var canonical := outcome
+	if outcome not in ["completed","arrived","expired","cancelled","interrupted","rejected","failed"]:
+		canonical = "cancelled" if outcome in ["superseded","character_changed","disabled","dragged","pet_dragged","foreground","panel_open","disconnected","shutdown"] else "failed"
+	var reason := ""
+	for character in outcome:
+		if character in "abcdefghijklmnopqrstuvwxyz_": reason += character
+	host.client.send({"type":"intent_result","character_id":host.session.character_id,"intent_id":id,"outcome":canonical,"reason":reason.left(64)})
+
+func _scene_exploration_enabled() -> bool:
+	if not enabled or not host.autonomy.surface_mode or _settings == null or not bool(_settings.get_value("scene_exploration_enabled",true)) or host.get("scene_navigation") == null or host.spatial_camera()==null:return false
+	# Explicit desktop window/taskbar support remains a separate movement mode.
+	var contact:Dictionary=host.autonomy.get_support_contact()
+	return str(contact.get("surface_id","")).begins_with("floor:") or host.scene_navigation.ground_latched
+
+## Furniture's own legacy support approach is still a Director command. Its
+## ownership must not block itself, nor grant movement to an unrelated request.
+func _owns_legacy_furniture_approach() -> bool:
+	if host.objects == null:return false
+	var interaction:Dictionary=host.objects._interaction
+	if interaction.get("stage","") != "approaching":return false
+	var id:=str(interaction.get("request_id",""))
+	if id.is_empty():return false
+	if not director._active.is_empty():return str(director._active.id)==id
+	if director._queue.is_empty():return false
+	return director._queue.all(func(entry):return str(entry.id)==id)

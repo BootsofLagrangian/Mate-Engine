@@ -1,0 +1,143 @@
+{
+  "scope": "Actual Windows D3D12 exported runtime; failed attempt retained, not overall acceptance",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_scene_navigation.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-scene-navigation-current",
+      "--character",
+      "cheval-grand"
+    ],
+    "started": 1788713703.2604504,
+    "exe_sha256": "b1c2b01a2d4793099402a7c4adf734e2ff4f5a99cc057b5d6ec8a5542ae2825a",
+    "script_sha256": "8af111ace749b4b514332f1cf7c8fd4a57278d410ca1f6f9a1f27c7a1ffd71d1",
+    "exit_code": 1,
+    "finished": 1788713759.1103518
+  },
+  "source_stable_during_build": true,
+  "checks": [
+    {
+      "label": "production backend and avatar ready",
+      "ms": 6578,
+      "ok": true
+    },
+    {
+      "label": "explicit production rig loaded",
+      "ms": 6594,
+      "ok": true
+    },
+    {
+      "label": "production manifest registered authored enter and exit (no test injection)",
+      "ms": 6633,
+      "ok": true
+    },
+    {
+      "label": "normal policy floor corridor ready",
+      "ms": 9211,
+      "ok": true
+    },
+    {
+      "label": "production perspective scene path accepted",
+      "ms": 9216,
+      "ok": true
+    },
+    {
+      "label": "real rendered avatar traverses scene Z and X",
+      "ms": 13680,
+      "ok": true
+    },
+    {
+      "label": "rendered foot stays outside obstacle expanded by actor radius",
+      "ms": 13684,
+      "ok": true
+    },
+    {
+      "label": "actual body yaw changes at least10degrees during cumulative concurrent travel",
+      "ms": 13689,
+      "ok": true
+    },
+    {
+      "label": "rendered scene endpoint reached",
+      "ms": 13694,
+      "ok": true
+    },
+    {
+      "label": "second production scene request accepted",
+      "ms": 13701,
+      "ok": true
+    },
+    {
+      "label": "actual user stop releases scene ownership without world drift",
+      "ms": 14418,
+      "ok": false
+    },
+    {
+      "label": "production validated command accepted: temporal-chair",
+      "ms": 14930,
+      "ok": true
+    },
+    {
+      "label": "chair completes authored entry and attaches",
+      "ms": 50009,
+      "ok": false
+    },
+    {
+      "label": "original settings restored",
+      "ms": 50102,
+      "ok": true
+    }
+  ],
+  "turning_overlap": {
+    "angle_radians": 3.58244910091162,
+    "max_heading_error": 3.02412889539336,
+    "seconds": 3.952
+  },
+  "commands": [
+    {
+      "id": "temporal-chair",
+      "intent": {
+        "kind": "furniture",
+        "object_type": "chair",
+        "placement": "near",
+        "verb": "sit"
+      },
+      "ms": 14930,
+      "result": {
+        "accepted": true,
+        "reason": "queued"
+      }
+    },
+    {
+      "id": "temporal-chair",
+      "ms": 15465,
+      "outcome": "blocked_endpoint",
+      "record_type": "terminal"
+    }
+  ],
+  "creation": {
+    "last_creation": {
+      "model_error": "",
+      "model_loaded": true,
+      "reason": "created",
+      "reference_ppm": 256.990119372572,
+      "type": "chair"
+    },
+    "obj_1": {
+      "applied_ratio": 1.0,
+      "physical_ppm": 138.424072265625,
+      "seat_floor_adaptation": true
+    }
+  },
+  "remaining": [
+    "User-stop first-frame foot drift",
+    "Chair staging blocked_endpoint; no sit entry observed",
+    "Computer skipped because chair failed"
+  ]
+}

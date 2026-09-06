@@ -5,6 +5,7 @@ const MAX_OBJECTS := 8
 const MAX_COORD := 100000
 const MIN_SCALE := 0.5
 const MAX_SCALE := 1.8
+const APPEARANCES := ["default","warm","cool","porcelain","flat"]
 const MAX_ID := 2147483646
 var objects: Array[Dictionary] = []
 var next_id: int = 1
@@ -91,7 +92,10 @@ func set_data(value: Variant) -> void:
 		if not visible_value is bool:
 			visible_value = true
 		if objects.size() < MAX_OBJECTS:
-			objects.append({"id": item.id, "type": type, "label": _label(item.get("label"), _default_label(type)), "x": int(x), "y": int(y), "scale": clampf(float(scale_value), MIN_SCALE, MAX_SCALE), "visible": visible_value})
+			objects.append({"id": item.id, "type": type, "label": _label(item.get("label"), _default_label(type)), "x": int(x), "y": int(y), "scale": clampf(float(scale_value), MIN_SCALE, MAX_SCALE), "visible": visible_value,"yaw_deg":clampf(float(item.get("yaw_deg",0.0)),-180.0,180.0) if _number(item.get("yaw_deg",0.0)) else 0.0,"appearance":str(item.get("appearance","default")) if item.get("appearance","default") in APPEARANCES else "default"})
+
+			if valid_position_m(item.get("position_m")): objects[-1]["position_m"] = item.position_m.duplicate()
+			if _number(item.get("spatial_unit_scale")) and .001 <= float(item.spatial_unit_scale) and float(item.spatial_unit_scale) <= 100.0: objects[-1]["spatial_unit_scale"] = float(item.spatial_unit_scale)
 
 func data() -> Dictionary:
 	return {"version": 1, "next_id": next_id, "objects": objects.duplicate(true)}
@@ -150,7 +154,7 @@ func add_object(type: String, position: Vector2i, screens: Array) -> String:
 		return ""
 	var id := "obj_%d" % next_id
 	next_id += 1
-	objects.append({"id": id, "type": type, "label": _default_label(type), "x": placed.x, "y": placed.y, "scale": 1.0, "visible": true})
+	objects.append({"id": id, "type": type, "label": _default_label(type), "x": placed.x, "y": placed.y, "scale": 1.0, "visible": true,"yaw_deg":0.0,"appearance":"default"})
 	return id
 
 func rename_object(id: String, label: String) -> bool:
@@ -216,3 +220,39 @@ func rows(screens: Array) -> Array:
 				row.verbs = entry.verbs.duplicate()
 		result.append(row)
 	return result
+
+func configure_object(id: String, yaw_deg: float, appearance: String) -> bool:
+	if not is_finite(yaw_deg) or yaw_deg < -180.0 or yaw_deg > 180.0 or appearance not in APPEARANCES: return false
+	for item in objects:
+		if item.id == id:
+			item.yaw_deg = yaw_deg
+			item.appearance = appearance
+			return true
+	return false
+
+## Canonical desktop scene metres; origin and world axes belong to the fixed
+## virtual-camera workarea frame, not this object's native window or current eye.
+const SPATIAL_FRAME := "desktop_scene_v1"
+const MAX_POSITION_M := 20.0
+static func valid_position_m(value: Variant) -> bool:
+	if not value is Dictionary or value.size() != 3: return false
+	for axis in ["x","y","z"]:
+		if not _number(value.get(axis)) or absf(float(value[axis])) > MAX_POSITION_M: return false
+	return true
+
+func set_position_m(id: String, value: Vector3) -> bool:
+	var position := {"x":value.x,"y":value.y,"z":value.z}
+	if not valid_position_m(position): return false
+	for item in objects:
+		if item.id == id:
+			item["position_m"] = position
+			return true
+	return false
+
+func set_spatial_unit_scale(id: String, value: float) -> bool:
+	if not is_finite(value) or value < .001 or value > 100.0: return false
+	for item in objects:
+		if item.id == id:
+			item["spatial_unit_scale"] = value
+			return true
+	return false

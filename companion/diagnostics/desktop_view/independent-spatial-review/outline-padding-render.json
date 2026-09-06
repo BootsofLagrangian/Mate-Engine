@@ -1,0 +1,19 @@
+{
+  "scope": "Linux llvmpipe GL Compatibility actual Cheval fixed bone pose, baseline680x760 versus symmetric1160x1120padding sameworldcamera/pixel scale; no Windows/GPU performance claim",
+  "results": [
+    {
+      "image": "padded-uncompensated",
+      "visible_pixels": 74415,
+      "mismatch_pixels_gt_0_02": 1108,
+      "mean_rgba_abs_error_visible": 0.0019205620835984732,
+      "max_channel_error": 1.0
+    },
+    {
+      "image": "padded-corrected",
+      "visible_pixels": 74220,
+      "mismatch_pixels_gt_0_02": 80,
+      "mean_rgba_abs_error_visible": 0.00011628122011402243,
+      "max_channel_error": 0.40784313725490196
+    }
+  ]
+}

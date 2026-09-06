@@ -1,0 +1,22 @@
+{
+	"checks": 1617,
+	"failures": [],
+	"rows": [
+		{
+			"character": "cheval-grand",
+			"max_length_error_m": 0.000000057518482213248,
+			"proxies": 186
+		},
+		{
+			"character": "rice-shower",
+			"max_length_error_m": 0.0000000163912773076813,
+			"proxies": 186
+		},
+		{
+			"character": "eishin-flash",
+			"max_length_error_m": 0.0000000415841852063892,
+			"proxies": 186
+		}
+	],
+	"scope": "Independent lifecycle/resource snapshots and real callback at uniform scale 0.6/1/1.4, yaw45 and translation. Does not assert whole addon physics scale invariance."
+}

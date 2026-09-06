@@ -1,0 +1,20 @@
+[
+  {
+    "original_name": "first-current-run.json",
+    "repo_relative_path": "companion/logs/diagnostic-traces/upper_body_review/first-current-run.json",
+    "sha256": "aada5dbebeefb2fb2cf5b0fc1ee39fabdffc49bc5e7cb2da2708dc362e4fc6d9",
+    "bytes": 393663
+  },
+  {
+    "original_name": "repeat-current-run.json",
+    "repo_relative_path": "companion/logs/diagnostic-traces/upper_body_review/repeat-current-run.json",
+    "sha256": "aada5dbebeefb2fb2cf5b0fc1ee39fabdffc49bc5e7cb2da2708dc362e4fc6d9",
+    "bytes": 393663
+  },
+  {
+    "original_name": "results.json",
+    "repo_relative_path": "companion/logs/diagnostic-traces/upper_body_review/results.json",
+    "sha256": "d1a9f49dbb42d96cfdec579a4ebeb2b1abbcfdef55642e81703fdc55ca6e66f3",
+    "bytes": 478256
+  }
+]

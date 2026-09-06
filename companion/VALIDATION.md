@@ -1,6 +1,6 @@
 # Validation record — 2026-09-06
 
-## Current exported build
+## Previous exported furniture build
 
 The exported native executable is **99,674,664 bytes**, SHA256
 `80303c7e703a5dbd526d343a2ac1ddd64af4b05ea8cbedd44094eb7c6bda170f`.

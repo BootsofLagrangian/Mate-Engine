@@ -1,0 +1,21 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+GAIT cheval-grand scale=0.6 speed=40.0 measured=709 max_desktop_slide_px=0.05961583554745 max_reach_clamp_m=0.00000003332001 stride=0.32222222462795 mean_pelvis_lower_m=0.00935688998313 max_pelvis_lower_m=0.0154408295742
+GAIT cheval-grand scale=0.6 speed=80.0 measured=704 max_desktop_slide_px=0.06547569483519 max_reach_clamp_m=0.00000004214685 stride=0.64444444923834 mean_pelvis_lower_m=0.02116164201633 max_pelvis_lower_m=0.03917461803422
+GAIT cheval-grand scale=0.6 speed=140.0 measured=698 max_desktop_slide_px=0.09595251828432 max_reach_clamp_m=0.00000004214685 stride=0.71324381827281 mean_pelvis_lower_m=0.0266900800511 max_pelvis_lower_m=0.04605701678942
+GAIT cheval-grand scale=1.0 speed=40.0 measured=708 max_desktop_slide_px=0.10613618046045 max_reach_clamp_m=0.00000003071953 stride=0.21021923066121 mean_pelvis_lower_m=0.00692039464241 max_pelvis_lower_m=0.01024161812301
+GAIT cheval-grand scale=1.0 speed=80.0 measured=704 max_desktop_slide_px=0.09993392974138 max_reach_clamp_m=0.00000003332001 stride=0.38666668683538 mean_pelvis_lower_m=0.01100318203144 max_pelvis_lower_m=0.01861564055678
+GAIT cheval-grand scale=1.0 speed=140.0 measured=705 max_desktop_slide_px=0.10215625166893 max_reach_clamp_m=0.00000004214685 stride=0.67666666953871 mean_pelvis_lower_m=0.02273650514159 max_pelvis_lower_m=0.04244607589263
+GAIT rice-shower scale=0.6 speed=40.0 measured=709 max_desktop_slide_px=0.05235627293587 max_reach_clamp_m=0.00000001490116 stride=0.32222222462795 mean_pelvis_lower_m=0.00944621171126 max_pelvis_lower_m=0.0158530362234
+GAIT rice-shower scale=0.6 speed=80.0 measured=704 max_desktop_slide_px=0.05806634575129 max_reach_clamp_m=0.00000002980232 stride=0.64444444923834 mean_pelvis_lower_m=0.02251146356009 max_pelvis_lower_m=0.04177181764414
+GAIT rice-shower scale=0.6 speed=140.0 measured=695 max_desktop_slide_px=0.04590948298573 max_reach_clamp_m=0.00000002980232 stride=0.64637786149212 mean_pelvis_lower_m=0.0247791977575 max_pelvis_lower_m=0.04187024705272
+GAIT rice-shower scale=1.0 speed=40.0 measured=702 max_desktop_slide_px=0.09574707597494 max_reach_clamp_m=0.00000000745058 stride=0.19333334342647 mean_pelvis_lower_m=0.00650632405416 max_pelvis_lower_m=0.00957180218916
+GAIT rice-shower scale=1.0 speed=80.0 measured=704 max_desktop_slide_px=0.08822146058083 max_reach_clamp_m=0.00000001490116 stride=0.38666668683538 mean_pelvis_lower_m=0.01125879068286 max_pelvis_lower_m=0.01927980615561
+GAIT rice-shower scale=1.0 speed=140.0 measured=710 max_desktop_slide_px=0.11948894709349 max_reach_clamp_m=0.00000001490116 stride=0.64637786149212 mean_pelvis_lower_m=0.02321486526393 max_pelvis_lower_m=0.04168124228631
+GAIT eishin-flash scale=0.6 speed=40.0 measured=709 max_desktop_slide_px=0.05851195007563 max_reach_clamp_m=0.00000001490116 stride=0.32222222462795 mean_pelvis_lower_m=0.00786575326228 max_pelvis_lower_m=0.01223578106138
+GAIT eishin-flash scale=0.6 speed=80.0 measured=704 max_desktop_slide_px=0.05470522865653 max_reach_clamp_m=0.00000001490116 stride=0.64444444923834 mean_pelvis_lower_m=0.01860909497745 max_pelvis_lower_m=0.03208215729685
+GAIT eishin-flash scale=0.6 speed=140.0 measured=698 max_desktop_slide_px=0.02445574104786 max_reach_clamp_m=0.00000002980232 stride=0.71379199921055 mean_pelvis_lower_m=0.02376435057974 max_pelvis_lower_m=0.03805767744768
+GAIT eishin-flash scale=1.0 speed=40.0 measured=711 max_desktop_slide_px=0.10362019389868 max_reach_clamp_m=0.00000000745058 stride=0.21038079977971 mean_pelvis_lower_m=0.00612599894113 max_pelvis_lower_m=0.00836641448409
+GAIT eishin-flash scale=1.0 speed=80.0 measured=704 max_desktop_slide_px=0.09755989164114 max_reach_clamp_m=0.00000001490116 stride=0.38666668683538 mean_pelvis_lower_m=0.00914352761241 max_pelvis_lower_m=0.01476439972986
+GAIT eishin-flash scale=1.0 speed=140.0 measured=705 max_desktop_slide_px=0.09207288175821 max_reach_clamp_m=0.00000002980232 stride=0.67666666953871 mean_pelvis_lower_m=0.02026822754331 max_pelvis_lower_m=0.03491945996208
+GAIT_FAILURES=0

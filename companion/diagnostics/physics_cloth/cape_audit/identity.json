@@ -1,0 +1,16 @@
+{
+  "files": {
+    "native/scripts/vrm_avatar.gd": "1a3daaaba499de5c558ab329e3828a1967193a426e4b45a045fd36121486d7cf",
+    "native/scripts/vrm_spring_contacts.gd": "02690733a39cfb8a2ec57f2f9599f31cdf1dfec9be49150c83abe57e0af7e45e",
+    "native/tools/probe_cape_modifier.gd": "24b8debd6bed490501c262603954aaf33760978f88bf69dfae3bdb36973267ef",
+    "assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "assets/motions/authored_overhead_stretch.vrma": "4e018ee772b0163e037b3f30b383936b2f44f839060075f9d0b89fdb7a15e19c",
+    "assets/motions/authored_stretch.vrma": "c806297dc5edb03bbfd3cd51a27cd27352111d31a3ef5f276e2ace254c49b34e",
+    "assets/research/everyday-candidates/canonical/uma_stretch02.curation.json": "6679d6d82c14f4f7ec78a0ac52ad0553f75e328c528f8f7d5e0f97dc10231ecf"
+  },
+  "windows_trigger_exe_sha256": "7cc455644cc35776b48bcd7dc8b2b8c90a346b8c815121f56e2a2499c3e0617c",
+  "validation_renderer": "Linux WSL Mesa D3D12 RTX4090 OpenGL compatibility",
+  "actual_modifier_callbacks": 2244,
+  "fixed_delta_seconds": 0.016666666666666666,
+  "runtime_changes_this_audit": false
+}

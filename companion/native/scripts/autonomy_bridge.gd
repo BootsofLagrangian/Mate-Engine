@@ -311,3 +311,23 @@ static func restore_position(saved: bool, x: int, y: int, window_size: Vector2i,
 			if screen.grow(-RESTORE_INSET).intersects(wanted):
 				return wanted.position
 	return Vector2i(fallback.end.x - window_size.x - 16, fallback.end.y - window_size.y - 8)
+
+
+## Render gutters may change independently of the visible character's desktop
+## position. Old settings contain an origin in the original reference canvas.
+static func restore_render_position(settings: Dictionary, reference_size: Vector2i,
+		reference_foot: Vector2, render_foot: Vector2, screens: Array, fallback: Rect2i) -> Vector2i:
+	var logical_origin := Vector2i(int(settings.get("window_x", -1)), int(settings.get("window_y", -1)))
+	var saved := bool(settings.get("window_pos_saved", false))
+	if settings.has("window_foot_x") and settings.has("window_foot_y"):
+		var anchor := Vector2(float(settings.window_foot_x), float(settings.window_foot_y))
+		var visible := false
+		if anchor.is_finite():
+			for screen in screens:
+				# A floor sole may lie exactly on the bottom/right workarea edge.
+				if Rect2(screen).grow(1.0).has_point(anchor): visible = true; break
+		if visible: logical_origin = Vector2i((anchor - reference_foot).round())
+		else: saved = false
+	var restored := restore_position(saved,
+		logical_origin.x, logical_origin.y, reference_size, screens, fallback)
+	return Vector2i((Vector2(restored) + reference_foot - render_foot).round())

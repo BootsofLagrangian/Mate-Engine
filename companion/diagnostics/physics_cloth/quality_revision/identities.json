@@ -1,0 +1,11 @@
+{
+  "files": {
+    "native/scripts/vrm_avatar.gd": "1a3daaaba499de5c558ab329e3828a1967193a426e4b45a045fd36121486d7cf",
+    "native/scripts/vrm_spring_contacts.gd": "02690733a39cfb8a2ec57f2f9599f31cdf1dfec9be49150c83abe57e0af7e45e",
+    "native/tools/probe_garment_quality.gd": "4fb7bacda3562a6fc556ea2f2119fa3a4ffe99eab5c86965c8155daa54f8ab15",
+    "native/tools/garment_quality_samples.gd": "54301e421e86027c1946a3b5f180f4e3ec5fad4471be8d17034b6d8eadf4fb03",
+    "diagnostics/physics_cloth/quality_revision/shape-rebased.json": "6a585bd1b81b54e781b3fee80b07154972265dcaabc34b199db6ed152bf582e5"
+  },
+  "default_extra_hand_contacts": false,
+  "assets_unchanged_by_runtime_rebase": true
+}

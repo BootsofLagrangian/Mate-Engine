@@ -1,0 +1,5 @@
+{
+  "native/scripts/autonomy_bridge.gd": "9c300ca2b83b23c11f006f25f171b7fe5e07d0f5b16f7879c0d5c965cff4bb20",
+  "native/scripts/main.gd": "54fae01bc57aa98eeb09cc697e664a424acc4ff958ac474d95cd8aabe72c5c44",
+  "diagnostics/desktop_view/independent-spatial-review/test_render_anchor.gd": "a6efcf2e7fb029f10193f33522ec0ed536c9ad8693e393fca4612f77378b9952"
+}

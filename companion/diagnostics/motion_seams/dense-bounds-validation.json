@@ -1,0 +1,46 @@
+{
+  "scope": "Dense acquisition bounds correction after independent review; no host safety changes",
+  "source_sha256": "314dc2039c1d5d078303813f8d050c8cf1c2d4e5bb377e20679bf1ccc162bf1c",
+  "before": [
+    {
+      "character": "cheval-grand",
+      "duration_s": 1.36666667461395,
+      "first_nonzero_bound_sample_s": 0.113888889551163,
+      "max_acquisition_bounds_overflow_m": 0.0
+    },
+    {
+      "character": "rice-shower",
+      "duration_s": 1.36666667461395,
+      "first_nonzero_bound_sample_s": 0.113888889551163,
+      "max_acquisition_bounds_overflow_m": 0.00669503211975098
+    },
+    {
+      "character": "eishin-flash",
+      "duration_s": 1.36666667461395,
+      "first_nonzero_bound_sample_s": 0.113888889551163,
+      "max_acquisition_bounds_overflow_m": 0.0036502480506897
+    }
+  ],
+  "after": [
+    {
+      "character": "cheval-grand",
+      "duration_s": 1.36666667461395,
+      "first_nonzero_bound_sample_s": 0.113888889551163,
+      "max_acquisition_bounds_overflow_m": 0.0
+    },
+    {
+      "character": "rice-shower",
+      "duration_s": 1.36666667461395,
+      "first_nonzero_bound_sample_s": 0.113888889551163,
+      "max_acquisition_bounds_overflow_m": 0.0
+    },
+    {
+      "character": "eishin-flash",
+      "duration_s": 1.36666667461395,
+      "first_nonzero_bound_sample_s": 0.113888889551163,
+      "max_acquisition_bounds_overflow_m": 0.0
+    }
+  ],
+  "seat_failures": 0,
+  "lifecycle_failures": 0
+}

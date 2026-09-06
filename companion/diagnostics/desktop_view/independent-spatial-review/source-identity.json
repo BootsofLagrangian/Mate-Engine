@@ -1,0 +1,10 @@
+{
+  "native/scripts/desktop_view.gd": "c78277b56d24ccce7eeae51ad684ab3658f57e8ffcf387510865bc69b685e407",
+  "native/scripts/desktop_object_window.gd": "78530e575b372c141ff706c78772b519cb4d23365179c4f5c87aa6d77d801b82",
+  "native/scripts/desktop_object_store.gd": "1b21a69cf24e6f45a11e2d91c4ddb476eb397fa0d8dce4a5f66bddacf5c2d0b6",
+  "native/scripts/desktop_objects_host.gd": "738585f7bdf1d6a4acb7be1d76938900ce64ac76a244a16facbc038d6410b40f",
+  "native/scripts/main.gd": "5e959c1af59a6b01a2bede8f4ac550de896eb9c90df9b7f2ff363982aaed1ff9",
+  "native/scripts/control_panel.gd": "0fccc3a30556bbe4f43206280ddb9a464669ed06216e2aee6db36f3a354c1976",
+  "native/scripts/settings.gd": "34c6b958eab72a718841f2fe65dafca523c6e6e253b1f2f5e0c5938ee84edb60",
+  "native/scripts/desktop_object_contact_scene.gd": "864f31ac7cc12430ac15990da1e562385e9023798116546cb9f83dc18e75fe75"
+}

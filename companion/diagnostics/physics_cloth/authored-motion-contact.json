@@ -1,0 +1,143 @@
+{
+	"rows": [
+		{
+			"baseline": {
+				"max_depth_m": 0.047092972509563,
+				"max_tail_step_m": 0.00667527690529823,
+				"penetrating_proxy_samples": 644,
+				"spring_tick_ms_mean": 0.522380555555556,
+				"sum_depth_m": 11.6606609549373,
+				"worst_frame": 306
+			},
+			"character": "cheval-grand",
+			"clip_duration": 1.29999995231628,
+			"contacts": {
+				"max_depth_m": 0.0000000216066837338547,
+				"max_tail_step_m": 0.00667527690529823,
+				"penetrating_proxy_samples": 0,
+				"spring_tick_ms_mean": 0.845966666666667,
+				"sum_depth_m": 0.000000194162130373599,
+				"worst_frame": 64
+			},
+			"frames": 360,
+			"motion": "uma_walk",
+			"timestep": 0.0166666666666667
+		},
+		{
+			"baseline": {
+				"max_depth_m": 0.0187081825733185,
+				"max_tail_step_m": 0.00639182375743985,
+				"penetrating_proxy_samples": 1093,
+				"spring_tick_ms_mean": 0.508102777777778,
+				"sum_depth_m": 10.1272822993994,
+				"worst_frame": 152
+			},
+			"character": "cheval-grand",
+			"clip_duration": 2.0,
+			"contacts": {
+				"max_depth_m": 0.0,
+				"max_tail_step_m": 0.00639182375743985,
+				"penetrating_proxy_samples": 0,
+				"spring_tick_ms_mean": 0.849422222222222,
+				"sum_depth_m": 0.0,
+				"worst_frame": 0
+			},
+			"frames": 360,
+			"motion": "sit_idle",
+			"timestep": 0.0166666666666667
+		},
+		{
+			"baseline": {
+				"max_depth_m": 0.0813991522789002,
+				"max_tail_step_m": 0.0205092243850231,
+				"penetrating_proxy_samples": 2003,
+				"spring_tick_ms_mean": 0.239141666666667,
+				"sum_depth_m": 59.6308288416268,
+				"worst_frame": 63
+			},
+			"character": "rice-shower",
+			"clip_duration": 1.29999995231628,
+			"contacts": {
+				"max_depth_m": 0.0000000303983688221265,
+				"max_tail_step_m": 0.0205092243850231,
+				"penetrating_proxy_samples": 0,
+				"spring_tick_ms_mean": 0.578719444444444,
+				"sum_depth_m": 0.0000000888109206176324,
+				"worst_frame": 143
+			},
+			"frames": 360,
+			"motion": "uma_walk",
+			"timestep": 0.0166666666666667
+		},
+		{
+			"baseline": {
+				"max_depth_m": 0.0515765032172203,
+				"max_tail_step_m": 0.000101365818409249,
+				"penetrating_proxy_samples": 2100,
+				"spring_tick_ms_mean": 0.251766666666667,
+				"sum_depth_m": 41.6894275024532,
+				"worst_frame": 267
+			},
+			"character": "rice-shower",
+			"clip_duration": 2.0,
+			"contacts": {
+				"max_depth_m": 0.0000000154972076282789,
+				"max_tail_step_m": 0.000101365818409249,
+				"penetrating_proxy_samples": 0,
+				"spring_tick_ms_mean": 0.550822222222222,
+				"sum_depth_m": 0.0000000196695326692975,
+				"worst_frame": 145
+			},
+			"frames": 360,
+			"motion": "sit_idle",
+			"timestep": 0.0166666666666667
+		},
+		{
+			"baseline": {
+				"max_depth_m": 0.0954439084976912,
+				"max_tail_step_m": 0.0133496196940541,
+				"penetrating_proxy_samples": 1415,
+				"spring_tick_ms_mean": 0.274725,
+				"sum_depth_m": 51.5194401092082,
+				"worst_frame": 75
+			},
+			"character": "eishin-flash",
+			"clip_duration": 1.29999995231628,
+			"contacts": {
+				"max_depth_m": 0.0000000357627868707855,
+				"max_tail_step_m": 0.0133496196940541,
+				"penetrating_proxy_samples": 0,
+				"spring_tick_ms_mean": 0.644708333333333,
+				"sum_depth_m": 0.00000170767307364206,
+				"worst_frame": 221
+			},
+			"frames": 360,
+			"motion": "uma_walk",
+			"timestep": 0.0166666666666667
+		},
+		{
+			"baseline": {
+				"max_depth_m": 0.0868166819214821,
+				"max_tail_step_m": 0.0031261034309864,
+				"penetrating_proxy_samples": 4233,
+				"spring_tick_ms_mean": 0.285333333333333,
+				"sum_depth_m": 122.579489074722,
+				"worst_frame": 274
+			},
+			"character": "eishin-flash",
+			"clip_duration": 2.0,
+			"contacts": {
+				"max_depth_m": 0.0000000357627868707855,
+				"max_tail_step_m": 0.00239153974689543,
+				"penetrating_proxy_samples": 0,
+				"spring_tick_ms_mean": 0.651055555555556,
+				"sum_depth_m": 0.00000751793384851096,
+				"worst_frame": 223
+			},
+			"frames": 360,
+			"motion": "sit_idle",
+			"timestep": 0.0166666666666667
+		}
+	],
+	"scope": "300 measured frames after60warmup percell; endpoint-vs-handproxy overlap, not skin mesh intersection. ImportedVRM springs/authoredVRMA identical; ownproxiesdisabledonly inbaseline. Fixed1/60manualspringtick, renderer modifierinactive."
+}

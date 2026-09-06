@@ -1,0 +1,7 @@
+{
+  "diagnostics/physics_cloth/extract_cyspring_profile.py": "c43b6942f372e7af282224217409a4637dccf85fe88e0fe72bc21ed368e41901",
+  "native/tools/probe_cape_candidates.gd": "d10479024cde7ae512f0291b68119ea582494ea708a0febf1e57c5ed1a845589",
+  "diagnostics/physics_cloth/cape_candidates/effective-report.json": "89a1ab4877dd3f6e6297cfec023aa01f6afe78537623d05ad1ac9bf94641d895",
+  "diagnostics/physics_cloth/cape_candidates/independent-validation.json": "7b2107637fb605d0fad586ce5448f5fb86c5d39b9bb01e8ff67572508cd94d58",
+  "diagnostics/physics_cloth/CAPE-SOURCE-CANDIDATES.md": "f5e3f0644df84ba5b727f3c8bb4c619aa1cb32db294148150d1c9cf58d10cd0e"
+}

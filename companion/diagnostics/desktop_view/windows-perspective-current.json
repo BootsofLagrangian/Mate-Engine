@@ -1,0 +1,328 @@
+{
+  "camera_edit": {
+    "after_transform": "[X: (0.939693, 0.0, -0.34202), Y: (-0.088521, 0.965926, -0.24321), Z: (0.330366, 0.258819, 0.907673), O: (0.239986, 2.834876, 3.511172)]",
+    "before_transform": "[X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (-0.698495, 1.334204, 3.6)]",
+    "fov_deg": 55.0,
+    "optical_origin_z_m": 4.0
+  },
+  "captures": [
+    {
+      "label": "front",
+      "metrics": [
+        {
+          "crop_origin": [
+            265,
+            357
+          ],
+          "flat_interior_samples": 6142,
+          "id": "obj_1",
+          "interior_mismatches": 0,
+          "native_size": [
+            111,
+            169
+          ],
+          "opaque_samples": 10142,
+          "raw_mismatches": 17
+        },
+        {
+          "crop_origin": [
+            301,
+            355
+          ],
+          "flat_interior_samples": 7079,
+          "id": "obj_2",
+          "interior_mismatches": 0,
+          "native_size": [
+            121,
+            187
+          ],
+          "opaque_samples": 11431,
+          "raw_mismatches": 14
+        }
+      ]
+    },
+    {
+      "label": "depth-reversed",
+      "metrics": [
+        {
+          "crop_origin": [
+            265,
+            357
+          ],
+          "flat_interior_samples": 5588,
+          "id": "obj_1",
+          "interior_mismatches": 0,
+          "native_size": [
+            111,
+            169
+          ],
+          "opaque_samples": 9557,
+          "raw_mismatches": 11
+        },
+        {
+          "crop_origin": [
+            305,
+            357
+          ],
+          "flat_interior_samples": 5403,
+          "id": "obj_2",
+          "interior_mismatches": 0,
+          "native_size": [
+            108,
+            165
+          ],
+          "opaque_samples": 9252,
+          "raw_mismatches": 17
+        }
+      ]
+    },
+    {
+      "label": "orbit",
+      "metrics": [
+        {
+          "crop_origin": [
+            354,
+            429
+          ],
+          "flat_interior_samples": 4816,
+          "id": "obj_1",
+          "interior_mismatches": 0,
+          "native_size": [
+            88,
+            141
+          ],
+          "opaque_samples": 6788,
+          "raw_mismatches": 4
+        },
+        {
+          "crop_origin": [
+            359,
+            456
+          ],
+          "flat_interior_samples": 4309,
+          "id": "obj_2",
+          "interior_mismatches": 0,
+          "native_size": [
+            95,
+            157
+          ],
+          "opaque_samples": 6712,
+          "raw_mismatches": 11
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "label": "production avatar/backend ready",
+      "ok": true
+    },
+    {
+      "label": "production virtual perspective camera active",
+      "ok": true
+    },
+    {
+      "label": "production chair created warm",
+      "ok": true
+    },
+    {
+      "label": "production appearance configured warm",
+      "ok": true
+    },
+    {
+      "label": "production chair created cool",
+      "ok": true
+    },
+    {
+      "label": "production appearance configured cool",
+      "ok": true
+    },
+    {
+      "label": "explicit canonical position accepted obj_1",
+      "ok": true
+    },
+    {
+      "label": "explicit canonical position accepted obj_2",
+      "ok": true
+    },
+    {
+      "label": "two actual native prop crops overlap",
+      "ok": true
+    },
+    {
+      "label": "front reference image retained",
+      "ok": true
+    },
+    {
+      "label": "front native crop retained obj_1",
+      "ok": true
+    },
+    {
+      "label": "front native window shares actual world obj_1",
+      "ok": true
+    },
+    {
+      "label": "front opaque interior depth/crop agreement obj_1",
+      "ok": true
+    },
+    {
+      "label": "front actual socket agrees with common projection obj_1",
+      "ok": true
+    },
+    {
+      "label": "front native crop retained obj_2",
+      "ok": true
+    },
+    {
+      "label": "front native window shares actual world obj_2",
+      "ok": true
+    },
+    {
+      "label": "front opaque interior depth/crop agreement obj_2",
+      "ok": true
+    },
+    {
+      "label": "front actual socket agrees with common projection obj_2",
+      "ok": true
+    },
+    {
+      "label": "depth-only translation accepted",
+      "ok": true
+    },
+    {
+      "label": "greater optical depth shrinks projection without scaling mesh",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed reference image retained",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed native crop retained obj_1",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed native window shares actual world obj_1",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed opaque interior depth/crop agreement obj_1",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed actual socket agrees with common projection obj_1",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed native crop retained obj_2",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed native window shares actual world obj_2",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed opaque interior depth/crop agreement obj_2",
+      "ok": true
+    },
+    {
+      "label": "depth-reversed actual socket agrees with common projection obj_2",
+      "ok": true
+    },
+    {
+      "label": "depth position restored",
+      "ok": true
+    },
+    {
+      "label": "UI orbit changes actual canonical camera to expected basis",
+      "ok": true
+    },
+    {
+      "label": "UI lens and distance change actual canonical projection",
+      "ok": true
+    },
+    {
+      "label": "camera edit preserves world pose and physical scale obj_1",
+      "ok": true
+    },
+    {
+      "label": "camera edit preserves world pose and physical scale obj_2",
+      "ok": true
+    },
+    {
+      "label": "orbit reference image retained",
+      "ok": true
+    },
+    {
+      "label": "orbit native crop retained obj_1",
+      "ok": true
+    },
+    {
+      "label": "orbit native window shares actual world obj_1",
+      "ok": true
+    },
+    {
+      "label": "orbit opaque interior depth/crop agreement obj_1",
+      "ok": true
+    },
+    {
+      "label": "orbit actual socket agrees with common projection obj_1",
+      "ok": true
+    },
+    {
+      "label": "orbit native crop retained obj_2",
+      "ok": true
+    },
+    {
+      "label": "orbit native window shares actual world obj_2",
+      "ok": true
+    },
+    {
+      "label": "orbit opaque interior depth/crop agreement obj_2",
+      "ok": true
+    },
+    {
+      "label": "orbit actual socket agrees with common projection obj_2",
+      "ok": true
+    },
+    {
+      "label": "orthographic switch changes actual production camera",
+      "ok": true
+    },
+    {
+      "label": "orthographic switch restores private world obj_1",
+      "ok": true
+    },
+    {
+      "label": "orthographic switch restores private world obj_2",
+      "ok": true
+    },
+    {
+      "label": "original settings restored and read back from disk",
+      "ok": true
+    }
+  ],
+  "failures": 0,
+  "model": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+  "renderer": "d3d12",
+  "scope": "Production Windows native object viewport readbacks and common World3D reference; no desktop pixels/input. Opaque depth/crop consistency; partial-alpha OS overdraw excluded. No seated choreography claim.",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_perspective.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-perspective-current"
+    ],
+    "started": 1788714279.0714803,
+    "exe_sha256": "b1c2b01a2d4793099402a7c4adf734e2ff4f5a99cc057b5d6ec8a5542ae2825a",
+    "script_sha256": "96db5cc651ae38006ddb1570bed7177692ff4d694d6a24b5291f3e8343ffe71c",
+    "exit_code": 0,
+    "finished": 1788714291.8003335
+  }
+}

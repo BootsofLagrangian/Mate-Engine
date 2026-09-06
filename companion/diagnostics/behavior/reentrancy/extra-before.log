@@ -1,0 +1,13 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+ERROR: bulk cancellation reserves all retiring IDs before callbacks
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:65)
+ERROR: supersession callback cannot duplicate incoming ID
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:71)
+Outcome reentrancy: 16 checks, 2 failures

@@ -1,0 +1,329 @@
+{
+  "cells": [
+    {
+      "projection": "orthographic",
+      "motion": "rest",
+      "time": 0.5,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "rest",
+      "time": 1.0,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "rest",
+      "time": 1.5,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "rest",
+      "time": 2.0,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "rest",
+      "time": 2.5,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "rest",
+      "time": 2.98333333333333,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_overhead_stretch",
+      "time": 0.5,
+      "max_angle_deg": 25.582560979103597,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 2.9802322498717615e-07,
+      "max_cape_segment_length_error_m": 1.2989812356312136e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_overhead_stretch",
+      "time": 1.0,
+      "max_angle_deg": 20.581942020144602,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.172325139828459e-07,
+      "max_cape_segment_length_error_m": 1.6731129648395182e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_overhead_stretch",
+      "time": 1.5,
+      "max_angle_deg": 20.13130497030147,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 3.5762786898541066e-07,
+      "max_cape_segment_length_error_m": 1.6543458467022099e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_overhead_stretch",
+      "time": 2.0,
+      "max_angle_deg": 24.020838887907043,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 4.172325139828459e-07,
+      "max_cape_segment_length_error_m": 1.11782854278486e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_overhead_stretch",
+      "time": 2.5,
+      "max_angle_deg": 25.09846436320012,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 2.9802322398797543e-07,
+      "max_cape_segment_length_error_m": 1.0691018173525357e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_overhead_stretch",
+      "time": 2.98333333333333,
+      "max_angle_deg": 24.60026017288282,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 4.1723251298364517e-07,
+      "max_cape_segment_length_error_m": 1.0662401764283125e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_stretch",
+      "time": 0.5,
+      "max_angle_deg": 31.57056209378924,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371579810804e-07,
+      "max_cape_segment_length_error_m": 1.269461427089169e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_stretch",
+      "time": 1.0,
+      "max_angle_deg": 12.031008406622279,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.172325139828459e-07,
+      "max_cape_segment_length_error_m": 1.266962016549522e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_stretch",
+      "time": 1.5,
+      "max_angle_deg": 12.962628261000129,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 3.5762786898541066e-07,
+      "max_cape_segment_length_error_m": 1.589417441549834e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_stretch",
+      "time": 2.0,
+      "max_angle_deg": 15.254108332278564,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 3.5762786898541066e-07,
+      "max_cape_segment_length_error_m": 1.4323332481191997e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_stretch",
+      "time": 2.5,
+      "max_angle_deg": 13.924238287893534,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.1723251298364517e-07,
+      "max_cape_segment_length_error_m": 2.2456872478260337e-07
+    },
+    {
+      "projection": "orthographic",
+      "motion": "authored_stretch",
+      "time": 2.98333333333333,
+      "max_angle_deg": 14.976714349616383,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 2.384185799897409e-07,
+      "max_cape_segment_length_error_m": 1.757287018955278e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "rest",
+      "time": 0.5,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "rest",
+      "time": 1.0,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "rest",
+      "time": 1.5,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "rest",
+      "time": 2.0,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "rest",
+      "time": 2.5,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "rest",
+      "time": 2.98333333333333,
+      "max_angle_deg": 9.552453782936574,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371599794818e-07,
+      "max_cape_segment_length_error_m": 1.2224009399153246e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_overhead_stretch",
+      "time": 0.5,
+      "max_angle_deg": 25.582560979103597,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 2.9802322498717615e-07,
+      "max_cape_segment_length_error_m": 1.2989812356312136e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_overhead_stretch",
+      "time": 1.0,
+      "max_angle_deg": 20.581942020144602,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.172325139828459e-07,
+      "max_cape_segment_length_error_m": 1.6731129648395182e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_overhead_stretch",
+      "time": 1.5,
+      "max_angle_deg": 20.13130497030147,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 3.5762786898541066e-07,
+      "max_cape_segment_length_error_m": 1.6543458467022099e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_overhead_stretch",
+      "time": 2.0,
+      "max_angle_deg": 24.020838887907043,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 4.172325139828459e-07,
+      "max_cape_segment_length_error_m": 1.11782854278486e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_overhead_stretch",
+      "time": 2.5,
+      "max_angle_deg": 25.09846436320012,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 2.9802322398797543e-07,
+      "max_cape_segment_length_error_m": 1.0691018173525357e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_overhead_stretch",
+      "time": 2.98333333333333,
+      "max_angle_deg": 24.60026017288282,
+      "bone": "Sp_Sh_Mantle0_L_04",
+      "max_scale_component_error": 4.1723251298364517e-07,
+      "max_cape_segment_length_error_m": 1.0662401764283125e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_stretch",
+      "time": 0.5,
+      "max_angle_deg": 31.57056209378924,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.768371579810804e-07,
+      "max_cape_segment_length_error_m": 1.269461427089169e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_stretch",
+      "time": 1.0,
+      "max_angle_deg": 12.031008406622279,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.172325139828459e-07,
+      "max_cape_segment_length_error_m": 1.266962016549522e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_stretch",
+      "time": 1.5,
+      "max_angle_deg": 12.962628261000129,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 3.5762786898541066e-07,
+      "max_cape_segment_length_error_m": 1.589417441549834e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_stretch",
+      "time": 2.0,
+      "max_angle_deg": 15.254108332278564,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 3.5762786898541066e-07,
+      "max_cape_segment_length_error_m": 1.4323332481191997e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_stretch",
+      "time": 2.5,
+      "max_angle_deg": 13.924238287893534,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 4.1723251298364517e-07,
+      "max_cape_segment_length_error_m": 2.2456872478260337e-07
+    },
+    {
+      "projection": "perspective",
+      "motion": "authored_stretch",
+      "time": 2.98333333333333,
+      "max_angle_deg": 14.976714349616383,
+      "bone": "Sp_Sh_Mantle0_R_04",
+      "max_scale_component_error": 2.384185799897409e-07,
+      "max_cape_segment_length_error_m": 1.757287018955278e-07
+    }
+  ],
+  "scope": "cape bone localsegment length and globalrotation A/B at actualmodifier callback vs same heldsourcepose; no meshstrain or fullphysics guarantee"
+}

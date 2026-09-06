@@ -1,17 +1,44 @@
 --- a/addons/Godot-MToon-Shader/mtoon_common.gdshaderinc
 +++ b/addons/Godot-MToon-Shader/mtoon_common.gdshaderinc
-@@ -112,11 +112,12 @@
- 			float aspect = abs(nearUpperRight.y / nearUpperRight.x);
- 			vec3 viewNormal = mat3(MODELVIEW_MATRIX) * NORMAL.xyz;
- 			vec3 clipNormal = mat3(PROJECTION_MATRIX) * viewNormal.xyz;
+@@ -1,0 +2,4 @@
++// Shared perspective crops need a common pixel-width reference; zero preserves legacy views.
++uniform float _OutlineReferenceViewportHeight = 0.0;
++// Preserve the authored legacy outline when only transparent canvas padding changes.
++uniform vec2 _OutlineLegacyReferenceViewportSize = vec2(0.0);
+@@ -111,9 +115,27 @@
+-			vec4 nearUpperRight = (INV_PROJECTION_MATRIX * vec4(1, 1, 0, 1));
+-			float aspect = abs(nearUpperRight.y / nearUpperRight.x);
+-			vec3 viewNormal = mat3(MODELVIEW_MATRIX) * NORMAL.xyz;
+-			vec3 clipNormal = mat3(PROJECTION_MATRIX) * viewNormal.xyz;
 -			vec2 projectedNormal = normalize(clipNormal.xy);
-+			vec2 projectedNormal = clipNormal.xy / max(length(clipNormal.xy), 0.000001);
- 			projectedNormal *= min(clipPos.w, _OutlineScaledMaxDistance);
- 			projectedNormal.x *= aspect;
- 			clipPos.xy += 0.01 * _OutlineWidth * outlineTex * projectedNormal.xy * clamp(1.0 - abs(normalize(viewNormal).z), 0.0, 1.0); // ignore offset when normal toward camera
+-			projectedNormal *= min(clipPos.w, _OutlineScaledMaxDistance);
+-			projectedNormal.x *= aspect;
+-			clipPos.xy += 0.01 * _OutlineWidth * outlineTex * projectedNormal.xy * clamp(1.0 - abs(normalize(viewNormal).z), 0.0, 1.0); // ignore offset when normal toward camera
 -			VERTEX = vec3((INV_PROJECTION_MATRIX * clipPos).xy, conventional_outlined_vertex.z);
++			if (_OutlineReferenceViewportHeight > 0.0) {
++				vec3 viewNormal = mat3(MODELVIEW_MATRIX) * NORMAL.xyz;
++				vec4 clipDirection = PROJECTION_MATRIX * vec4(viewNormal, 0.0);
++				// Derivative of perspective division, then normalize in actual pixels.
++				vec2 pixelDirection = (clipDirection.xy * clipPos.w - clipPos.xy * clipDirection.w) * VIEWPORT_SIZE;
++				pixelDirection /= max(length(pixelDirection), 0.000001);
++				float facing = clamp(1.0 - abs(normalize(viewNormal).z), 0.0, 1.0);
++				float clipWidth = 0.01 * _OutlineWidth * outlineTex * _OutlineReferenceViewportHeight * min(clipPos.w, _OutlineScaledMaxDistance) * facing;
++				clipPos.xy += pixelDirection * clipWidth / VIEWPORT_SIZE;
++			} else {
++				vec4 nearUpperRight = (INV_PROJECTION_MATRIX * vec4(1, 1, 0, 1));
++				float aspect = abs(nearUpperRight.y / nearUpperRight.x);
++				vec3 viewNormal = mat3(MODELVIEW_MATRIX) * NORMAL.xyz;
++				vec3 clipNormal = mat3(PROJECTION_MATRIX) * viewNormal.xyz;
++				float legacyViewportScale = 1.0;
++				if (min(_OutlineLegacyReferenceViewportSize.x, _OutlineLegacyReferenceViewportSize.y) > 0.0) {
++					// Restore the reference projection's XY ratio before normalization.
++					clipNormal.xy *= VIEWPORT_SIZE / _OutlineLegacyReferenceViewportSize;
++					legacyViewportScale = _OutlineLegacyReferenceViewportSize.y / VIEWPORT_SIZE.y;
++				}
++				vec2 projectedNormal = clipNormal.xy / max(length(clipNormal.xy), 0.000001);
++				projectedNormal *= min(clipPos.w, _OutlineScaledMaxDistance);
++				projectedNormal.x *= aspect;
++				clipPos.xy += 0.01 * _OutlineWidth * outlineTex * projectedNormal.xy * clamp(1.0 - abs(normalize(viewNormal).z), 0.0, 1.0) * legacyViewportScale; // ignore offset when normal toward camera
++			}
 +			// Screen-space outline changes XY only: normal extrusion in Z exposes inner mouth faces.
 +			VERTEX = vec3((INV_PROJECTION_MATRIX * clipPos).xy, VERTEX.z);
- 		}
- 	} else {
- 		VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;

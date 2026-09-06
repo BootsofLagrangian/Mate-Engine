@@ -113,7 +113,7 @@ func _test_control_panel_fit() -> void:
 	var main_script: GDScript = load("res://scripts/main.gd")
 	var zone: float = main_script.PET_ZONE_WIDTH
 	var win: Vector2i = main_script.WINDOW_SIZE
-	check(is_equal_approx(zone + ControlPanel.PANEL_WIDTH + 2.0 * main_script.PANEL_MARGIN, float(win.x)), "pet zone (%.0f) + panel + margins == window width %d" % [zone, win.x])
+	check(is_equal_approx(zone + ControlPanel.PANEL_WIDTH + 2.0 * main_script.PANEL_MARGIN, float(main_script.REFERENCE_SIZE.x)), "legacy content reference width is preserved inside padded render canvas")
 	check(zone >= 300.0, "pet zone at least 300 px wide (%.0f)" % zone)
 	check(main_script.SUN_ENERGY + main_script.FILL_ENERGY <= 1.2 and main_script.AMBIENT_ENERGY <= 0.6 and main_script.TONEMAP_EXPOSURE < 1.0, "lighting budget lowered vs the blown-out Windows capture (sun %.2f fill %.2f ambient %.2f exposure %.2f)" % [main_script.SUN_ENERGY, main_script.FILL_ENERGY, main_script.AMBIENT_ENERGY, main_script.TONEMAP_EXPOSURE])
 	panel.queue_free()
@@ -768,9 +768,9 @@ func _test_pet_scale() -> void:
 			check((xf * pivot_local).is_equal_approx(pivot_world), "pivot fixed at yaw %.0f scale %.2f" % [rad_to_deg(yaw), scale])
 			check(is_equal_approx((xf * (pivot_local + Vector3.UP)).y, pivot_world.y + scale), "height scales about the pivot (yaw %.0f scale %.2f)" % [rad_to_deg(yaw), scale])
 	check(AutonomyBridge.fit_shift(Rect2(300, 100, 200, 400), win) == Vector2.ZERO, "rect inside the window needs no shift")
-	check(AutonomyBridge.fit_shift(Rect2(300, 500, 200, 400), win) == Vector2(0, -140), "legs past the bottom shift the pivot up")
+	check(AutonomyBridge.fit_shift(Rect2(300, win.y - 260, 200, 400), win) == Vector2(0, -140), "legs past the bottom shift the pivot up")
 	check(AutonomyBridge.fit_shift(Rect2(300, -20, 200, 400), win) == Vector2(0, 20), "head past the top shifts the pivot down")
-	check(AutonomyBridge.fit_shift(Rect2(600, 100, 200, 400), win) == Vector2(-120, 0), "right overflow shifts left")
+	check(AutonomyBridge.fit_shift(Rect2(win.x - 80, 100, 200, 400), win) == Vector2(-120, 0), "right overflow shifts left")
 	check(AutonomyBridge.fit_shift(Rect2(), win) == Vector2.ZERO, "empty rect ignored")
 	vp.queue_free()
 
@@ -1519,8 +1519,10 @@ func _test_scale_with_avatar(av: VrmAvatar, aabb: AABB) -> void:
 	var foot_local: Vector3 = rest["foot"]
 	var sit_local: Vector3 = rest["sit"]
 	check(sit_local.y - foot_local.y > 0.3 * aabb.size.y, "seat anchor well above the sole (%.2f m)" % (sit_local.y - foot_local.y))
-	var foot_px := AutonomyBridge.foot_pivot_px(win, zone)
-	var cam := AutonomyBridge.pet_camera(aabb.size.y, 28.0, win, foot_px, AutonomyBridge.reference_height_px(win.y))
+	var reference := Vector2(main_script.REFERENCE_SIZE)
+	var reference_foot := AutonomyBridge.foot_pivot_px(reference, zone)
+	var foot_px := Vector2(win.x * .5, reference_foot.y + main_script.RENDER_PADDING.y)
+	var cam := AutonomyBridge.pet_camera(aabb.size.y, 28.0, win, foot_px, AutonomyBridge.reference_height_px(reference.y))
 	var ppm := float(cam["px_per_m"])
 	var cam_pos: Vector3 = cam["position"]
 	var vp := SubViewport.new()
@@ -1562,10 +1564,10 @@ func _test_scale_with_avatar(av: VrmAvatar, aabb: AABB) -> void:
 				var shifted := Rect2(rect.position + shift, rect.size)
 				check(shifted.position.x >= -0.01 and shifted.end.x <= win.x + 0.01 and is_zero_approx(shift.y), "body inside the window horizontally after fit_shift at scale %.2f (shift %s)" % [scale, str(shift)])
 				if scale <= AutonomyBridge.SCALE_DEFAULT:
-					check(shift == Vector2.ZERO and rect.position.x >= win.x - zone, "small/default pet stays inside the pet zone without any shift (rect %s)" % str(rect))
+					check(shift == Vector2.ZERO and rect.position.x >= 0.0 and rect.end.x <= win.x, "small/default pet fits the centered animation canvas without shifting (rect %s)" % str(rect))
 	var ratio: float = heights[AutonomyBridge.SCALE_MAX] / heights[AutonomyBridge.SCALE_DEFAULT]
 	check(absf(ratio - AutonomyBridge.SCALE_MAX / AutonomyBridge.SCALE_DEFAULT) < 0.2, "projected height scales with the pet scale (ratio %.2f, small perspective tolerance)" % ratio)
-	check(heights[AutonomyBridge.SCALE_DEFAULT] < win.y * 0.55, "default pet is a small pet (%.0f px tall)" % heights[AutonomyBridge.SCALE_DEFAULT])
+	check(heights[AutonomyBridge.SCALE_DEFAULT] < reference.y * 0.55, "default pet retains its original small pixel size (%.0f px tall)" % heights[AutonomyBridge.SCALE_DEFAULT])
 	# Seat pivot: switch at 0.6 (seat pixel taken from the current pose), scale to 1.25.
 	var basis6 := Basis.IDENTITY.scaled(Vector3.ONE * AutonomyBridge.SCALE_DEFAULT)
 	av.transform = AutonomyBridge.pivot_transform(basis6, AutonomyBridge.pixel_to_world(foot_px, cam_pos, ppm, win), foot_local)
@@ -1579,6 +1581,6 @@ func _test_scale_with_avatar(av: VrmAvatar, aabb: AABB) -> void:
 	check(foot_after.y > foot_before.y + 50.0, "feet drop below the seat when the seated pet grows (%.0f -> %.0f)" % [foot_before.y, foot_after.y])
 	var rect_max: Rect2 = project_rect.call()
 	var shift := AutonomyBridge.fit_shift(rect_max, win)
-	check(shift.y < 0.0 and rect_max.end.y > win.y and is_equal_approx(rect_max.end.y + shift.y, win.y), "seated max scale overflows the bottom; fit_shift lifts the pivot exactly as far as needed (%s)" % str(shift))
+	check(is_equal_approx(shift.y, minf(0.0, win.y - rect_max.end.y)), "seated max scale uses render room before lifting any overflow (%s)" % str(shift))
 	av.transform = Transform3D.IDENTITY
 	vp.queue_free()

@@ -1,0 +1,34 @@
+{
+  "recorded_utc": "2026-09-06T15:20:58.294101+00:00",
+  "scope": "Motion-owned authored seat runtime and metadata; host choreography and authored-gait owner have separate acceptance",
+  "source_sha256": {
+    "companion/native/scripts/motion_player.gd": "eed63ece04ffdc5ef91cc7187eb049b94f5f3af4579eae13e8535b5c9d08d403",
+    "companion/native/scripts/seated_transition.gd": "b7303a2876a9cbc4338429ce30565d7301e7e86efafd77fca39807c975ff3aaf",
+    "companion/native/scripts/seated_floor_constraint.gd": "abe88dc41ec44289a4856dd9b5ea6c277446aaddc3a1ba4ee5b81d43b299c1f1",
+    "companion/native/scripts/upper_body_overlay.gd": "a5ffe5f01359a76ab71fe42a9ddda9c72960f0c40b8b84bdbb864c21ffad4494",
+    "companion/native/scripts/motion_bank.gd": "f15aaf15c021931c8ca7b1a573ec2ef82c5e18f8be6fc527dc528267b1ac087e",
+    "companion/engine/motion_assets.py": "78ac3b2d2ad453ccf25f086873e03fb0cfa04199c92870456d0af8bc4617c87e",
+    "companion/native/tools/probe_authored_seated_transition.gd": "e07e65f7120b1c58ead755c6056e3595d46a4d06c9b3fb1ac46c8537b1273b1d",
+    "companion/native/tools/probe_seated_transition_lifecycle.gd": "b79106786a591c2f06cfcc57591b7e6387828ddb462e0dea4e2e02cab8f1a4a1",
+    "companion/native/tools/probe_motion_capability_metadata.gd": "b0a7cbb72f1b453098034d24eaefcd8976c6eb4d21c9ab8117b5b55cf6660ede",
+    "companion/native/tools/render_authored_seated_transition.gd": "df80f55fdeed8480f8ef75df6c07def6c330844c05623098a508a3c5cf01c4b4"
+  },
+  "logs": {
+    "seated-final-catalog.log": "efd0d6105081d6ea4aa156b9d36c8beeb09604a781ad65b2528ad1275dbee622",
+    "seated-final-motion.log": "dee550385cd76fda76841437e520ad9f3002ebd26ce9ca78fbf9a9de1e860fed",
+    "seated-final-lifecycle.log": "57ec05bf531381597dca3e3b2fdb1a14ca5fee83d57deb7add525d18be7dc0ab",
+    "seated-final-native-catalog.log": "697a1f8c6c82f01274eb64762c666fca58a8ae45d4c8d78dceb2157fb58effb7"
+  },
+  "results": {
+    "backend_motion_assets_tests_passed": 63,
+    "authored_seat_cases": 12,
+    "authored_seat_failures": 0,
+    "seated_lifecycle_failures": 0,
+    "native_metadata_failures": 0
+  },
+  "selected_assets": {
+    "sit_enter.vrma": "462730295dd046fb9c20f9d6e82c15f8937b64df690d680fa8ac153e1d0cc001",
+    "sit_idle.vrma": "0e39233152825252f022dbbe6a34e0a4978545602083502293b788b58e3792ff",
+    "sit_exit.vrma": "8aca1b030941b910bb09b5c05fcd2fc8652139de9dedb4f0715d11fe89fc851c"
+  }
+}

@@ -1,0 +1,72 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+ERROR: The calculated index 0 is out of bounds (the array has 0 elements). Leaving the array untouched.
+   at: remove_at (core/variant/array.cpp:503)
+   GDScript backtrace (most recent call first):
+       [0] _expire (res://scripts/behavior_director.gd:341)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:21)
+ERROR: expire reentrant same-ID terminal emitted once
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:26)
+ERROR: The calculated index 0 is out of bounds (the array has 0 elements). Leaving the array untouched.
+   at: remove_at (core/variant/array.cpp:503)
+   GDScript backtrace (most recent call first):
+       [0] cancel_intent (res://scripts/behavior_director.gd:136)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:22)
+ERROR: cancel reentrant same-ID terminal emitted once
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:26)
+ERROR: cancel_all reentrant same-ID terminal emitted once
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:26)
+ERROR: The calculated index 0 is out of bounds (the array has 0 elements). Leaving the array untouched.
+   at: remove_at (core/variant/array.cpp:503)
+   GDScript backtrace (most recent call first):
+       [0] request_intent (res://scripts/behavior_director.gd:119)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:24)
+ERROR: supersede reentrant same-ID terminal emitted once
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:26)
+ERROR: active reentrant same-ID terminal emitted once
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:26)
+ERROR: The calculated index 2 is out of bounds (the array has 0 elements). Leaving the array untouched.
+   at: remove_at (core/variant/array.cpp:503)
+   GDScript backtrace (most recent call first):
+       [0] _expire (res://scripts/behavior_director.gd:341)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:36)
+SCRIPT ERROR: Out of bounds get index '1' (on base: 'Array[Dictionary]')
+          at: BehaviorDirector._expire (res://scripts/behavior_director.gd:338)
+          GDScript backtrace (most recent call first):
+              [0] _expire (res://scripts/behavior_director.gd:338)
+              [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:36)
+ERROR: expiry callback can clear remaining queue exactly once
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:37)
+ERROR: bulk cancellation preserves callback-created work
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:44)
+ERROR: active completion preserves callback-activated replacement
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://../diagnostics/behavior/test_outcome_reentrancy.gd:7)
+       [1] _initialize (res://../diagnostics/behavior/test_outcome_reentrancy.gd:52)
+Outcome reentrancy: 14 checks, 8 failures
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2514)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:804)

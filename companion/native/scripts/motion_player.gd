@@ -41,16 +41,25 @@ var _process_sample_delta := 0.0
 var _posing_from_previous := false
 var locomotion_clips: Dictionary = {"walk":false,"walk_formal":false}
 var _locomotion_hip_centers: Dictionary = {}
+var locomotion_styles: Dictionary = {}
 var action_overlap := ActionOverlap.new()
+var upper_body := UpperBodyOverlay.new()
+var seated_transition := SeatedTransition.new()
 var overlap_diagnostics: Dictionary = {}
 var _overlap_outgoing: Dictionary = {}
 var _overlap_incoming: Dictionary = {}
 var _overlap_incoming_signaled := false
 var _ambient_was_allowed := false
 const TRANSITION_SECONDS := 0.45
+var view_yaw_radians := 0.0:
+	set(value):
+		if is_finite(value):
+			view_yaw_radians = wrapf(value,-PI,PI)
+			gait.view_yaw_radians = view_yaw_radians
 var _facing_target := 0.0
 var _facing_velocity := 0.0
 var _contact_pose := "foot"
+var _seated_idle_start := 0.0
 var _contact_hand := "right"
 var _contact_target := Vector3.INF
 var contact_reachable := false
@@ -110,12 +119,76 @@ func _ready() -> void:
 	_blink_next = randf_range(1.5, 4.0)
 
 
+func play_upper_body_gesture(name: String, intensity: float = 1.0, speed: float = 1.0, repeat: int = 1, channels: Array = ["head","arms","torso"]) -> bool:
+	return upper_body.start(self,name,intensity,speed,repeat,channels)
+
+func stop_upper_body_gesture() -> void:
+	upper_body.stop(elapsed)
+
+func is_upper_body_active() -> bool:
+	return not upper_body.actions.is_empty()
+
+func set_upper_body_contact_lock(locked: bool) -> void:
+	if locked:
+		# Retire smoothly, permanently for this request. Unlocking must not
+		# resurrect a half-finished wave; the host contact solver owns final IK.
+		for action in upper_body.actions:
+			if not action.has("retire_at"):
+				action.retire_at = elapsed
+	upper_body.contact_locked = locked
+
+func clear_seated_transition_registrations() -> void:
+	if seated_transition.active: cancel_seated_transition()
+	seated_transition.clips.clear()
+	seated_transition._bounds_cache.clear()
+
+func register_seated_transition(kind: String, clip_name: String) -> bool:
+	var registered:=seated_transition.register_clip(kind,clip_name,vrma_clips)
+	if registered: prepare_seated_geometry_inputs()
+	return registered
+
+func prepare_seated_geometry_inputs() -> bool:
+	# Immutable mesh indexing belongs to model/asset preparation, not the
+	# user's sit-down boundary. This never captures a future outgoing pose.
+	if avatar==null or not avatar.has_model():return false
+	return not TransitionBoundsMeasure.measure(avatar,true).is_empty()
+
+func seated_transition_requirements(kind: String) -> Dictionary:
+	if not seated_transition.clips.has(kind) or avatar == null or not avatar.has_model(): return {}
+	var name: String = seated_transition.clips[kind]
+	if not vrma_clips.has(name): return {}
+	var clip: VrmaClip = vrma_clips[name]
+	var height := avatar.skeleton.get_bone_global_rest(avatar.bone_index.hips).origin.y
+	return {"clip":name,"duration":clip.duration,"source_root_delta_local":(clip.sample_hips_offset(clip.duration)-clip.sample_hips_offset(0))*height}
+
+func start_seated_transition(kind: String, root_delta_local: Vector3 = Vector3.ZERO) -> bool:
+	if not seated_transition.begin(self,kind,root_delta_local): return false
+	finish_locomotion()
+	turn.cancel()
+	_heading_pending = false
+	_facing_velocity = 0.0
+	upper_body.clear()
+	stop_gesture()
+	_contact_pose = "seat_"+kind
+	return true
+
+func seated_transition_state() -> Dictionary:
+	return seated_transition.diagnostics.duplicate()
+
+func finish_seated_transition() -> bool:
+	return seated_transition.finish(self)
+
+func cancel_seated_transition() -> void:
+	seated_transition.reset()
+	stop_contact_pose()
+
 func set_bank(new_bank: MotionBank) -> void:
 	bank = new_bank if new_bank else MotionBank.new()
 
 
 ## Play a gesture from the bank. Unknown names fall back to idle (contract: gesture IDs from the fetched bank).
 func play_gesture(name: String, emotion: String = "", intensity: float = 1.0, speed: float = 1.0, repeat: int = 1, preview: bool = false) -> bool:
+	if seated_transition.active or name in seated_transition.clips.values(): return false
 	_clear_overlap()
 	if not emotion.is_empty():
 		set_emotion(emotion)
@@ -125,6 +198,7 @@ func play_gesture(name: String, emotion: String = "", intensity: float = 1.0, sp
 		_preview = preview
 		return started
 	_begin_transition()
+	upper_body.clear() # The common inertial snapshot now owns this outgoing layer.
 	_vrma_name = ""
 	var motion := bank.get_motion(name)
 	if motion.is_empty() or name == "idle":
@@ -178,11 +252,11 @@ func stop_gesture() -> void:
 
 
 func current_gesture() -> String:
-	return _vrma_name if not _vrma_name.is_empty() else (_gesture_name if _gesture_active else "idle")
+	return seated_transition.clip_name if seated_transition.active else _vrma_name if not _vrma_name.is_empty() else (_gesture_name if _gesture_active else "idle")
 
 
 func is_gesture_active() -> bool:
-	return _gesture_active or not _vrma_name.is_empty()
+	return seated_transition.active or _gesture_active or not _vrma_name.is_empty()
 
 
 func set_emotion(emotion: String, weight: float = 0.5, hold: float = EMOTION_HOLD) -> void:
@@ -288,6 +362,9 @@ func _sample_overlap(delta: float) -> Dictionary:
 
 ## Reset gesture, emotion and mouth (used on cancel/character switch).
 func reset_all() -> void:
+	seated_transition.reset()
+	upper_body.clear()
+	upper_body.contact_locked=false
 	clear_seated_floor()
 	stop_gesture()
 	_emotion = "neutral"
@@ -299,7 +376,8 @@ func reset_all() -> void:
 	contact_reachable = false
 	turn.cancel()
 	gait = DesktopGait.new()
-	_facing_target = 0.0
+	gait.view_yaw_radians = view_yaw_radians
+	_facing_target = view_yaw_radians
 	_facing_velocity = 0.0
 	_heading_pending = false
 	_travel_intent = false
@@ -440,9 +518,9 @@ func _process(delta: float) -> void:
 			var local_time := fmod(time, maxf(clip.duration,0.001))
 			if _vrma_loop and locomotion_clips.has(_vrma_name) and (gait.has_sample() or _travel_intent) and _contact_pose == "foot":
 				local_time = gait.phase*clip.duration
-			var blend := smoothstep(0.0, TRANSITION_SECONDS, elapsed-_vrma_start)
+			var blend := _blend_weight((elapsed-_vrma_start)/TRANSITION_SECONDS)
 			if not _vrma_loop:
-				blend *= smoothstep(0.0, TRANSITION_SECONDS, (total-time)/_vrma_speed)
+				blend *= _blend_weight((total-time)/(_vrma_speed*TRANSITION_SECONDS))
 			var sampled_pose := clip.sample(local_time)
 			if _contact_pose == "sit":
 				# Contact owns the seated lower body even when dialogue plays a
@@ -454,13 +532,21 @@ func _process(delta: float) -> void:
 			if _vrma_loop and bool(locomotion_clips.get(_vrma_name,false)) and _contact_pose == "foot":
 				var height := avatar.skeleton.get_bone_global_rest(avatar.bone_index.hips).origin.y
 				var oscillation: Vector3 = clip.sample_hips_offset(local_time)-Vector3(_locomotion_hip_centers.get(_vrma_name,Vector3.ZERO))
-				avatar.set_hips_offset((oscillation*height).limit_length(height*0.035)*blend*_vrma_intensity)
+				var hip_limit := height*0.035
+				var source_style: Dictionary = locomotion_styles.get(_vrma_name,{})
+				if bool(source_style.get("preserve_source_hip_height",false)):
+					oscillation.y = clip.sample_hips_offset(local_time).y
+				if source_style.has("hip_translation_limit_leg_lengths") and avatar.bone_index.has("leftUpperLeg") and avatar.bone_index.has("leftFoot"):
+					var leg_length := avatar.skeleton.get_bone_global_rest(avatar.bone_index.leftUpperLeg).origin.distance_to(avatar.skeleton.get_bone_global_rest(avatar.bone_index.leftFoot).origin)
+					hip_limit = leg_length*float(source_style.hip_translation_limit_leg_lengths)
+				avatar.set_hips_offset((oscillation*height).limit_length(hip_limit)*blend*_vrma_intensity)
 			if vrma_contact_modes.get(_vrma_name,"") == "foot" and _contact_pose == "foot":
 				var height := avatar.skeleton.get_bone_global_rest(avatar.bone_index.hips).origin.y
 				avatar.set_hips_offset((clip.sample_hips_offset(local_time)*height*blend*_vrma_intensity).limit_length(height*0.12))
 				vrma_foot_contact = true
 				vrma_contact_weight = smoothstep(0.0,TRANSITION_SECONDS,elapsed-_vrma_start)
 	_apply_ambient(delta)
+	upper_body.apply(self,delta)
 	var contact_solvable := false
 	if _contact_pose == "lean":
 		contact_solvable = avatar.apply_hand_contact(_contact_hand,_contact_target)
@@ -470,13 +556,15 @@ func _process(delta: float) -> void:
 	var turn_was_active := turn.active
 	var turn_blocked := _preview or _custom_motion or _contact_pose != "foot"
 	turn.apply(avatar,delta,_facing_target,turn_blocked)
-	if is_finite(avatar.seated_floor.clearance):
+	if is_finite(avatar.seated_floor.clearance) and not seated_transition.active:
 		avatar.seated_floor.set_active(_contact_pose == "sit")
 		if _contact_pose == "sit": avatar.seated_floor.solve_legs(smoothstep(0.0,TRANSITION_SECONDS,elapsed-_transition_start))
 	var completed_turn := turn_was_active and not turn.active and not turn_blocked
 	# A geometrically solvable target is not yet attached while blending in.
 	# Report the rendered wrist's final world-space error (1.5 cm threshold).
 	contact_reachable = contact_solvable and avatar.bone_global_position(_contact_hand+"Hand").distance_to(_contact_target) < 0.015
+
+	seated_transition.apply(self,delta)
 
 	# Expressions: blink, emotion, mouth
 	_update_blink(delta)
@@ -578,6 +666,16 @@ func _update_hand_goals(delta: float) -> void:
 func clear_locomotion_registrations() -> void:
 	locomotion_clips = {"walk":false,"walk_formal":false}
 	_locomotion_hip_centers.clear()
+	locomotion_styles.clear()
+	if gait.has_method("configure_authored_locomotion"): gait.call("configure_authored_locomotion",{})
+
+func register_locomotion_style(name: String, metadata: Dictionary) -> bool:
+	if not locomotion_clips.has(name): return false
+	# Validate on a temporary solver; registration must not disturb live feet.
+	var validator := DesktopGait.new()
+	if not validator.has_method("configure_authored_locomotion") or not validator.call("configure_authored_locomotion",metadata): return false
+	locomotion_styles[name] = metadata.duplicate(true)
+	return true
 
 func register_locomotion_clip(name: String, preserve_hips: bool = true) -> bool:
 	if not vrma_clips.has(name):
@@ -596,18 +694,28 @@ func load_vrma(name: String, path: String, contact_mode: String = "") -> bool:
 		push_warning("VRMA: " + clip.error)
 		return false
 	vrma_clips[name] = clip
+	seated_transition._bounds_cache.clear()
+	if name == "sit_idle" and avatar != null:
+		avatar.seated_geometry.clear()
+		avatar._seated_canonical_rotations.clear()
 	vrma_contact_modes[name] = contact_mode if contact_mode in ["foot",""] else ""
 	return true
 
 ## loop=true plays until stop/supersession; otherwise repeat is a finite cycle count.
 func play_vrma(name: String, speed: float = 1.0, loop: bool = false, repeat: int = 1) -> bool:
+	if seated_transition.active or name in seated_transition.clips.values(): return false
+	if not loop and not Dictionary(locomotion_styles.get(name,{})).is_empty(): return false
 	if not vrma_clips.has(name):
 		return false
 	_clear_overlap()
 	if vrma_contact_modes.get(name,"") == "foot":
 		authored_ambient.capture_contact_origin(avatar)
 	stop_gesture()
+	if not (loop and locomotion_clips.has(name)):
+		upper_body.clear() # Avoid a second arm fade over the common velocity-carry handoff.
 	_vrma_name = name
+	if gait.has_method("configure_authored_locomotion"):
+		gait.call("configure_authored_locomotion",locomotion_styles.get(name,{}))
 	_vrma_start = elapsed
 	_vrma_speed = clampf(speed,0.5,2.0)
 	_vrma_loop = loop
@@ -678,6 +786,40 @@ func prepare_locomotion(direction_px: Vector2) -> bool:
 	gait.begin_steering(avatar,_facing_target)
 	return true
 
+## World-scene travel retains the same concurrent steering/foot owner.
+func prepare_scene_locomotion(yaw_radians: float) -> bool:
+	if not is_finite(yaw_radians) or avatar == null or not avatar.has_model() or _contact_pose != "foot" or _preview or _custom_motion:
+		return false
+	if not _travel_intent:
+		_begin_transition()
+		_travel_start_yaw = avatar.rotation.y
+	_travel_intent = true
+	turn.cancel()
+	update_scene_heading(yaw_radians)
+	gait.begin_steering(avatar,_facing_target)
+	return true
+
+func update_scene_heading(yaw_radians: float) -> bool:
+	if not is_finite(yaw_radians) or not _travel_intent or _contact_pose != "foot": return false
+	_facing_target = wrapf(yaw_radians,-PI,PI)
+	_heading_pending = true
+	gait.steering_heading = _facing_target
+	return true
+
+func set_scene_locomotion_sample(velocity_world: Vector3, displacement_world: Vector3, heading_world: float, supported: bool = true, distance_world_m: float = -1.0) -> void:
+	if avatar == null or not avatar.has_model(): return
+	var owns_legs := (_travel_intent or (_vrma_loop and locomotion_clips.has(_vrma_name))) and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active
+	if owns_legs: update_scene_heading(heading_world)
+	gait.sample_scene(avatar,velocity_world,displacement_world,supported and owns_legs,distance_world_m)
+	gait.compensate_movement(avatar)
+	_record_pose_velocity(_process_sample_delta)
+	if is_equal_approx(_transition_start,elapsed) and not _transition_from.is_empty():
+		_transition_velocity = _pose_velocity.duplicate()
+		_transition_hips_velocity = _hips_velocity
+		_transition_hips_from = avatar.skeleton.get_bone_pose_position(avatar.bone_index.hips)
+		for idx in avatar.bone_index.values():
+			_transition_from[idx] = avatar.skeleton.get_bone_pose_rotation(idx)
+
 func locomotion_ready() -> bool:
 	if not _travel_intent or avatar == null or not avatar.has_model() or _preview or _custom_motion or _contact_pose != "foot":
 		return false
@@ -692,7 +834,7 @@ func finish_locomotion() -> void:
 func set_heading_intent(direction_px: Vector2) -> void:
 	if absf(direction_px.x) <= 0.001:
 		return
-	var wanted := deg_to_rad(82.0)*signf(direction_px.x)
+	var wanted := wrapf(view_yaw_radians+deg_to_rad(82.0)*signf(direction_px.x),-PI,PI)
 	if absf(angle_difference(_facing_target,wanted)) > 0.001:
 		_facing_target = wanted
 		_heading_pending = true
@@ -711,7 +853,7 @@ func set_contact_heading(yaw_radians: float) -> bool:
 
 func face_front() -> void:
 	finish_locomotion()
-	_facing_target = 0.0
+	_facing_target = view_yaw_radians
 	_heading_pending = true
 
 func heading_ready() -> bool:
@@ -762,6 +904,7 @@ func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF) 
 		if not play_vrma("sit_idle",1.0,true):
 			return false
 		_contact_pose = "sit"
+		_seated_idle_start = elapsed
 		set_locomotion_direction(Vector2.ZERO)
 		return true
 	if pose == "lean" and world_hand_target.is_finite() and avatar != null and avatar.has_model():
@@ -774,6 +917,7 @@ func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF) 
 	return false
 
 func stop_contact_pose() -> void:
+	seated_transition.reset()
 	clear_seated_floor()
 	_contact_pose = "foot"
 	_contact_target = Vector3.INF
@@ -788,7 +932,7 @@ func _apply_seated_base() -> void:
 	if _contact_pose != "sit" or not vrma_clips.has("sit_idle"):
 		return
 	var clip: VrmaClip = vrma_clips["sit_idle"]
-	var pose := clip.sample(fmod(elapsed,maxf(clip.duration,0.001)))
+	var pose := clip.sample(fmod(elapsed-_seated_idle_start,maxf(clip.duration,0.001)))
 	for bone in pose.keys():
 		if bone != "hips" and not ("Leg" in bone or "Foot" in bone or "Toes" in bone):
 			pose.erase(bone)
@@ -797,11 +941,14 @@ func _apply_seated_base() -> void:
 
 ## Host calls once after actual window movement, even when displacement is zero.
 ## Effective pixels/metre = orthographic camera ppm * user avatar scale.
-func set_locomotion_sample(velocity_px: Vector2, traveled_px: Vector2, pixels_per_metre: float, supported: bool = true) -> void:
+func set_locomotion_sample(velocity_px: Vector2, traveled_px: Vector2, pixels_per_metre: float, supported: bool = true, actual_world_delta: Variant = null) -> void:
 	var owns_legs := (_travel_intent or (_vrma_loop and locomotion_clips.has(_vrma_name))) and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active
 	if owns_legs:
 		set_locomotion_direction(velocity_px)
-	gait.sample(velocity_px,traveled_px,pixels_per_metre,supported and owns_legs)
+	if actual_world_delta == null:
+		gait.sample(velocity_px,traveled_px,pixels_per_metre,supported and owns_legs)
+	else:
+		gait.call("sample",velocity_px,traveled_px,pixels_per_metre,supported and owns_legs,actual_world_delta)
 	if avatar != null and avatar.has_model():
 		gait.compensate_movement(avatar)
 		# Re-evaluate against the same previous FINAL-frame reference. A second
@@ -959,7 +1106,7 @@ func _record_pose_velocity(delta: float) -> void:
 			# IK arm joints can counter-rotate faster than their composed world
 			# hand motion. A head-sized cap destroys that cancellation at release.
 			var humanoid := str(avatar.bone_index.find_key(idx))
-			var carry_limit := 360.0 if _bone_channel(humanoid) == "arms" else 120.0
+			var carry_limit := 720.0 if _bone_channel(humanoid) == "arms" else 120.0
 			_pose_velocity[idx] = velocity.limit_length(deg_to_rad(carry_limit))
 		_previous_pose[idx] = current
 
@@ -982,12 +1129,16 @@ func _check_model_identity() -> void:
 	_transition_hips_velocity = Vector3.ZERO
 	_applied.clear()
 	if replacing:
+		seated_transition.reset()
+		upper_body.clear()
+		upper_body.contact_locked = false
 		authored_ambient.reset()
 		_ambient_attention_override = false
 		_transition_hips_from = Vector3.INF
 		_ambient_was_allowed = false
 		turn.cancel()
 		gait = DesktopGait.new()
+		gait.view_yaw_radians = view_yaw_radians
 		_facing_target = avatar.rotation.y
 		_facing_velocity = 0.0
 		_heading_pending = false
@@ -995,3 +1146,8 @@ func _check_model_identity() -> void:
 		_contact_pose = "foot"
 		_contact_target = Vector3.INF
 		contact_reachable = false
+
+## Zero velocity and acceleration at both ends of authored layer ownership.
+static func _blend_weight(value: float) -> float:
+	var u := clampf(value,0.0,1.0)
+	return u*u*u*(u*(u*6.0-15.0)+10.0)

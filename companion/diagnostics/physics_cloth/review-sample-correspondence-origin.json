@@ -1,0 +1,176 @@
+{
+	"at_origin": true,
+	"rows": [
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "cheval-grand",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 0.0,
+					"frame": 0
+				},
+				{
+					"error": 0.0,
+					"frame": 1
+				},
+				{
+					"error": 0.0,
+					"frame": 2
+				},
+				{
+					"error": 0.0,
+					"frame": 10
+				},
+				{
+					"error": 0.0,
+					"frame": 30
+				},
+				{
+					"error": 0.0,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 0.0,
+			"sampled_points": 753,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "rice-shower",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 0.0,
+					"frame": 0
+				},
+				{
+					"error": 0.0,
+					"frame": 1
+				},
+				{
+					"error": 0.0,
+					"frame": 2
+				},
+				{
+					"error": 0.0,
+					"frame": 10
+				},
+				{
+					"error": 0.0,
+					"frame": 30
+				},
+				{
+					"error": 0.0,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 0.0,
+			"sampled_points": 1409,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "eishin-flash",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 0.0,
+					"frame": 0
+				},
+				{
+					"error": 0.0,
+					"frame": 1
+				},
+				{
+					"error": 0.0,
+					"frame": 2
+				},
+				{
+					"error": 0.0,
+					"frame": 10
+				},
+				{
+					"error": 0.0,
+					"frame": 30
+				},
+				{
+					"error": 0.0,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 0.0,
+			"sampled_points": 2088,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "mambo",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 0.0,
+					"frame": 0
+				},
+				{
+					"error": 0.0,
+					"frame": 1
+				},
+				{
+					"error": 0.0,
+					"frame": 2
+				},
+				{
+					"error": 0.0,
+					"frame": 10
+				},
+				{
+					"error": 0.0,
+					"frame": 30
+				},
+				{
+					"error": 0.0,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 0.0,
+			"sampled_points": 813,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "hachimi",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 0.0,
+					"frame": 0
+				},
+				{
+					"error": 0.0,
+					"frame": 1
+				},
+				{
+					"error": 0.0,
+					"frame": 2
+				},
+				{
+					"error": 0.0,
+					"frame": 10
+				},
+				{
+					"error": 0.0,
+					"frame": 30
+				},
+				{
+					"error": 0.0,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 0.0,
+			"sampled_points": 696,
+			"worst_point": -1
+		}
+	],
+	"scope": "Pair at +/-0.56m; rest sampling then60identical authored spring ticks; all local poses reset and same relaxed pose; compare exact sampling identities and skinned points."
+}

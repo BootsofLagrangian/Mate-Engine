@@ -375,6 +375,8 @@ static func parse_asset_catalog(data: Variant, out_errors: Array[String]) -> Arr
 			"locomotion_preserve_hips": bool(item.get("locomotion_preserve_hips", false)),
 			"locomotion_priority": int(item.get("locomotion_priority", 0)),
 			"contact_mode": str(item.get("contact_mode", "")),
+			"seated_transition": str(item.get("seated_transition", "")),
+			"locomotion_style": Dictionary(item.get("locomotion_style", {})).duplicate(true),
 			# Description is the manifest's own wording (used for tooltips and LLM hints); the
 			# native side never relabels clips (a dance is a dance, not a greeting).
 			"description": str(item.get("description", "")).left(500),
@@ -409,6 +411,14 @@ static func validate_asset_entry(item: Variant) -> Array[String]:
 		problems.append("locomotion is not a bool")
 	if item.has("locomotion_preserve_hips") and typeof(item["locomotion_preserve_hips"]) != TYPE_BOOL:
 		problems.append("locomotion_preserve_hips is not a bool")
+	if item.has("seated_transition") and (typeof(item.seated_transition) != TYPE_STRING or item.seated_transition not in ["", "enter", "exit"]):
+		problems.append("seated_transition must be empty, enter or exit")
+	var style: Variant = item.get("locomotion_style", {})
+	if not style is Dictionary:
+		problems.append("locomotion_style must be an object")
+	elif not style.is_empty():
+		if not bool(item.get("locomotion", false)) or not DesktopGait.new().configure_authored_locomotion(style):
+			problems.append("invalid locomotion_style")
 	# Godot JSON numbers decode as floats, including JSON integer tokens.
 	var priority: Variant = item.get("locomotion_priority", 0)
 	if typeof(priority) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(priority)) or float(priority) != floorf(float(priority)) or float(priority) < 0 or float(priority) > 100:

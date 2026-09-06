@@ -1,0 +1,22 @@
+# Authored locomotion, optional source contact correction
+
+`DesktopGait.configure_authored_locomotion()` enables a measured source gait. An empty descriptor preserves the existing displacement-driven UMA/default gait. The authored mode leaves swing leg rotations and source hip motion intact; it only blends foot planting over source-authored stance intervals. There is no generated swing parabola or extra crouch. MotionPlayer continues to own heading and interruption blending.
+
+The version 1 descriptor contains `cycle_stride_leg_lengths` (distance over the complete source clip period divided by target rest upper-leg-to-ankle length), `contacts.left/right` (one `[start,end]` pair or up to four pairs; normalized raw clip phase; wrap supported), and `contact_blend_phase`. Optional `preserve_source_hip_height` retains source vertical hip motion, and `hip_translation_limit_leg_lengths` bounds the source offset after centering horizontal placement. The complete 4.033 s goofy source contains two steps per foot; its two contact intervals are retained without truncating its head/body performance.
+
+The actual locally extracted UMA clips and their provenance/measurements are maintained by the motion acquisition owner in `diagnostics/meme_motion` and the ignored source assets. They are installed as `playful_strut` and `mambo_goofy_walk`. Normal roaming still prefers `uma_walk`.
+
+An optional `move_to.locomotion_id` selects a loaded, registered looping locomotion clip. `LivingBehavior` advertises at most 32 current capabilities, retains the choice through the Director queue, revalidates at dispatch, and main selects it once when walking begins. Catalog revocation cancels an explicit selection. Omitted selection keeps the existing default. Completion/cancellation clears the choice. This is a finite navigation request, not an indefinitely looping dialogue gesture.
+
+An optional fifth `sample` argument supplies actual world displacement. It replaces pixel-derived compensation for that sample and uses the full inverse skeleton basis, including avatar scale. Default stance height carries the accumulated local vertical displacement so a following zero-displacement frame does not undo the previous correction. Unsupported/invalid samples, changed scale, model replacement and release clear stale contact state. The host's camera projection integration has its own tests; this helper alone is not evidence of Windows perspective behavior.
+
+## Evidence and limits
+
+- Existing `probe_desktop_gait.gd`: 18 cases, Cheval/Rice/Eishin × 0.6/1.0 × 40/80/140 px/s; zero failures, worst planted-frame displacement 0.120 px. This checks the unchanged default path.
+- `probe_runtime.gd` / `runtime-summary.json`: real production MotionPlayer, installed metadata, five real rigs, both authored clips, 30/60 fps and five source periods per case. The eight Mambo/Hachimi acceptance cases pass: planted-frame drift at most 0.0071 px at 300 px/m, negligible reach clamp, swing quaternion dot error at most 2.4e-7. No synthetic source pose is used.
+- The three larger rigs are explicit transfer measurements, not passing acceptance cases for these mini-calibrated styles. Their runtime contacts can clamp up to 4.8 cm and move up to 7.4 px/frame, particularly during early cycles. Their default walking is unchanged. Do not claim universal retarget quality from the mini results.
+- `test_routing.gd`: ten checks through the real main handlers with isolated node doubles; selection, non-loop/preview exclusion, deduplication and revocation. This is not a live LLM or OS navigation test.
+- `test_world_delta.gd`: 24 checks on four real rigs at scale 0.6, two consecutive vertical world shifts then two zero shifts; worst foot drift 0.044 px and persistent correct support offset. No rendered camera or Windows compositor is involved.
+- `without-source-hips.json` and `full-source-hips.json` preserve development screening failures. Omitting the authored hip trajectory caused exaggerated contact reach failures; retaining source hip height resolved the actual mini cases. `probe_authored.gd` remains a direct helper screening tool and deliberately reports broader rig-transfer failures.
+
+Rendered full-runtime mini clips and independent review are separate artifacts. Screen recordings and numerical contact tests answer different questions; a small contact error does not by itself establish natural motion.

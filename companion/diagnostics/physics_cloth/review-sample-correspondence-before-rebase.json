@@ -1,0 +1,175 @@
+{
+	"rows": [
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "cheval-grand",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 1.62254416942596,
+					"frame": 0
+				},
+				{
+					"error": 0.763207077980042,
+					"frame": 1
+				},
+				{
+					"error": 0.731783032417297,
+					"frame": 2
+				},
+				{
+					"error": 0.979436814785004,
+					"frame": 10
+				},
+				{
+					"error": 0.00218738475814462,
+					"frame": 30
+				},
+				{
+					"error": 0.00000202294245355006,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 1.62254416942596,
+			"sampled_points": 753,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "rice-shower",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 1.43381905555725,
+					"frame": 0
+				},
+				{
+					"error": 0.759781837463379,
+					"frame": 1
+				},
+				{
+					"error": 0.810116410255432,
+					"frame": 2
+				},
+				{
+					"error": 1.1167299747467,
+					"frame": 10
+				},
+				{
+					"error": 0.234234735369682,
+					"frame": 30
+				},
+				{
+					"error": 0.000247608899371698,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 1.43381905555725,
+			"sampled_points": 1409,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "eishin-flash",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 1.26744401454926,
+					"frame": 0
+				},
+				{
+					"error": 0.536481738090515,
+					"frame": 1
+				},
+				{
+					"error": 0.634969115257263,
+					"frame": 2
+				},
+				{
+					"error": 0.958706617355347,
+					"frame": 10
+				},
+				{
+					"error": 0.0144661664962769,
+					"frame": 30
+				},
+				{
+					"error": 0.000000937234460707259,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 1.26744401454926,
+			"sampled_points": 2088,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "mambo",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 0.88493686914444,
+					"frame": 0
+				},
+				{
+					"error": 0.805537045001984,
+					"frame": 1
+				},
+				{
+					"error": 0.749518811702728,
+					"frame": 2
+				},
+				{
+					"error": 0.502693235874176,
+					"frame": 10
+				},
+				{
+					"error": 0.190739497542381,
+					"frame": 30
+				},
+				{
+					"error": 0.0200606938451529,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 0.88493686914444,
+			"sampled_points": 813,
+			"worst_point": -1
+		},
+		{
+			"before_physics_max_point_error_m": 0.0,
+			"character": "hachimi",
+			"mismatch": [],
+			"same_physics_frames": [
+				{
+					"error": 1.59250962734222,
+					"frame": 0
+				},
+				{
+					"error": 1.00525045394897,
+					"frame": 1
+				},
+				{
+					"error": 0.64342188835144,
+					"frame": 2
+				},
+				{
+					"error": 0.713695526123047,
+					"frame": 10
+				},
+				{
+					"error": 0.42155995965004,
+					"frame": 30
+				},
+				{
+					"error": 0.1829943805933,
+					"frame": 59
+				}
+			],
+			"same_physics_max_error": 1.59250962734222,
+			"sampled_points": 696,
+			"worst_point": -1
+		}
+	],
+	"scope": "Pair at +/-0.56m; rest sampling then60identical authored spring ticks; all local poses reset and same relaxed pose; compare exact sampling identities and skinned points."
+}

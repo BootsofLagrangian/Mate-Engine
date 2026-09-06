@@ -1,0 +1,34 @@
+{
+  "source_sha256": {
+    "companion/native/scripts/motion_player.gd": "5b0f23af3a37677f027b0523d99d8d2d4b1dd7ceea945f8a62817c0104c67991",
+    "companion/native/scripts/seated_transition.gd": "56e0ba6f4abc2c53ff66b4fd68de9bbd8719123073862ac5976072e893b4d891",
+    "companion/native/scripts/transition_bounds_measure.gd": "ee98270da741e342f2302731d3df291ea6aeee9536ca59c7010f8da6b61ce1ef",
+    "companion/native/tools/probe_seated_bounds_inflation.gd": "3101998fb6562147dcb200ae97e5b165fe0d460bce1c68d7d6c53c9f7081dc8f"
+  },
+  "timing_ms": {
+    "min": 35.476,
+    "max": 45.327,
+    "samples": [
+      39.536,
+      45.052,
+      39.824,
+      45.327,
+      38.489,
+      39.683,
+      35.476,
+      36.477,
+      39.398,
+      39.009,
+      37.561,
+      37.002
+    ]
+  },
+  "scope": "Native selected three rigs, after immutable input prewarm; not a <=30ms guarantee or packaged Windows fit acceptance",
+  "seat_cases": 12,
+  "seat_failures": 0,
+  "lifecycle_failures": 0,
+  "acquisition_non_aligned_cases": 9,
+  "acquisition_overflow_m": 0,
+  "full_transition_cases": 3,
+  "full_transition_overflow_m": 0
+}

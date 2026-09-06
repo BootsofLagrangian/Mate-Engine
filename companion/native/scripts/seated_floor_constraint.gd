@@ -182,7 +182,7 @@ func clear() -> void:
 	secondary=null
 	avatar=null
 
-func solve_legs(weight: float = 1.0) -> void:
+func solve_legs(weight: float = 1.0, penetration_only: bool = false) -> void:
 	if avatar==null or not is_finite(floor_y): return
 	var sk:=avatar.skeleton
 	for side in ["left","right"]:
@@ -194,6 +194,7 @@ func solve_legs(weight: float = 1.0) -> void:
 		var sole_offset:=rest.origin.y-float(avatar.sole_calibration.get("floor_y",0.0))
 		var target:=foot.origin
 		var lift:=maxf(0,floor_y+sole_offset-target.y)
+		if penetration_only and lift <= 0.00001: continue
 		var shin:=sk.get_bone_global_rest(knee).origin.distance_to(rest.origin)
 		target.y=floor_y+sole_offset
 		# Relax shins forward for low seats while keeping the pelvis attached.

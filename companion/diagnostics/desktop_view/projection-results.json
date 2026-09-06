@@ -1,0 +1,9 @@
+{
+	"cases": 405,
+	"checks": 5274,
+	"failures": [],
+	"max_contact_error_m": 0.000000825502809220779,
+	"max_pixel_error": 0.000191837942111306,
+	"module_sha256": "69b319cc7f8a5bf7d8b055f57895d41f8ea6fbe2c4c1a55ccd5e70aadec27ca6",
+	"scope": "Actual Godot orthographic projection680×760, pure geometry; no main/runtime integration or Windows rendering claim."
+}

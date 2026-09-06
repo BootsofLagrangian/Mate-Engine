@@ -1,0 +1,12 @@
+{
+  "motion_player_sha256": "e76fdefeceaef481501516dd53ad65450dda0f2eb724359800e920e8ad815276",
+  "seated_transition_sha256": "314dc2039c1d5d078303813f8d050c8cf1c2d4e5bb377e20679bf1ccc162bf1c",
+  "independent_bound_cases": 9,
+  "independent_bound_failures": 0,
+  "fps": [
+    60,
+    90,
+    144
+  ],
+  "scope": "Actual local mesh containment during first0.20s of livewave\u2192UMAseatedacquisition; notWindowsorframe-latencyvalidation"
+}

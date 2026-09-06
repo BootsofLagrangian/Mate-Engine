@@ -1,0 +1,13 @@
+{
+  "rebuild_bit_identical": true,
+  "catalog_validated": 33,
+  "existing_catalog_entries_preserved": 16,
+  "uma_walk_available": true,
+  "assets": {
+    "assets/motions/mambo_sway.vrma": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+    "assets/motions/hachimi_peek.vrma": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+    "assets/motions/playful_shrug.vrma": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609"
+  },
+  "nested_style_schema_preserved": true,
+  "full_precision_manifest_serialization": true
+}

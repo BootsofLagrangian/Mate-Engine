@@ -1,0 +1,8 @@
+{
+  "callbacks": 2244,
+  "sampled_internal_chain_segments": 504,
+  "max_absolute_segment_length_difference_m": 2.2456872478260337e-07,
+  "max_global_rotation_difference_deg": 31.570574989928573,
+  "max_scale_component_difference": 4.768371599794818e-07,
+  "scope": "Recomputed from nonzero-time samples; internal numbered cape-chain segments only, excluding attachment-root segment whose shoulder/chest parent is not in the recorded cape-only snapshot."
+}

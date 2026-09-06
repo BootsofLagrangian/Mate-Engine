@@ -1,0 +1,69 @@
+{
+	"engine": {
+		"build": "official",
+		"hash": "6ce3de25aa58466e14ef354703ba8d9791a417da",
+		"hex": 263426,
+		"major": 4,
+		"minor": 5,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.5.2-stable (official)",
+		"timestamp": 0
+	},
+	"failures": [],
+	"results": [
+		{
+			"character": "cheval-grand",
+			"contacts": 0,
+			"proxies": 186,
+			"runtime_springs": 31,
+			"scope": "authored_secondary_bones_only",
+			"states": 31,
+			"supported": true,
+			"wall_ms_120_frames": 815.826
+		},
+		{
+			"character": "rice-shower",
+			"contacts": 956,
+			"proxies": 186,
+			"runtime_springs": 33,
+			"scope": "authored_secondary_bones_only",
+			"states": 33,
+			"supported": true,
+			"wall_ms_120_frames": 820.123
+		},
+		{
+			"character": "eishin-flash",
+			"contacts": 482,
+			"proxies": 186,
+			"runtime_springs": 35,
+			"scope": "authored_secondary_bones_only",
+			"states": 35,
+			"supported": true,
+			"wall_ms_120_frames": 820.078
+		},
+		{
+			"character": "mambo",
+			"contacts": 0,
+			"proxies": 0,
+			"runtime_springs": 0,
+			"scope": "authored_secondary_bones_only",
+			"states": 0,
+			"supported": false,
+			"wall_ms_120_frames": 821.187
+		},
+		{
+			"character": "hachimi",
+			"contacts": 0,
+			"proxies": 0,
+			"runtime_springs": 0,
+			"scope": "authored_secondary_bones_only",
+			"states": 0,
+			"supported": false,
+			"wall_ms_120_frames": 821.148
+		}
+	],
+	"sphere_cases": 1000,
+	"worst_length_error_m": 0.00000158154964446933,
+	"worst_penetration_m": 0.000000243037939072488
+}

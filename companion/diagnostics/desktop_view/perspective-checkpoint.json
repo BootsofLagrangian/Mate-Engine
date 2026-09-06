@@ -1,0 +1,19 @@
+{
+  "scope": "Source checkpoint for independent perspective review; command/choreography integration and final Windows remain separate",
+  "tests": {
+    "orthographic": 5274,
+    "perspective_crop": 454,
+    "imported_chair": 14,
+    "host_migration": 9,
+    "main_three_rigs": 54
+  },
+  "failures": 0,
+  "max_crop_error_px": 0.00478805135935545,
+  "max_main_pivot_error_px": 0.000172633488546126,
+  "source_sha256": {
+    "desktop_view": "c78277b56d24ccce7eeae51ad684ab3658f57e8ffcf387510865bc69b685e407",
+    "desktop_object_window": "2266a31f794d510450d46ba4d0b46902dca5dafa52d277294e89d42c17e0b0ff",
+    "desktop_object_store": "1b21a69cf24e6f45a11e2d91c4ddb476eb397fa0d8dce4a5f66bddacf5c2d0b6",
+    "desktop_objects_host": "781063bb50664191ad33ec9616f751d14c6f4b350f0081a788a5482e76d72468"
+  }
+}

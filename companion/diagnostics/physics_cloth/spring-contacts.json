@@ -1,0 +1,89 @@
+{
+	"engine": {
+		"build": "official",
+		"hash": "6ce3de25aa58466e14ef354703ba8d9791a417da",
+		"hex": 263426,
+		"major": 4,
+		"minor": 5,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.5.2-stable (official)",
+		"timestamp": 0
+	},
+	"failures": [],
+	"results": [
+		{
+			"character": "cheval-grand",
+			"contacts": 0,
+			"deep_overlap_policy": "yield_to_authored_shape",
+			"extra_contacts_enabled": true,
+			"proxies": 186,
+			"response_full_deg": 2.0,
+			"response_zero_deg": 10.0,
+			"runtime_springs": 31,
+			"scope": "shape_preserving_shallow_secondary_contacts",
+			"states": 31,
+			"supported": true,
+			"wall_ms_120_frames": 816.022
+		},
+		{
+			"character": "rice-shower",
+			"contacts": 1429,
+			"deep_overlap_policy": "yield_to_authored_shape",
+			"extra_contacts_enabled": true,
+			"proxies": 186,
+			"response_full_deg": 2.0,
+			"response_zero_deg": 10.0,
+			"runtime_springs": 33,
+			"scope": "shape_preserving_shallow_secondary_contacts",
+			"states": 33,
+			"supported": true,
+			"wall_ms_120_frames": 820.006
+		},
+		{
+			"character": "eishin-flash",
+			"contacts": 960,
+			"deep_overlap_policy": "yield_to_authored_shape",
+			"extra_contacts_enabled": true,
+			"proxies": 186,
+			"response_full_deg": 2.0,
+			"response_zero_deg": 10.0,
+			"runtime_springs": 35,
+			"scope": "shape_preserving_shallow_secondary_contacts",
+			"states": 35,
+			"supported": true,
+			"wall_ms_120_frames": 820.2
+		},
+		{
+			"character": "mambo",
+			"contacts": 0,
+			"deep_overlap_policy": "yield_to_authored_shape",
+			"extra_contacts_enabled": true,
+			"proxies": 120,
+			"response_full_deg": 2.0,
+			"response_zero_deg": 10.0,
+			"runtime_springs": 20,
+			"scope": "shape_preserving_shallow_secondary_contacts",
+			"states": 20,
+			"supported": true,
+			"wall_ms_120_frames": 820.623
+		},
+		{
+			"character": "hachimi",
+			"contacts": 0,
+			"deep_overlap_policy": "yield_to_authored_shape",
+			"extra_contacts_enabled": true,
+			"proxies": 102,
+			"response_full_deg": 2.0,
+			"response_zero_deg": 10.0,
+			"runtime_springs": 17,
+			"scope": "shape_preserving_shallow_secondary_contacts",
+			"states": 17,
+			"supported": true,
+			"wall_ms_120_frames": 820.735
+		}
+	],
+	"sphere_cases": 1000,
+	"worst_length_error_m": 0.00000158154964446933,
+	"worst_penetration_m": 0.000000243037939072488
+}

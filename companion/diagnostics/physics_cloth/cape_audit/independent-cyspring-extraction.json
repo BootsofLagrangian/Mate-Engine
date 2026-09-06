@@ -1,0 +1,10 @@
+{
+  "profile_matches_reextraction": true,
+  "profile_sha256": "4f15c380b6d35c6e4fa34ec9f3162ce13566f9a3b7c6ea2b9a0c85f31ec3215c",
+  "source_sha256": "e1385d37f4614d469e56eb759c659947a8d02084d76f2ea441474d3a68aa4a72",
+  "chains": 4,
+  "joints": 18,
+  "colliders": 27,
+  "connected_panel_records": 4,
+  "limitation": "Extraction preserves raw native parameters; no conversion of solver units, angle limits, connected panels or collider semantics is validated."
+}

@@ -1,0 +1,193 @@
+{
+  "schema": "mate.cyspring-source/1",
+  "source": {
+    "path": "/mnt/f/ULTIMA/UMA-Extractor/UmaMusumeToolbox/uma_asset/3d/chara/body/bdy1089_00/clothes/pfb_bdy1089_00_cloth00",
+    "sha256": "e1385d37f4614d469e56eb759c659947a8d02084d76f2ea441474d3a68aa4a72",
+    "path_id": "-8656938089124833977"
+  },
+  "selection": {
+    "bone_contains": "Mantle"
+  },
+  "limitations": [
+    "Native solver global rates and time normalization are not established.",
+    "Angle limits, inside/capsule colliders and connected panels require a compatible solver.",
+    "Raw values are not VRM parameter units."
+  ],
+  "chains": [
+    {
+      "root": "Sp_Sh_Mantle0_L_00",
+      "joints": [
+        {
+          "name": "Sp_Sh_Mantle0_L_00",
+          "stiffness": 100.0,
+          "drag": 400.0,
+          "gravity": 500.0,
+          "limit": 1
+        },
+        {
+          "name": "Sp_Sh_Mantle0_L_01",
+          "stiffness": 160.0,
+          "drag": 660.0,
+          "gravity": 670.0,
+          "limit": 1
+        },
+        {
+          "name": "Sp_Sh_Mantle0_L_02",
+          "stiffness": 280.0,
+          "drag": 920.0,
+          "gravity": 550.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Sh_Mantle0_L_03",
+          "stiffness": 360.0,
+          "drag": 1320.0,
+          "gravity": 540.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Sh_Mantle0_L_04",
+          "stiffness": 580.0,
+          "drag": 600.0,
+          "gravity": 100.0,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "root": "Sp_Sh_Mantle0_R_00",
+      "joints": [
+        {
+          "name": "Sp_Sh_Mantle0_R_00",
+          "stiffness": 100.0,
+          "drag": 400.0,
+          "gravity": 500.0,
+          "limit": 1
+        },
+        {
+          "name": "Sp_Sh_Mantle0_R_01",
+          "stiffness": 160.0,
+          "drag": 660.0,
+          "gravity": 670.0,
+          "limit": 1
+        },
+        {
+          "name": "Sp_Sh_Mantle0_R_02",
+          "stiffness": 280.0,
+          "drag": 920.0,
+          "gravity": 550.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Sh_Mantle0_R_03",
+          "stiffness": 360.0,
+          "drag": 1320.0,
+          "gravity": 540.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Sh_Mantle0_R_04",
+          "stiffness": 580.0,
+          "drag": 600.0,
+          "gravity": 100.0,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "root": "Sp_Ch_Mantle0_BL_00",
+      "joints": [
+        {
+          "name": "Sp_Ch_Mantle0_BL_00",
+          "stiffness": 160.0,
+          "drag": 680.0,
+          "gravity": 580.0,
+          "limit": 1
+        },
+        {
+          "name": "Sp_Ch_Mantle0_BL_01",
+          "stiffness": 310.0,
+          "drag": 900.0,
+          "gravity": 760.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Ch_Mantle0_BL_02",
+          "stiffness": 400.0,
+          "drag": 1250.0,
+          "gravity": 1000.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Ch_Mantle0_BL_03",
+          "stiffness": 500.0,
+          "drag": 550.0,
+          "gravity": 100.0,
+          "limit": 1
+        }
+      ]
+    },
+    {
+      "root": "Sp_Ch_Mantle0_BR_00",
+      "joints": [
+        {
+          "name": "Sp_Ch_Mantle0_BR_00",
+          "stiffness": 160.0,
+          "drag": 680.0,
+          "gravity": 580.0,
+          "limit": 1
+        },
+        {
+          "name": "Sp_Ch_Mantle0_BR_01",
+          "stiffness": 310.0,
+          "drag": 900.0,
+          "gravity": 760.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Ch_Mantle0_BR_02",
+          "stiffness": 400.0,
+          "drag": 1250.0,
+          "gravity": 1000.0,
+          "limit": 0
+        },
+        {
+          "name": "Sp_Ch_Mantle0_BR_03",
+          "stiffness": 500.0,
+          "drag": 550.0,
+          "gravity": 100.0,
+          "limit": 1
+        }
+      ]
+    }
+  ],
+  "collider_count": 27,
+  "connected_bones": [
+    {
+      "Bone1": "Sp_Sh_Mantle0_L_02",
+      "Bone2": "Sp_Ch_Mantle0_BL_01",
+      "Intensity": 0.20000000298023224,
+      "IsFold": 0
+    },
+    {
+      "Bone1": "Sp_Sh_Mantle0_R_02",
+      "Bone2": "Sp_Ch_Mantle0_BR_01",
+      "Intensity": 0.20000000298023224,
+      "IsFold": 0
+    },
+    {
+      "Bone1": "Sp_Sh_Mantle0_L_03",
+      "Bone2": "Sp_Ch_Mantle0_BL_02",
+      "Intensity": 0.10000000149011612,
+      "IsFold": 0
+    },
+    {
+      "Bone1": "Sp_Sh_Mantle0_R_03",
+      "Bone2": "Sp_Ch_Mantle0_BR_02",
+      "Intensity": 0.10000000149011612,
+      "IsFold": 0
+    }
+  ],
+  "source_code_revision": "07f82e9fa08f23c1cda3a9be3045a09372eae8bb",
+  "native_solver_rates": "unresolved; no claim of exact UMA force mapping"
+}

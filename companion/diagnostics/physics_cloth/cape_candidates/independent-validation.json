@@ -1,0 +1,154 @@
+{
+  "checks": 5040,
+  "failures": [],
+  "actual_modifier_callbacks": 4488,
+  "source_profile_sha256": "4f15c380b6d35c6e4fa34ec9f3162ce13566f9a3b7c6ea2b9a0c85f31ec3215c",
+  "runtime_parameter_scope": "All84recorded samples, four selected cape chains; source-relative arrays times recorded scales verified, drag/radii/collider identities preserved, all nonselected states exact match to original captured config.",
+  "one_second_source_samples": [
+    {
+      "anchor": 0.6,
+      "motion": "rest",
+      "baseline": {
+        "bone_x_span_m": 0.714301139116288,
+        "mean_root_to_tip_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_x_span_m": 0.659533053636551,
+        "mean_root_to_tip_drop_m": 0.5915288925170887
+      }
+    },
+    {
+      "anchor": 0.6,
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_x_span_m": 1.1278567910194388,
+        "mean_root_to_tip_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_x_span_m": 1.015522956848144,
+        "mean_root_to_tip_drop_m": 0.5421035140752776
+      }
+    },
+    {
+      "anchor": 0.6,
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_x_span_m": 0.6667170226573941,
+        "mean_root_to_tip_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_x_span_m": 0.617832079529762,
+        "mean_root_to_tip_drop_m": 0.5644004642963397
+      }
+    },
+    {
+      "anchor": 1.2,
+      "motion": "rest",
+      "baseline": {
+        "bone_x_span_m": 0.714301139116288,
+        "mean_root_to_tip_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_x_span_m": 0.565058857202529,
+        "mean_root_to_tip_drop_m": 0.6161755621433245
+      }
+    },
+    {
+      "anchor": 1.2,
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_x_span_m": 1.1278567910194388,
+        "mean_root_to_tip_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_x_span_m": 0.820704907178878,
+        "mean_root_to_tip_drop_m": 0.591822415590285
+      }
+    },
+    {
+      "anchor": 1.2,
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_x_span_m": 0.6667170226573941,
+        "mean_root_to_tip_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_x_span_m": 0.5187866091728209,
+        "mean_root_to_tip_drop_m": 0.6008807718753802
+      }
+    },
+    {
+      "anchor": 5.0,
+      "motion": "rest",
+      "baseline": {
+        "bone_x_span_m": 0.714301139116288,
+        "mean_root_to_tip_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_x_span_m": 0.317480355501175,
+        "mean_root_to_tip_drop_m": 0.6458670049905765
+      }
+    },
+    {
+      "anchor": 5.0,
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_x_span_m": 1.1278567910194388,
+        "mean_root_to_tip_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_x_span_m": 0.39212168753147103,
+        "mean_root_to_tip_drop_m": 0.6478310525417316
+      }
+    },
+    {
+      "anchor": 5.0,
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_x_span_m": 0.6667170226573941,
+        "mean_root_to_tip_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_x_span_m": 0.2571573257446289,
+        "mean_root_to_tip_drop_m": 0.646998271346091
+      }
+    },
+    {
+      "anchor": 12.5,
+      "motion": "rest",
+      "baseline": {
+        "bone_x_span_m": 0.714301139116288,
+        "mean_root_to_tip_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_x_span_m": 0.24742813408374797,
+        "mean_root_to_tip_drop_m": 0.6498924046754827
+      }
+    },
+    {
+      "anchor": 12.5,
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_x_span_m": 1.1278567910194388,
+        "mean_root_to_tip_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_x_span_m": 0.372103989124298,
+        "mean_root_to_tip_drop_m": 0.6484966576099382
+      }
+    },
+    {
+      "anchor": 12.5,
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_x_span_m": 0.6667170226573941,
+        "mean_root_to_tip_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_x_span_m": 0.24197665229439708,
+        "mean_root_to_tip_drop_m": 0.6515949517488465
+      }
+    }
+  ],
+  "metric_scope": "Bone X extent and average root-to-last-recorded-tip vertical drop, not rendered mesh width or cloth strain."
+}

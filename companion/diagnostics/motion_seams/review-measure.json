@@ -1,0 +1,125 @@
+{
+  "failures": 0,
+  "rows": [
+    {
+      "character": "cheval-grand",
+      "extra_x_m": 0.0360147953033447,
+      "extra_z_m": 0.0216484069824219,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.0
+    },
+    {
+      "character": "cheval-grand",
+      "extra_x_m": 0.104606628417969,
+      "extra_z_m": 0.137274503707886,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.000000119209289550781,
+      "phase": 0.2
+    },
+    {
+      "character": "cheval-grand",
+      "extra_x_m": 0.108257293701172,
+      "extra_z_m": 0.149661540985107,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.4
+    },
+    {
+      "character": "cheval-grand",
+      "extra_x_m": 0.107870578765869,
+      "extra_z_m": 0.142190098762512,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.6
+    },
+    {
+      "character": "cheval-grand",
+      "extra_x_m": 0.0937387943267822,
+      "extra_z_m": 0.136682868003845,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.000000119209289550781,
+      "phase": 0.8
+    },
+    {
+      "character": "rice-shower",
+      "extra_x_m": 0.0,
+      "extra_z_m": 0.00155341625213623,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.0
+    },
+    {
+      "character": "rice-shower",
+      "extra_x_m": 0.0346946716308594,
+      "extra_z_m": 0.0950891971588135,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.2
+    },
+    {
+      "character": "rice-shower",
+      "extra_x_m": 0.0444046258926392,
+      "extra_z_m": 0.101273775100708,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.4
+    },
+    {
+      "character": "rice-shower",
+      "extra_x_m": 0.0474710464477539,
+      "extra_z_m": 0.100108504295349,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.6
+    },
+    {
+      "character": "rice-shower",
+      "extra_x_m": 0.03175950050354,
+      "extra_z_m": 0.0939360857009888,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.8
+    },
+    {
+      "character": "eishin-flash",
+      "extra_x_m": 0.0,
+      "extra_z_m": 0.00100505352020264,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.0
+    },
+    {
+      "character": "eishin-flash",
+      "extra_x_m": 0.0733243227005005,
+      "extra_z_m": 0.0690735578536987,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.2
+    },
+    {
+      "character": "eishin-flash",
+      "extra_x_m": 0.0709422826766968,
+      "extra_z_m": 0.0716215372085571,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.4
+    },
+    {
+      "character": "eishin-flash",
+      "extra_x_m": 0.0736850500106812,
+      "extra_z_m": 0.0578653812408447,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.6
+    },
+    {
+      "character": "eishin-flash",
+      "extra_x_m": 0.0612033605575562,
+      "extra_z_m": 0.048253059387207,
+      "minimum_y_error_m": 0.0,
+      "overflow_m": 0.0,
+      "phase": 0.8
+    }
+  ]
+}

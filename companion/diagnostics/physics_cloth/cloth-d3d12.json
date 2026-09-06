@@ -1,0 +1,42 @@
+{
+	"adapter": "D3D12 (NVIDIA GeForce RTX 4090)",
+	"baseline": {
+		"physics_frames": 120,
+		"physics_ms_mean": 1.08845833333333,
+		"physics_ms_p95": 1.169,
+		"render_cpu_ms_mean": 0.614174998303254,
+		"render_frames": 675,
+		"render_gpu_ms_mean": 0.0,
+		"wall_ms": 1991.622
+	},
+	"cloth": {
+		"physics_frames": 360,
+		"physics_ms_mean": 3.51045,
+		"physics_ms_p95": 13.255,
+		"render_cpu_ms_mean": 0.608247222751379,
+		"render_frames": 1900,
+		"render_gpu_ms_mean": 0.0,
+		"wall_ms": 5843.266
+	},
+	"engine": {
+		"build": "official",
+		"hash": "6ce3de25aa58466e14ef354703ba8d9791a417da",
+		"hex": 263426,
+		"major": 4,
+		"minor": 5,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.5.2-stable (official)",
+		"timestamp": 0
+	},
+	"finite": true,
+	"max_deformation_m": 0.269902735948563,
+	"max_y": 1.14999938011169,
+	"min_y": 0.636701881885529,
+	"physics_engine": "Jolt Physics",
+	"pinned_max_error_m": 0.00000063657790860816,
+	"pinned_vertices": 32,
+	"scope": "new 288-vertex skirt proxy, not imported character garment; matched scene baseline excludes cloth",
+	"triangles": 512,
+	"vertices": 288
+}

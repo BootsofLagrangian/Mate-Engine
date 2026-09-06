@@ -1,0 +1,90 @@
+{
+  "selection": "Two full authored sources selected from 26 filename-screened candidates and visual/FK review",
+  "bytes_preserved_from_source_bake": true,
+  "existing_entries_preserved": 31,
+  "locomotion_default_overridden": false,
+  "motions": [
+    {
+      "name": "playful_strut",
+      "path": "assets/motions/playful_strut.vrma",
+      "kind": "vrma",
+      "duration": 1.2999999523162842,
+      "loop": true,
+      "ambient": false,
+      "locomotion": true,
+      "locomotion_priority": 0,
+      "locomotion_preserve_hips": true,
+      "locomotion_style": {
+        "version": 1,
+        "cycle_stride_leg_lengths": 1.539550751,
+        "contacts": {
+          "left": [
+            0.31,
+            0.59
+          ],
+          "right": [
+            0.81,
+            0.09
+          ]
+        },
+        "contact_blend_phase": 0.04,
+        "preserve_source_hip_height": true,
+        "hip_translation_limit_leg_lengths": 0.15
+      },
+      "description": "Authored broad-stride parade walk with large arm swings; choose for a finite supported move.",
+      "sha256": "11a0e7a35e78f4161961f9e619cc99fafa3efec531a2a965e62bda62d0a65376",
+      "source_clip": "anm_eve_type00_homewalk03_loop",
+      "source": "local UMA extraction",
+      "source_manifest": "assets/research/playful-walk/uma-source/manifest.json",
+      "conversion_manifest": "assets/research/playful-walk/candidates/uma_homewalk03_loop.bake.json",
+      "license": "local-user-assets-not-redistributable"
+    },
+    {
+      "name": "mambo_goofy_walk",
+      "path": "assets/motions/mambo_goofy_walk.vrma",
+      "kind": "vrma",
+      "duration": 4.0333333015441895,
+      "loop": true,
+      "ambient": false,
+      "locomotion": true,
+      "locomotion_priority": 0,
+      "locomotion_preserve_hips": true,
+      "locomotion_style": {
+        "version": 1,
+        "cycle_stride_leg_lengths": 4.165960726,
+        "contacts": {
+          "left": [
+            [
+              0.37,
+              0.52
+            ],
+            [
+              0.88,
+              0.01
+            ]
+          ],
+          "right": [
+            [
+              0.06,
+              0.3
+            ],
+            [
+              0.645,
+              0.835
+            ]
+          ]
+        },
+        "contact_blend_phase": 0.025,
+        "preserve_source_hip_height": true,
+        "hip_translation_limit_leg_lengths": 0.25
+      },
+      "description": "Authored goofy high-knee strut with deliberate head and hip rocking; two gait cycles per full source loop.",
+      "sha256": "a4dfaca13bba107b72569fdad0beda851f92018dfce692377514664cc4b38e20",
+      "source_clip": "anm_eve_type00_walkunique09_loop",
+      "source": "local UMA extraction",
+      "source_manifest": "assets/research/playful-walk/uma-source/manifest.json",
+      "conversion_manifest": "assets/research/playful-walk/candidates/uma_walkunique09_loop.bake.json",
+      "license": "local-user-assets-not-redistributable"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "scope": "One actual Korean explicit conversation-only request after bilingual grounding; no intent expected",
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\run_text_scenario.gd",
+      "--",
+      "--scenario",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\diagnostics\\text_scenarios\\computer-conversation.json",
+      "--character",
+      "cheval-grand",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\text-scenario-computer-bilingual-negative-01"
+    ],
+    "scope": "exported executable plus external scenario script",
+    "executable_sha256": "b1c2b01a2d4793099402a7c4adf734e2ff4f5a99cc057b5d6ec8a5542ae2825a",
+    "script_sha256": "389d7491453b4f753e0c591d0e48779d47bd2401ecf816a19d4c0b831981f211",
+    "parent_script_sha256": "38280eb30e9bc3c4529c13aa9f17803e6137872e0441a27844b410e835233d43",
+    "scenario_sha256": "49c2ce4bc3e575b7d37b034c71c28a252c963c1d112d1517dc60e419cd0ad778",
+    "started_unix": 1788714192.5069835,
+    "character": "cheval-grand",
+    "prompt_capture_id": "88c65ac494bc4b129847903cfe50fde3",
+    "launcher_child_pid": 29710,
+    "exact_prompt_captured": true,
+    "exit_code": 0,
+    "finished_unix": 1788714205.405253
+  },
+  "checks": [
+    {
+      "label": "native ready",
+      "ms": 6665,
+      "ok": true
+    },
+    {
+      "label": "actual selected character ready",
+      "ms": 6668,
+      "ok": true
+    },
+    {
+      "label": "real model provider",
+      "ms": 6671,
+      "ok": true
+    },
+    {
+      "label": "scenario step 0 actual reply / playback / intent / native outcome",
+      "ms": 9355,
+      "ok": true
+    },
+    {
+      "label": "total object bound respected",
+      "ms": 9362,
+      "ok": true
+    },
+    {
+      "label": "original settings restored after test",
+      "ms": 9388,
+      "ok": true
+    }
+  ],
+  "raw": "{\"text\":\"それはいいですね。\", \"emotion\":\"neutral\", \"gesture\":\"idle\", \"intent\":{}}\n\n",
+  "action": {
+    "character": "cheval-grand",
+    "elapsed_ms": 988.1,
+    "emotion": "neutral",
+    "gesture": "idle",
+    "intensity": 0.8,
+    "ms": 7752,
+    "speed": 0.92,
+    "turn_id": "t1-7879",
+    "type": "action"
+  },
+  "done": {
+    "audio_url": null,
+    "character": "cheval-grand",
+    "elapsed_ms": 1351.1,
+    "emotion": "neutral",
+    "gesture": "idle",
+    "intensity": 0.8,
+    "ms": 8118,
+    "ok": true,
+    "speed": 0.92,
+    "text": "それはいいですね。",
+    "timings": {
+      "first_audio_ms": 1136.1,
+      "first_text_ms": 500.6,
+      "first_token_ms": 500.4,
+      "llm_done_ms": 988.1,
+      "total_ms": 1351.1
+    },
+    "turn_id": "t1-7879",
+    "type": "done",
+    "voice_error": null
+  },
+  "outcomes": [],
+  "failures": [],
+  "pcm_bytes": 83840
+}

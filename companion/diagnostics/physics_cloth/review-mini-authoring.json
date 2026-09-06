@@ -1,0 +1,39 @@
+{
+  "rows": [
+    {
+      "character": "mambo",
+      "published_existing_retained": {
+        "changed": false,
+        "reason": "existing_authored_secondary_retained"
+      },
+      "authoring": {
+        "changed": true,
+        "version": 1,
+        "source": "Mate authored conservative VRM0 spring tuning",
+        "hair_roots": 8,
+        "skirt_roots": 12,
+        "collider_groups": 4,
+        "cloth_triangles": false
+      },
+      "only_secondary_animation_modified": true
+    },
+    {
+      "character": "hachimi",
+      "published_existing_retained": {
+        "changed": false,
+        "reason": "existing_authored_secondary_retained"
+      },
+      "authoring": {
+        "changed": true,
+        "version": 1,
+        "source": "Mate authored conservative VRM0 spring tuning",
+        "hair_roots": 7,
+        "skirt_roots": 10,
+        "collider_groups": 4,
+        "cloth_triangles": false
+      },
+      "only_secondary_animation_modified": true
+    }
+  ],
+  "failures": []
+}

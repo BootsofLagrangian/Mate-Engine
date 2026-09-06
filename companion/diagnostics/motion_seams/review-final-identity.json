@@ -1,0 +1,17 @@
+{
+  "verdict": "APPROVED",
+  "source_sha256": {
+    "companion/native/scripts/motion_player.gd": "5b0f23af3a37677f027b0523d99d8d2d4b1dd7ceea945f8a62817c0104c67991",
+    "companion/native/scripts/seated_transition.gd": "56e0ba6f4abc2c53ff66b4fd68de9bbd8719123073862ac5976072e893b4d891",
+    "companion/native/scripts/transition_bounds_measure.gd": "ee98270da741e342f2302731d3df291ea6aeee9536ca59c7010f8da6b61ce1ef",
+    "companion/diagnostics/motion_seams/review_vectors.gd": "5e35b4ff10ac7c84b63e5d799abf3419bdac11375998842d9ce3ef0e1a918643",
+    "companion/diagnostics/motion_seams/review_bounds.gd": "51d4384d34108646f474c0230f6cec98c163a66a1b42235b5776d79297e6e739",
+    "companion/diagnostics/motion_seams/review_measure.gd": "67852556e9cc51d200faafdbcfe1004a6a6ea76dc80fd07f7e235094281a87b4"
+  },
+  "optimized_validation_hash_mismatches": [],
+  "independent_acquisition_cases": 9,
+  "independent_measure_cases": 15,
+  "geometry_failures": 0,
+  "minimum_y_error_m": 0,
+  "scope": "Motion seam ownership/continuity and conservative base-vertex geometry. Native Windows scene fit and frame timing remain separate acceptance."
+}

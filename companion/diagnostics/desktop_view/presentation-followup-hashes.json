@@ -1,0 +1,9 @@
+{
+  "scope": "Source-only follow-up: explicit panel PTT release and external Windows probe view/action-dispatcher additions. No rerun of prior756 projection cases and no Windows execution by reviewer.",
+  "verdict": "APPROVED",
+  "hashes": {
+    "companion/native/scripts/main.gd": "900f8a774b3a1a07cbe7ee1de0b423582ef155b2c01f2fddc4b4827218f584ba",
+    "companion/native/scripts/companion_panel_window.gd": "c864130e87dd9105b4113d2d067a9c9ed3f06d37662e58de79fa8924b4bb6a4d",
+    "companion/native/tools/probe_windows_motion_chain.gd": "509beedb334085440769cb4709fe574d8273edca92e106b2c96e9358c722caa6"
+  }
+}

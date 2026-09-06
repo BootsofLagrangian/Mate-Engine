@@ -1,0 +1,42 @@
+{
+	"checks": 1080,
+	"failures": [],
+	"rows": [
+		{
+			"character": "cheval-grand",
+			"retained_floor_colliders": 14,
+			"worst_direction_cross": 0.00000199764508579392,
+			"worst_length_error_m": 0.000000111758708953857,
+			"zero_initial_velocity": true
+		},
+		{
+			"character": "rice-shower",
+			"retained_floor_colliders": 24,
+			"worst_direction_cross": 0.000000952742539084284,
+			"worst_length_error_m": 0.000000104308128356934,
+			"zero_initial_velocity": true
+		},
+		{
+			"character": "eishin-flash",
+			"retained_floor_colliders": 19,
+			"worst_direction_cross": 0.00000456844554719282,
+			"worst_length_error_m": 0.000000119209289550781,
+			"zero_initial_velocity": true
+		},
+		{
+			"character": "mambo",
+			"retained_floor_colliders": 20,
+			"worst_direction_cross": 0.000000578848244003893,
+			"worst_length_error_m": 0.0000000596046447753906,
+			"zero_initial_velocity": true
+		},
+		{
+			"character": "hachimi",
+			"retained_floor_colliders": 17,
+			"worst_direction_cross": 0.00000037150317666601,
+			"worst_length_error_m": 0.0000000596046447753906,
+			"zero_initial_velocity": true
+		}
+	],
+	"scope": "Independent rebase check on five actual rigs at scale .6/1/1.4, yaw45 translation(.56,.25,-.3), posed head; runtime resource/state/collider identity retained, actual seated floor colliders/terminal joints retained. Not a garment appearance or continuous motion benchmark."
+}

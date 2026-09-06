@@ -1,0 +1,119 @@
+{
+  "scope": "Read-only captured Windows scene route; no runtime modifications; sampled frames cannot establish all-frame naturalness",
+  "report_sha256": "dbba0bc68426158c545b364546ab9ef3c9c031e08a359431ed2d9932bb96c1d7",
+  "visually_inspected_frames": [
+    8,
+    16,
+    24,
+    32,
+    40,
+    48
+  ],
+  "opposed_facing_samples": [
+    {
+      "ms": 9620,
+      "alignment": -0.9931094296015546,
+      "distance_m": 0.0034999998638636223,
+      "dt": 0.079
+    },
+    {
+      "ms": 9699,
+      "alignment": -0.9859855133877358,
+      "distance_m": 0.0032304578212475235,
+      "dt": 0.079
+    },
+    {
+      "ms": 9781,
+      "alignment": -0.9734948433713615,
+      "distance_m": 0.0033600001115807318,
+      "dt": 0.082
+    },
+    {
+      "ms": 9862,
+      "alignment": -0.9536620080786129,
+      "distance_m": 0.003383333093236122,
+      "dt": 0.081
+    },
+    {
+      "ms": 9943,
+      "alignment": -0.9239810852428214,
+      "distance_m": 0.003406247057867325,
+      "dt": 0.081
+    },
+    {
+      "ms": 10024,
+      "alignment": -0.8811997023002237,
+      "distance_m": 0.003499860191508165,
+      "dt": 0.081
+    },
+    {
+      "ms": 10106,
+      "alignment": -0.8285915869153083,
+      "distance_m": 0.003499860191508165,
+      "dt": 0.082
+    },
+    {
+      "ms": 10187,
+      "alignment": -0.7674029632994384,
+      "distance_m": 0.003499860191508165,
+      "dt": 0.081
+    },
+    {
+      "ms": 10268,
+      "alignment": -0.7055137690090233,
+      "distance_m": 0.0031498881699166923,
+      "dt": 0.081
+    },
+    {
+      "ms": 10349,
+      "alignment": -0.6314157540892977,
+      "distance_m": 0.003429999987706593,
+      "dt": 0.081
+    },
+    {
+      "ms": 10430,
+      "alignment": -0.551034131649464,
+      "distance_m": 0.003429998125408612,
+      "dt": 0.081
+    },
+    {
+      "ms": 10510,
+      "alignment": -0.4651714944454869,
+      "distance_m": 0.003429999987706593,
+      "dt": 0.08
+    },
+    {
+      "ms": 10588,
+      "alignment": -0.37468196999342346,
+      "distance_m": 0.003429999987706593,
+      "dt": 0.078
+    },
+    {
+      "ms": 10666,
+      "alignment": -0.2804655908049533,
+      "distance_m": 0.003429999987706593,
+      "dt": 0.078
+    },
+    {
+      "ms": 10745,
+      "alignment": -0.19148402269390494,
+      "distance_m": 0.0031491873704733294,
+      "dt": 0.079
+    },
+    {
+      "ms": 10824,
+      "alignment": -0.09411476834306813,
+      "distance_m": 0.0033833321620871633,
+      "dt": 0.079
+    }
+  ],
+  "opposed_seconds": 1.283,
+  "opposed_distance_m": 0.05421202430103199,
+  "max_sample_yaw_step_degrees": 6.999741785969157,
+  "recorded_sample_dt_range": [
+    0.078,
+    0.098
+  ],
+  "head_quaternions_recorded": false,
+  "recommendation": "Suppress translation while heading opposes travel; overlap remaining turn after first-step alignment rather than wait for full heading."
+}

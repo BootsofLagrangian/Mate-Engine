@@ -1,0 +1,65 @@
+[
+  {
+    "character": "cheval-grand",
+    "duration_s": 1.36666667461395,
+    "fps": 60,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "rice-shower",
+    "duration_s": 1.36666667461395,
+    "fps": 60,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "eishin-flash",
+    "duration_s": 1.36666667461395,
+    "fps": 60,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "cheval-grand",
+    "duration_s": 1.36666667461395,
+    "fps": 90,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "rice-shower",
+    "duration_s": 1.36666667461395,
+    "fps": 90,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "eishin-flash",
+    "duration_s": 1.36666667461395,
+    "fps": 90,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "cheval-grand",
+    "duration_s": 1.36666667461395,
+    "fps": 144,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "rice-shower",
+    "duration_s": 1.36666667461395,
+    "fps": 144,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  },
+  {
+    "character": "eishin-flash",
+    "duration_s": 1.36666667461395,
+    "fps": 144,
+    "max_acquisition_bounds_overflow_m": 0.0,
+    "whole_clip_grid_interval_s": 0.113888889551163
+  }
+]

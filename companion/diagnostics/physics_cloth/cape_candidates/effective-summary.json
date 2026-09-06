@@ -1,0 +1,150 @@
+{
+  "actual_candidate_callbacks": 4488,
+  "nonselected_unchanged_and_effective_parameter_checks": 2940,
+  "cells": [
+    {
+      "variant": "sourcecurve-g0.6",
+      "motion": "rest",
+      "baseline": {
+        "bone_origin_x_span_m": 0.714301139116288,
+        "mean_chain_root_tip_vertical_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.659533053636551,
+        "mean_chain_root_tip_vertical_drop_m": 0.5915288925170887
+      }
+    },
+    {
+      "variant": "sourcecurve-g0.6",
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 1.1278567910194388,
+        "mean_chain_root_tip_vertical_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 1.015522956848144,
+        "mean_chain_root_tip_vertical_drop_m": 0.5421035140752776
+      }
+    },
+    {
+      "variant": "sourcecurve-g0.6",
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 0.6667170226573941,
+        "mean_chain_root_tip_vertical_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.617832079529762,
+        "mean_chain_root_tip_vertical_drop_m": 0.5644004642963397
+      }
+    },
+    {
+      "variant": "sourcecurve-g1.2",
+      "motion": "rest",
+      "baseline": {
+        "bone_origin_x_span_m": 0.714301139116288,
+        "mean_chain_root_tip_vertical_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.565058857202529,
+        "mean_chain_root_tip_vertical_drop_m": 0.6161755621433245
+      }
+    },
+    {
+      "variant": "sourcecurve-g1.2",
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 1.1278567910194388,
+        "mean_chain_root_tip_vertical_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.820704907178878,
+        "mean_chain_root_tip_vertical_drop_m": 0.591822415590285
+      }
+    },
+    {
+      "variant": "sourcecurve-g1.2",
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 0.6667170226573941,
+        "mean_chain_root_tip_vertical_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.5187866091728209,
+        "mean_chain_root_tip_vertical_drop_m": 0.6008807718753802
+      }
+    },
+    {
+      "variant": "sourcecurve-g5.0",
+      "motion": "rest",
+      "baseline": {
+        "bone_origin_x_span_m": 0.714301139116288,
+        "mean_chain_root_tip_vertical_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.317480355501175,
+        "mean_chain_root_tip_vertical_drop_m": 0.6458670049905765
+      }
+    },
+    {
+      "variant": "sourcecurve-g5.0",
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 1.1278567910194388,
+        "mean_chain_root_tip_vertical_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.39212168753147103,
+        "mean_chain_root_tip_vertical_drop_m": 0.6478310525417316
+      }
+    },
+    {
+      "variant": "sourcecurve-g5.0",
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 0.6667170226573941,
+        "mean_chain_root_tip_vertical_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.2571573257446289,
+        "mean_chain_root_tip_vertical_drop_m": 0.646998271346091
+      }
+    },
+    {
+      "variant": "sourcecurve-g12.5",
+      "motion": "rest",
+      "baseline": {
+        "bone_origin_x_span_m": 0.714301139116288,
+        "mean_chain_root_tip_vertical_drop_m": 0.5675027221441258
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.24742813408374797,
+        "mean_chain_root_tip_vertical_drop_m": 0.6498924046754827
+      }
+    },
+    {
+      "variant": "sourcecurve-g12.5",
+      "motion": "authored_overhead_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 1.1278567910194388,
+        "mean_chain_root_tip_vertical_drop_m": 0.495196595788001
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.372103989124298,
+        "mean_chain_root_tip_vertical_drop_m": 0.6484966576099382
+      }
+    },
+    {
+      "variant": "sourcecurve-g12.5",
+      "motion": "authored_stretch",
+      "baseline": {
+        "bone_origin_x_span_m": 0.6667170226573941,
+        "mean_chain_root_tip_vertical_drop_m": 0.530824244022368
+      },
+      "candidate": {
+        "bone_origin_x_span_m": 0.24197665229439708,
+        "mean_chain_root_tip_vertical_drop_m": 0.6515949517488465
+      }
+    }
+  ]
+}

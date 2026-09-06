@@ -1,0 +1,8 @@
+{
+  "native/scripts/main.gd": "0f71516a99b81dc7be6156fd11f3b12394de705ad8a8e9e5ed2495fc119fb277",
+  "native/scripts/desktop_view.gd": "549fe5eaed5cae2eb03b3ede6fbab7e2e057b54a12c29b1df56532122518be10",
+  "native/addons/Godot-MToon-Shader/mtoon_common.gdshaderinc": "dfbe6f70cf8a0acf4c05f975f4c21adc458d152fa9bffa14f24b430f2d919ba5",
+  "patches/mtoon-screen-outline-depth.patch": "7199ce509735458383cf57c37b7c4c2cec8d2c16cdc721a887fbde0ae3e12130",
+  "diagnostics/desktop_view/test_main_perspective.gd": "fc911f6926d79708dc3cc8bb6729bfb9cb7d9f86ffce184d68c2acd9f45cc58b",
+  "diagnostics/desktop_view/independent-spatial-review/probe_outline_padding.gd": "bfdf7c9877ece65433a3c1ad01b47401a599e7b03f2cc3028145118482a7c5b9"
+}

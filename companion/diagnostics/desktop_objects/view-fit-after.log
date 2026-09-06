@@ -1,0 +1,8 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+view=0.0 ppm=330.894083217027 object_scale=0.62132299269896 local_nav=[P: (172.6895, 393.5301), S: (326.9819, 267.8126)] local_prop=[P: (232.0087, 451.3445), S: (188.5934, 210.5263)] full=[P: (172.6895, 393.5301), S: (326.9819, 268.3408)] global_prop=[P: (830.0087, 1180.344), S: (188.5934, 210.5263)] full_global=[P: (770.6895, 1122.53), S: (326.9819, 268.3408)]
+view=45.0 ppm=330.894083217027 object_scale=0.62132299269896 local_nav=[P: (179.2292, 345.3134), S: (319.3428, 363.9033)] local_prop=[P: (204.6577, 378.1312), S: (266.7114, 337.4579)] full=[P: (179.2292, 345.3134), S: (319.3428, 370.2758)] global_prop=[P: (802.6577, 1107.131), S: (266.7114, 337.4579)] full_global=[P: (777.2292, 1074.313), S: (319.3428, 370.2758)]
+fit_after={ "reason": "fits", "local_bounds": [P: (179.2292, 345.3134), S: (319.3428, 370.2758)], "viewport": (680.0, 760.0), "origin": (598, 676), "global_bounds_before": [P: (777.2292, 1021.313), S: (319.3428, 370.2758)] }
+Occupied view fit: 10 checks, 0 failures
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+     at: cleanup (core/object/object.cpp:2514)

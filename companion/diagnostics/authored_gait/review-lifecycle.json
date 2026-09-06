@@ -1,0 +1,126 @@
+{
+  "checks": 30,
+  "failures": 0,
+  "results": [
+    {
+      "check": "real mini avatar loads",
+      "passed": true
+    },
+    {
+      "check": "multiple and wrap contacts accepted",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: <null>",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: []",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: [0.4]",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: [0.0, 1.0]",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: [0.4, 0.4]",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: [[0.8, 0.2], [0.1, 0.4]]",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: [[0.2, 0.6], [0.3, 0.5]]",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: [0.3, nan]",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "malformed interval rejected: [true, 0.6]",
+      "passed": true
+    },
+    {
+      "check": "invalid interval cannot disturb live style",
+      "passed": true
+    },
+    {
+      "check": "plant persists across zero phase wrap",
+      "passed": true
+    },
+    {
+      "check": "unplanted swing exactly keeps authored source",
+      "passed": true
+    },
+    {
+      "check": "second distinct contact acquires current source ankle",
+      "passed": true
+    },
+    {
+      "check": "idempotent registration preserves active plant",
+      "passed": true
+    },
+    {
+      "check": "actual world delta uses full rotated scaled basis inverse",
+      "passed": true
+    },
+    {
+      "check": "invalid sample drops unconsumed displacement",
+      "passed": true
+    },
+    {
+      "check": "lost support clears prior support plane",
+      "passed": true
+    },
+    {
+      "check": "changed effective scale clears prior support plane",
+      "passed": true
+    },
+    {
+      "check": "reversal reacquires feet without obsolete contact",
+      "passed": true
+    },
+    {
+      "check": "disabled gait clears support and cached feet",
+      "passed": true
+    }
+  ]
+}

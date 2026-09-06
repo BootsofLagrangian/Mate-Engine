@@ -1,0 +1,5 @@
+# Supplemental orthographic control: inconclusive
+
+A supplemental comparison replaced each avatar Shader resource at runtime with an inline copy of the previous common shader, keeping the earlier mouth-depth fix. It compared a full orthographic viewport with the current shader at reference height zero. The images differed substantially (8,000+ pixels); copying uniform values explicitly did not remove the differences. Recreating the current shader inline also changed the rendering. Thus this procedure changes more than the outline formula and does not establish a baseline regression or equivalence. It is not included as a passing validation result.
+
+Local images and logs remain under `companion/logs/shared-world-avatar-render-orthographic*` (ignored), and the diagnostic flags remain available for investigating the control. The accepted evidence is the independent source review of the preserved legacy branch and the separately documented perspective crop comparison, including its raw boundary mismatches. No exact orthographic visual-equivalence claim is made from this experiment.

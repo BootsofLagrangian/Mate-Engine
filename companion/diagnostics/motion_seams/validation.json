@@ -1,0 +1,43 @@
+{
+  "time_utc": "2026-09-06T16:12:03.503089+00:00",
+  "source_sha256": {
+    "companion/native/scripts/motion_player.gd": "e76fdefeceaef481501516dd53ad65450dda0f2eb724359800e920e8ad815276",
+    "companion/native/scripts/seated_transition.gd": "89456e9b28a34f3583dfb4898a0f3933d17ef338f8b253a07537c6f0689976bb",
+    "companion/native/tools/probe_motion_seams.gd": "ea7809eb023c7a7a6836d7b8f03b7c6c366309ae7e5434984c8a14e29769554e",
+    "companion/native/tools/probe_scene_locomotion_motion.gd": "ce87b280c19c094366b4d0061265851445c1ec3da1ac98ac04886c2c7bdaaec5"
+  },
+  "results": {
+    "ordinary_edges": 24,
+    "ordinary_failures": 0,
+    "scene_path_cases": 6,
+    "scene_path_failures": 0,
+    "seated_cases": 12,
+    "seated_failures": 0,
+    "seated_lifecycle_failures": 0,
+    "upper_contact_failures": 0
+  },
+  "raw_trace_sha256": {
+    "seam-upperbody-regression.log": "3afad102a82e5fbe9d6e0fd0a9f6c35aa3bfb860e97b17024262da6a18516ef3",
+    "motion-seams-before.log": "35e9d52d62c1525157cbdb39b2b416a167d95c079390027b4e7840883567636e",
+    "motion-seams-final-complete.log": "6eeaa6e661fa44aea488cf9f6856fca5de626a6d303a1f29881004bf377ba189",
+    "motion-seams-after.json": "87b7d4b80b003210240b3e0a66a1fe4fb3c774db4e60985402e49add2c728b02",
+    "motion-seams-single-owner.json": "d54454969a76d5c80990b8d979f7ccc7163d4a2a92d507eeaff426515f128dc1",
+    "scene-motion-api.log": "218b63f21d866b855ac19daf3158d05bc66cdb0e9fbfdf9dcffad33e7e402bf3",
+    "motion-seams-before.json": "e720f0879cac55ece48a073a48a219e1d30834e1b257f0632f55c5231031bb61",
+    "scene-motion-api-final.log": "218b63f21d866b855ac19daf3158d05bc66cdb0e9fbfdf9dcffad33e7e402bf3",
+    "motion-seams-accepted.json": "d31d9c7a8df4da7dbfbf1a32460325a8f7f15eba058800e7d623a487ec574184",
+    "motion-seams-accepted.log": "a9ebc579025869e44b42aeefb27a31023f9e33ec83c74a36b6325d18750fe135",
+    "motion-seams-final-complete.json": "d31d9c7a8df4da7dbfbf1a32460325a8f7f15eba058800e7d623a487ec574184",
+    "seated-seam-regression.log": "a84f5b2ea2f2b5c3d457d9f8751e1f491a9d3747442f90ab8d00f97896d2672e",
+    "seated-seam-lifecycle.log": "57ec05bf531381597dca3e3b2fdb1a14ca5fee83d57deb7add525d18be7dc0ab",
+    "motion-seams-carry720.json": "9f58a4fe33356fddc6bd2661c9495262ffbbe65030609179efe19459a465a582",
+    "seam-bank-release-regression.log": "0cc8a9b65ac885d3b61a7157159768c4ed2db536df16975a66b5e2ef27a43c6c",
+    "motion-seams-carry720.log": "99419765c0291ae32b0bdabf51a906597e3249b54753edb379edf75c02f2df79",
+    "motion-seams-final.log": "64eb9f0f4ece8a1cfe4cb23515700b7185218e6a850f83011c8e7394f30ab7c0",
+    "motion-seams-after.log": "db332b55912a087dc8022c2cef250c1b2a4976d9aefa6baaa8eae340ec804984",
+    "seated-seam-final.log": "0ffe82ba7038987b6f3eab7e7ead6bbb83c544e9988894c76c96364a8c14ea38",
+    "motion-seams-single-owner.log": "038b003df4f9b8bd3700a9874a26c57bf5becf4aae44b73edc95f282454e642a",
+    "motion-seams-final.json": "49cef2996dfbbbcebdc855e6d5a0aa3ec2b98e4f619281b98ae332357932f07e"
+  },
+  "scope": "Focused MotionPlayer/SeatedTransition source tests, not packaged Windows acceptance; source fast arm return remains disclosed"
+}

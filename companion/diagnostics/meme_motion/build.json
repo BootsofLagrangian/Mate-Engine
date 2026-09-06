@@ -1,0 +1,62 @@
+{
+  "base_pose_scope": "shoulders and arms only; head/neck/torso use neutral normalized rest",
+  "base_sha256": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+  "base_time_s": 0.5,
+  "motions": [
+    {
+      "ambient": false,
+      "bytes": 55944,
+      "contact_mode": "foot",
+      "description": "Two unhurried, offbeat upper-body sways; legs and support remain independently owned.",
+      "duration": 4.2,
+      "kind": "vrma",
+      "leg_tracks": false,
+      "license": "local-user-assets-not-redistributable",
+      "loop": false,
+      "name": "mambo_sway",
+      "path": "assets/motions/mambo_sway.vrma",
+      "root_translation": false,
+      "rotation_tracks": 10,
+      "sha256": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+      "source": "Original bounded upper-body curves over local UMA resting pose",
+      "source_manifest": "diagnostics/meme_motion/motions.json"
+    },
+    {
+      "ambient": false,
+      "bytes": 42460,
+      "contact_mode": "foot",
+      "description": "Curious left/right peek with an amused final lift; no face morphs or airborne root motion.",
+      "duration": 4.1,
+      "kind": "vrma",
+      "leg_tracks": false,
+      "license": "local-user-assets-not-redistributable",
+      "loop": false,
+      "name": "hachimi_peek",
+      "path": "assets/motions/hachimi_peek.vrma",
+      "root_translation": false,
+      "rotation_tracks": 7,
+      "sha256": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+      "source": "Original bounded upper-body curves over local UMA resting pose",
+      "source_manifest": "diagnostics/meme_motion/motions.json"
+    },
+    {
+      "ambient": false,
+      "bytes": 37912,
+      "contact_mode": "foot",
+      "description": "Small symmetrical shrug with a delayed head tilt; reusable for any humanoid profile.",
+      "duration": 3.0,
+      "kind": "vrma",
+      "leg_tracks": false,
+      "license": "local-user-assets-not-redistributable",
+      "loop": false,
+      "name": "playful_shrug",
+      "path": "assets/motions/playful_shrug.vrma",
+      "root_translation": false,
+      "rotation_tracks": 8,
+      "sha256": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+      "source": "Original bounded upper-body curves over local UMA resting pose",
+      "source_manifest": "diagnostics/meme_motion/motions.json"
+    }
+  ],
+  "sample_hz": 60
+}

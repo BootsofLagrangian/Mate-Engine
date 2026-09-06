@@ -1,0 +1,248 @@
+{
+  "cells": [
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.578783880325387,
+      "motion": "mambo_sway",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 1.02945614354467,
+      "motion": "hachimi_peek",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.936281691095113,
+      "motion": "playful_shrug",
+      "scope": "asset"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.245858550071716,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.229501739144325,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.279319643974304,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.245858535170555,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.229501739144325,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.279438316822052,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 0.000000422652192355599,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 0.000000360968897439307,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 0.000000360488002115744,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.225643664598465,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.213955193758011,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.258667498826981,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.225643649697304,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.213955163955688,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.258718252182007,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "rice-shower",
+      "max_foot_error_m": 0.000000418908854271649,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "rice-shower",
+      "max_foot_error_m": 0.00000035998721159558,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "rice-shower",
+      "max_foot_error_m": 0.000000359967913254877,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.249040305614471,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.236435949802399,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.285382658243179,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.249040335416794,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.236435949802399,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.285440057516098,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "eishin-flash",
+      "max_foot_error_m": 0.000000299602277209488,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "eishin-flash",
+      "max_foot_error_m": 0.000000329535566834238,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "eishin-flash",
+      "max_foot_error_m": 0.000000329535566834238,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    }
+  ],
+  "characters": [
+    "cheval-grand",
+    "rice-shower",
+    "eishin-flash"
+  ],
+  "checks": 367,
+  "failures": [],
+  "input_sha256": {
+    "assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "assets/eishin-flash.vrm": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+    "assets/motions/hachimi_peek.vrma": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+    "assets/motions/mambo_sway.vrma": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+    "assets/motions/playful_shrug.vrma": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+    "assets/motions/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "assets/motions/uma_walk.vrma": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+    "assets/rice-shower.vrm": "50ede37cd75029d8d00d17472588b4820408557243b6b2ee058570c7c451035a"
+  },
+  "input_sha256_after": {
+    "assets/cheval-grand.vrm": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "assets/eishin-flash.vrm": "60a6eb700088864589d35101a2eccbe55397fad4306fe8842a967d3d06801b28",
+    "assets/motions/hachimi_peek.vrma": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+    "assets/motions/mambo_sway.vrma": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+    "assets/motions/playful_shrug.vrma": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+    "assets/motions/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "assets/motions/uma_walk.vrma": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573",
+    "assets/rice-shower.vrm": "50ede37cd75029d8d00d17472588b4820408557243b6b2ee058570c7c451035a"
+  },
+  "scope": "Deterministic real-rig source harness; not packaged Windows visual acceptance"
+}

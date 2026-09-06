@@ -1,0 +1,226 @@
+{
+  "failures": 8,
+  "rows": [
+    {
+      "cancelled": true,
+      "character": "mambo",
+      "clip": "uma_homewalk03_loop",
+      "fps": 30,
+      "max_plant_slide_px": 0.0000390356376556156,
+      "max_reach_clamp_m": 0.00000000767988250771623,
+      "stance_samples": 55,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 279
+    },
+    {
+      "cancelled": true,
+      "character": "mambo",
+      "clip": "uma_homewalk03_loop",
+      "fps": 60,
+      "max_plant_slide_px": 0.0000434567539286945,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "stance_samples": 121,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 559
+    },
+    {
+      "cancelled": true,
+      "character": "mambo",
+      "clip": "uma_walkunique09_loop",
+      "fps": 30,
+      "max_plant_slide_px": 1.22450720518827,
+      "max_reach_clamp_m": 0.0211199149489403,
+      "stance_samples": 271,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 779
+    },
+    {
+      "cancelled": true,
+      "character": "mambo",
+      "clip": "uma_walkunique09_loop",
+      "fps": 60,
+      "max_plant_slide_px": 0.635678716935217,
+      "max_reach_clamp_m": 0.022582158446312,
+      "stance_samples": 561,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 1559
+    },
+    {
+      "cancelled": true,
+      "character": "hachimi",
+      "clip": "uma_homewalk03_loop",
+      "fps": 30,
+      "max_plant_slide_px": 0.0000382600191528581,
+      "max_reach_clamp_m": 0.00000000767988250771623,
+      "stance_samples": 55,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 279
+    },
+    {
+      "cancelled": true,
+      "character": "hachimi",
+      "clip": "uma_homewalk03_loop",
+      "fps": 60,
+      "max_plant_slide_px": 0.0000715692124231282,
+      "max_reach_clamp_m": 0.00000000767988250771623,
+      "stance_samples": 121,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 559
+    },
+    {
+      "cancelled": true,
+      "character": "hachimi",
+      "clip": "uma_walkunique09_loop",
+      "fps": 30,
+      "max_plant_slide_px": 1.22451963834465,
+      "max_reach_clamp_m": 0.0211193896830082,
+      "stance_samples": 271,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 779
+    },
+    {
+      "cancelled": true,
+      "character": "hachimi",
+      "clip": "uma_walkunique09_loop",
+      "fps": 60,
+      "max_plant_slide_px": 0.635639601387084,
+      "max_reach_clamp_m": 0.0225816126912832,
+      "stance_samples": 561,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 1559
+    },
+    {
+      "cancelled": true,
+      "character": "cheval-grand",
+      "clip": "uma_homewalk03_loop",
+      "fps": 30,
+      "max_plant_slide_px": 0.00017388808259966,
+      "max_reach_clamp_m": 0.0000000307759471240843,
+      "stance_samples": 55,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 279
+    },
+    {
+      "cancelled": true,
+      "character": "cheval-grand",
+      "clip": "uma_homewalk03_loop",
+      "fps": 60,
+      "max_plant_slide_px": 0.000190148330148077,
+      "max_reach_clamp_m": 0.0000000333720322487352,
+      "stance_samples": 121,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 559
+    },
+    {
+      "cancelled": true,
+      "character": "cheval-grand",
+      "clip": "uma_walkunique09_loop",
+      "fps": 30,
+      "max_plant_slide_px": 4.47605615481734,
+      "max_reach_clamp_m": 0.111810818314552,
+      "stance_samples": 271,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 779
+    },
+    {
+      "cancelled": true,
+      "character": "cheval-grand",
+      "clip": "uma_walkunique09_loop",
+      "fps": 60,
+      "max_plant_slide_px": 2.31358855962753,
+      "max_reach_clamp_m": 0.119808368384838,
+      "stance_samples": 561,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 1559
+    },
+    {
+      "cancelled": true,
+      "character": "rice-shower",
+      "clip": "uma_homewalk03_loop",
+      "fps": 30,
+      "max_plant_slide_px": 0.000159944829647429,
+      "max_reach_clamp_m": 0.0000000318288932987798,
+      "stance_samples": 55,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 279
+    },
+    {
+      "cancelled": true,
+      "character": "rice-shower",
+      "clip": "uma_homewalk03_loop",
+      "fps": 60,
+      "max_plant_slide_px": 0.000159939952482091,
+      "max_reach_clamp_m": 0.0000000307759471240843,
+      "stance_samples": 121,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 559
+    },
+    {
+      "cancelled": true,
+      "character": "rice-shower",
+      "clip": "uma_walkunique09_loop",
+      "fps": 30,
+      "max_plant_slide_px": 4.05643600970507,
+      "max_reach_clamp_m": 0.101326920092106,
+      "stance_samples": 271,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 779
+    },
+    {
+      "cancelled": true,
+      "character": "rice-shower",
+      "clip": "uma_walkunique09_loop",
+      "fps": 60,
+      "max_plant_slide_px": 2.0966780371964,
+      "max_reach_clamp_m": 0.108574606478214,
+      "stance_samples": 561,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 1559
+    },
+    {
+      "cancelled": true,
+      "character": "eishin-flash",
+      "clip": "uma_homewalk03_loop",
+      "fps": 30,
+      "max_plant_slide_px": 0.000159983864023161,
+      "max_reach_clamp_m": 0.0000000307759471240843,
+      "stance_samples": 55,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 279
+    },
+    {
+      "cancelled": true,
+      "character": "eishin-flash",
+      "clip": "uma_homewalk03_loop",
+      "fps": 60,
+      "max_plant_slide_px": 0.00016420639781245,
+      "max_reach_clamp_m": 0.0000000333720322487352,
+      "stance_samples": 121,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 559
+    },
+    {
+      "cancelled": true,
+      "character": "eishin-flash",
+      "clip": "uma_walkunique09_loop",
+      "fps": 30,
+      "max_plant_slide_px": 4.29823184385896,
+      "max_reach_clamp_m": 0.0953654795885086,
+      "stance_samples": 271,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 779
+    },
+    {
+      "cancelled": true,
+      "character": "eishin-flash",
+      "clip": "uma_walkunique09_loop",
+      "fps": 60,
+      "max_plant_slide_px": 2.22792006097734,
+      "max_reach_clamp_m": 0.103124633431435,
+      "stance_samples": 561,
+      "swing_quaternion_error": 0.0,
+      "swing_samples": 1559
+    }
+  ],
+  "scope": "Direct DesktopGait on real source rotations; no full MotionPlayer hip translation or OS window rendering"
+}

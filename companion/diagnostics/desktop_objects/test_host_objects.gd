@@ -5,7 +5,7 @@ class Objects:
 	func _sync_windows() -> void: pass
 class FacingObjects:
 	extends Objects
-	func _fit_contact_view() -> bool: return true
+	func _fit_contact_view(_preserve_seat: bool = false) -> bool: return true
 	func _activate_contact_scene(_id: String) -> bool:
 		_contact_id = _id
 		_contact_scene = ContactScene.new()

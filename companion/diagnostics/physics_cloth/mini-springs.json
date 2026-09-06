@@ -1,0 +1,30 @@
+{
+	"failures": [],
+	"rows": [
+		{
+			"character": "mambo",
+			"finite": true,
+			"max_pose_angle_deg_after_modifier_reset": 0.0,
+			"max_tail_step_m": 0.00594962621107697,
+			"min_tail_y": 0.149493515491486,
+			"proxies": 120,
+			"runtime_springs": 20,
+			"scope": "authored_secondary_bones_only",
+			"states": 20,
+			"supported": true
+		},
+		{
+			"character": "hachimi",
+			"finite": true,
+			"max_pose_angle_deg_after_modifier_reset": 0.0,
+			"max_tail_step_m": 0.00844807270914316,
+			"min_tail_y": 0.149637594819069,
+			"proxies": 102,
+			"runtime_springs": 17,
+			"scope": "authored_secondary_bones_only",
+			"states": 17,
+			"supported": true
+		}
+	],
+	"scope": "published authored spring assets, 360 displayed frames per rig, head sway18deg/yaw8degroll; no cloth mesh simulation"
+}

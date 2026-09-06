@@ -1,0 +1,203 @@
+{
+  "scope": "Independent analysis of owner-rendered lit Cheval plus two chairs; no rerender or Windows claim",
+  "rows": [
+    {
+      "crop": 0,
+      "mismatches": 7,
+      "interior_mismatches": 0,
+      "pixels": [
+        {
+          "global_pixel": [
+            313,
+            306
+          ],
+          "max_rgb_error": 0.1725490196078432,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            364,
+            360
+          ],
+          "max_rgb_error": 0.035294117647058865,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            309,
+            389
+          ],
+          "max_rgb_error": 0.11764705882352942,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            278,
+            394
+          ],
+          "max_rgb_error": 0.20784313725490197,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            383,
+            417
+          ],
+          "max_rgb_error": 0.18823529411764706,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            315,
+            499
+          ],
+          "max_rgb_error": 0.2313725490196078,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            317,
+            662
+          ],
+          "max_rgb_error": 0.20392156862745098,
+          "transition_3x3": true
+        }
+      ]
+    },
+    {
+      "crop": 1,
+      "mismatches": 16,
+      "interior_mismatches": 0,
+      "pixels": [
+        {
+          "global_pixel": [
+            340,
+            293
+          ],
+          "max_rgb_error": 0.015686274509803977,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            297,
+            304
+          ],
+          "max_rgb_error": 0.02352941176470591,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            368,
+            389
+          ],
+          "max_rgb_error": 0.10196078431372552,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            278,
+            394
+          ],
+          "max_rgb_error": 0.20784313725490197,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            310,
+            396
+          ],
+          "max_rgb_error": 0.07058823529411762,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            328,
+            396
+          ],
+          "max_rgb_error": 0.10588235294117648,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            375,
+            400
+          ],
+          "max_rgb_error": 0.16470588235294115,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            390,
+            417
+          ],
+          "max_rgb_error": 0.11372549019607842,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            350,
+            444
+          ],
+          "max_rgb_error": 0.03529411764705882,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            385,
+            446
+          ],
+          "max_rgb_error": 0.0980392156862745,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            342,
+            451
+          ],
+          "max_rgb_error": 0.22745098039215686,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            390,
+            454
+          ],
+          "max_rgb_error": 0.22352941176470592,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            355,
+            462
+          ],
+          "max_rgb_error": 0.2274509803921569,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            377,
+            610
+          ],
+          "max_rgb_error": 0.21568627450980393,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            312,
+            659
+          ],
+          "max_rgb_error": 0.0862745098039216,
+          "transition_3x3": true
+        },
+        {
+          "global_pixel": [
+            318,
+            663
+          ],
+          "max_rgb_error": 0.1568627450980392,
+          "transition_3x3": true
+        }
+      ]
+    }
+  ]
+}

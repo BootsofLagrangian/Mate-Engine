@@ -1,0 +1,206 @@
+{
+  "failures": 0,
+  "rows": [
+    {
+      "character": "mambo",
+      "clip": "playful_strut",
+      "fps": 30,
+      "max_plant_slide_px": 0.000108515342844839,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "plant_samples": 56,
+      "swing_quaternion_error": 0.000000178813934326172,
+      "swing_samples": 228
+    },
+    {
+      "character": "mambo",
+      "clip": "playful_strut",
+      "fps": 60,
+      "max_plant_slide_px": 0.000043413618300292,
+      "max_reach_clamp_m": 0.00000000767988250771623,
+      "plant_samples": 120,
+      "swing_quaternion_error": 0.000000238418579101562,
+      "swing_samples": 461
+    },
+    {
+      "character": "mambo",
+      "clip": "mambo_goofy_walk",
+      "fps": 30,
+      "max_plant_slide_px": 0.000145612631285985,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "plant_samples": 270,
+      "swing_quaternion_error": 0.000000178813934326172,
+      "swing_samples": 735
+    },
+    {
+      "character": "mambo",
+      "clip": "mambo_goofy_walk",
+      "fps": 60,
+      "max_plant_slide_px": 0.00706206174072577,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "plant_samples": 562,
+      "swing_quaternion_error": 0.000000238418579101562,
+      "swing_samples": 1480
+    },
+    {
+      "character": "hachimi",
+      "clip": "playful_strut",
+      "fps": 30,
+      "max_plant_slide_px": 0.0000743006296488602,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "plant_samples": 56,
+      "swing_quaternion_error": 0.000000178813934326172,
+      "swing_samples": 228
+    },
+    {
+      "character": "hachimi",
+      "clip": "playful_strut",
+      "fps": 60,
+      "max_plant_slide_px": 0.0000540732003173616,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "plant_samples": 120,
+      "swing_quaternion_error": 0.000000178813934326172,
+      "swing_samples": 461
+    },
+    {
+      "character": "hachimi",
+      "clip": "mambo_goofy_walk",
+      "fps": 30,
+      "max_plant_slide_px": 0.000144181728956028,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "plant_samples": 270,
+      "swing_quaternion_error": 0.000000238418579101562,
+      "swing_samples": 735
+    },
+    {
+      "character": "hachimi",
+      "clip": "mambo_goofy_walk",
+      "fps": 60,
+      "max_plant_slide_px": 0.00706336704752175,
+      "max_reach_clamp_m": 0.00000000833000246558413,
+      "plant_samples": 562,
+      "swing_quaternion_error": 0.000000238418579101562,
+      "swing_samples": 1480
+    },
+    {
+      "character": "cheval-grand",
+      "clip": "playful_strut",
+      "fps": 30,
+      "max_plant_slide_px": 7.36085884273052,
+      "max_reach_clamp_m": 0.0479588955640793,
+      "plant_samples": 50,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 234
+    },
+    {
+      "character": "cheval-grand",
+      "clip": "playful_strut",
+      "fps": 60,
+      "max_plant_slide_px": 3.42365177348256,
+      "max_reach_clamp_m": 0.0337320789694786,
+      "plant_samples": 120,
+      "swing_quaternion_error": 0.000000238418579101562,
+      "swing_samples": 465
+    },
+    {
+      "character": "cheval-grand",
+      "clip": "mambo_goofy_walk",
+      "fps": 30,
+      "max_plant_slide_px": 2.56945844739676,
+      "max_reach_clamp_m": 0.0173039343208075,
+      "plant_samples": 262,
+      "swing_quaternion_error": 0.000000238418579101562,
+      "swing_samples": 743
+    },
+    {
+      "character": "cheval-grand",
+      "clip": "mambo_goofy_walk",
+      "fps": 60,
+      "max_plant_slide_px": 1.29873119294643,
+      "max_reach_clamp_m": 0.0152049986645579,
+      "plant_samples": 561,
+      "swing_quaternion_error": 0.000000298023223876953,
+      "swing_samples": 1482
+    },
+    {
+      "character": "rice-shower",
+      "clip": "playful_strut",
+      "fps": 30,
+      "max_plant_slide_px": 0.00404893235099735,
+      "max_reach_clamp_m": 0.0000000315139523365815,
+      "plant_samples": 56,
+      "swing_quaternion_error": 0.000000119209289550781,
+      "swing_samples": 226
+    },
+    {
+      "character": "rice-shower",
+      "clip": "playful_strut",
+      "fps": 60,
+      "max_plant_slide_px": 0.000160252005798611,
+      "max_reach_clamp_m": 0.0000000333200098623365,
+      "plant_samples": 119,
+      "swing_quaternion_error": 0.000000298023223876953,
+      "swing_samples": 458
+    },
+    {
+      "character": "rice-shower",
+      "clip": "mambo_goofy_walk",
+      "fps": 30,
+      "max_plant_slide_px": 2.13356832973659,
+      "max_reach_clamp_m": 0.0153146656230092,
+      "plant_samples": 274,
+      "swing_quaternion_error": 0.000000298023223876953,
+      "swing_samples": 728
+    },
+    {
+      "character": "rice-shower",
+      "clip": "mambo_goofy_walk",
+      "fps": 60,
+      "max_plant_slide_px": 1.37131456285715,
+      "max_reach_clamp_m": 0.0138433277606964,
+      "plant_samples": 560,
+      "swing_quaternion_error": 0.000000298023223876953,
+      "swing_samples": 1469
+    },
+    {
+      "character": "eishin-flash",
+      "clip": "playful_strut",
+      "fps": 30,
+      "max_plant_slide_px": 7.25437738001347,
+      "max_reach_clamp_m": 0.0417540371417999,
+      "plant_samples": 54,
+      "swing_quaternion_error": 0.000000178813934326172,
+      "swing_samples": 231
+    },
+    {
+      "character": "eishin-flash",
+      "clip": "playful_strut",
+      "fps": 60,
+      "max_plant_slide_px": 3.20092281326652,
+      "max_reach_clamp_m": 0.017316997051239,
+      "plant_samples": 112,
+      "swing_quaternion_error": 0.000000178813934326172,
+      "swing_samples": 473
+    },
+    {
+      "character": "eishin-flash",
+      "clip": "mambo_goofy_walk",
+      "fps": 30,
+      "max_plant_slide_px": 2.19898922368884,
+      "max_reach_clamp_m": 0.0181724447757006,
+      "plant_samples": 266,
+      "swing_quaternion_error": 0.000000238418579101562,
+      "swing_samples": 738
+    },
+    {
+      "character": "eishin-flash",
+      "clip": "mambo_goofy_walk",
+      "fps": 60,
+      "max_plant_slide_px": 1.43731841817498,
+      "max_reach_clamp_m": 0.0147345792502165,
+      "plant_samples": 555,
+      "swing_quaternion_error": 0.000000178813934326172,
+      "swing_samples": 1482
+    }
+  ],
+  "scope": "Production MotionPlayer with production installed source metadata; all five real rigs, 30/60fps, five periods each; mini rigs acceptance, three larger rigs disclosed transfer measurements"
+}

@@ -77,6 +77,10 @@ def build():
     original = preset_path.read_text()
     def source_snapshot():
         sources = list((NATIVE / 'scripts').glob('*.gd')) + [NATIVE / 'main.tscn', NATIVE / 'project.godot']
+        # Record installed plugin code as well as the patch recipes: exports use
+        # these actual bytes, including the off-axis MToon outline correction.
+        sources += [p for p in (NATIVE / 'addons').rglob('*')
+                    if p.is_file() and p.suffix in {'.gd', '.gdshader', '.gdshaderinc'}]
         return {str(p.relative_to(NATIVE)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(sources)}
     sources_before = source_snapshot()
     temporary = original.replace('custom_template/release=""', 'custom_template/release=' + json.dumps(str(template)))

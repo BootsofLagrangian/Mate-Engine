@@ -1,0 +1,8 @@
+{
+  "companion/native/scripts/motion_player.gd": "54a0eafa6e3f49f0bf3fbe560c5076d95e88a6b5000a0522d9d40dcc9af59eee",
+  "companion/native/scripts/desktop_gait.gd": "5f96d5edb9bd6fca974ed42d7ec6b8c9f7eb3b0232638f1e3536b98164876414",
+  "companion/native/scripts/upper_body_overlay.gd": "f30521e6b5cb0d0d0cc6994f09a70f916d6d8d7baeccdad5c280676964447795",
+  "companion/native/tools/probe_upper_body_overlay.gd": "6236d280dfd0ef2c3e939dd729576d88930593d8a75f10ff6703cc64d184bdd9",
+  "companion/native/tools/probe_upper_body_review.gd": "0d29c67c978dcab2454a6731caf2ca8747b18577570276eb73950064ee57574c",
+  "companion/native/tools/probe_upper_body_contacts.gd": "373aaae35c5d279b4bdbebe1d263a085034a48a94d9dd3ffa92b5e08a8faacb7"
+}

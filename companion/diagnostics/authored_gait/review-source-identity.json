@@ -1,0 +1,21 @@
+{
+  "native/scripts/desktop_gait.gd": {
+    "sha256": "7fd5d787a4cb3092346ddf62377f4683442eb4efd139dc3709f87c11f2d3cbb6"
+  },
+  "native/scripts/living_behavior.gd": {
+    "sha256": "ae1502dd0e501e1dc03ad200f6e7a9549f558c08e9fe5d2bc99e79045a6976b7"
+  },
+  "native/scripts/behavior_director.gd": {
+    "sha256": "644da4b14b7d70fd0ab0a029c41c831452bb7849df9f601ef760ebd1a5697f5b"
+  },
+  "diagnostics/authored_gait/review_lifecycle.gd": {
+    "sha256": "a64de3ed00c3d9b220ad73b72b53b2dea97eb164e5215fbd752a97330737b1f9"
+  },
+  "diagnostics/authored_gait/review_routing.gd": {
+    "sha256": "473dba403f969cc1cce3b9ff8bb19d1bf69f0d661aa9fcd7c8495dc8b7ccbe41"
+  },
+  "native/scripts/main.gd::_on_locomotion": {
+    "sha256": "5682d30852b8bbad99210fb5492bf911d316ef42b0bd3f3ce18b0bbc0992bcc9",
+    "scope": "Exact function through following comments before next function. Other concurrent main changes excluded."
+  }
+}

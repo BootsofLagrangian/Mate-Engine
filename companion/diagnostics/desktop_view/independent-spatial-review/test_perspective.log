@@ -1,0 +1,3 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+{"checks":454,"failures":[],"max_crop_error_px":0.00478805135935545,"scope":"Actual Godot cameras, 3D projection geometry and off-axis crop; no Windows rendering"}

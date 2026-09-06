@@ -1,0 +1,135 @@
+{
+  "checks": [
+    {
+      "label": "actual backend avatar and motions ready",
+      "ok": true
+    },
+    {
+      "label": "startup pet mode ignores stale open-panel preference",
+      "ok": true
+    },
+    {
+      "label": "root transparent borderless non-minimizable non-maximizable",
+      "ok": true
+    },
+    {
+      "label": "settings use independent native viewport",
+      "ok": true
+    },
+    {
+      "label": "settings window is visible native window",
+      "ok": true
+    },
+    {
+      "label": "settings do not overlap rendered character",
+      "ok": true
+    },
+    {
+      "label": "settings close keeps pet alive",
+      "ok": true
+    },
+    {
+      "label": "view 0 exact projected foot pivot",
+      "ok": true
+    },
+    {
+      "label": "view 0 finite visible geometry",
+      "ok": true
+    },
+    {
+      "label": "view 0 viewport alpha corners clear",
+      "ok": true
+    },
+    {
+      "label": "view 1 exact projected foot pivot",
+      "ok": true
+    },
+    {
+      "label": "view 1 finite visible geometry",
+      "ok": true
+    },
+    {
+      "label": "view 1 viewport alpha corners clear",
+      "ok": true
+    },
+    {
+      "label": "view 2 exact projected foot pivot",
+      "ok": true
+    },
+    {
+      "label": "view 2 finite visible geometry",
+      "ok": true
+    },
+    {
+      "label": "view 2 viewport alpha corners clear",
+      "ok": true
+    },
+    {
+      "label": "view 3 exact projected foot pivot",
+      "ok": true
+    },
+    {
+      "label": "view 3 finite visible geometry",
+      "ok": true
+    },
+    {
+      "label": "view 3 viewport alpha corners clear",
+      "ok": true
+    }
+  ],
+  "evidence": {
+    "panel": {
+      "panel": "[P: (1663, 672), S: (380, 720)]",
+      "pet": "[P: (2056, 1060), S: (195, 331)]",
+      "root_size": "(680, 760)"
+    },
+    "views": [
+      {
+        "basis": "[X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0)]",
+        "bounds": "[P: (416.7596, 388.8), S: (195.3251, 331.2)]",
+        "foot_error_px": 0.0,
+        "settings": {
+          "view_height": 0.0,
+          "view_pitch_deg": 0.0,
+          "view_yaw_deg": 0.0,
+          "view_zoom": 1.0
+        }
+      },
+      {
+        "basis": "[X: (0.707107, 0.0, -0.707107), Y: (-0.5, 0.707107, -0.5), Z: (0.5, 0.707107, 0.5)]",
+        "bounds": "[P: (425.5605, 322.4676), S: (218.6614, 437.637)]",
+        "foot_error_px": 0.0,
+        "settings": {
+          "view_height": 0.0,
+          "view_pitch_deg": 45.0,
+          "view_yaw_deg": 45.0,
+          "view_zoom": 1.0
+        }
+      },
+      {
+        "basis": "[X: (-0.0, 0.0, -1.0), Y: (0.0, 1.0, 0.0), Z: (1.0, 0.0, -0.0)]",
+        "bounds": "[P: (486.5441, 341.6166), S: (113.9089, 331.2)]",
+        "foot_error_px": 0.0,
+        "settings": {
+          "view_height": 0.0,
+          "view_pitch_deg": 0.0,
+          "view_yaw_deg": 90.0,
+          "view_zoom": 1.0
+        }
+      },
+      {
+        "basis": "[X: (0.707107, 0.0, 0.707107), Y: (-0.31479, 0.895441, 0.31479), Z: (-0.633172, -0.44518, 0.633172)]",
+        "bounds": "[P: (325.7804, 250.4165), S: (262.3937, 509.5847)]",
+        "foot_error_px": 6.103515625e-05,
+        "settings": {
+          "view_height": 0.25,
+          "view_pitch_deg": -30.0,
+          "view_yaw_deg": -45.0,
+          "view_zoom": 1.2
+        }
+      }
+    ]
+  },
+  "failures": 0,
+  "renderer": "NVIDIA GeForce RTX 4090"
+}

@@ -9,7 +9,14 @@ const DEFAULTS := {
 	"character": "",
 	"window_x": -1,
 	"window_y": -1,
-	"panel_open": true,
+	"panel_open": false,
+	"view_yaw_deg": 0.0,
+	"view_pitch_deg": 0.0,
+	"view_height": 0.0,
+	"view_zoom": 1.0,
+	"view_projection": "perspective",
+	"view_fov_deg": 45.0,
+	"view_distance_m": 3.6,
 	"vad_enabled": false,
 	"vad_threshold": 0.035,
 	"mic_target_rate": 0,
@@ -48,7 +55,7 @@ const DEFAULTS := {
 	"interest_points": {"points": [], "next_id": 1},
 	# Desktop living-space objects (experimental; owned/persisted by the objects host, not the panel):
 	# {"version": 1, "next_id": n, "objects": [{id,label,type,x,y,scale,visible}...]}. Empty by
-	# default; only an explicit "추가" in the 공간 tab creates one.
+	# default; advertised furniture skills can create one when the LM needs it.
 	"desktop_objects": {"version": 1, "next_id": 1, "objects": []},
 }
 

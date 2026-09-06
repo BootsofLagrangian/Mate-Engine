@@ -1,0 +1,223 @@
+{
+  "cells": [
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.578783880325387,
+      "motion": "mambo_sway",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 1.02945614354467,
+      "motion": "hachimi_peek",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.936281691095113,
+      "motion": "playful_shrug",
+      "scope": "asset"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "head_accel_deg_s2": 355.599403381348,
+      "head_speed_deg_s": 75.1270751953125,
+      "scope": "walking baseline"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "head_accel_deg_s2": 737.528171539307,
+      "head_accel_peak_frame": 39,
+      "head_difference_peak": {
+        "baseline_world_rest_relative_euler_yxz_deg": [
+          -0.154924318194389,
+          0.514270305633545,
+          -0.545885384082794
+        ],
+        "frame": 69,
+        "time_s": 2.3,
+        "world_rest_relative_euler_yxz_deg": [
+          -8.85911273956299,
+          22.1430473327637,
+          5.56222343444824
+        ]
+      },
+      "head_speed_deg_s": 117.831649780273,
+      "max_head_vs_baseline_deg": 24.4997929301874,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.222514599561691,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "head_accel_deg_s2": 810.871067047119,
+      "head_accel_peak_frame": 77,
+      "head_difference_peak": {
+        "baseline_world_rest_relative_euler_yxz_deg": [
+          0.027479974552989,
+          0.00176658772397786,
+          0.431278914213181
+        ],
+        "frame": 89,
+        "time_s": 2.96666666666667,
+        "world_rest_relative_euler_yxz_deg": [
+          1.28987097740173,
+          30.4716930389404,
+          -6.12390184402466
+        ]
+      },
+      "head_speed_deg_s": 118.164253234863,
+      "max_head_vs_baseline_deg": 31.2492424340214,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.217294305562973,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 30,
+      "head_accel_deg_s2": 388.243188858032,
+      "head_accel_peak_frame": 101,
+      "head_difference_peak": {
+        "baseline_world_rest_relative_euler_yxz_deg": [
+          1.16091227531433,
+          -0.679114639759064,
+          -1.09974718093872
+        ],
+        "frame": 56,
+        "time_s": 1.86666666666667,
+        "world_rest_relative_euler_yxz_deg": [
+          -15.3337745666504,
+          4.49912548065186,
+          -1.36065399646759
+        ]
+      },
+      "head_speed_deg_s": 86.7078475952148,
+      "max_head_vs_baseline_deg": 17.2752713261804,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.266167253255844,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "head_accel_deg_s2": 681.620635986328,
+      "head_speed_deg_s": 76.7444686889648,
+      "scope": "walking baseline"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "head_accel_deg_s2": 1052.89054870605,
+      "head_accel_peak_frame": 78,
+      "head_difference_peak": {
+        "baseline_world_rest_relative_euler_yxz_deg": [
+          -0.079945370554924,
+          0.097223773598671,
+          0.28027206659317
+        ],
+        "frame": 136,
+        "time_s": 2.26666666666667,
+        "world_rest_relative_euler_yxz_deg": [
+          -8.85518074035645,
+          22.2614326477051,
+          5.21797037124634
+        ]
+      },
+      "head_speed_deg_s": 117.580093383789,
+      "max_head_vs_baseline_deg": 24.6656026024786,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.222514599561691,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "head_accel_deg_s2": 777.584209442139,
+      "head_accel_peak_frame": 78,
+      "head_difference_peak": {
+        "baseline_world_rest_relative_euler_yxz_deg": [
+          -0.0127789815887809,
+          0.0660932138562202,
+          0.33146733045578
+        ],
+        "frame": 179,
+        "time_s": 2.98333333333333,
+        "world_rest_relative_euler_yxz_deg": [
+          1.26178658008575,
+          30.4751491546631,
+          -6.02424812316895
+        ]
+      },
+      "head_speed_deg_s": 105.765075683594,
+      "max_head_vs_baseline_deg": 31.1440302000465,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.217294290661812,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "fps": 60,
+      "head_accel_deg_s2": 726.689071655273,
+      "head_accel_peak_frame": 204,
+      "head_difference_peak": {
+        "baseline_world_rest_relative_euler_yxz_deg": [
+          1.14749646186829,
+          -0.710712373256683,
+          -0.862684607505798
+        ],
+        "frame": 114,
+        "time_s": 1.9,
+        "world_rest_relative_euler_yxz_deg": [
+          -15.2706050872803,
+          4.7247052192688,
+          -1.50055909156799
+        ]
+      },
+      "head_speed_deg_s": 86.7269821166992,
+      "max_head_vs_baseline_deg": 17.2755001375176,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.266179919242859,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 4.22652192355599e-07,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 3.60968897439307e-07,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "cheval-grand",
+      "max_foot_error_m": 3.60488002115744e-07,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    }
+  ],
+  "characters": [
+    "cheval-grand"
+  ],
+  "checks": 132,
+  "failures": [],
+  "scope": "First candidate Cheval-only matched control comparison before neutral torso/head revision. Final world-rest-relative Euler uses Godot default YXZ decomposition; component differences are not additive rotation attribution.",
+  "probe_sha256": "8213445e1250defa7008bf2ddd69bb09c1de71b22d3bcc2f003ba237b8ce807b",
+  "candidate_motion_hashes": {
+    "companion/assets/motions/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "companion/assets/motions/mambo_sway.vrma": "157bc0436f19b02a46a21f2190281b8f03e2c098fe3b5661546acdafe7c7d409",
+    "companion/assets/motions/hachimi_peek.vrma": "6bd9ec4df22c453a76d403f240f5421130d029103156ddf6dde85dd0cbd38edf",
+    "companion/assets/motions/playful_shrug.vrma": "a31a8d428d1c16117c6f74b783d1940cf79cedf22afd27f6c10b886a00ee15c4"
+  }
+}

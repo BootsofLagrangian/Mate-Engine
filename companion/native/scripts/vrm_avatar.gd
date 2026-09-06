@@ -35,6 +35,7 @@ var _sole_points_rest: Array[Vector3] = []
 var sole_calibration: Dictionary = {}
 var seated_geometry: Dictionary = {}
 var seated_floor := SeatedFloorConstraint.new()
+var spring_contacts := preload("res://scripts/vrm_spring_contacts.gd").new()
 var _secondary_pose_cache: Dictionary = {}
 var _secondary_pose_samples := 0
 var _seated_canonical_rotations: Dictionary = {}
@@ -66,6 +67,7 @@ static func load_vrm(path: String) -> Node3D:
 
 
 func clear_model() -> void:
+	spring_contacts.clear()
 	seated_floor.clear()
 	if model:
 		model.queue_free()
@@ -118,10 +120,39 @@ func set_model(scene: Node3D) -> void:
 	_resolve_expressions()
 	_calibrate_soles()
 	apply_pose({})
+	spring_contacts.configure(self)
+	rebase_secondary_physics()
 	if skeleton:
 		for child in skeleton.get_children(true):
 			if child.name == "VRM_internal_skeleton_modifier":
 				child.modification_processed.connect(_capture_secondary_pose.bind(skeleton))
+
+
+## Explicit history reset after initial retarget/placement or a discontinuous
+## coordinate-frame handoff. Never call on continuous motion: inertia must remain.
+## Existing spring resources, states, colliders and lengths are left intact.
+func rebase_secondary_physics() -> int:
+	if not has_model(): return 0
+	var secondary: Node = spring_contacts.find_secondary(model)
+	if secondary == null: return 0
+	secondary.update_centers(skeleton.global_transform)
+	var count := 0
+	for i in secondary.spring_bones_internal.size():
+		var state: Variant = secondary.spring_bones_internal[i]
+		var xf: Transform3D = secondary.center_transforms[secondary.springs_centers[i]]
+		for joint in state.verlets:
+			var pose := skeleton.get_bone_global_pose(joint.bone_idx)
+			var origin: Vector3 = xf * pose.origin
+			var direction: Vector3 = xf.basis * pose.basis * joint.bone_axis
+			if not origin.is_finite() or not direction.is_finite() or direction.length_squared() < 0.00000001: continue
+			# Match the addon's forward-center update and fixed-length convention.
+			# Import initialization precedes final retargeted poses and can instead
+			# seed an inverse-center tail, causing a startup snap at nonzero position.
+			var tail: Vector3 = origin + direction.normalized() * joint.length
+			joint.current_tail = tail
+			joint.prev_tail = tail
+			count += 1
+	return count
 
 
 func has_model() -> bool:

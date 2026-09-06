@@ -1,0 +1,295 @@
+{
+	"cells": [
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1559.722, 1111.882), S: (214.6063, 280.0972)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.01347)",
+				"distance_m": 0.0134704699739814,
+				"ok": true,
+				"point": "(0.804978, -1.330282, -0.005369)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "cheval-grand",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1580.823, 1136.623), S: (237.5737, 265.4274)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.110341)",
+				"distance_m": 0.110341034829617,
+				"ok": true,
+				"point": "(0.804978, -1.148007, 0.561816)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "cheval-grand",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1560.587, 1113.198), S: (215.435, 281.0875)]",
+				"changed": true,
+				"correction_m": "(-0.001339, 0.0, -0.001339)",
+				"distance_m": 0.0018937581917271,
+				"ok": true,
+				"point": "(0.573595, -1.330282, -0.564816)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "cheval-grand",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1581.456, 1138.629), S: (238.2165, 266.3077)]",
+				"changed": true,
+				"correction_m": "(-0.071896, 0.0, -0.071896)",
+				"distance_m": 0.101675964891911,
+				"ok": true,
+				"point": "(0.972597, -1.148007, -0.165815)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "cheval-grand",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1559.236, 1111.144), S: (214.1418, 279.5419)]",
+				"changed": true,
+				"correction_m": "(-0.019997, 0.0, 0.0)",
+				"distance_m": 0.0199973713606596,
+				"ok": true,
+				"point": "(-0.011896, -1.330282, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "cheval-grand",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1587.327, 1157.208), S: (244.2061, 274.537)]",
+				"changed": true,
+				"correction_m": "(-0.023065, 0.0, 0.0)",
+				"distance_m": 0.0230654887855053,
+				"ok": true,
+				"point": "(0.649092, -1.148007, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "cheval-grand",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1562.679, 1111.883), S: (188.7157, 276.5702)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.099967)",
+				"distance_m": 0.0999667569994926,
+				"ok": true,
+				"point": "(0.804978, -1.330282, -0.091865)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "rice-shower",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1586.283, 1147.854), S: (206.0813, 248.8551)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.159443)",
+				"distance_m": 0.159443244338036,
+				"ok": true,
+				"point": "(0.804978, -1.148007, 0.512714)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "rice-shower",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1563.693, 1113.398), S: (189.5215, 277.8263)]",
+				"changed": true,
+				"correction_m": "(-0.061009, 0.0, -0.061009)",
+				"distance_m": 0.0862801074981689,
+				"ok": true,
+				"point": "(0.513925, -1.330282, -0.624486)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "rice-shower",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1587.077, 1150.368), S: (206.769, 249.6952)]",
+				"changed": true,
+				"correction_m": "(-0.10504, 0.0, -0.10504)",
+				"distance_m": 0.148548498749733,
+				"ok": true,
+				"point": "(0.939453, -1.148007, -0.198959)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "rice-shower",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1562.481, 1111.588), S: (188.5586, 276.3255)]",
+				"changed": true,
+				"correction_m": "(-0.102648, 0.0, 0.0)",
+				"distance_m": 0.102647863328457,
+				"ok": true,
+				"point": "(-0.094546, -1.330282, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "rice-shower",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1587.01, 1150.157), S: (206.7112, 249.6247)]",
+				"changed": true,
+				"correction_m": "(-0.149461, 0.0, 0.0)",
+				"distance_m": 0.149461209774017,
+				"ok": true,
+				"point": "(0.522696, -1.148007, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "rice-shower",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1559.721, 1113.188), S: (214.8062, 278.7101)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.01263)",
+				"distance_m": 0.0126295024529099,
+				"ok": true,
+				"point": "(0.804978, -1.330282, -0.004528)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "eishin-flash",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1584.24, 1136.59), S: (234.1698, 268.0789)]",
+				"changed": true,
+				"correction_m": "(0.0, 0.0, -0.109676)",
+				"distance_m": 0.109675839543343,
+				"ok": true,
+				"point": "(0.804978, -1.148007, 0.562481)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "eishin-flash",
+			"yaw": 0.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1560.536, 1114.431), S: (215.5871, 279.6429)]",
+				"changed": true,
+				"correction_m": "(-0.001224, 0.0, -0.001224)",
+				"distance_m": 0.00173154892399907,
+				"ok": true,
+				"point": "(0.57371, -1.330282, -0.564701)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "eishin-flash",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1584.666, 1137.938), S: (234.6006, 268.6369)]",
+				"changed": true,
+				"correction_m": "(-0.073436, 0.0, -0.073436)",
+				"distance_m": 0.103854134678841,
+				"ok": true,
+				"point": "(0.971057, -1.148007, -0.167355)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "eishin-flash",
+			"yaw": 45.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1558.258, 1110.959), S: (213.4073, 277.0376)]",
+				"changed": true,
+				"correction_m": "(-0.032353, 0.0, 0.0)",
+				"distance_m": 0.0323534049093723,
+				"ok": true,
+				"point": "(-0.024252, -1.330282, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 0.0,
+			"rig": "eishin-flash",
+			"yaw": 90.0
+		},
+		{
+			"max_y_overrun_px": 0.0,
+			"normalization": {
+				"bounds": "[P: (1582.224, 1130.213), S: (232.1357, 265.4465)]",
+				"changed": true,
+				"correction_m": "(-0.13745, 0.0, 0.0)",
+				"distance_m": 0.137450248003006,
+				"ok": true,
+				"point": "(0.534707, -1.148007, -0.804978)",
+				"reason": "normalized"
+			},
+			"ok": true,
+			"pitch": 30.0,
+			"rig": "eishin-flash",
+			"yaw": 90.0
+		}
+	],
+	"failures": [],
+	"scope": "18 exact swept-hull ground-placement cells,181 actual hull headings each; fixed worldY, safe idempotence, bound rejection. Geometry helper only; production admission is separate.",
+	"source_sha256": "282a56fcf5355e6e8148a30c8903ba82967ca52216eb01a58e9c9ee968107a23"
+}

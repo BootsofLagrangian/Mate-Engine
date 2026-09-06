@@ -1,0 +1,489 @@
+{
+  "camera_basis": "[X: (0.707107, 0.0, -0.707107), Y: (-0.353553, 0.866025, -0.353553), Z: (0.612372, 0.5, 0.612372)]",
+  "character_identity": {
+    "actual": "cheval-grand",
+    "model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+    "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "requested": "cheval-grand"
+  },
+  "checks": [
+    {
+      "label": "native backend, avatar and required motion assets ready",
+      "ok": true
+    },
+    {
+      "label": "requested character and actual loaded VRM agree",
+      "ok": true
+    },
+    {
+      "label": "actual monitor floor support ready",
+      "ok": true
+    },
+    {
+      "label": "first rightward user move accepted",
+      "ok": true
+    },
+    {
+      "label": "idle to turn to actual rightward walk",
+      "ok": true
+    },
+    {
+      "label": "replacement is issued during moving gait",
+      "ok": true
+    },
+    {
+      "label": "walking direction replacement accepted",
+      "ok": true
+    },
+    {
+      "label": "replacement transitions to turning",
+      "ok": true
+    },
+    {
+      "label": "replacement has no redundant multi-second settle pause",
+      "ok": true
+    },
+    {
+      "label": "reversed turn and walk reach left point",
+      "ok": true
+    },
+    {
+      "label": "superseded trip has one explicit outcome",
+      "ok": true
+    },
+    {
+      "label": "rendered foot actually reaches left point",
+      "ok": true
+    },
+    {
+      "label": "next rightward trip accepted",
+      "ok": true
+    },
+    {
+      "label": "repeated turn and walk reach right point",
+      "ok": true
+    },
+    {
+      "label": "rendered foot actually reaches right point",
+      "ok": true
+    },
+    {
+      "label": "trip for interruption accepted",
+      "ok": true
+    },
+    {
+      "label": "interruption begins during actual walk",
+      "ok": true
+    },
+    {
+      "label": "native action dispatcher layers upper body over the owned walk",
+      "ok": false
+    },
+    {
+      "label": "upper-body action preserves actual window travel",
+      "ok": false
+    },
+    {
+      "label": "stop is issued during moving gait",
+      "ok": false
+    },
+    {
+      "label": "user stop freezes the native window while the body settles",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->nod starts through the actual panel button",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->nod both live timelines advance before outgoing completion",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->nod reaches incoming endpoint with preview ownership and releases it",
+      "ok": true
+    },
+    {
+      "label": "pair:nod->wave starts through the actual panel button",
+      "ok": true
+    },
+    {
+      "label": "pair:nod->wave both live timelines advance before outgoing completion",
+      "ok": true
+    },
+    {
+      "label": "pair:nod->wave reaches incoming endpoint with preview ownership and releases it",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->wave starts through the actual panel button",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->wave both live timelines advance before outgoing completion",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->wave reaches incoming endpoint with preview ownership and releases it",
+      "ok": true
+    },
+    {
+      "label": "continuous own-viewport captures saved",
+      "ok": true
+    }
+  ],
+  "failures": 3,
+  "outcomes": [
+    {
+      "id": "chain:first",
+      "outcome": "superseded",
+      "time": 12.0567723333334
+    },
+    {
+      "id": "chain:reverse",
+      "outcome": "arrived",
+      "time": 20.2531293333334
+    },
+    {
+      "id": "chain:repeat",
+      "outcome": "arrived",
+      "time": 29.5437036666665
+    },
+    {
+      "id": "chain:stop",
+      "outcome": "interrupted",
+      "time": 31.6333333333331
+    }
+  ],
+  "pairs": [
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "wave",
+      "incoming_duration": 3.0,
+      "maximum_incoming_progress": 2.9929659999999,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "nod"
+    },
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "nod",
+      "incoming_duration": 4.0,
+      "maximum_incoming_progress": 3.98644133333322,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "wave"
+    },
+    {
+      "active_preview_owned": true,
+      "advancing": true,
+      "finished": true,
+      "first": "wave",
+      "incoming_duration": 4.0,
+      "maximum_incoming_progress": 3.99729399999988,
+      "natural_finish": true,
+      "promoted": true,
+      "second": "wave"
+    }
+  ],
+  "renderer": "NVIDIA GeForce RTX 4090",
+  "scope": "Normal production native scene, actual Windows placement/movement, user intentions, moving reversal, repeated turns/walks, user stop and three overlapping gesture pairs through the panel button; own viewport only; capture overhead included.",
+  "stop_drift_px": 0.0,
+  "transitions": [
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 878,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "loading",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "settle",
+      "voice": false,
+      "window": "(1266, 84)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 3403,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "loading",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "approach",
+      "voice": false,
+      "window": "(1266, 84)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 8003,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "loading",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "settle",
+      "voice": false,
+      "window": "(1069, 252)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 10503,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "loading",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "inspect",
+      "voice": false,
+      "window": "(960, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 10518,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "idle_to_right",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "anticipate",
+      "voice": false,
+      "window": "(960, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 11650,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "idle_to_right",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "walk",
+      "voice": false,
+      "window": "(960, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 14285,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "moving_reversal",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "rest",
+      "voice": false,
+      "window": "(1092, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 14293,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "moving_reversal",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "anticipate",
+      "voice": false,
+      "window": "(1092, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 15961,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "moving_reversal",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "walk",
+      "voice": false,
+      "window": "(1092, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 21765,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "moving_reversal",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "arrive",
+      "voice": false,
+      "window": "(720, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 22139,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "left_to_right",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "anticipate",
+      "voice": false,
+      "window": "(720, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 23804,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "left_to_right",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "walk",
+      "voice": false,
+      "window": "(720, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 31056,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "left_to_right",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "arrive",
+      "voice": false,
+      "window": "(1200, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 31474,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "stop_and_settle",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "anticipate",
+      "voice": false,
+      "window": "(1200, 157)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 33139,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "stop_and_settle",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "walk",
+      "voice": false,
+      "window": "(1200, 157)"
+    },
+    {
+      "blocked": true,
+      "foreground": false,
+      "gesture": "wave",
+      "listening": false,
+      "ms": 33155,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "stop_and_settle",
+      "pointer": "(1052, 1022)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "paused",
+      "voice": false,
+      "window": "(1200, 157)"
+    }
+  ],
+  "view": {
+    "view_distance_m": 3.6,
+    "view_fov_deg": 45.0,
+    "view_height": 0.0,
+    "view_pitch_deg": 30.0,
+    "view_projection": "orthographic",
+    "view_yaw_deg": 45.0,
+    "view_zoom": 1.0
+  },
+  "launch": {
+    "command": [
+      "/home/hard2251/workspace/mate-engine/Mate-Engine/companion/native/build/MateCompanion.exe",
+      "--rendering-driver",
+      "d3d12",
+      "--rendering-method",
+      "forward_plus",
+      "--script",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\native\\tools\\probe_windows_motion_chain.gd",
+      "--",
+      "--output",
+      "\\\\wsl.localhost\\Ubuntu-24.04\\home\\hard2251\\workspace\\mate-engine\\Mate-Engine\\companion\\logs\\windows-motion-view45-current",
+      "--character",
+      "cheval-grand",
+      "--view-yaw",
+      "45",
+      "--view-pitch",
+      "30"
+    ],
+    "started": 1788714341.6647027,
+    "exe_sha256": "b1c2b01a2d4793099402a7c4adf734e2ff4f5a99cc057b5d6ec8a5542ae2825a",
+    "script_sha256": "509beedb334085440769cb4709fe574d8273edca92e106b2c96e9358c722caa6",
+    "exit_code": 1,
+    "finished": 1788714402.8142297
+  },
+  "status": "Partial Windows result; three live walking/upper-body interruption failures remain under investigation. Panel sequence handoff cases pass."
+}

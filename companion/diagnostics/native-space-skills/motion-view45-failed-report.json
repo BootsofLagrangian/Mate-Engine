@@ -1,0 +1,217 @@
+{
+  "camera_basis": "[X: (0.707107, 0.0, -0.707107), Y: (-0.5, 0.707107, -0.5), Z: (0.5, 0.707107, 0.5)]",
+  "character_identity": {
+    "actual": "cheval-grand",
+    "model_path": "C:/Users/headd/AppData/Roaming/Godot/app_userdata/Mate Companion Native/avatars/cheval-grand.vrm",
+    "model_sha256": "61e40e14eec93f9bd8124b2a9d3a71aba0e580ee9b2ef4a55dbb6e4ce5d8ef8a",
+    "requested": "cheval-grand"
+  },
+  "checks": [
+    {
+      "label": "native backend, avatar and required motion assets ready",
+      "ok": true
+    },
+    {
+      "label": "requested character and actual loaded VRM agree",
+      "ok": true
+    },
+    {
+      "label": "actual monitor floor support ready",
+      "ok": false
+    },
+    {
+      "label": "first rightward user move accepted",
+      "ok": true
+    },
+    {
+      "label": "idle to turn to actual rightward walk",
+      "ok": false
+    },
+    {
+      "label": "replacement is issued during moving gait",
+      "ok": false
+    },
+    {
+      "label": "walking direction replacement accepted",
+      "ok": true
+    },
+    {
+      "label": "replacement transitions to turning",
+      "ok": false
+    },
+    {
+      "label": "replacement has no redundant multi-second settle pause",
+      "ok": false
+    },
+    {
+      "label": "reversed turn and walk reach left point",
+      "ok": false
+    },
+    {
+      "label": "superseded trip has one explicit outcome",
+      "ok": true
+    },
+    {
+      "label": "rendered foot actually reaches left point",
+      "ok": false
+    },
+    {
+      "label": "next rightward trip accepted",
+      "ok": true
+    },
+    {
+      "label": "repeated turn and walk reach right point",
+      "ok": false
+    },
+    {
+      "label": "rendered foot actually reaches right point",
+      "ok": false
+    },
+    {
+      "label": "trip for interruption accepted",
+      "ok": true
+    },
+    {
+      "label": "interruption begins during actual walk",
+      "ok": false
+    },
+    {
+      "label": "native action dispatcher layers upper body over the owned walk",
+      "ok": false
+    },
+    {
+      "label": "upper-body action preserves actual window travel",
+      "ok": false
+    },
+    {
+      "label": "stop is issued during moving gait",
+      "ok": false
+    },
+    {
+      "label": "user stop freezes the native window while the body settles",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->nod starts through the actual panel button",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->nod both live timelines advance before outgoing completion",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->nod reaches incoming endpoint with preview ownership and releases it",
+      "ok": true
+    },
+    {
+      "label": "pair:nod->wave starts through the actual panel button",
+      "ok": true
+    },
+    {
+      "label": "pair:nod->wave both live timelines advance before outgoing completion",
+      "ok": true
+    },
+    {
+      "label": "pair:nod->wave reaches incoming endpoint with preview ownership and releases it",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->wave starts through the actual panel button",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->wave both live timelines advance before outgoing completion",
+      "ok": true
+    },
+    {
+      "label": "pair:wave->wave reaches incoming endpoint with preview ownership and releases it",
+      "ok": true
+    },
+    {
+      "label": "continuous own-viewport captures saved",
+      "ok": true
+    }
+  ],
+  "failures": 13,
+  "outcomes": [
+    {
+      "id": "chain:first",
+      "outcome": "superseded",
+      "time": 32.4846493333341
+    },
+    {
+      "id": "chain:reverse",
+      "outcome": "superseded",
+      "time": 59.5177093333332
+    },
+    {
+      "id": "chain:repeat",
+      "outcome": "superseded",
+      "time": 81.5174893333325
+    },
+    {
+      "id": "chain:stop",
+      "outcome": "user_stop",
+      "time": 95.0173099999988
+    }
+  ],
+  "renderer": "NVIDIA GeForce RTX 4090",
+  "scope": "Normal production native scene, actual Windows placement/movement, user intentions, moving reversal, repeated turns/walks, user stop and three overlapping gesture pairs through the panel button; own viewport only; capture overhead included.",
+  "stop_drift_px": 0.0,
+  "transitions": [
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 836,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "loading",
+      "pointer": "(657, 1063)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "settle",
+      "voice": false,
+      "window": "(1639, 672)"
+    },
+    {
+      "blocked": false,
+      "foreground": false,
+      "gesture": "idle",
+      "listening": false,
+      "ms": 4516,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "loading",
+      "pointer": "(657, 1063)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "no_surface",
+      "voice": false,
+      "window": "(1402, 628)"
+    },
+    {
+      "blocked": true,
+      "foreground": false,
+      "gesture": "wave",
+      "listening": false,
+      "ms": 95247,
+      "owned_walk": "",
+      "panel_open": false,
+      "phase": "stop_and_settle",
+      "pointer": "(657, 1063)",
+      "pointer_interaction": false,
+      "preview": false,
+      "state": "paused",
+      "voice": false,
+      "window": "(1402, 628)"
+    }
+  ],
+  "view": {
+    "view_height": 0.0,
+    "view_pitch_deg": 45.0,
+    "view_yaw_deg": 45.0,
+    "view_zoom": 1.0
+  }
+}

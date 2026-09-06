@@ -37,7 +37,7 @@ var _reconnect_in := 0.0
 var _backoff := RECONNECT_MIN
 var _want_connection := false
 var _avatar_generation := 0
-var _avatar_inflight: Dictionary = {} # generation -> HTTPRequest
+var _avatar_inflight: Dictionary = {} # generation -> {request: HTTPRequest, temp: String}
 var _motion_generation := 0
 
 
@@ -77,7 +77,7 @@ func _schedule_reconnect() -> void:
 
 
 func send(message: Dictionary) -> bool:
-	if state != "open":
+	if state != "open" or _ws == null or _ws.get_ready_state() != WebSocketPeer.STATE_OPEN:
 		return false
 	var err := _ws.send_text(JSON.stringify(message))
 	if err != OK:
@@ -133,7 +133,7 @@ func _set_state(s: String) -> void:
 
 # ---------------------------------------------------------------- HTTP helpers
 
-func _request(path: String, method: HTTPClient.Method, body: String, callback: Callable, download_to: String = "") -> void:
+func _request(path: String, method: HTTPClient.Method, body: String, callback: Callable, download_to: String = "") -> HTTPRequest:
 	var req := HTTPRequest.new()
 	req.timeout = 30.0 if download_to.is_empty() else 300.0
 	if not download_to.is_empty():
@@ -150,6 +150,8 @@ func _request(path: String, method: HTTPClient.Method, body: String, callback: C
 	if err != OK:
 		req.queue_free()
 		callback.call(HTTPRequest.RESULT_CANT_CONNECT, 0, PackedByteArray())
+		return null
+	return req
 
 
 static func _parse_json(data: PackedByteArray) -> Variant:
@@ -206,8 +208,17 @@ func save_motion(motion: Dictionary) -> void:
 	)
 
 
-static func avatar_cache_path(character_id: String) -> String:
-	return AVATAR_CACHE_DIR.path_join(character_id.validate_filename() + ".vrm")
+static func avatar_cache_path(character_id: String, variant_id: String = "default") -> String:
+	if variant_id == "default":
+		return AVATAR_CACHE_DIR.path_join(character_id.validate_filename() + ".vrm")
+	# A nested hash key cannot collide with a default character filename or a
+	# different variant whose punctuation validates to the same filename.
+	return AVATAR_CACHE_DIR.path_join("variants").path_join((character_id+"\n"+variant_id).sha256_text()+".vrm")
+
+
+static func avatar_variant_url(character_id: String, variant_id: String = "default") -> String:
+	var path := "/characters/%s/avatar" % character_id.uri_encode()
+	return path if variant_id == "default" else path+"?variant="+variant_id.uri_encode()
 
 
 # ---------------------------------------------------------------- VRMA motion assets
@@ -284,21 +295,33 @@ func fetch_motion_asset(entry: Dictionary, force: bool = false) -> void:
 
 
 ## Download (or reuse cached) VRM for [character_id]. Only the latest request reports back.
-func fetch_avatar(character_id: String, avatar_url: String, force: bool = false) -> void:
+func cancel_avatar_fetch() -> void:
 	_avatar_generation += 1
+	for pending in _avatar_inflight.values():
+		var request: HTTPRequest = pending.request
+		if is_instance_valid(request):
+			request.cancel_request()
+			request.queue_free()
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(str(pending.temp)))
+	_avatar_inflight.clear()
+
+
+func fetch_avatar(character_id: String, avatar_url: String, force: bool = false, variant_id: String = "default") -> void:
+	cancel_avatar_fetch()
 	var generation := _avatar_generation
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(AVATAR_CACHE_DIR))
-	var cache := avatar_cache_path(character_id)
+	var cache := avatar_cache_path(character_id,variant_id)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(cache.get_base_dir()))
 	if not force and FileAccess.file_exists(cache) and FileAccess.open(cache, FileAccess.READ).get_length() > 1024:
 		avatar_ready.emit(true, character_id, cache, "cached")
 		return
-	var path := avatar_url if not avatar_url.is_empty() else "/characters/%s/avatar" % character_id
+	var path := avatar_url if not avatar_url.is_empty() else avatar_variant_url(character_id,variant_id)
 	if path.begins_with("http://") or path.begins_with("https://"):
 		# Absolute URL supplied by the catalog; strip our base if it matches.
 		if path.begins_with(base_url):
 			path = path.substr(base_url.length())
 	var temp := cache + ".part%d" % generation
-	_request(path, HTTPClient.METHOD_GET, "", func(result: int, code: int, _data: PackedByteArray) -> void:
+	var request := _request(path, HTTPClient.METHOD_GET, "", func(result: int, code: int, _data: PackedByteArray) -> void:
 		_avatar_inflight.erase(generation)
 		if generation != _avatar_generation:
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(temp))
@@ -317,3 +340,4 @@ func fetch_avatar(character_id: String, avatar_url: String, force: bool = false)
 			return
 		avatar_ready.emit(true, character_id, cache, "downloaded")
 	, temp)
+	if is_instance_valid(request): _avatar_inflight[generation] = {"request":request,"temp":temp}

@@ -10,6 +10,7 @@ signal ptt_released
 signal vad_toggled(enabled: bool)
 signal cancel_requested
 signal character_selected(id: String)
+signal avatar_variant_selected(id: String)
 signal refresh_requested
 signal reload_avatar_requested
 signal preview_gesture(name: String, emotion: String, intensity: float, speed: float, repeat: int)
@@ -44,6 +45,8 @@ const PANEL_WIDTH := 340.0
 const SettingsScript := preload("res://scripts/settings.gd")
 const EMOTIONS := ["neutral", "happy", "relaxed", "sad", "surprised", "angry"]
 const KEYFRAME_MAX := 64
+## View (camera) settings: key -> default. Ranges live in _build_view_tab.
+const VIEW_DEFAULTS := {"view_projection": "perspective", "view_yaw_deg": 0.0, "view_pitch_deg": 0.0, "view_height": 0.0, "view_zoom": 1.0, "view_fov_deg": 45.0, "view_distance_m": 3.6}
 ## Bank names that are contact/support poses rather than one-shot gestures (never chained).
 const SEQUENCE_EXCLUDED_WORDS := ["sit", "seat", "prop", "support", "hold", "contact", "lean"]
 const SEQUENCE_LEAD_DEFAULT := 0.35
@@ -64,6 +67,10 @@ var _mode_label: Label
 var _level_bar: ProgressBar
 var _status_line: Label
 var _character_option: OptionButton
+var _avatar_variant_option: OptionButton
+var _avatar_variant_note: Label
+var _avatar_variant_rows: Array = []
+var _avatar_variant_id := "default"
 var _transcript: RichTextLabel
 var _input: LineEdit
 var _mic_button: Button
@@ -114,6 +121,16 @@ var _surface_status: Label
 var _sit_button: Button
 var _sitting := false
 var _idle_clip_option: OptionButton
+# view tab
+var _view_projection: OptionButton
+var _view_projection_note: Label
+var _view_fov: HSlider
+var _view_distance: HSlider
+var _view_yaw: HSlider
+var _view_pitch: HSlider
+var _view_height: HSlider
+var _view_zoom: HSlider
+var _view_reset: Button
 ## Saved/mirrored idle_clip value: "auto", "" (procedural breathing only) or an imported clip name.
 var _idle_choice := "auto"
 ## Current character's profile ambient_loop (from the character catalogue) shown under "자동".
@@ -155,7 +172,9 @@ var _objects: Node # desktop objects host bound via bind_desktop_objects(), or n
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	set_anchors_preset(Control.PRESET_LEFT_WIDE)
+	# The panel lives in its own modeless settings window (Astra's wrapper) and fills it; the host
+	# may still place it as a sidebar by overriding the anchors after instantiation.
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	custom_minimum_size = Vector2(PANEL_WIDTH, 0)
 	clip_contents = true
 	_settings = get_node_or_null("/root/Settings")
@@ -220,8 +239,8 @@ func _build() -> void:
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(title)
 	var collapse := Button.new()
-	collapse.text = "펫 모드 (F8)"
-	collapse.tooltip_text = "패널을 숨기고 투명 펫 모드로 전환합니다. F8로 다시 엽니다."
+	collapse.text = "닫기 (F8)"
+	collapse.tooltip_text = "설정 창을 닫습니다. 캐릭터는 바탕화면에 그대로 남습니다."
 	collapse.pressed.connect(func(): collapse_requested.emit())
 	head.add_child(collapse)
 
@@ -268,6 +287,7 @@ func _build() -> void:
 	_build_chat_tab()
 	_build_behavior_tab()
 	_build_space_tab()
+	_build_view_tab()
 	_build_motion_tab()
 	_build_work_tab()
 	_build_settings_tab()
@@ -295,6 +315,21 @@ func _build_chat_tab() -> void:
 	refresh.tooltip_text = "캐릭터 목록과 모션 뱅크를 다시 받습니다"
 	refresh.pressed.connect(func(): refresh_requested.emit())
 	row.add_child(refresh)
+	var variant_row := HBoxContainer.new()
+	v.add_child(variant_row)
+	variant_row.add_child(_label("외형"))
+	_avatar_variant_option = OptionButton.new()
+	_avatar_variant_option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_avatar_variant_option.item_selected.connect(func(i: int):
+		_avatar_variant_id = str(_avatar_variant_option.get_item_metadata(i))
+		_refresh_avatar_variant_note()
+		avatar_variant_selected.emit(_avatar_variant_id))
+	variant_row.add_child(_avatar_variant_option)
+	_avatar_variant_note = Label.new()
+	_avatar_variant_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_avatar_variant_note.add_theme_font_size_override("font_size",11)
+	v.add_child(_avatar_variant_note)
+	set_avatar_variants([],"default")
 
 	_transcript = RichTextLabel.new()
 	_transcript.bbcode_enabled = true
@@ -446,13 +481,13 @@ func _build_space_tab() -> void:
 	inner.add_theme_constant_override("separation", 6)
 	scroll.add_child(inner)
 	var beta := Label.new()
-	beta.text = "실험 기능 · 미리보기: 가구를 바탕화면에 놓고 펫이 앉거나 살펴봅니다. 접촉 동작은 Windows에서 확인 중입니다."
+	beta.text = "대화로 가구를 놓거나 사용해 달라고 요청하세요. 아래에서 직접 조절할 수도 있습니다."
 	beta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	beta.add_theme_font_size_override("font_size", 11)
 	beta.modulate = Color(0.95, 0.8, 0.55)
 	inner.add_child(beta)
 
-	inner.add_child(_section("가구 놓기"))
+	inner.add_child(_section("직접 배치 · 선택 사항"))
 	var add_row := HBoxContainer.new()
 	inner.add_child(add_row)
 	_obj_catalogue = OptionButton.new()
@@ -548,6 +583,90 @@ func _build_space_tab() -> void:
 	future.modulate = Color(0.6, 0.6, 0.66)
 	inner.add_child(future)
 	_refresh_objects()
+
+
+## "시점": how the character is viewed (camera yaw/pitch, eye-height offset, zoom). These change the
+## viewing angle only, never where the character stands on the desktop. Values go through the
+## existing setting_changed channel; set_view_settings() mirrors host values without emitting.
+func _build_view_tab() -> void:
+	var v := _tab("시점")
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	v.add_child(scroll)
+	var inner := VBoxContainer.new()
+	inner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	inner.add_theme_constant_override("separation", 6)
+	scroll.add_child(inner)
+	var note := Label.new()
+	note.text = "캐릭터를 바라보는 각도와 거리만 바꿉니다. 바탕화면에서 캐릭터가 서 있는 자리는 그대로입니다."
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.add_theme_font_size_override("font_size", 11)
+	note.modulate = Color(0.7, 0.7, 0.78)
+	inner.add_child(note)
+	inner.add_child(_section("카메라"))
+	var projection_row := HBoxContainer.new()
+	inner.add_child(projection_row)
+	var projection_label := _label("투영 방식")
+	projection_label.custom_minimum_size.x = 70
+	projection_row.add_child(projection_label)
+	_view_projection = OptionButton.new()
+	_view_projection.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_view_projection.add_item("직교 · 일정한 크기")
+	_view_projection.set_item_metadata(0, "orthographic")
+	_view_projection.add_item("원근 · 가까울수록 크게")
+	_view_projection.set_item_metadata(1, "perspective")
+	_view_projection.select(1 if str(_setting("view_projection", "perspective")) == "perspective" else 0)
+	projection_row.add_child(_view_projection)
+	_view_projection_note = Label.new()
+	_view_projection_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_view_projection_note.add_theme_font_size_override("font_size", 11)
+	inner.add_child(_view_projection_note)
+	_view_yaw = _view_row(inner, "좌우 회전", "view_yaw_deg", -180.0, 180.0, 1.0, "%.0f°", "캐릭터를 왼쪽/오른쪽에서 봅니다 (도)")
+	_view_pitch = _view_row(inner, "위아래 각도", "view_pitch_deg", -60.0, 70.0, 1.0, "%.0f°", "위에서 내려다보거나 아래에서 올려다봅니다 (도)")
+	_view_height = _view_row(inner, "눈높이", "view_height", -0.5, 0.5, 0.01, "%+.2f m", "카메라 눈높이를 위아래로 옮깁니다 (미터). 캐릭터 위치는 바뀌지 않습니다.")
+	_view_zoom = _view_row(inner, "확대", "view_zoom", 0.6, 1.6, 0.05, "×%.2f", "1.00이 기본 크기입니다")
+	_view_fov = _view_row(inner, "화각", "view_fov_deg", 20.0, 80.0, 1.0, "%.0f°", "원근 시점의 세로 화각입니다. 넓힐수록 더 많은 공간이 보입니다. 확대 1.00 기준입니다.")
+	_view_distance = _view_row(inner, "카메라 거리", "view_distance_m", 1.0, 12.0, 0.1, "%.1f m", "원근 시점에서 카메라와 기준점 사이의 실제 거리입니다. 가구 위치나 크기는 바꾸지 않습니다.")
+	_view_projection.item_selected.connect(func(_index: int):
+		_refresh_view_projection()
+		setting_changed.emit("view_projection", _view_projection.get_selected_metadata()))
+	_refresh_view_projection()
+	_view_reset = Button.new()
+	_view_reset.text = "기본 시점"
+	_view_reset.tooltip_text = "직교 · 회전 0° · 각도 0° · 눈높이 0 · 확대 1.00 · 화각 45° · 거리 3.6 m로 되돌립니다"
+	_view_reset.pressed.connect(reset_view_settings)
+	inner.add_child(_view_reset)
+
+
+func _view_row(parent: Control, text: String, key: String, minv: float, maxv: float, step: float, fmt: String, tip: String) -> HSlider:
+	var default_value := float(VIEW_DEFAULTS[key])
+	var row := HBoxContainer.new()
+	parent.add_child(row)
+	var l := _label(text)
+	l.custom_minimum_size = Vector2(70, 0)
+	l.tooltip_text = tip
+	row.add_child(l)
+	var s := HSlider.new()
+	s.min_value = minv
+	s.max_value = maxv
+	s.step = step
+	s.value = clampf(float(_setting(key, default_value)), minv, maxv)
+	s.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	s.tooltip_text = tip
+	row.add_child(s)
+	var val := Label.new()
+	val.text = fmt % s.value
+	val.custom_minimum_size = Vector2(56, 0)
+	val.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.add_child(val)
+	s.set_meta("value_label", val)
+	s.set_meta("value_format", fmt)
+	s.set_meta("setting_key", key)
+	s.value_changed.connect(func(nv: float):
+		val.text = fmt % nv
+		setting_changed.emit(key, nv))
+	return s
 
 
 func _build_motion_tab() -> void:
@@ -1127,6 +1246,45 @@ func set_characters(characters: Array, current: String) -> void:
 			_character_option.select(_character_option.item_count - 1)
 			profile_loop = str(c.get("ambient_loop", "")) if typeof(c.get("ambient_loop", "")) == TYPE_STRING else ""
 	set_idle_profile(profile_loop)
+	for character in characters:
+		if str(character.get("id","")) == current:
+			set_avatar_variants(character.get("avatar_variants",[]),_avatar_variant_id)
+			break
+
+
+## Selection changes this character's model only; mood tags describe variants,
+## never trigger automatic identity, voice or arbitrary behavior changes.
+func set_avatar_variants(entries: Array, current: String = "default") -> void:
+	_avatar_variant_rows = entries.duplicate(true)
+	if _avatar_variant_rows.is_empty():
+		_avatar_variant_rows = [{"id":"default","label":"기본 외형","avatar_available":true}]
+	_avatar_variant_option.clear()
+	var selected := 0
+	for row in _avatar_variant_rows:
+		var id := str(row.get("id","default"))
+		var label := str(row.get("label",id))
+		if id == "default" and label == "Default": label = "기본 외형"
+		_avatar_variant_option.add_item(label)
+		var index := _avatar_variant_option.item_count-1
+		_avatar_variant_option.set_item_metadata(index,id)
+		_avatar_variant_option.set_item_disabled(index,not bool(row.get("avatar_available",true)))
+		_avatar_variant_option.set_item_tooltip(index,str(row.get("description","")))
+		if id == current: selected = index
+	_avatar_variant_option.select(selected)
+	_avatar_variant_id = str(_avatar_variant_option.get_selected_metadata())
+	_avatar_variant_option.disabled = _avatar_variant_rows.size() <= 1
+	_refresh_avatar_variant_note()
+
+
+func _refresh_avatar_variant_note() -> void:
+	var description := "외형을 바꿔도 대화와 목소리는 유지됩니다."
+	for row in _avatar_variant_rows:
+		if str(row.get("id","")) != _avatar_variant_id: continue
+		var detail := str(row.get("description",""))
+		var moods: Array = row.get("mood_tags",[])
+		if not detail.is_empty(): description = detail
+		if not moods.is_empty(): description += " · " + ", ".join(PackedStringArray(moods))
+	_avatar_variant_note.text = description
 
 
 func set_bank(new_bank: MotionBank) -> void:
@@ -1228,9 +1386,17 @@ func set_vrma_clips(clips: Dictionary) -> void:
 func preset_names() -> Array[String]:
 	var names: Array[String] = bank.names()
 	for n in vrma_clips.keys():
-		if not bank.has_motion(str(n)):
+		if not bank.has_motion(str(n)) and not _contextual_clip(str(n)):
 			names.append(str(n))
 	return names
+
+
+## These assets remain loaded for seating/navigation owners. Starting them as
+## standalone gestures would bypass their contact and travel prerequisites.
+func _contextual_clip(name: String) -> bool:
+	var entry: Dictionary = vrma_clips.get(name,{})
+	return name in ["sit_enter","sit_exit","sit_idle"] or not str(entry.get("seated_transition","")).is_empty() \
+		or not entry.get("locomotion_style",{}).is_empty()
 
 
 func _refresh_preset_option() -> void:
@@ -1260,6 +1426,7 @@ func idle_candidates() -> Array[String]:
 	var out: Array[String] = []
 	for n in vrma_clips.keys():
 		var name := str(n)
+		if _contextual_clip(name): continue
 		var e: Dictionary = vrma_clips[n] if typeof(vrma_clips[n]) == TYPE_DICTIONARY else {}
 		var flagged := bool(e.get("ambient", false)) and bool(e.get("loop", false))
 		if flagged or AutonomyBridge.AMBIENT_IDLE_CLIPS.has(name) or (not _idle_profile_loop.is_empty() and name == _idle_profile_loop):
@@ -1438,6 +1605,56 @@ func set_avatar_info(text: String) -> void:
 
 func set_audio_stats(stats: Dictionary) -> void:
 	_audio_stats.text = "오디오 대기 %.1fs · 버퍼 %dms · 수신 %d · 무시 %d · 드롭 %d · %dHz" % [stats.get("pending_seconds", 0.0), stats.get("buffered_ms", 0), stats.get("accepted", 0), stats.get("stale", 0), stats.get("dropped_frames", 0), stats.get("rate", 0)]
+
+
+# ------------------------------------------------------------- view tab API
+
+func _view_sliders() -> Dictionary:
+	return {"view_yaw_deg": _view_yaw, "view_pitch_deg": _view_pitch, "view_height": _view_height, "view_zoom": _view_zoom, "view_fov_deg": _view_fov, "view_distance_m": _view_distance}
+
+
+func _refresh_view_projection() -> void:
+	var perspective := str(_view_projection.get_selected_metadata()) == "perspective"
+	for slider: HSlider in [_view_fov, _view_distance]:
+		slider.editable = perspective
+		slider.get_parent().modulate.a = 1.0 if perspective else 0.45
+	_view_projection_note.text = "실제 거리와 깊이에 따라 크기와 겹침이 달라집니다." if perspective else "깊이가 달라도 같은 크기로 보입니다. 화각과 거리는 원근에서 조절합니다."
+
+
+## Mirror host/saved view values without emitting (unknown keys ignored, values clamped to the
+## slider range). Partial dictionaries only touch the keys given.
+func set_view_settings(values: Dictionary) -> void:
+	if values.get("view_projection", "") in ["orthographic", "perspective"]:
+		_view_projection.select(1 if values["view_projection"] == "perspective" else 0)
+		_refresh_view_projection()
+	var sliders := _view_sliders()
+	for key in values.keys():
+		var s: HSlider = sliders.get(str(key), null)
+		if s == null:
+			continue
+		var raw: Variant = values[key]
+		if typeof(raw) != TYPE_FLOAT and typeof(raw) != TYPE_INT:
+			continue
+		var v := clampf(float(raw), s.min_value, s.max_value)
+		if not is_finite(v):
+			continue
+		s.set_value_no_signal(v)
+		(s.get_meta("value_label") as Label).text = str(s.get_meta("value_format")) % s.value
+
+
+## Current view values: projection string and numeric camera controls.
+func view_settings() -> Dictionary:
+	var out := {"view_projection": str(_view_projection.get_selected_metadata())}
+	for key in _view_sliders():
+		out[key] = float((_view_sliders()[key] as HSlider).value)
+	return out
+
+
+## Reset is atomic: the host restores all seven defaults before projecting again,
+## avoiding intermediate camera states that could invalidate an occupied seat.
+func reset_view_settings() -> void:
+	set_view_settings(VIEW_DEFAULTS)
+	setting_changed.emit("view_reset", true)
 
 
 # ------------------------------------------------------------- behavior tab API

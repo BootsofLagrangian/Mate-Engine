@@ -1813,6 +1813,24 @@
       "repo_relative_path": "companion/logs/diagnostic-traces/walking_posture/source-ablation.json.gz",
       "sha256": "125bb03d18b64de63f595c9fdf1b8787ff7da093ca6f9d4e2a80415d51935f54",
       "uncompressed_sha256": "63686b85ea951176f9ee04107a1d898bfe012d3c27d10ec74ee4f051af979212"
+    },
+    {
+      "original_name": "first-current-run.json",
+      "repo_relative_path": "companion/logs/diagnostic-traces/upper_body_review/first-current-run.json",
+      "sha256": "aada5dbebeefb2fb2cf5b0fc1ee39fabdffc49bc5e7cb2da2708dc362e4fc6d9",
+      "bytes": 393663
+    },
+    {
+      "original_name": "repeat-current-run.json",
+      "repo_relative_path": "companion/logs/diagnostic-traces/upper_body_review/repeat-current-run.json",
+      "sha256": "aada5dbebeefb2fb2cf5b0fc1ee39fabdffc49bc5e7cb2da2708dc362e4fc6d9",
+      "bytes": 393663
+    },
+    {
+      "original_name": "results.json",
+      "repo_relative_path": "companion/logs/diagnostic-traces/upper_body_review/results.json",
+      "sha256": "d1a9f49dbb42d96cfdec579a4ebeb2b1abbcfdef55642e81703fdc55ca6e66f3",
+      "bytes": 478256
     }
   ]
 }

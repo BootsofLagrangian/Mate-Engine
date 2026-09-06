@@ -1,0 +1,3 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+{"cases":405,"checks":5274,"failures":[],"max_contact_error_m":0.00000101724299383932,"max_pixel_error":0.000183908370672725,"module_sha256":"c78277b56d24ccce7eeae51ad684ab3658f57e8ffcf387510865bc69b685e407","scope":"Actual Godot orthographic projection680×760, pure geometry; no main/runtime integration or Windows rendering claim."}

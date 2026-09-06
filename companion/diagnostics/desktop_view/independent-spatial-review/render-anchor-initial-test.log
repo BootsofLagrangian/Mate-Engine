@@ -1,0 +1,3 @@
+Godot Engine v4.5.2.stable.official.6ce3de25a - https://godotengine.org
+
+{"checks":18,"failures":["nonfinite anchor falls back to legacy origin","nonfinite anchor falls back to legacy origin","nonfinite anchor falls back to legacy origin"],"scope":"Independent persisted desktop foot/padding migration arithmetic; no window launch or settings mutation"}

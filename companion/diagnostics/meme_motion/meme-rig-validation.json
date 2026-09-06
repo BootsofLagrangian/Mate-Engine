@@ -1,0 +1,179 @@
+{
+  "cells": [
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.578783880325387,
+      "motion": "mambo_sway",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 1.02945614354467,
+      "motion": "hachimi_peek",
+      "scope": "asset"
+    },
+    {
+      "endpoint_rad": 0.0,
+      "max_step_deg_60hz": 0.936281691095113,
+      "motion": "playful_shrug",
+      "scope": "asset"
+    },
+    {
+      "character": "mambo",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.107858002185822,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "mambo",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.103420585393906,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "mambo",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.128291711211205,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "mambo",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.107869729399681,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "mambo",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.103433661162853,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "mambo",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.128344297409058,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "mambo",
+      "max_foot_error_m": 0.000000112377875893799,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "mambo",
+      "max_foot_error_m": 0.000000105909023773165,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "mambo",
+      "max_foot_error_m": 0.0000000899678838095497,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    },
+    {
+      "character": "hachimi",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.107858017086983,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "hachimi",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.103420577943325,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "hachimi",
+      "fps": 30,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.128291741013527,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "hachimi",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.107869759202003,
+      "motion": "mambo_sway",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "hachimi",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.103433661162853,
+      "motion": "hachimi_peek",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "hachimi",
+      "fps": 60,
+      "max_leg_error_m": 0.0,
+      "max_upper_change_m": 0.128344297409058,
+      "motion": "playful_shrug",
+      "scope": "walking overlay"
+    },
+    {
+      "character": "hachimi",
+      "max_foot_error_m": 0.0000000978021716946387,
+      "motion": "mambo_sway",
+      "scope": "ambient action"
+    },
+    {
+      "character": "hachimi",
+      "max_foot_error_m": 0.0000000970186064819245,
+      "motion": "hachimi_peek",
+      "scope": "ambient action"
+    },
+    {
+      "character": "hachimi",
+      "max_foot_error_m": 0.0000000897362042451277,
+      "motion": "playful_shrug",
+      "scope": "ambient action"
+    }
+  ],
+  "characters": [
+    "mambo",
+    "hachimi"
+  ],
+  "checks": 250,
+  "failures": [],
+  "input_sha256": {
+    "assets/hachimi.vrm": "521f8f33c9b8e17f473dbe56982b9537d261686cbf5ed055e9f6c90027604d1d",
+    "assets/mambo.vrm": "42f3fba3b12d22a4019661206f6c04f3b8b51206b6637fa46d6bb5951fb5cae7",
+    "assets/motions/hachimi_peek.vrma": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+    "assets/motions/mambo_sway.vrma": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+    "assets/motions/playful_shrug.vrma": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+    "assets/motions/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "assets/motions/uma_walk.vrma": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573"
+  },
+  "input_sha256_after": {
+    "assets/hachimi.vrm": "521f8f33c9b8e17f473dbe56982b9537d261686cbf5ed055e9f6c90027604d1d",
+    "assets/mambo.vrm": "42f3fba3b12d22a4019661206f6c04f3b8b51206b6637fa46d6bb5951fb5cae7",
+    "assets/motions/hachimi_peek.vrma": "fa6474a060a9129e14af672fab80f09058e2677b50ee5ffc986ce1436c115856",
+    "assets/motions/mambo_sway.vrma": "f611bf259f8a8c6d483ed716efb487a60f614f0123b8a12abfc6215b4cd56a87",
+    "assets/motions/playful_shrug.vrma": "676fc684882f89418d38c101e09d12ee07e3ad8a5483d962437876680ce5e609",
+    "assets/motions/uma_home_idle.vrma": "679b086799df59c54fbb3760657b4c42e79bf7c1892c9fe3d99a1797fc27d0d9",
+    "assets/motions/uma_walk.vrma": "8f0b44c9fbee138f9923185a6dc373e0a11349c7d20c523163c941ebfe329573"
+  },
+  "scope": "Deterministic real-rig source harness; not packaged Windows visual acceptance"
+}
