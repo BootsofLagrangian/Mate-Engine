@@ -72,8 +72,7 @@ static func route_view_admission(path: PackedVector3Array, ground_query: Callabl
 	return {"accepted":true,"reason":"route_view_clear","path_points":path.size()}
 
 func _blocked() -> bool:
-	var job_active:bool=not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
-	return job_active or not host.autonomy.enabled or host.autonomy._pointer_interaction or host.objects.is_dragging() or host.panel_open or host._drag_active or host._sit_active or ((host.audio.voice_active or host.session.is_foreground_busy() or host.bridge.dialogue_holding(host._now())) and not host.objects.owns_foreground_speech()) or host.mic.is_recording() or host.motion._preview or host.motion._custom_motion
+	return not host.autonomy.enabled or (host.autonomy._pointer_interaction and not host.body_action_can_continue()) or host.objects.is_dragging() or (host.panel_open and not host.body_action_can_continue()) or host._drag_active or host._sit_active or (host.body_dialogue_busy(true) and not host.objects.owns_foreground_speech()) or (host.mic.is_recording() and not host.body_action_can_continue()) or host.motion._preview or host.motion._custom_motion
 func tick(delta: float) -> void:
 	if not holding:return
 	if host._drag_active or host.spatial_camera()==null or not host.autonomy.enabled or not host.autonomy.surface_mode:

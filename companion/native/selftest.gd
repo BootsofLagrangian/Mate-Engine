@@ -27,6 +27,7 @@ func _process(_delta: float) -> bool:
 	_test_pcm_queue()
 	_test_wav()
 	_test_session()
+	_test_interaction_continuity()
 	_test_settings_urls()
 	_test_audio_output()
 	_test_microphone()
@@ -374,6 +375,86 @@ func _test_session() -> void:
 	check(not s.handle({"type": "weird"}), "unknown type discarded")
 	check(activities.has("thinking") and activities.has("speaking") and activities.has("idle"), "activity transitions emitted")
 	check(discarded.size() >= 7, "discards were reported (%d)" % discarded.size())
+
+
+## Exercise independent task, conversation and body lifecycles without a renderer.
+func _test_interaction_continuity() -> void:
+	print("[interaction continuity]")
+	var session := CompanionSession.new()
+	session.set_character("cheval-grand")
+	var job := session.make_job("continue the background task")
+	var jid: String = job.job_id
+	check(session.handle({"type":"job", "job_id":jid, "status":"running"}), "continuity job starts")
+	check(not session.handle({"type":"start", "turn_id":"job:foreign:ack", "character":"cheval-grand"}) and not session.is_background_presentation(), "foreign ack cannot acquire presentation ownership")
+	check(not session.handle({"type":"start", "turn_id":"job:%s:other" % jid, "character":"cheval-grand"}) and not session.is_background_presentation(), "owned job with forged suffix cannot acquire presentation ownership")
+	var ack := "job:%s:ack" % jid
+	check(session.handle({"type":"start", "turn_id":ack, "character":"cheval-grand"}) and session.is_background_presentation(), "owned acknowledgement gets background presentation")
+	check(session.cancel_turn() == ack and session.job.status == "running" and not session.is_background_presentation(), "cancelling task speech preserves running job")
+	var chat := session.make_chat("look at me")
+	check(not session.is_background_presentation(), "ordinary dialogue never inherits job presentation ownership")
+	check(session.cancel_turn() == chat.turn_id and session.job.status == "running", "cancelling foreground dialogue preserves running job")
+	check(session.handle({"type":"job", "job_id":jid, "status":"completed"}), "continuity job completes")
+	check(session.handle({"type":"start", "turn_id":"job:%s:result" % jid, "character":"cheval-grand"}) and session.is_background_presentation(), "completed job result retains owned background presentation")
+
+	var director := BehaviorDirector.new()
+	director.set_character("cheval-grand")
+	director.observe_interest("destination", Vector2(300, 100), 1.0, 120.0, "floor")
+	check(director.request_intent("move", "move_to", "destination", "llm").accepted, "explicit movement queued")
+	var context := {"can_move":true, "autonomy_state":"walk", "working":true}
+	var frame := director.tick(0.1, context)
+	check(frame.action.get("type") == "move_interest" and frame.intent_id == "move", "background work permits explicit movement dispatch")
+	check(director.resolve_intent("move", "started") and director.has_explicit_body_intent(), "started explicit movement owns body")
+	var uninterrupted := true
+	for attention in ["thinking", "speaking", "listening", "pointer_interaction", "panel_open"]:
+		context[attention] = true
+		context["body_continuing"] = director.has_explicit_body_intent()
+		frame = director.tick(0.1, context)
+		uninterrupted = uninterrupted and frame.action.is_empty() and frame.intent_id == "move" and frame.state == "walk"
+		context.erase(attention)
+	context["working"] = false
+	frame = director.tick(0.1, context)
+	check(uninterrupted and frame.action.is_empty() and frame.intent_id == "move" and director.drain_outcomes().is_empty(), "compatible attention and job completion do not interrupt or restart explicit movement")
+	check(director.navigation_result("destination", "arrived"), "preserved movement reaches destination")
+	check(not director.navigation_result("destination", "arrived"), "duplicate arrival cannot complete twice")
+	var outcomes := director.drain_outcomes()
+	check(outcomes.size() == 1 and outcomes[0].id == "move" and outcomes[0].outcome == "arrived" and not director.has_explicit_body_intent(), "movement releases ownership with exactly one arrival")
+
+	# Exercise the actual host policy using real session/director objects without
+	# entering main's scene tree (which would launch OS integration and services).
+	var app: Node = load("res://scripts/main.gd").new()
+	app.audio = AudioOutput.new()
+	app.living = LivingBehavior.new()
+	app.session = session
+	app.audio.voice_active = true
+	check(not app.body_dialogue_busy(), "host background result speech does not block body")
+	app.session.cancel_turn()
+	app.session.make_chat("continue speaking while walking")
+	check(app.body_dialogue_busy(), "host foreground dialogue blocks unowned body")
+	app.living.director.observe_interest("destination", Vector2(300, 100), 1.0, 120.0, "floor")
+	app.living.director.request_intent("host-move", "move_to", "destination", "user")
+	app.living.director.tick(0.1, {"can_move":true})
+	app.living.director.resolve_intent("host-move", "started")
+	check(app.body_action_can_continue() and not app.body_dialogue_busy(true), "host accepted body action continues through foreground speech and hold")
+	app.living.director.navigation_result("destination", "arrived")
+	check(not app.body_action_can_continue() and app.body_dialogue_busy(), "host releases body continuation on actual navigation completion")
+	app.audio.free()
+	app.living.free()
+	app.free()
+
+	for interruption in ["speaking", "dragging", "panel_open"]:
+		var interrupted := BehaviorDirector.new()
+		interrupted.observe_interest("destination", Vector2(300, 100), 1.0, 120.0, "floor")
+		var source := "user" if interruption == "dragging" else "local"
+		interrupted.request_intent("interrupted", "move_to", "destination", source)
+		interrupted.tick(0.1, {"can_move":true})
+		interrupted.resolve_intent("interrupted", "started")
+		var interrupt_context := {"can_move":true, "autonomy_state":"walk", "body_continuing":interrupted.has_explicit_body_intent()}
+		interrupt_context[interruption] = true
+		var stopped := interrupted.tick(0.1, interrupt_context)
+		check(stopped.action.get("type") == "cancel_move" and stopped.intent_id.is_empty(), "%s still preempts %s movement" % [interruption, source])
+		interrupted.tick(0.1, interrupt_context)
+		var stopped_outcomes := interrupted.drain_outcomes()
+		check(stopped_outcomes.size() == 1 and stopped_outcomes[0].outcome == "preempted", "%s interruption emits one terminal outcome" % interruption)
 
 
 func _test_settings_urls() -> void:

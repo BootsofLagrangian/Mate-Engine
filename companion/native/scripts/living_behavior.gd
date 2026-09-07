@@ -267,8 +267,7 @@ func tick(delta: float) -> void:
 	publish_world()
 	# Foreground ownership applies even when autonomous decisions are disabled.
 	if host.motion.has_method("set_ambient_suspended"):
-		var working: bool = not host.session.job.is_empty() and str(host.session.job.get("status", "")) not in host.session.JOB_TERMINAL
-		host.motion.set_ambient_suspended(host.audio.voice_active or host.mic.is_recording() or host.session.is_foreground_busy() or working or host._drag_active or is_marker_dragging() or host.motion._preview or host.motion._custom_motion or host.autonomy.state in ["anticipate", "walk", "arrive", "approach"])
+		host.motion.set_ambient_suspended(host.body_dialogue_busy() or host.mic.is_recording() or host._drag_active or is_marker_dragging() or host.motion._preview or host.motion._custom_motion or host.autonomy.state in ["anticipate", "walk", "arrive", "approach"])
 	if not enabled:
 		if host.motion.has_method("set_ambient_attention_override"):
 			host.motion.set_ambient_attention_override(host.panel_open or host.audio.voice_active or host.mic.is_recording() or host.session.is_foreground_busy())
@@ -276,7 +275,7 @@ func tick(delta: float) -> void:
 	var pointer := Vector2(DisplayServer.mouse_get_position())
 	var near: bool = host.pet_rect.grow(100.0).has_point(pointer - Vector2(host.get_window().position))
 	var job_active: bool = not host.session.job.is_empty() and str(host.session.job.get("status", "")) not in host.session.JOB_TERMINAL
-	var speaking: bool = host.audio.voice_active
+	var speaking: bool = host.audio.voice_active and not host.session.is_background_presentation()
 	var listening: bool = host.mic.is_recording()
 	var thinking: bool = host.session.is_foreground_busy() and not speaking
 	if _scene_exploration_enabled() and not host.scene_navigation.holding and host.autonomy.can_request_move():
@@ -286,7 +285,7 @@ func tick(delta: float) -> void:
 	var furniture_busy:bool=host.objects != null and not host.objects._interaction.is_empty()
 	var can_move: bool = (scene_ground or host.autonomy.can_request_move()) and not host.bridge.dialogue_holding(host._now()) and not host.is_sitting() and not scene_moving and (not furniture_busy or _owns_legacy_furniture_approach())
 	last_output = director.tick(delta, {"character_id":host.session.character_id,"panel_open":host.panel_open,
-		"dragging":host._drag_active or is_marker_dragging(),"speaking":speaking,"listening":listening,"thinking":thinking,"working":job_active,
+		"body_continuing":host.body_action_can_continue(),"dragging":host._drag_active or is_marker_dragging(),"speaking":speaking,"listening":listening,"thinking":thinking,"working":job_active,
 		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move,
 		"autonomy_enabled":host.autonomy.enabled,"autonomy_state":"walk" if scene_moving else ("rest" if scene_ground else host.autonomy.state),
 		"moving":scene_moving or host.autonomy.state == "walk", "pointer_point":pointer,
@@ -332,7 +331,7 @@ func tick(delta: float) -> void:
 		_look = _pointer_seen
 	var state := str(last_output.get("state", "rest"))
 	if state != _last_state:
-		if state in ["listening", "thinking", "speaking", "attentive"] and _last_state not in ["listening", "thinking", "speaking", "attentive"] and not host._drag_active and not host.motion._preview:
+		if state in ["listening", "thinking", "speaking", "attentive"] and _last_state not in ["listening", "thinking", "speaking", "attentive"] and not host._drag_active and not host.motion._preview and not host.body_action_owns_heading():
 			host.motion.face_front()
 		_last_state = state
 		host.panel.set_behavior_state(str(LABELS.get(state, state)))

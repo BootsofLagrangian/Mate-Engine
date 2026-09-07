@@ -267,6 +267,11 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 	if movement in ["anticipate", "walk", "arrive", "approach"]:
 		state = movement
 		return _snapshot(action)
+	# Work is an idle presentation, never an exclusive body owner.
+	if bool(context.get("working", false)):
+		state = "working"
+		return _snapshot(action)
+	if state == "working": state = "rest"
 	if _time >= _phase_until:
 		_cycle += 1
 		if state == "curious" or state == "sleepy":
@@ -297,9 +302,15 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 				_phase_until = _time + float(style.idle_interval_s)
 	return _snapshot(action)
 
+## Accepted non-local actions retain their body while conversation uses attention.
+func has_explicit_body_intent() -> bool:
+	return not _active.is_empty() and _active.get("source", "local") != "local"
+
+
 func _priority_state(context: Dictionary) -> String:
 	for pair in [["dragging", "held"], ["speaking", "speaking"], ["listening", "listening"],
-		["thinking", "thinking"], ["panel_open", "attentive"], ["pointer_interaction", "attentive"], ["working", "working"]]:
+		["thinking", "thinking"], ["panel_open", "attentive"], ["pointer_interaction", "attentive"]]:
+		if bool(context.get("body_continuing", false)) and pair[0] in ["speaking", "listening", "thinking", "pointer_interaction", "panel_open"]: continue
 		if bool(context.get(pair[0], false)):
 			return pair[1]
 	return ""

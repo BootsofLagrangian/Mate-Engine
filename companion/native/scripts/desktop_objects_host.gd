@@ -222,8 +222,7 @@ func _tick_command() -> void:
 	if _pending_command.source == "llm" and host.living.director.has_user_intent(): cancel_commands("user_priority"); return
 	if not host.living.enabled or not host.autonomy.enabled or not host.autonomy.surface_mode: cancel_commands("disabled"); return
 	if host._drag_active or is_dragging(): cancel_commands("dragged"); return
-	var job_active: bool = not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
-	if job_active or host.mic.is_recording() or host.motion._preview or host.motion._custom_motion or ((host.audio.voice_active or host.session.is_foreground_busy() or host.bridge.dialogue_holding(host._now())) and not _owns_command_speech(_pending_command)): return
+	if (host.mic.is_recording() and not host.body_action_can_continue()) or host.motion._preview or host.motion._custom_motion or (host.body_dialogue_busy(true) and not _owns_command_speech(_pending_command)): return
 	var intent:Dictionary=_pending_command.intent
 	if _spatial_enabled() and _command_needs_ground(intent) and _ground_context().is_empty():
 		fit_diagnostics["ground_wait"]={"reason":"ground_not_ready","command_id":_pending_command.id}
@@ -478,10 +477,9 @@ func tick(delta: float) -> void:
 	var id := str(_interaction.id)
 	if not store.has_object(id) or not windows.has(id) or (not windows[id].visible and id != _contact_id) or is_dragging(): cancel_interaction("object_unavailable"); return
 	if _clock >= float(_interaction.expires) and _interaction.stage != "seated": cancel_interaction("expired"); _status("상호작용 요청 시간이 지나 멈췄습니다"); return
-	if host.panel_open and _interaction.stage not in ["seated","using","exiting","chair_carry","chair_restore"]:
+	if host.panel_open and not host.body_action_can_continue() and _interaction.stage not in ["seated","using","exiting","chair_carry","chair_restore"]:
 		cancel_interaction("panel_open"); return
-	var job_active: bool = not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
-	var busy: bool = job_active or host.mic.is_recording() or host._drag_active or host.motion._preview or host.motion._custom_motion or ((host.audio.voice_active or host.session.is_foreground_busy()) and not owns_foreground_speech())
+	var busy: bool = (host.mic.is_recording() and not host.body_action_can_continue()) or host._drag_active or host.motion._preview or host.motion._custom_motion or (host.body_dialogue_busy() and not owns_foreground_speech())
 	if _interaction.stage=="restore_approaching":
 		if busy: cancel_interaction("foreground");return
 		if _clock>=float(_interaction.restore_deadline):cancel_interaction("restore_clearance_timeout")
@@ -492,14 +490,14 @@ func tick(delta: float) -> void:
 		return
 	if _interaction.stage == "using":
 		if not _owns_seat_contact(id): cancel_interaction("contact_lost"); return
-		if busy or (host._dialogue_gesture_active() and not owns_foreground_speech()): cancel_interaction("foreground"); return
+		if busy or (host._dialogue_gesture_active() and not host.body_action_can_continue()): cancel_interaction("foreground"); return
 		if _clock >= float(_interaction.until): cancel_interaction("completed"); _status("컴퓨터 작업 자세 미리보기를 마쳤습니다"); return
 		_apply_work_contact(windows[id])
 		return
 	if _interaction.stage == "seated":
 		if not _owns_seat_contact(id): cancel_interaction("contact_lost")
 		return
-	if busy or (host.bridge.dialogue_holding(host._now()) and not owns_foreground_speech()):
+	if busy or (host.body_dialogue_busy(true) and not owns_foreground_speech()):
 		if _interaction.stage in ["facing","pose_wait","entering","exiting"]: cancel_interaction("foreground")
 		return
 	if _interaction.stage in ["entering","exiting"]:
@@ -1587,8 +1585,7 @@ func owns_foreground_speech() -> bool:
 
 func admits_contact_during_reply() -> bool:
 	if not owns_foreground_speech() or _interaction.get("stage","") not in ["ready_contact","seating"]: return false
-	var job_active:bool=not host.session.job.is_empty() and str(host.session.job.get("status","")) not in ["done","failed","cancelled","completed"]
-	return not job_active and not host.motion._preview and not host.motion._custom_motion
+	return not host.motion._preview and not host.motion._custom_motion
 
 ## A transient ungrounded pose is never a world-plane definition. Preserve the
 ## admitted scene plane across authored contact/exit; reset on drag/model change.

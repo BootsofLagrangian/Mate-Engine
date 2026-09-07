@@ -91,6 +91,12 @@ func is_owned_job_turn(ev_turn: String) -> bool:
 	return not jid.is_empty() and (ev_turn == "job:%s:ack" % jid or ev_turn == "job:%s:result" % jid)
 
 
+## Task acknowledgements/results use voice and face without acquiring the body.
+## Verify ownership, not merely a job: prefix supplied by a remote event.
+func is_background_presentation() -> bool:
+	return is_owned_job_turn(turn_id)
+
+
 func set_character(id: String) -> bool:
 	if id == character_id:
 		return false

@@ -70,6 +70,7 @@ var _avatar_variant_command := {}
 var _avatar_variant_seen := {}
 var avatar_variant_outcomes: Array = []
 var _selection_announced := "" # character id last sent as select_character on this connection
+var _preserving_body_turn := false
 var _action_seen_turn := "" # done metadata is a legacy fallback, never a replay of an action
 var _fps_active := true
 # VRMA catalog (GET /motion-assets): every valid entry, and the subset MotionPlayer accepted.
@@ -389,10 +390,10 @@ func _wire() -> void:
 	session.turn_started.connect(func(id: String):
 		_action_seen_turn = ""
 		audio.begin_turn(id))
-	session.turn_finished.connect(func(_id: String, outcome: String):
+	session.turn_finished.connect(func(id: String, outcome: String):
 		if outcome != "done":
 			audio.cancel()
-			motion.stop_gesture())
+			if not _preserving_body_turn and not session.is_owned_job_turn(id) and not body_action_can_continue(): motion.stop_gesture())
 	session.activity_changed.connect(func(a: String):
 		panel.set_activity(a)
 		_update_handle_dot())
@@ -855,21 +856,21 @@ func _on_event(ev: Dictionary) -> void:
 			if not session.character_id.is_empty() and not avatar.has_model() and _avatar_loading_for != session.character_id:
 				_load_avatar_for(session.character_id, false)
 		"text":
-			bridge.note_dialogue(_now())
+			_note_body_dialogue()
 			var t := str(ev.get("text", ""))
 			panel.update_live_reply(t, false)
 			_show_subtitle(t)
 		"audio":
-			bridge.note_dialogue(_now())
+			_note_body_dialogue()
 			audio.push_event(ev)
 		"action":
 			_action_seen_turn = str(ev.get("turn_id", session.turn_id))
 			# Direct action notifications may animate the upper body over an owned walk;
 			# ordinary chat already requests a safe stop before speech.
-			bridge.note_dialogue(_now())
+			_note_body_dialogue()
 			_play_dialogue_action(ev)
 		"done":
-			bridge.note_dialogue(_now())
+			_note_body_dialogue()
 			var t := str(ev.get("text", session.text))
 			var ok := bool(ev.get("ok", true))
 			if not ok:
@@ -895,7 +896,7 @@ func _on_event(ev: Dictionary) -> void:
 				# Active-turn error: hard-flush queued PCM and stop playback now, even when
 				# generation had already finished (turn_finished only fires while generating).
 				audio.cancel()
-				motion.stop_gesture()
+				if not session.is_background_presentation() and not body_action_can_continue(): motion.stop_gesture()
 				panel.set_status_message("응답 오류로 음성을 중단했습니다")
 		"voice_error":
 			panel.append_transcript("system", "음성 오류: " + str(ev.get("message", "")))
@@ -904,7 +905,7 @@ func _on_event(ev: Dictionary) -> void:
 func _play_dialogue_action(event: Dictionary) -> void:
 	# An acknowledged furniture skill owns its locomotion/contact pose while
 	# the same turn speaks. Face and voice may continue without replacing it.
-	if objects != null and objects.owns_foreground_speech():
+	if session.is_background_presentation() or (objects != null and not objects._interaction.is_empty()):
 		motion.set_emotion(str(event.get("emotion", "")))
 		return
 	var name := _dialogue_gesture_name(event)
@@ -934,8 +935,8 @@ func _send_chat(text: String) -> void:
 	if client.state != "open":
 		panel.append_transcript("system", "백엔드에 연결되어 있지 않습니다")
 		return
+	_cancel_current(body_action_can_continue())
 	_own_body_for_dialogue()
-	_cancel_current()
 	var msg := session.make_chat(text)
 	audio.begin_turn(msg["turn_id"])
 	if living != null:
@@ -948,8 +949,8 @@ func _on_utterance(wav: PackedByteArray, seconds: float, source: String) -> void
 	if client.state != "open":
 		panel.append_transcript("system", "백엔드에 연결되어 있지 않습니다 (음성 %.1fs 버림)" % seconds)
 		return
+	_cancel_current(body_action_can_continue())
 	_own_body_for_dialogue()
-	_cancel_current()
 	var msg := session.make_audio(Marshalls.raw_to_base64(wav))
 	audio.begin_turn(msg["turn_id"])
 	if living != null:
@@ -958,19 +959,19 @@ func _on_utterance(wav: PackedByteArray, seconds: float, source: String) -> void
 	panel.append_transcript("user", "[음성 %.1f초 · %s · %d bytes]" % [seconds, "PTT" if source == "ptt" else "VAD", wav.size()])
 
 
-func _cancel_current() -> void:
-	cancel_scene_approach("cancelled")
+func _cancel_current(preserve_body: bool = false) -> void:
+	if not preserve_body:
+		cancel_scene_approach("cancelled")
+		if objects != null: objects.cancel_interaction("cancelled")
+		if living != null: living.cancel("cancelled")
 	cancel_avatar_variant("","cancelled","local_stop")
 	motion.stop_upper_body_gesture()
-	if objects != null:
-		objects.cancel_interaction("cancelled")
-	if living != null:
-		living.cancel("cancelled")
+	_preserving_body_turn = preserve_body
 	var id := session.cancel_turn()
-	if not id.is_empty():
-		client.send(session.make_cancel(id))
+	_preserving_body_turn = false
+	if not id.is_empty(): client.send(session.make_cancel(id))
 	audio.cancel()
-	motion.stop_gesture()
+	if not preserve_body: motion.stop_gesture()
 
 
 func _avatar_variant_entry(character_id: String, variant_id: String) -> Dictionary:
@@ -1227,8 +1228,8 @@ func _set_panel_open(open: bool, persist: bool = true) -> void:
 		Settings.set_value("panel_open", open)
 	if open:
 		panel.focus_input()
-		# Never let the window run away while the user is in the panel: block this very frame
-		# instead of waiting for the next _process tick.
+		# The settings panel has its own window. Preserve explicit body actions;
+		# spontaneous roaming still yields while the user is typing.
 		_push_autonomy_context()
 	_refresh_autonomy_label()
 	_update_passthrough(true)
@@ -1574,6 +1575,25 @@ func _now() -> float:
 
 ## Per-frame context for DesktopAutonomy: any true field freezes movement immediately; movement
 ## resumes only after the module's own settle delay once everything is clear again.
+## Speech for a background task never revokes an admitted body action or extends
+## the conversation hold. Explicit user dialogue still takes attention normally.
+func _note_body_dialogue() -> void:
+	if not session.is_background_presentation(): bridge.note_dialogue(_now())
+
+func body_dialogue_busy(include_hold: bool = false) -> bool:
+	if body_action_can_continue(): return false
+	return (audio.voice_active and not session.is_background_presentation()) or session.is_foreground_busy() or (include_hold and bridge.dialogue_holding(_now()))
+
+func body_action_can_continue() -> bool:
+	if objects != null and not objects._interaction.is_empty(): return true
+	if living == null: return false
+	return living.director.has_explicit_body_intent()
+
+
+func body_action_owns_heading() -> bool:
+	return (scene_navigation != null and scene_navigation.navigation.active) or (objects != null and not objects._interaction.is_empty()) or _sit_active
+
+
 func _push_autonomy_context() -> void:
 	if autonomy == null:
 		return
@@ -1581,9 +1601,12 @@ func _push_autonomy_context() -> void:
 	var marker_dragging: bool = living != null and living.is_marker_dragging()
 	var object_dragging: bool = objects != null and objects.is_dragging()
 	var object_hold: bool = objects != null and objects.blocks_roaming()
-	var ctx := bridge.context(panel_open, mic.is_recording(), audio.voice_active, _drag_active or marker_dragging or object_dragging,
-		session.activity, session.is_foreground_busy(), session.is_foreground_playing(), _now(),
+	var background := session.is_background_presentation()
+	var continuing := body_action_can_continue()
+	var ctx := bridge.context(panel_open and not continuing, mic.is_recording() and not continuing, audio.voice_active and not background and not continuing, _drag_active or marker_dragging or object_dragging,
+		"idle" if background or continuing else session.activity, session.is_foreground_busy() and not continuing, session.is_foreground_playing() and not continuing, _now(),
 		(_sit_active and _sit_attached) or _dialogue_gesture_active() or object_hold)
+	if continuing and not object_hold and not (_sit_active and _sit_attached): ctx["foreground_busy"] = false
 	if objects != null and objects.has_method("admits_contact_during_reply") and objects.admits_contact_during_reply():
 		ctx["speaking"] = false
 		ctx["foreground_busy"] = false
@@ -1592,13 +1615,16 @@ func _push_autonomy_context() -> void:
 	# Passthrough hides pointer events outside the pet region, so use the global pointer.
 	var mouse_local := Vector2(DisplayServer.mouse_get_position() - get_window().position)
 	var handle_rect := Rect2(handle_button.position, handle_button.size) if handle_button.visible else Rect2()
-	autonomy.set_pointer_interaction(AutonomyBridge.pointer_near(mouse_local, pet_rect, handle_rect, _drag_active))
+	autonomy.set_pointer_interaction(not continuing and AutonomyBridge.pointer_near(mouse_local, pet_rect, handle_rect, _drag_active))
 
 
-## A user dialogue turn starts: the body belongs to the conversation from this instant. Roaming is
-## blocked by the context (hold window), the walk loop is dropped so it cannot resume mid-reply.
+## A user turn takes attention. Explicit actions retain their body; spontaneous
+## roaming yields and waits through the normal conversation hold.
 func _own_body_for_dialogue() -> void:
-	bridge.note_dialogue(_now())
+	_note_body_dialogue()
+	if body_action_can_continue():
+		_push_autonomy_context()
+		return
 	if not _walk_started.is_empty() and motion.current_gesture() == _walk_started:
 		motion.stop_gesture()
 	_walk_started = ""
