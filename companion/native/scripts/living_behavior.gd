@@ -7,6 +7,10 @@ var refresh_diagnostics:Dictionary={"calls":0,"last_refresh_us":0,"last_refresh_
 var host
 var director := BehaviorDirector.new()
 var scene_interests = preload("desktop_scene_interests.gd").new()
+var idle_recovery = preload("idle_recovery.gd").new()
+var _recovery_look := false
+var _recovery_settle := false
+var recovery_diagnostics: Dictionary = {"queued":0,"completed":0,"cancelled":0,"phase":"","last_outcome":""}
 var points: InterestPoints
 var last_output: Dictionary = {}
 var selected_locomotion_id := ""
@@ -241,6 +245,7 @@ func _event(event: Dictionary) -> void:
 		if host.objects != null: host.objects.cancel_commands(type,str(event.get("turn_id", "")) + ":intent")
 
 func cancel(reason: String = "cancelled") -> void:
+	_cancel_idle_recovery(false)
 	# The appearance loader itself clears locomotion with avatar_changed;
 	# every external cancellation must also revoke its pending/deferred load.
 	if reason != "avatar_changed" and host != null and host.has_method("cancel_avatar_variant"):
@@ -283,10 +288,13 @@ func tick(delta: float) -> void:
 	var scene_moving:bool=host.get("scene_navigation") != null and host.scene_navigation.navigation.active
 	var scene_ground:bool=host.get("scene_navigation") != null and host.scene_navigation.ground_latched
 	var furniture_busy:bool=host.objects != null and not host.objects._interaction.is_empty()
+	# Revoke the local return before dispatch, including accepted intents still
+	# waiting in the queue. It must never delay a new explicit movement.
+	_yield_recovery_to_explicit()
 	var can_move: bool = (scene_ground or host.autonomy.can_request_move()) and not host.bridge.dialogue_holding(host._now()) and not host.is_sitting() and not scene_moving and (not furniture_busy or _owns_legacy_furniture_approach())
 	last_output = director.tick(delta, {"character_id":host.session.character_id,"panel_open":host.panel_open,
 		"body_continuing":host.body_action_can_continue(),"dragging":host._drag_active or is_marker_dragging(),"speaking":speaking,"listening":listening,"thinking":thinking,"working":job_active,
-		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move,
+		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move and not idle_recovery.active(),
 		"autonomy_enabled":host.autonomy.enabled,"autonomy_state":"walk" if scene_moving else ("rest" if scene_ground else host.autonomy.state),
 		"moving":scene_moving or host.autonomy.state == "walk", "pointer_point":pointer,
 		"actor_point":Vector2(host.get_window().position) + host.pet_rect.get_center(),
@@ -304,6 +312,7 @@ func tick(delta: float) -> void:
 				var callback:=func(outcome:String):
 					selected_locomotion_id=""
 					director.navigation_result(target_id,outcome)
+					if outcome in ["arrived","completed"]: queue_idle_recovery("scene_navigation_completed")
 				var result:Dictionary=host.scene_navigation.request_owned(scene_interests.world_target(target_id),host.objects.scene_obstacle_bounds(),callback)
 				selected_locomotion_id=requested if result.get("accepted",false) else ""
 				director.resolve_intent(str(action.id),"started" if result.get("accepted",false) else str(result.get("reason","unreachable")))
@@ -329,18 +338,20 @@ func tick(delta: float) -> void:
 		_pointer_next = _attention_until + 5.0
 	elif _clock < _attention_until:
 		_look = _pointer_seen
+	_tick_idle_recovery(delta, speaking or listening or thinking, scene_moving, furniture_busy)
 	var state := str(last_output.get("state", "rest"))
 	if state != _last_state:
-		if state in ["listening", "thinking", "speaking", "attentive"] and _last_state not in ["listening", "thinking", "speaking", "attentive"] and not host._drag_active and not host.motion._preview and not host.body_action_owns_heading():
+		if state in ["listening", "thinking", "speaking", "attentive"] and _last_state not in ["listening", "thinking", "speaking", "attentive"] and not host._drag_active and not host.motion._preview and not host.body_action_owns_heading() and (not idle_recovery.active() or speaking or listening or thinking):
 			host.motion.face_front()
 		_last_state = state
 		host.panel.set_behavior_state(str(LABELS.get(state, state)))
-	host.motion.set_ambient_state(str(last_output.get("ambient", "rest")), float(last_output.get("strength", 0.5)))
+	host.motion.set_ambient_state("settle" if _recovery_settle else str(last_output.get("ambient", "rest")), 0.35 if _recovery_settle else float(last_output.get("strength", 0.5)))
 	if host.motion.has_method("set_ambient_attention_override"):
-		host.motion.set_ambient_attention_override(_look.is_finite() or speaking or listening or thinking or host.panel_open)
+		host.motion.set_ambient_attention_override(_recovery_look or (not _recovery_settle and (_look.is_finite() or speaking or listening or thinking or host.panel_open)))
 	_maybe_idle_action(state)
 
 func _maybe_idle_action(state: String) -> void:
+	if idle_recovery.active(): return
 	if str(_settings.get_value("idle_clip", "auto")) != "auto": return
 	if _clock < _idle_action_next or state not in ["rest", "sleepy"] or _look.is_finite(): return
 	if host.autonomy.state not in ["rest", "inspect"] or host._dialogue_gesture_active() or not host.motion.heading_ready(): return
@@ -358,7 +369,13 @@ func _maybe_idle_action(state: String) -> void:
 
 func apply_attention() -> bool:
 	if not enabled: return false
-	if _look.is_finite() and host.avatar.has_model():
+	if _recovery_look and host.avatar.has_model():
+		# Look toward the viewer before the feet/body follow. MotionPlayer limits
+		# and accelerates this gaze; its authored idle head returns during settle.
+		var toward := clampf(angle_difference(host.avatar.rotation.y,host.motion.view_yaw_radians),deg_to_rad(-14),deg_to_rad(14))
+		host.motion.gaze_target = Vector2(0.5 + rad_to_deg(toward)/36.0,0.45)
+		host.motion.gaze_has_target = true
+	elif _look.is_finite() and host.avatar.has_model():
 		var head: Vector2 = host.camera.unproject_position(host.avatar.bone_global_position("head"))
 		var delta := (_look - Vector2(host.get_window().position) - head) / 320.0
 		# Navigation destinations are floor/seat coordinates, not eye-level targets.
@@ -396,6 +413,7 @@ func _frame_moved(displacement: Vector2, velocity: Vector2) -> void:
 	host.motion.set_locomotion_sample(velocity, displacement, maxf(host._px_per_m * host.pet_scale(), 1.0), supported, world_delta)
 
 func _navigation_finished(target_id: String, outcome: String) -> void:
+	if outcome in ["arrived","completed"]: queue_idle_recovery("navigation_completed")
 	selected_locomotion_id = ""
 	if outcome == "heading_timeout":
 		host.motion.cancel_heading()
@@ -436,3 +454,51 @@ func _owns_legacy_furniture_approach() -> bool:
 	if not director._active.is_empty():return str(director._active.id)==id
 	if director._queue.is_empty():return false
 	return director._queue.all(func(entry):return str(entry.id)==id)
+
+## Called only after the prior action releases its body ownership. This does not
+## rotate the camera or continuously force a frontal idle pose.
+func queue_idle_recovery(reason: String = "interaction_completed") -> void:
+	if enabled:
+		idle_recovery.queue(reason)
+		recovery_diagnostics.queued += 1
+		recovery_diagnostics["reason"] = reason
+		recovery_diagnostics["phase"] = idle_recovery.phase
+		recovery_diagnostics["last_outcome"] = "queued"
+
+func _cancel_idle_recovery(brake: bool) -> void:
+	if idle_recovery.active():
+		recovery_diagnostics.cancelled += 1
+		recovery_diagnostics["last_outcome"] = "cancelled"
+	if brake and host != null: host.motion.cancel_heading()
+	idle_recovery.clear()
+	_recovery_look = false
+	_recovery_settle = false
+	recovery_diagnostics["phase"] = ""
+
+func _yield_recovery_to_explicit() -> void:
+	if idle_recovery.active() and (director.has_explicit_body_intent() or director._queue.any(func(intent): return intent.get("source","local") != "local")):
+		_cancel_idle_recovery(idle_recovery.owns_heading and not director.has_explicit_body_intent())
+
+func _tick_idle_recovery(delta: float, foreground_busy: bool, scene_moving: bool, furniture_busy: bool) -> void:
+	_recovery_look = false
+	_recovery_settle = false
+	if not idle_recovery.active(): return
+	var superseded: bool = host._drag_active or is_marker_dragging() or host.is_sitting() or scene_moving or furniture_busy or director.has_explicit_body_intent() or host.motion._preview or host.motion._custom_motion or host.autonomy.state in ["anticipate","walk","arrive","approach"]
+	var result: Dictionary = idle_recovery.tick(delta, {"superseded":superseded,
+		"busy":foreground_busy or host._dialogue_gesture_active() or host.bridge.dialogue_holding(host._now()),
+		"heading_ready":host.motion.heading_ready()})
+	recovery_diagnostics["phase"] = idle_recovery.phase
+	if result.get("completed",false):
+		recovery_diagnostics.completed += 1
+		recovery_diagnostics["last_outcome"] = "completed"
+	if result.get("cancelled",false):
+		recovery_diagnostics.cancelled += 1
+		recovery_diagnostics["last_outcome"] = "cancelled"
+	if result.get("brake",false): host.motion.cancel_heading()
+	if result.get("turn",false):
+		if not host.motion.set_contact_heading(host.motion.view_yaw_radians):
+			_cancel_idle_recovery(false)
+			return
+	_recovery_look = bool(result.get("look",false))
+	_recovery_settle = bool(result.get("settle",false))
+	if _recovery_settle: _look = Vector2.INF

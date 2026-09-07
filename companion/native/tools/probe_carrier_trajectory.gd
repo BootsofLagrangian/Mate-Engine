@@ -25,7 +25,7 @@ func run()->void:
  var curve_center:Vector3=scene.seat_node().global_transform*Vector3(.35,1.025,0)
  scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
  verify(not DesktopSeatedCarrierSweep.check(scene,snapshot,.5,90,[AABB(curve_center-Vector3.ONE*.015,Vector3.ONE*.03)],1,path).accepted,"actual nonlinear intermediate collision rejected")
- for invalid in [[Vector2.ZERO],[Vector2.ZERO,Vector2(.6,.4),Vector2(.5,.5),Vector2.ONE],[Vector2.ZERO,Vector2(INF,0),Vector2.ONE],[Vector2(.01,0),Vector2.ONE],[Vector2.ZERO,Vector2(1,1.1)],[Vector2.ZERO,"bad",Vector2.ONE]]:
+ for invalid in [[Vector2.ZERO],[Vector2.ZERO,Vector2(.6,.5),Vector2(.5,.4),Vector2.ONE],[Vector2.ZERO,Vector2(INF,0),Vector2.ONE],[Vector2(.01,0),Vector2.ONE],[Vector2.ZERO,Vector2(1,1.1)],[Vector2.ZERO,"bad",Vector2.ONE]]:
   verify(not DesktopSeatedCarrierSweep.check(scene,snapshot,.5,90,[],1,invalid).accepted and scene.seat_setup()==original,"invalid trajectory rejected without mutation")
  verify(not DesktopSeatedCarrierSweep.check(scene,snapshot,100,90,[],1,path).accepted and scene.seat_setup()==original,"invalid setup target restored")
  var dense:Array=[]
@@ -49,6 +49,20 @@ func run()->void:
  snapshot.articulation_frozen=false
  snapshot.articulation_enclosed=true
  verify(DesktopSeatedCarrierSweep.check(scene,snapshot,0,-180,[],1).accepted,"opposite signed180 is stationary envelope")
+ scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
+ scene.set_seat_setup(.1,0)
+ snapshot.transform=scene.seat_node().global_transform
+ snapshot.articulation_frozen=true
+ snapshot.articulation_enclosed=false
+ var excursion_setup:=scene.seat_setup()
+ verify(DesktopSeatedCarrierSweep.check(scene,snapshot,0,90,[],1,[Vector2.ZERO,Vector2(-1,.3),Vector2.ONE]).accepted,"bounded purposeful pull excursion admitted")
+ verify(not DesktopSeatedCarrierSweep.check(scene,snapshot,0,90,[],1,[Vector2.ZERO,Vector2(-16,.3),Vector2.ONE]).accepted and scene.seat_setup()==excursion_setup,"actual pull capability rejects excursion and restores")
+ verify(not DesktopSeatedCarrierSweep.check(scene,snapshot,0,90,[],1,[Vector2.ZERO,Vector2(-17,.3),Vector2.ONE]).accepted,"normalized excursion guard rejects out of bounds")
+ var seat_parts:Array=[]
+ DesktopSeatedCarrierSweep._seat_parts(scene.seat_node(),scene.seat_node().global_transform.affine_inverse(),seat_parts)
+ var chair_point:Vector3=scene.seat_node().global_transform*Vector3(seat_parts[0].points[0])
+ var chair_collision:=DesktopSeatedCarrierSweep.check(scene,snapshot,.1,0,[AABB(chair_point-Vector3.ONE*.005,Vector3.ONE*.01)],1)
+ verify(not chair_collision.accepted and chair_collision.reason=="carrier_geometry_blocked","own chair geometry collision rejected independently of body")
  scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
  verify(scene.seat_setup()==original,"all paths restore setup")
  scene.free();quit(1 if failures else 0)

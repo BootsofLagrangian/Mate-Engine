@@ -45,6 +45,7 @@ var locomotion_styles: Dictionary = {}
 var _source_seat_profiles: Dictionary = {}
 var authored_seated_feet:=AuthoredFootContacts.new()
 var seated_carrier:=SeatedCarrier.new()
+var seated_presence:=AuthoredSeatedPresence.new()
 var action_overlap := ActionOverlap.new()
 var upper_body := UpperBodyOverlay.new()
 var seated_transition := SeatedTransition.new()
@@ -389,6 +390,7 @@ func _sample_overlap(delta: float) -> Dictionary:
 func reset_all() -> void:
 	seated_transition.reset()
 	upper_body.clear()
+	seated_presence.reset()
 	upper_body.contact_locked=false
 	clear_seated_floor()
 	stop_gesture()
@@ -464,8 +466,9 @@ func _process(delta: float) -> void:
 			for bone in sampled.keys():
 				target[bone] = sampled[bone]
 
+	# Seated presence is applied once after authored rotations below.
 	# 2. Procedural idle layer (breath / sway / micro head motion)
-	if idle_enabled:
+	if idle_enabled and _contact_pose != "sit":
 		var breath := sin(elapsed * TAU / 4.2)
 		_add(target, "chest", Vector3(1.2 * breath, 0.0, 0.0))
 		_add(target, "spine", Vector3(0.6 * breath, 0.0, 0.3 * sin(elapsed * TAU / 9.0)))
@@ -483,8 +486,9 @@ func _process(delta: float) -> void:
 		_advance_gaze(wanted,delta)
 		var yaw := clampf((_gaze_current.x - 0.5) * 36.0, -14.0, 14.0) # + = look toward the character's right
 		var pitch := clampf((_gaze_current.y - 0.45) * 24.0, -10.0, 12.0)
-		_add(target, "head", Vector3(pitch * 0.7, yaw * 0.7, 0.0))
-		_add(target, "neck", Vector3(pitch * 0.3, yaw * 0.3, 0.0))
+		if _contact_pose != "sit":
+			_add(target, "head", Vector3(pitch * 0.7, yaw * 0.7, 0.0))
+			_add(target, "neck", Vector3(pitch * 0.3, yaw * 0.3, 0.0))
 
 	# 4. Pet reaction (small head tilt + lean)
 	if elapsed < _pet_until:
@@ -572,6 +576,7 @@ func _process(delta: float) -> void:
 				vrma_foot_contact = true
 				vrma_contact_weight = smoothstep(0.0,TRANSITION_SECONDS,elapsed-_vrma_start)
 	_apply_ambient(delta)
+	seated_presence.apply(self,delta)
 	upper_body.apply(self,delta)
 	var contact_solvable := false
 	if _contact_pose == "lean":

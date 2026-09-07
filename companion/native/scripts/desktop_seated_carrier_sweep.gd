@@ -81,16 +81,64 @@ static func check(scene:DesktopObjectContactScene,snapshot:Dictionary,target_pul
     var expanded:AABB=AABB(obstacle.box).grow((radius+arc_pad)*RigCapsules.scale_bound(inverse.basis))
     if _hull_intersects_box(local_points,expanded):return {"accepted":false,"reason":"occupied_sweep_blocked","blocked_body_id":str(capsule.get("id","")),"obstacle_index":index,"obstacle_id":obstacle.id,"sweep_segment":step,"body_bounds_world":result_bounds,"validation_ms":(Time.get_ticks_usec()-started)/1000.0,"scope":snapshot.get("scope","")}
    before_a=after_a;before_b=after_b
- return {"accepted":true,"reason":"clear","body_bounds_world":result_bounds,"target_avatar_transform":to*attachment,"segments":count,"validation_ms":(Time.get_ticks_usec()-started)/1000.0,"scope":snapshot.get("scope","")}
+ var seat_check:=_check_seat_geometry(scene,transforms,segment_angles,obstacles,support_scale)
+ if not seat_check.accepted:
+  seat_check["body_bounds_world"]=result_bounds
+  seat_check["validation_ms"]=(Time.get_ticks_usec()-started)/1000.0
+  return seat_check
+ return {"accepted":true,"reason":"clear","body_bounds_world":result_bounds,"chair_bounds_world":seat_check.bounds,"target_avatar_transform":to*attachment,"segments":count,"validation_ms":(Time.get_ticks_usec()-started)/1000.0,"scope":snapshot.get("scope","")}
+
+static func _seat_parts(node:Node,to_seat:Transform3D,result:Array)->void:
+ if node is MeshInstance3D and node.mesh!=null:
+  var local:Transform3D=to_seat*node.global_transform
+  for box in Parts.local_parts(node.mesh):
+   var points:Array[Vector3]=[]
+   var radius:=0.0
+   for i in 8:
+    var point:Vector3=local*AABB(box).get_endpoint(i)
+    points.append(point);radius=maxf(radius,point.length())
+   result.append({"points":points,"radius":radius,"id":str(node.get_path())})
+ for child in node.get_children():_seat_parts(child,to_seat,result)
+
+## The physical moving chair is also swept against fixed furniture. End-point
+## convex hulls plus per-segment angular padding enclose each mesh-part path.
+## In each obstacle's own frame an enclosing AABB is deliberately conservative.
+static func _check_seat_geometry(scene:DesktopObjectContactScene,transforms:Array,angles:Array,obstacles:Array,support_scale:float)->Dictionary:
+ var parts:Array=[]
+ _seat_parts(scene.seat_node(),scene.seat_node().global_transform.affine_inverse(),parts)
+ if parts.is_empty():return {"accepted":false,"reason":"missing_carrier_geometry"}
+ var total:=AABB();var first:=true
+ for part in parts:
+  for step in angles.size():
+   var points:Array[Vector3]=[]
+   for p in part.points:
+    points.append(Transform3D(transforms[step])*Vector3(p))
+    points.append(Transform3D(transforms[step+1])*Vector3(p))
+   var padding:=float(part.radius)*support_scale*(1-cos(float(angles[step])*.5))+.000001
+   var world:=AABB(points[0],Vector3.ZERO)
+   for p in points:world=world.expand(p)
+   world=world.grow(padding)
+   total=world if first else total.merge(world);first=false
+   for index in obstacles.size():
+    var obstacle:Dictionary=obstacles[index]
+    if not world.grow(.000001).intersects(obstacle.world_bounds):continue
+    var inverse:Transform3D=obstacle.inverse
+    var local:=AABB(inverse*points[0],Vector3.ZERO)
+    for p in points:local=local.expand(inverse*p)
+    local=local.grow(padding*RigCapsules.scale_bound(inverse.basis))
+    if local.grow(.000001).intersects(obstacle.box):return {"accepted":false,"reason":"carrier_geometry_blocked","blocked_chair_part":part.id,"obstacle_index":index,"obstacle_id":obstacle.id,"sweep_segment":step,"chair_bounds_world":total}
+ return {"accepted":true,"bounds":total}
+
 
 ## Runtime interpolates these progress coordinates on one monotone master clock.
-## Exact endpoints and componentwise monotonicity forbid hidden backtracking.
+## Pull may make a purposeful excursion (normalized x in [-16,16]); actual
+## chair capability bounds are checked for every sample. Yaw remains monotone.
 static func _validate_trajectory(trajectory:Array)->Array:
  if trajectory.is_empty():return [Vector2.ZERO,Vector2.ONE]
  if trajectory.size()<2 or trajectory.size()>65:return []
  var previous:=Vector2.ZERO
  for point in trajectory:
-  if not point is Vector2 or not point.is_finite() or point.x<0 or point.y<0 or point.x>1 or point.y>1 or point.x<previous.x or point.y<previous.y:return []
+  if not point is Vector2 or not point.is_finite() or point.x < -16 or point.x>16 or point.y<0 or point.y>1 or point.y<previous.y:return []
   previous=point
  if trajectory[0]!=Vector2.ZERO or trajectory[-1]!=Vector2.ONE:return []
  return trajectory.duplicate()

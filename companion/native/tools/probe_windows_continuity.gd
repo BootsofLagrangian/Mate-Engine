@@ -11,7 +11,17 @@ func sample() -> void:
 	if app == null or Engine.get_process_frames() == last_frame: return
 	last_frame = Engine.get_process_frames()
 	var nav = app.scene_navigation
-	frames.append({"ms":elapsed(),"stage":app.objects._interaction.get("stage",""),"command":app.objects._interaction.get("command_id",""),"voice":app.audio.voice_active,"job":app.session.job.get("status",""),"yaw":app.avatar.rotation.y,"travel_m":Vector3(nav.diagnostics.get("committed_world_delta",Vector3.ZERO)).length() if nav.navigation.active else 0.0,"gesture":app.motion.current_gesture(),"arrival_pivot":nav._arrival_pending,"chair_kind":app.objects.fit_diagnostics.get("chair_phase",{}).get("kind",""),"hand_weight":app.objects._interaction.get("work_contact_weight",-1.0)})
+	frames.append({"ms":elapsed(),"stage":app.objects._interaction.get("stage",""),"command":app.objects._interaction.get("command_id",""),"voice":app.audio.voice_active,"job":app.session.job.get("status",""),"yaw":app.avatar.rotation.y,"travel_m":Vector3(nav.diagnostics.get("committed_world_delta",Vector3.ZERO)).length() if nav.navigation.active else 0.0,"gesture":app.motion.current_gesture(),"arrival_pivot":nav._arrival_pending,"chair_kind":app.objects.fit_diagnostics.get("chair_phase",{}).get("kind",""),"hand_weight":app.objects._interaction.get("work_contact_weight",-1.0),"head_rotation":str(app.avatar.skeleton.get_bone_pose_rotation(app.avatar.bone_index.head)) if app.avatar.has_model() and app.avatar.bone_index.has("head") else "","chest_rotation":str(app.avatar.skeleton.get_bone_pose_rotation(app.avatar.bone_index.chest)) if app.avatar.has_model() and app.avatar.bone_index.has("chest") else ""})
+	var row:Dictionary=frames[-1]
+	row.presence=app.motion.seated_presence.diagnostics.duplicate(true)
+	row.recovery=app.living.recovery_diagnostics.duplicate(true) if app.living != null else {}
+	row.ambient_weight=app.motion.authored_ambient.weight
+	row.carrier_admission=app.objects.fit_diagnostics.get("carrier_admission",{}).duplicate(true)
+	row.chair_phase=app.objects.fit_diagnostics.get("chair_phase",{}).duplicate(true)
+	if row.stage=="using" and row.hand_weight>.99:
+		row.wrist_errors={}
+		for side in ["left","right"]:
+			row.wrist_errors[side]=app.avatar.bone_global_position(side+"Hand").distance_to(app.objects.contact_socket_world("keyboard_"+side))
 	report["frames"] = frames
 func run() -> void:
 	if OS.get_name() != "Windows":
@@ -54,6 +64,7 @@ func run() -> void:
 		await finish(); return
 	if not check(str(app.session.capabilities.get("provider","")) not in ["", "stub"],"backend declares a non-stub provider"):
 		await finish(); return
+	report["fixture_view"]=app._view_settings.duplicate(true)
 	app._switch_character("cheval-grand")
 	var expected := BackendClient.avatar_cache_path("cheval-grand").get_file()
 	if not check(await wait_for(func(): return app.session.character_id == "cheval-grand" and app.avatar.has_model() \
@@ -106,10 +117,18 @@ func run() -> void:
 	check(await wait_for(func():return command_outcome(owner),25.0) and command_outcome(owner,"completed"),"computer use and authored exit finish normally across task announcements")
 	check(report.commands.filter(func(row):return row.id==owner).size()==1 and command_outcome(owner,"completed"),"body action completes exactly once without cancellation")
 	check(frames.any(func(row):return row.hand_weight>0.05 and row.hand_weight<0.95),"work hands acquire contact progressively")
-	check(frames.any(func(row):return row.chair_kind=="settle_in"),"occupied chair swivels and rolls along one admitted path")
+	check(frames.any(func(row):return row.stage=="chair_carry" and row.chair_kind=="settle_in"),"occupied chair swivels and rolls along one admitted path")
 	if not expected_walk.is_empty():check(frames.any(func(row):return row.gesture==expected_walk and row.travel_m>0.00001),"replacement drives committed desktop movement")
 	check(frames.any(func(row):return row.voice and row.travel_m>0.00001),"actual world travel overlaps voice playback")
 	check(frames.any(func(row):return row.job in ["starting","running"] and not str(row.stage).is_empty()),"actual body action overlaps background task")
+	if "--expect-presence" in OS.get_cmdline_user_args():
+		check(frames.any(func(row):return row.stage=="using" and row.presence.get("active",false) and row.presence.get("weight",0)>.99),"stationary seated presence resumes after occupied carry")
+		var wrists:Array=frames.filter(func(row):return row.has("wrist_errors"))
+		check(not wrists.is_empty() and wrists.all(func(row):return row.wrist_errors.left<.02 and row.wrist_errors.right<.02),"breathing preserves final keyboard wrist contact within 2cm")
+		check(await wait_for(func():return int(app.living.recovery_diagnostics.get("completed",0))>0,18.0),"completed workstation returns through gaze turn and settled idle")
+		check(app.motion.heading_ready() and absf(angle_difference(app.avatar.rotation.y,app.motion.view_yaw_radians))<deg_to_rad(2),"recovery faces viewer with completed grounded turn")
+		check(app._view_settings==report.fixture_view,"idle recovery preserves chosen camera view")
+		await shot("recovered-idle")
 	app._cancel_current()
 	check(not app.body_action_can_continue(),"explicit stop leaves no body owner")
 	await finish()

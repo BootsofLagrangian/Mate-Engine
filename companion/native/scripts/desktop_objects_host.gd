@@ -193,6 +193,7 @@ func request_intent(intent: Dictionary, source: String, command_id: String) -> D
 	if source == "llm" and (host.living.director.has_user_intent() or (not _pending_command.is_empty() and _pending_command.source == "user") or (not _interaction.is_empty() and _interaction.get("source","user") == "user")):
 		return {"accepted":false,"reason":"user_priority"}
 	cancel_commands("superseded")
+	if host.living != null: host.living._cancel_idle_recovery(host.living.idle_recovery.owns_heading)
 	_pending_command = {"id":command_id,"intent":intent.duplicate(true),"source":source,"expires":_clock+30.0,"character":str(host.session.character_id)}
 	_command_seen[command_id] = _clock
 	while _command_seen.size() > 128: _command_seen.erase(_command_seen.keys()[0])
@@ -922,6 +923,16 @@ static func chair_overlap_path(pull_start: float, yaw_end: float) -> Array:
 		result.append(Vector2(chair_ease((t-pull_start)/(1.0-pull_start)),chair_ease(t/yaw_end)))
 	return result
 
+## Make room for the feet while already swivelling, then ease inward once
+## the legs clear the desk. Pull reverses while yaw is still advancing.
+static func chair_clearance_path(excursion: float, return_start: float) -> Array:
+	var result:Array=[]
+	for i in 65:
+		var t:=float(i)/64.0
+		var pull:=excursion*chair_ease(t/.35) if t<.35 else lerpf(excursion,1.0,chair_ease((t-return_start)/(1.0-return_start)))
+		result.append(Vector2(pull,chair_ease(t/.9)))
+	return result
+
 static func chair_path_sample(path: Array, t: float) -> Vector2:
 	if path.is_empty():return Vector2(t,t)
 	var at:=clampf(t,0.0,1.0)*(path.size()-1)
@@ -930,7 +941,7 @@ static func chair_path_sample(path: Array, t: float) -> Vector2:
 
 static func chair_path_slopes(path: Array) -> Vector2:
 	var slopes:=Vector2.ZERO
-	for i in path.size()-1:slopes=slopes.max((Vector2(path[i+1])-Vector2(path[i]))*(path.size()-1))
+	for i in path.size()-1:slopes=slopes.max((Vector2(path[i+1])-Vector2(path[i])).abs()*(path.size()-1))
 	return slopes
 
 func _tick_chair_steps(delta: float) -> void:
@@ -970,6 +981,27 @@ func _tick_chair_steps(delta: float) -> void:
 					admitted_this_frame=true
 					break
 
+		# The approach planner clears the empty chair; the occupied foot volume
+		# can need a little more room. Admit the whole outward/turn/inward curve.
+		if carried and not admitted_this_frame and step.kind=="swivel_in" and not _interaction.chair_steps.is_empty() and _interaction.chair_steps[0].kind=="roll_in":
+			var start_pull:=float(current_setup.pullout_local_m)
+			var target_pull:=float(_interaction.chair_steps[0].pull)
+			var span:=start_pull-target_pull
+			if span>.0001:
+				for extra in [.1,.2,.3]:
+					if start_pull+extra>float(current_setup.capability.get("max_pullout_m",0)):continue
+					var found:=false
+					for return_start in [.55,.65,.7]:
+						var combined:Dictionary=_interaction.chair_steps[0].duplicate(true)
+						combined.kind="settle_in"
+						combined.trajectory=chair_clearance_path(-extra/span,return_start)
+						combined.clearance_local_m=extra
+						if _admit_carrier_step(combined):
+							_interaction.chair_steps.pop_front()
+							step=combined;admitted_this_frame=true;found=true
+							break
+					if found:break
+
 		if _interaction.stage=="chair_restore":
 			var others: Array = []
 			for object_id in windows:
@@ -983,7 +1015,9 @@ func _tick_chair_steps(delta: float) -> void:
 				else: cancel_interaction(str(sweep.get("reason","unsafe_chair_restore")))
 				return
 		if carried and str(step.kind) not in ["lift","lower"] and not admitted_this_frame and not _admit_carrier_step(step):
-			cancel_interaction(str(fit_diagnostics.get("carrier_admission",{}).get("reason","unsafe_occupied_sweep")));return
+			var rejection:=str(fit_diagnostics.get("carrier_admission",{}).get("reason","unsafe_occupied_sweep"))
+			if _unwind_incoming_carrier(rejection):return
+			cancel_interaction(rejection);return
 		var setup: Dictionary = _contact_scene.seat_setup()
 		step.from_pull=float(setup.pullout_local_m); step.from_yaw=float(setup.yaw_delta_deg)
 		step.from_lift=float(_interaction.chair_lift); step.elapsed=0.0
@@ -1087,8 +1121,24 @@ func _admit_lift_envelope(snapshot: Dictionary) -> bool:
 	var result: Dictionary = helper.check_stationary_envelope(_contact_scene,snapshot,helper.fixed_solids(_contact_scene,others),host.avatar.model.get_instance_id())
 	fit_diagnostics["carrier_admission"]=result
 	if not result.get("accepted",false):return false
-	if not _carrier_envelope_fits(result.get("body_bounds_world",AABB())):
+	var envelope:AABB=result.get("body_bounds_world",AABB())
+	if result.has("chair_bounds_world"):envelope=envelope.merge(result.chair_bounds_world)
+	if not _carrier_envelope_fits(envelope):
 		result.reason="lift_envelope_outside_view";return false
+	return true
+
+## If the first occupied turn is blocked, the original authored exit is still
+## valid at this unchanged chair setup. Lower the feet and stand via that source
+## instead of cancelling the seated attachment into an instantaneous stand.
+func _unwind_incoming_carrier(reason: String) -> bool:
+	if _interaction.get("chair_exit",false) or not _interaction.has("setup_plan"):return false
+	var setup:Dictionary=_contact_scene.seat_setup()
+	var plan:Dictionary=_interaction.setup_plan
+	if absf(float(setup.pullout_local_m)-float(plan.pullout_local_m))>.0001 or absf(angle_difference(deg_to_rad(float(setup.yaw_delta_deg)),deg_to_rad(float(plan.yaw_delta_deg))))>.0001:return false
+	_interaction.abort_reason=reason
+	_interaction.chair_exit=true
+	_interaction.chair_step={}
+	_interaction.chair_steps=[{"kind":"lower","pull":float(setup.pullout_local_m),"yaw":float(setup.yaw_delta_deg),"lift":0.0}]
 	return true
 
 func _admit_carrier_step(step: Dictionary) -> bool:
@@ -1105,7 +1155,9 @@ func _admit_carrier_step(step: Dictionary) -> bool:
 	var result: Dictionary = helper.check(_contact_scene,snapshot,float(step.pull),float(step.yaw),fixed,host.avatar.model.get_instance_id(),step.get("trajectory",[]))
 	fit_diagnostics["carrier_admission"]=result
 	if not result.get("accepted",false): return false
-	if not _carrier_envelope_fits(result.get("body_bounds_world",AABB())):
+	var envelope:AABB=result.get("body_bounds_world",AABB())
+	if result.has("chair_bounds_world"):envelope=envelope.merge(result.chair_bounds_world)
+	if not _carrier_envelope_fits(envelope):
 		result.reason="occupied_sweep_outside_view";return false
 	step.model_id=snapshot.model_id;step.source_clip_id=snapshot.source_clip_id
 	return true
@@ -1200,10 +1252,12 @@ func _tick_presentation() -> void:
 	host._refresh_sit_button()
 
 func _complete_contact_exit(foot: Vector3, model_id: int, owner: Dictionary) -> void:
-	cancel_interaction("completed")
+	var outcome:=str(_interaction.get("abort_reason","completed"))
+	cancel_interaction(outcome)
 	if _spatial_enabled() and host.get("scene_navigation")!=null:
 		fit_diagnostics["completed_exit_ground"]=host.scene_navigation.adopt_contact_exit(foot,model_id,owner)
 	host._refresh_sit_button()
+	if host.living != null: host.living.queue_idle_recovery("furniture_completed")
 
 func _apply_work_contact(_object_window) -> void:
 	if host.motion.has_method("set_upper_body_contact_lock"): host.motion.set_upper_body_contact_lock(true)
