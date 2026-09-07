@@ -1,0 +1,5 @@
+# Engine-only additions on top of experiments/omni/requirements-lock.txt (fastapi, httpx,
+# soundfile, librosa, torch, transformers are already pinned there).
+uvicorn==0.52.4
+websockets==12.0
+pytest==9.1.1

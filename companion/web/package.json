@@ -1,0 +1,1 @@
+{"name":"cheval-companion","private":true,"version":"0.1.0","type":"module","scripts":{"build":"vite build","dev":"vite --host 127.0.0.1"},"dependencies":{"@pixiv/three-vrm":"3.4.4","three":"0.180.0"},"devDependencies":{"playwright":"^1.58.2","vite":"^6.4.1"}}

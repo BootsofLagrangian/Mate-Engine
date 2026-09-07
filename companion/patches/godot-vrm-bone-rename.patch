@@ -1,0 +1,41 @@
+--- a/addons/vrm/vrm_utils.gd
++++ b/addons/vrm/vrm_utils.gd
+@@ -162,12 +162,23 @@
+ 	var original_indices_to_new_bone_names = {}
+ 	var skellen: int = p_skeleton.get_bone_count()
+ 
+-	# Rename bones to their humanoid equivalents.
++	# Collect names before mutating, then rename through temporary names.
++	# Adjacent VRM bones may already own another bone's target humanoid name
++	# (e.g. Spine -> Chest, Chest -> UpperChest). One-pass rename loses them.
+ 	for i in range(skellen):
+-		var bn: StringName = p_bone_map.find_profile_bone_name(p_skeleton.get_bone_name(i))
+-		original_bone_names_to_indices[p_skeleton.get_bone_name(i)] = i
+-		original_indices_to_bone_names[i] = p_skeleton.get_bone_name(i)
++		var original: StringName = p_skeleton.get_bone_name(i)
++		var bn: StringName = p_bone_map.find_profile_bone_name(original)
++		original_bone_names_to_indices[original] = i
++		original_indices_to_bone_names[i] = original
+ 		original_indices_to_new_bone_names[i] = bn
++	for i in range(skellen):
++		if original_indices_to_new_bone_names[i] != StringName():
++			var temporary := "__MateVrmRename_%d" % i
++			while p_skeleton.find_bone(temporary) != -1:
++				temporary += "_"
++			p_skeleton.set_bone_name(i, temporary)
++	for i in range(skellen):
++		var bn: StringName = original_indices_to_new_bone_names[i]
+ 		if bn != StringName():
+ 			p_skeleton.set_bone_name(i, bn)
+ 
+--- a/addons/vrm/vrm_extension.gd
++++ b/addons/vrm/vrm_extension.gd
+@@ -961,7 +961,7 @@
+ 	root_node.set("vrm_meta", vrm_meta)
+ 
+ 	if vrm_extension.has("secondaryAnimation") and (vrm_extension["secondaryAnimation"].get("colliderGroups", []).size() > 0 or vrm_extension["secondaryAnimation"].get("boneGroups", []).size() > 0):
+-		var secondary_node: Node = root_node.get_node("secondary")
++		var secondary_node: Node = root_node.get_node_or_null("secondary")
+ 		if secondary_node == null:
+ 			secondary_node = Node3D.new()
+ 			root_node.add_child(secondary_node, true)
