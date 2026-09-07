@@ -11,7 +11,7 @@ func sample() -> void:
 	if app == null or Engine.get_process_frames() == last_frame: return
 	last_frame = Engine.get_process_frames()
 	var nav = app.scene_navigation
-	frames.append({"ms":elapsed(),"stage":app.objects._interaction.get("stage",""),"command":app.objects._interaction.get("command_id",""),"voice":app.audio.voice_active,"job":app.session.job.get("status",""),"yaw":app.avatar.rotation.y,"travel_m":Vector3(nav.diagnostics.get("committed_world_delta",Vector3.ZERO)).length() if nav.navigation.active else 0.0,"gesture":app.motion.current_gesture()})
+	frames.append({"ms":elapsed(),"stage":app.objects._interaction.get("stage",""),"command":app.objects._interaction.get("command_id",""),"voice":app.audio.voice_active,"job":app.session.job.get("status",""),"yaw":app.avatar.rotation.y,"travel_m":Vector3(nav.diagnostics.get("committed_world_delta",Vector3.ZERO)).length() if nav.navigation.active else 0.0,"gesture":app.motion.current_gesture(),"arrival_pivot":nav._arrival_pending,"chair_kind":app.objects.fit_diagnostics.get("chair_phase",{}).get("kind",""),"hand_weight":app.objects._interaction.get("work_contact_weight",-1.0)})
 	report["frames"] = frames
 func run() -> void:
 	if OS.get_name() != "Windows":
@@ -63,13 +63,17 @@ func run() -> void:
 	check(app.objects.rows().is_empty(),"starts with zero furniture objects")
 	if not check(app.objects.native_available(),"actual native furniture windows supported"):
 		await finish(); return
+	var expected_walk := argument("--expect-walk")
+	if not expected_walk.is_empty():
+		check(AutonomyBridge.pick_walk_clip(app._vrma_loaded)==expected_walk,"requested replacement is the loaded default walk")
+		check(not Dictionary(app.motion.locomotion_styles.get(expected_walk,{})).is_empty(),"replacement uses authored contacts instead of procedural legs")
 	area = DisplayServer.screen_get_usable_rect(DisplayServer.window_get_current_screen())
 	if not check(await choose_floor_corridor(),"normal floor support and movement readiness"):
 		await finish(); return
 
 	if not direct_skill({"kind":"furniture","object_type":"computer","verb":"use"},"continuity:computer"):
 		await finish(); return
-	if not check(await wait_for(func(): return app.objects._interaction.get("stage","") in ["scene_approaching","approaching","entering","chair_setup","chair_carry"],20.0),"authored computer sequence starts"):
+	if not check(await wait_for(func(): return app.objects._interaction.get("stage","") in ["scene_approaching","approaching"],20.0),"authored computer sequence starts"):
 		await finish(); return
 	var owner: String = app.objects._interaction.get("command_id","")
 	app._set_panel_open(true,false)
@@ -78,9 +82,20 @@ func run() -> void:
 	check(app.objects._interaction.get("command_id","") == owner,"new chat preserves admitted body owner synchronously")
 	if not check(await wait_for(func(): return app.objects._interaction.get("stage","") == "using",40.0),"computer approach and entry complete across conversation"):
 		await finish(); return
+	if check(await wait_for(func():return float(app.objects._interaction.get("work_contact_weight",-1))>.15 and float(app.objects._interaction.get("work_contact_weight",1))<.85,1.0),"partial hand contact available"):
+		var object_window=app.objects.windows[app.objects._interaction.id]
+		app.objects._apply_work_contact(object_window)
+		var pose:Dictionary={}
+		for side in ["left","right"]:
+			for suffix in ["UpperArm","LowerArm","Hand"]:
+				var index:int=app.avatar.bone_index[side+suffix]
+				pose[index]=app.avatar.skeleton.get_bone_pose_rotation(index)
+		app.objects._apply_work_contact(object_window)
+		check(pose.keys().all(func(index):return Quaternion(pose[index]).is_equal_approx(app.avatar.skeleton.get_bone_pose_rotation(index))),"repeated same-frame hand contact is idempotent")
 	check(await wait_for(func(): return not done.is_empty() and played and not app.audio.voice_active,25.0),"real local LM reply and dedicated voice finish")
 	check(app.objects._interaction.get("command_id","") == owner,"reply leaves computer ownership intact")
 	await shot("conversation-seated")
+	await verify_owned_furniture_region()
 	app._start_job("현재 작업 폴더의 파일 목록을 도구로 한 번 확인하고 한 문장으로 요약하세요. 파일을 수정하지 마세요.")
 	check(await wait_for(func(): return not app.session.job.is_empty(),10.0),"real background task accepted")
 	check(await wait_for(func(): return str(app.session.job.get("status","")) in app.session.JOB_TERMINAL,40.0),"real task reaches terminal state")
@@ -90,8 +105,18 @@ func run() -> void:
 	check(await wait_for(func():return report.events.any(func(row):return row.get("type","")=="done" and row.get("turn_id","")==result_turn) and not app.audio.voice_active and app.audio.queue.pending_frames()==0,20.0),"owned result voice finishes")
 	check(await wait_for(func():return command_outcome(owner),25.0) and command_outcome(owner,"completed"),"computer use and authored exit finish normally across task announcements")
 	check(report.commands.filter(func(row):return row.id==owner).size()==1 and command_outcome(owner,"completed"),"body action completes exactly once without cancellation")
+	check(frames.any(func(row):return row.hand_weight>0.05 and row.hand_weight<0.95),"work hands acquire contact progressively")
+	check(frames.any(func(row):return row.chair_kind=="settle_in"),"occupied chair swivels and rolls along one admitted path")
+	if not expected_walk.is_empty():check(frames.any(func(row):return row.gesture==expected_walk and row.travel_m>0.00001),"replacement drives committed desktop movement")
 	check(frames.any(func(row):return row.voice and row.travel_m>0.00001),"actual world travel overlaps voice playback")
 	check(frames.any(func(row):return row.job in ["starting","running"] and not str(row.stage).is_empty()),"actual body action overlaps background task")
 	app._cancel_current()
 	check(not app.body_action_can_continue(),"explicit stop leaves no body owner")
 	await finish()
+
+func verify_owned_furniture_region() -> void:
+	var tools_path: String = get_script().resource_path.get_base_dir()
+	var helper = load(tools_path.path_join("probe_owned_window_region.gd"))
+	var evidence: Dictionary = await helper.verify(app,output,tools_path.path_join("probe_owned_window_region.ps1"))
+	report["owned_furniture_region"] = evidence
+	check(bool(evidence.get("ok",false)),"owned Windows region preserves furniture outside character bounds")

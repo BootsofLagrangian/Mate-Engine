@@ -710,6 +710,18 @@ func register_locomotion_style(name: String, metadata: Dictionary) -> bool:
 	locomotion_styles[name] = metadata.duplicate(true)
 	return true
 
+## World speed that plays a measured source at its authored cadence. A fixed
+## slow desktop speed stretches a normal walk into conspicuous slow motion.
+func authored_locomotion_speed(name: String) -> float:
+	if avatar == null or not avatar.has_model() or not vrma_clips.has(name) or Dictionary(locomotion_styles.get(name,{})).is_empty(): return 0.0
+	if not avatar.bone_index.has("leftUpperLeg") or not avatar.bone_index.has("leftFoot"): return 0.0
+	var sk := avatar.skeleton
+	var leg := sk.get_bone_global_rest(avatar.bone_index.leftUpperLeg).origin-sk.get_bone_global_rest(avatar.bone_index.leftFoot).origin
+	var world_leg := (sk.global_transform.basis*leg).length()
+	var cycles: float = float(locomotion_styles[name].cycle_stride_leg_lengths)/maxf(vrma_clips[name].duration,.1)
+	return world_leg*clampf(cycles,.2,2.5)
+
+
 func register_locomotion_clip(name: String, preserve_hips: bool = true) -> bool:
 	if not vrma_clips.has(name):
 		return false

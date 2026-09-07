@@ -550,6 +550,7 @@ func tick(delta: float) -> void:
 		_interaction.stage = "scene_approaching"
 		var accepted: Dictionary = host.request_scene_approach(plan.target_world,scene_obstacle_bounds(),plan.get("navigation_geometry",{}))
 		if not accepted.get("accepted",false): cancel_interaction(str(accepted.get("reason","unreachable")))
+		else:host.scene_navigation.arrival_yaw=float(plan.facing_yaw)
 		return
 	if _interaction.stage == "waiting":
 		# Stage in front of the cushion using the authored backwards hips travel.
@@ -585,6 +586,10 @@ func tick(delta: float) -> void:
 		var direction: Vector3 = _contact_scene.facing_direction_world()
 		if not host.motion.set_contact_heading(atan2(direction.x,direction.z)):
 			cancel_interaction("heading_rejected")
+		elif host.motion.heading_ready():
+			_interaction.stage="ready_contact"
+			host._push_autonomy_context()
+			_begin_seat(id,contact_socket_screen("seat"))
 		return
 	if _interaction.stage == "facing":
 		if _clock >= float(_interaction.facing_until): cancel_interaction("heading_timeout"); return
@@ -908,6 +913,26 @@ static func chair_yaw(from: float, to: float, weight: float) -> float:
 	if weight>=1:return to
 	return wrapf(rad_to_deg(lerp_angle(deg_to_rad(from),deg_to_rad(to),weight)),-180.0,180.0)
 
+## Rotation leads translation; their nonzero intervals overlap. Validation and
+## playback both use these exact piecewise-linear normalized samples.
+static func chair_overlap_path(pull_start: float, yaw_end: float) -> Array:
+	var result:Array=[]
+	for i in 65:
+		var t:=float(i)/64.0
+		result.append(Vector2(chair_ease((t-pull_start)/(1.0-pull_start)),chair_ease(t/yaw_end)))
+	return result
+
+static func chair_path_sample(path: Array, t: float) -> Vector2:
+	if path.is_empty():return Vector2(t,t)
+	var at:=clampf(t,0.0,1.0)*(path.size()-1)
+	var index:=mini(int(at),path.size()-2)
+	return Vector2(path[index]).lerp(Vector2(path[index+1]),at-index)
+
+static func chair_path_slopes(path: Array) -> Vector2:
+	var slopes:=Vector2.ZERO
+	for i in path.size()-1:slopes=slopes.max((Vector2(path[i+1])-Vector2(path[i]))*(path.size()-1))
+	return slopes
+
 func _tick_chair_steps(delta: float) -> void:
 	var carried: bool = _interaction.stage=="chair_carry"
 	if carried and not _owns_seat_contact(_contact_id): cancel_interaction("contact_lost"); return
@@ -926,6 +951,25 @@ func _tick_chair_steps(delta: float) -> void:
 				_interaction.until=_clock+10.0
 			return
 		var step: Dictionary = _interaction.chair_steps.pop_front()
+		var admitted_this_frame := false
+		var current_setup:Dictionary=_contact_scene.seat_setup()
+		if absf(float(step.pull)-float(current_setup.pullout_local_m))<.0001 and absf(angle_difference(deg_to_rad(float(step.yaw)),deg_to_rad(float(current_setup.yaw_delta_deg))))<.0001 and absf(float(step.lift)-float(_interaction.chair_lift))<.0001:
+			_tick_chair_steps(delta)
+			return
+
+		# Try one occupied pull/yaw path instead of stopping between swivel and
+		# roll. Its actual combined sweep must pass; otherwise retain safe axes.
+		if carried and step.kind=="swivel_in" and not _interaction.chair_steps.is_empty() and _interaction.chair_steps[0].kind=="roll_in":
+			for delay in [.25,.4,.55,.7]:
+				var combined:Dictionary=_interaction.chair_steps[0].duplicate(true)
+				combined.kind="settle_in"
+				combined.trajectory=chair_overlap_path(delay,.9)
+				if _admit_carrier_step(combined):
+					_interaction.chair_steps.pop_front()
+					step=combined
+					admitted_this_frame=true
+					break
+
 		if _interaction.stage=="chair_restore":
 			var others: Array = []
 			for object_id in windows:
@@ -938,7 +982,7 @@ func _tick_chair_steps(delta: float) -> void:
 					_begin_restore_step_away(others)
 				else: cancel_interaction(str(sweep.get("reason","unsafe_chair_restore")))
 				return
-		if carried and str(step.kind) not in ["lift","lower"] and not _admit_carrier_step(step):
+		if carried and str(step.kind) not in ["lift","lower"] and not admitted_this_frame and not _admit_carrier_step(step):
 			cancel_interaction(str(fit_diagnostics.get("carrier_admission",{}).get("reason","unsafe_occupied_sweep")));return
 		var setup: Dictionary = _contact_scene.seat_setup()
 		step.from_pull=float(setup.pullout_local_m); step.from_yaw=float(setup.yaw_delta_deg)
@@ -946,6 +990,9 @@ func _tick_chair_steps(delta: float) -> void:
 		var distance: float = absf(float(step.pull)-float(step.from_pull))*_contact_scale
 		var angle: float = absf(rad_to_deg(angle_difference(deg_to_rad(float(step.from_yaw)),deg_to_rad(float(step.yaw)))))
 		step.duration=maxf(.6,maxf(1.875*distance/.16,1.875*angle/70.0))
+		if step.has("trajectory"):
+			var slopes:=chair_path_slopes(step.trajectory)
+			step.duration=maxf(.6,maxf(slopes.x*distance/.16,slopes.y*angle/70.0))
 		_interaction.chair_step=step
 	var step: Dictionary = _interaction.chair_step
 	if carried and str(step.kind) in ["lift","lower"] and not step.get("envelope_ready",false):
@@ -959,11 +1006,13 @@ func _tick_chair_steps(delta: float) -> void:
 		if not _admit_lift_envelope(envelope): cancel_interaction(str(fit_diagnostics.get("carrier_admission",{}).get("reason","unsafe_lift_envelope")));return
 		step.envelope_ready=true
 	step.elapsed=minf(float(step.duration),float(step.elapsed)+clampf(delta,0.0,.05))
-	var t:=chair_ease(float(step.elapsed)/float(step.duration))
+	var progress:=float(step.elapsed)/float(step.duration)
+	var t:=progress if step.has("trajectory") else chair_ease(progress)
+	var axes:=chair_path_sample(step.get("trajectory",[]),t)
 	var lift:=lerpf(float(step.from_lift),float(step.lift),t)
 	var moving: bool = step.kind not in ["lift","lower"]
 	if carried and moving and (not host.motion.seated_carrier_state().get("ready",false) or not _carrier_step_valid(step)): cancel_interaction("carrier_not_ready"); return
-	if not _contact_scene.set_seat_setup(lerpf(float(step.from_pull),float(step.pull),t),chair_yaw(float(step.from_yaw),float(step.yaw),t)):
+	if not _contact_scene.set_seat_setup(lerpf(float(step.from_pull),float(step.pull),axes.x),chair_yaw(float(step.from_yaw),float(step.yaw),axes.y)):
 		cancel_interaction("chair_setup_rejected"); return
 	if carried:
 		var facing: Vector3 = _contact_scene.facing_direction_world()
@@ -1053,7 +1102,7 @@ func _admit_carrier_step(step: Dictionary) -> bool:
 	for id in windows:
 		if id!=_contact_id and bool(store.get_object(id).get("visible",false)) and is_instance_valid(windows[id]._scene): _append_scene_solids(windows[id]._scene,others)
 	var fixed: Array = helper.fixed_solids(_contact_scene,others)
-	var result: Dictionary = helper.check(_contact_scene,snapshot,float(step.pull),float(step.yaw),fixed,host.avatar.model.get_instance_id())
+	var result: Dictionary = helper.check(_contact_scene,snapshot,float(step.pull),float(step.yaw),fixed,host.avatar.model.get_instance_id(),step.get("trajectory",[]))
 	fit_diagnostics["carrier_admission"]=result
 	if not result.get("accepted",false): return false
 	if not _carrier_envelope_fits(result.get("body_bounds_world",AABB())):
@@ -1161,11 +1210,26 @@ func _apply_work_contact(_object_window) -> void:
 	host.motion.set_ambient_state("working",1.0)
 	if host.living != null: host.living._look = contact_socket_screen("inspect")
 	if not contact_scene_active() or not host.avatar.has_model(): return
+	if not _interaction.has("work_contact_start"):_interaction.work_contact_start=_clock
+	var weight:=smoothstep(0.0,.65,_clock-float(_interaction.work_contact_start))*smoothstep(0.0,.45,float(_interaction.get("until",_clock+1.0))-_clock)
+	_interaction.work_contact_weight=weight
+	# A view refresh can call this again in the same frame. Blend from the same
+	# incoming pose rather than cumulatively approaching the IK target.
+	if int(_interaction.get("work_contact_frame",-1))!=Engine.get_process_frames():
+		_interaction.work_contact_frame=Engine.get_process_frames()
+		var source:Dictionary={}
+		for side in ["left","right"]:
+			for suffix in ["UpperArm","LowerArm","Hand"]:
+				if host.avatar.bone_index.has(side+suffix):
+					var index:int=host.avatar.bone_index[side+suffix]
+					source[index]=host.avatar.skeleton.get_bone_pose_rotation(index)
+		_interaction.work_contact_source=source
+	for index in _interaction.work_contact_source:host.avatar.skeleton.set_bone_pose_rotation(index,_interaction.work_contact_source[index])
 	var both := true
 	for side in ["left","right"]:
 		var socket: String = "keyboard_"+side
 		var target := contact_socket_world(socket)
-		var reached: bool = target.is_finite() and host.avatar.apply_hand_contact(side,target)
+		var reached: bool = target.is_finite() and host.avatar.apply_hand_contact(side,target,weight)
 		_interaction[side+"_hand_reachable"] = reached
 		both = both and reached
 	_interaction["hand_reachable"] = both

@@ -1515,6 +1515,10 @@ func take_projection_world_delta() -> Variant:
 
 func _update_passthrough(force: bool) -> void:
 	var region := pet_rect.grow(10)
+	# Windows also clips drawing to this region. Occupied furniture moves from
+	# its own native window into this viewport, so retain its visible geometry.
+	if objects != null and objects.contact_scene_active() and objects._contact_scene.visible:
+		region = region.merge(objects.contact_bounds().grow(10))
 	if handle_button.visible:
 		region = region.merge(Rect2(handle_button.position, handle_button.size).grow(4))
 	if subtitle.visible:

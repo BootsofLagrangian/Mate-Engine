@@ -491,9 +491,16 @@ func contact_anchors() -> Dictionary:
 
 ## Solve a hand to an explicit world surface point, preserving the elbow pole.
 ## Returns false for unreachable contacts instead of promising hand attachment.
-func apply_hand_contact(side: String, world_target: Vector3) -> bool:
+func apply_hand_contact(side: String, world_target: Vector3, weight: float = 1.0) -> bool:
 	if not has_model() or not bone_index.has(side+"Hand") or not world_target.is_finite():
 		return false
+	if not is_finite(weight):return false
+	weight=clampf(weight,0.0,1.0)
+	if weight<=0.0:return false
+	var incoming:Dictionary={}
+	for suffix in ["UpperArm","LowerArm","Hand"]:
+		var index:int=bone_index[side+suffix]
+		incoming[index]=skeleton.get_bone_pose_rotation(index)
 	var origin := skeleton.get_bone_global_pose(bone_index[side+"UpperArm"]).origin
 	var target := skeleton.global_transform.affine_inverse()*world_target
 	var torso := Basis.IDENTITY
@@ -518,7 +525,9 @@ func apply_hand_contact(side: String, world_target: Vector3) -> bool:
 		wrist_target = wrist_rest.slerp(wrist_target,deg_to_rad(75.0)/bend)
 	skeleton.set_bone_pose_rotation(hand,wrist_target)
 	var diagnostic: Dictionary = arm_ik.diagnostics.get(side,{})
-	return not diagnostic.is_empty() and float(diagnostic.clamped) < 0.015
+	for index in incoming:
+		skeleton.set_bone_pose_rotation(index,Quaternion(incoming[index]).slerp(skeleton.get_bone_pose_rotation(index),weight))
+	return weight>=.99 and not diagnostic.is_empty() and float(diagnostic.clamped) < 0.015
 
 
 ## Exact rest-mesh sole candidates for projection by the host.

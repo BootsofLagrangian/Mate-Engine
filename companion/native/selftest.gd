@@ -28,6 +28,7 @@ func _process(_delta: float) -> bool:
 	_test_wav()
 	_test_session()
 	_test_interaction_continuity()
+	_test_authored_speed_and_arrival()
 	_test_settings_urls()
 	_test_audio_output()
 	_test_microphone()
@@ -455,6 +456,36 @@ func _test_interaction_continuity() -> void:
 		interrupted.tick(0.1, interrupt_context)
 		var stopped_outcomes := interrupted.drain_outcomes()
 		check(stopped_outcomes.size() == 1 and stopped_outcomes[0].outcome == "preempted", "%s interruption emits one terminal outcome" % interruption)
+
+
+func _test_authored_speed_and_arrival() -> void:
+	var avatar:=VrmAvatar.new();root.add_child(avatar)
+	avatar.model=Node3D.new();avatar.add_child(avatar.model)
+	avatar.skeleton=Skeleton3D.new();avatar.model.add_child(avatar.skeleton)
+	avatar.skeleton.add_bone("upper");avatar.skeleton.add_bone("foot")
+	avatar.skeleton.set_bone_rest(0,Transform3D(Basis.IDENTITY,Vector3(0,.75,0)))
+	avatar.skeleton.set_bone_rest(1,Transform3D.IDENTITY)
+	avatar.bone_index={"leftUpperLeg":0,"leftFoot":1}
+	var player:=MotionPlayer.new();player.avatar=avatar
+	var clip:=VrmaClip.new();clip.duration=1.5
+	player.vrma_clips["walk"]=clip
+	check(player.register_locomotion_style("walk",{}),"legacy empty style registers")
+	check(player.authored_locomotion_speed("walk")==0.0,"registered empty gait style keeps fallback speed without missing-key error")
+	var style:Dictionary={"version":1,"cycle_stride_leg_lengths":1.6,"contacts":{"left":[.1,.4],"right":[.6,.9]}}
+	check(player.register_locomotion_style("walk",style),"measured stride style registers")
+	check(is_equal_approx(player.authored_locomotion_speed("walk"),.8),"nominal speed follows source period and rest leg")
+	avatar.scale=Vector3.ONE*.6
+	check(is_equal_approx(player.authored_locomotion_speed("walk"),.48),"nominal speed scales to world-space avatar size")
+	player.free();avatar.free()
+	var host:Node=load("res://scripts/main.gd").new()
+	var nav:=DesktopSceneNavigationHost.new();nav.host=host
+	nav.navigation.path=PackedVector3Array([Vector3.ZERO,Vector3.ONE]);nav.navigation._index=1
+	nav.arrival_yaw=PI
+	check(is_equal_approx(absf(nav.approach_heading(0,0)),PI/3),"terminal orientation stays in forward hemisphere during travel")
+	check(is_equal_approx(nav.approach_heading(0,10),0),"terminal orientation leaves distant path facing unchanged")
+	nav.navigation.path.append(Vector3(2,0,2))
+	check(is_equal_approx(nav.approach_heading(0,0),0),"terminal orientation never cuts an earlier navigation corner")
+	nav.free();host.free()
 
 
 func _test_settings_urls() -> void:

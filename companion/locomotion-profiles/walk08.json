@@ -1,0 +1,22 @@
+{
+  "name": "uma_walk08_loop",
+  "source_sha256": "a61ebeb727431447aebf5f9d5089dcf4852b95e00006fa6ad5a24ad5e1a1046d",
+  "duration_s": 1.43333327770233,
+  "locomotion_style": {
+    "version": 1,
+    "cycle_stride_leg_lengths": 1.576873246729277,
+    "contacts": {
+      "left": [
+        0.95,
+        0.28
+      ],
+      "right": [
+        0.46,
+        0.78
+      ]
+    },
+    "contact_blend_phase": 0.04,
+    "preserve_source_hip_height": true,
+    "hip_translation_limit_leg_lengths": 0.09
+  }
+}

@@ -17,22 +17,27 @@ static func _append_fixed(node:Node,output:Array)->void:
   for box in Parts.local_parts(node.mesh):output.append({"bounds":box,"transform":node.global_transform,"id":str(node.get_path())})
  for child in node.get_children():_append_fixed(child,output)
 
-static func check(scene:DesktopObjectContactScene,snapshot:Dictionary,target_pull:float,target_yaw:float,solids:Array,expected_model_id:int)->Dictionary:
+static func check(scene:DesktopObjectContactScene,snapshot:Dictionary,target_pull:float,target_yaw:float,solids:Array,expected_model_id:int,trajectory:Array=[])->Dictionary:
  if not is_instance_valid(scene) or not scene.supports_seat_setup():return {"accepted":false,"reason":"seat_setup_unsupported"}
  if snapshot.get("space","")!="avatar_local" or int(snapshot.get("model_id",-1))!=expected_model_id or not snapshot.get("transform") is Transform3D or not snapshot.get("capsules") is Array or snapshot.capsules.is_empty():return {"accepted":false,"reason":"invalid_body_snapshot"}
+ if not is_finite(target_pull) or not is_finite(target_yaw) or absf(target_yaw)>180.0:return {"accepted":false,"reason":"invalid_setup_target"}
+ var path:=_validate_trajectory(trajectory)
+ if path.is_empty():return {"accepted":false,"reason":"invalid_carrier_trajectory"}
  var original:=scene.seat_setup()
  var stationary:=is_equal_approx(target_pull,float(original.pullout_local_m)) and absf(angle_difference(deg_to_rad(target_yaw),deg_to_rad(float(original.yaw_delta_deg))))<.000001
  if not bool(snapshot.get("articulation_frozen",false)) and not (stationary and bool(snapshot.get("articulation_enclosed",false))):return {"accepted":false,"reason":"body_articulation_not_frozen"}
  var from:Transform3D=scene.seat_node().global_transform
- if not scene.set_seat_setup(target_pull,target_yaw):return {"accepted":false,"reason":"invalid_setup_target"}
- var to:Transform3D=scene.seat_node().global_transform
- scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
  var body:Transform3D=snapshot.transform
- if not body.is_finite() or not from.is_finite() or not to.is_finite():return {"accepted":false,"reason":"nonfinite_body_transform"}
+ if not body.is_finite() or not from.is_finite() or absf(from.basis.determinant())<.0000001:return {"accepted":false,"reason":"nonfinite_body_transform"}
+ var sampled:=_sample_setup_path(scene,original,target_pull,target_yaw,path)
+ # Sampling is the only mutation; restore before any collision or snapshot exit.
+ scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
+ if not sampled.get("accepted",false):return sampled
+ var transforms:Array=sampled.transforms
+ var segment_angles:Array=sampled.angles
+ var count:int=segment_angles.size()
+ var to:Transform3D=transforms[-1]
  var attachment:=from.affine_inverse()*body
- var angle:=from.basis.orthonormalized().get_rotation_quaternion().angle_to(to.basis.orthonormalized().get_rotation_quaternion())
- var count:=maxi(1,maxi(ceili(angle/deg_to_rad(5)),ceili(from.origin.distance_to(to.origin)/.025)))
- if count>256:return {"accepted":false,"reason":"carrier_path_too_large"}
  var obstacles:Array=[]
  for value in solids:
   var box:AABB
@@ -42,10 +47,13 @@ static func check(scene:DesktopObjectContactScene,snapshot:Dictionary,target_pul
   elif value is Dictionary and value.get("bounds") is AABB and value.get("transform") is Transform3D:
    box=value.bounds;transform=value.transform;id=str(value.get("id",""))
   else:return {"accepted":false,"reason":"invalid_carrier_obstacle"}
-  if not box.position.is_finite() or not box.size.is_finite() or not transform.is_finite() or absf(transform.basis.determinant())<.0000001:return {"accepted":false,"reason":"invalid_carrier_obstacle"}
-  obstacles.append({"box":box,"inverse":transform.affine_inverse(),"id":id})
+  if not box.position.is_finite() or not box.size.is_finite() or box.size.x<0 or box.size.y<0 or box.size.z<0 or not transform.is_finite() or absf(transform.basis.determinant())<.0000001:return {"accepted":false,"reason":"invalid_carrier_obstacle"}
+  obstacles.append({"box":box,"inverse":transform.affine_inverse(),"world_bounds":transform*box,"id":id})
  var body_scale:=RigCapsules.scale_bound(body.basis)
- var support_scale:=RigCapsules.scale_bound(from.basis)
+ var seat_parent:Node3D=scene.seat_node().get_parent()
+ var parent_scale:=RigCapsules.scale_bound(seat_parent.global_basis)
+ var support_scale:=parent_scale*RigCapsules.scale_bound(scene.seat_node().basis)
+ body_scale=maxf(body_scale,parent_scale*RigCapsules.scale_bound(scene.seat_node().basis*attachment.basis))
  var result_bounds:=AABB()
  var first:=true
  var started:=Time.get_ticks_usec()
@@ -54,10 +62,10 @@ static func check(scene:DesktopObjectContactScene,snapshot:Dictionary,target_pul
   var a:Vector3=attachment*Vector3(capsule.a)
   var b:Vector3=attachment*Vector3(capsule.b)
   var radius:=float(capsule.radius)*body_scale
-  var arc_pad:=maxf(a.length(),b.length())*support_scale*(1-cos(angle/count*.5))+.000001
   var before_a:=from*a;var before_b:=from*b
   for step in count:
-   var next:=from.interpolate_with(to,float(step+1)/count)
+   var next:Transform3D=transforms[step+1]
+   var arc_pad:=maxf(a.length(),b.length())*support_scale*(1-cos(float(segment_angles[step])*.5))+.000001
    var after_a:=next*a;var after_b:=next*b
    var points:Array[Vector3]=[before_a,before_b,after_a,after_b]
    var segment_bounds:=AABB(before_a,Vector3.ZERO)
@@ -66,6 +74,7 @@ static func check(scene:DesktopObjectContactScene,snapshot:Dictionary,target_pul
    result_bounds=segment_bounds if first else result_bounds.merge(segment_bounds);first=false
    for index in obstacles.size():
     var obstacle:Dictionary=obstacles[index]
+    if not segment_bounds.grow(.000001).intersects(obstacle.world_bounds):continue
     var inverse:Transform3D=obstacle.inverse
     var local_points:Array[Vector3]=[]
     for p in points:local_points.append(inverse*p)
@@ -73,6 +82,49 @@ static func check(scene:DesktopObjectContactScene,snapshot:Dictionary,target_pul
     if _hull_intersects_box(local_points,expanded):return {"accepted":false,"reason":"occupied_sweep_blocked","blocked_body_id":str(capsule.get("id","")),"obstacle_index":index,"obstacle_id":obstacle.id,"sweep_segment":step,"body_bounds_world":result_bounds,"validation_ms":(Time.get_ticks_usec()-started)/1000.0,"scope":snapshot.get("scope","")}
    before_a=after_a;before_b=after_b
  return {"accepted":true,"reason":"clear","body_bounds_world":result_bounds,"target_avatar_transform":to*attachment,"segments":count,"validation_ms":(Time.get_ticks_usec()-started)/1000.0,"scope":snapshot.get("scope","")}
+
+## Runtime interpolates these progress coordinates on one monotone master clock.
+## Exact endpoints and componentwise monotonicity forbid hidden backtracking.
+static func _validate_trajectory(trajectory:Array)->Array:
+ if trajectory.is_empty():return [Vector2.ZERO,Vector2.ONE]
+ if trajectory.size()<2 or trajectory.size()>65:return []
+ var previous:=Vector2.ZERO
+ for point in trajectory:
+  if not point is Vector2 or not point.is_finite() or point.x<0 or point.y<0 or point.x>1 or point.y>1 or point.x<previous.x or point.y<previous.y:return []
+  previous=point
+ if trajectory[0]!=Vector2.ZERO or trajectory[-1]!=Vector2.ONE:return []
+ return trajectory.duplicate()
+
+## Sample the actual setup API, not endpoint Transform3D interpolation: pull and
+## swivel follow independently specified timing and the runtime shortest yaw arc.
+static func _sample_setup_path(scene:DesktopObjectContactScene,original:Dictionary,target_pull:float,target_yaw:float,path:Array)->Dictionary:
+ var transforms:Array=[scene.seat_node().global_transform]
+ var angles:Array=[]
+ var previous:Vector2=path[0]
+ var pull0:=float(original.pullout_local_m)
+ var yaw0:=float(original.yaw_delta_deg)
+ var yaw_delta:=angle_difference(deg_to_rad(yaw0),deg_to_rad(target_yaw))
+ for index in range(1,path.size()):
+  var point:Vector2=path[index]
+  var before:Transform3D=transforms[-1]
+  var pull:=lerpf(pull0,target_pull,point.x)
+  var yaw:=_path_yaw(yaw0,target_yaw,point.y)
+  if not scene.set_seat_setup(pull,yaw):return {"accepted":false,"reason":"invalid_setup_target"}
+  var endpoint:Transform3D=scene.seat_node().global_transform
+  if not endpoint.is_finite():return {"accepted":false,"reason":"nonfinite_body_transform"}
+  var angle:=absf(yaw_delta*(point.y-previous.y))
+  var count:=maxi(1,maxi(ceili(angle/deg_to_rad(5)),ceili(before.origin.distance_to(endpoint.origin)/.025)))
+  if angles.size()+count>256:return {"accepted":false,"reason":"carrier_path_too_large"}
+  for step in count:
+   var progress:=previous.lerp(point,float(step+1)/count)
+   if not scene.set_seat_setup(lerpf(pull0,target_pull,progress.x),_path_yaw(yaw0,target_yaw,progress.y)):return {"accepted":false,"reason":"invalid_setup_target"}
+   transforms.append(scene.seat_node().global_transform)
+   angles.append(angle/count)
+  previous=point
+ return {"accepted":true,"transforms":transforms,"angles":angles}
+
+static func _path_yaw(from:float,to:float,weight:float)->float:
+ return wrapf(rad_to_deg(lerp_angle(deg_to_rad(from),deg_to_rad(to),weight)),-180.0,180.0)
 
 static func check_stationary_envelope(scene:DesktopObjectContactScene,envelope:Dictionary,solids:Array,expected_model_id:int)->Dictionary:
  if not is_instance_valid(scene):return {"accepted":false,"reason":"seat_setup_unsupported"}

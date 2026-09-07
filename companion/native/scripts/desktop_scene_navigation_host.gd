@@ -13,6 +13,9 @@ var _prepare_time := 0.0
 var _base_speed := 0.0
 var _completion := Callable()
 var ground_latched := false
+var arrival_yaw := NAN
+var _arrival_pending := false
+var _arrival_wait := 0.0
 func configure(app: Node) -> void: host=app
 func owns_foot() -> bool: return holding and foot_world.is_finite()
 func request(target: Vector3, solids: Array, grid: Dictionary = {}) -> Dictionary:
@@ -42,7 +45,7 @@ func request(target: Vector3, solids: Array, grid: Dictionary = {}) -> Dictionar
 	if not view.accepted:candidate.dispose();return view
 	if holding:cancel("superseded")
 	navigation.dispose();navigation=candidate
-	ground_latched=false
+	ground_latched=false;arrival_yaw=NAN;_arrival_pending=false;_arrival_wait=0.0
 	foot_world=start;holding=true;_preparing=true;_prepare_time=0;_base_speed=.35*host._pet_scale
 	diagnostics={"initial_placement":placement,"original_world":original}
 	host._update_avatar_transform(0);host._update_pet_rect()
@@ -78,6 +81,16 @@ func tick(delta: float) -> void:
 	if host._drag_active or host.spatial_camera()==null or not host.autonomy.enabled or not host.autonomy.surface_mode:
 		cancel("dragged" if host._drag_active else "disabled")
 		return
+	if _arrival_pending:
+		if _blocked():cancel("foreground");return
+		_arrival_wait+=delta
+		host.motion.update_scene_heading(arrival_yaw)
+		host.motion.set_scene_locomotion_sample(Vector3.ZERO,Vector3.ZERO,arrival_yaw,true,0.0)
+		if host.motion.heading_ready():
+			_arrival_pending=false
+			_finish_arrival()
+		elif _arrival_wait>6.0:cancel("heading_timeout")
+		return
 	if not navigation.active:return
 	if _blocked():cancel("dragged" if host._drag_active else "foreground");return
 	if _preparing:
@@ -89,6 +102,8 @@ func tick(delta: float) -> void:
 		if host.living != null and not str(host.living.get("selected_locomotion_id")).is_empty() and host.living.get("selected_locomotion_id") != null:clip=str(host.living.selected_locomotion_id)
 		if clip.is_empty() or not host.motion.play_vrma(clip,1.0,true):cancel("missing_locomotion");return
 		host._walk_started=clip
+		var authored_speed:float=host.motion.authored_locomotion_speed(clip)
+		if authored_speed>0.0:_base_speed=authored_speed
 	var heading_error:=absf(angle_difference(host.avatar.rotation.y,navigation._heading))
 	navigation.speed_mps=_base_speed*heading_speed_factor(heading_error)
 	var before:=foot_world
@@ -111,17 +126,33 @@ func tick(delta: float) -> void:
 		foot_world=before;host.get_window().position=old_origin;host.autonomy.position=Vector2(old_origin)
 		host._refresh_spatial_crop();host._pivot_px=host.camera.unproject_position(foot_world);host._pivot_px_target=host._pivot_px;host._update_avatar_transform(0)
 		cancel("outside_workarea");return
-	var heading_accepted:bool=host.motion.update_scene_heading(float(frame.heading_world))
+	var presented_heading:float=approach_heading(float(frame.heading_world),foot_world.distance_to(navigation.path[-1]))
+	var heading_accepted:bool=host.motion.update_scene_heading(presented_heading)
 	var world_delta:=foot_world-before
 	var pixels:Vector2=host.spatial_camera().unproject_position(foot_world)-host.spatial_camera().unproject_position(before)
-	host.motion.set_scene_locomotion_sample(world_delta/maxf(delta,.001),world_delta,float(frame.heading_world),true,float(frame.distance_m))
+	host.motion.set_scene_locomotion_sample(world_delta/maxf(delta,.001),world_delta,presented_heading,true,float(frame.distance_m))
 	diagnostics=frame.duplicate();diagnostics["committed_world_delta"]=world_delta;diagnostics["heading_accepted"]=heading_accepted;diagnostics["avatar_yaw"]=host.avatar.rotation.y
 	if frame.arrived:
-		_stop_scene_motion()
-		if _completion.is_valid() and not ground_latched: release_to_contact()
-		_notify("arrived")
+		if is_finite(arrival_yaw):
+			_arrival_pending=true;_arrival_wait=0.0
+			host.motion.update_scene_heading(arrival_yaw)
+		else:_finish_arrival()
 	elif not navigation.active:cancel(str(frame.outcome))
+## Prepare part of the seat-facing turn during the final segment. Forward walk
+## never faces the rear hemisphere while translating; its remaining pivot keeps
+## gait ownership until contact orientation is ready (no intermediate idle).
+func approach_heading(path_heading: float, remaining: float) -> float:
+	if not is_finite(arrival_yaw) or navigation._index<navigation.path.size()-1:return path_heading
+	var weight:=1.0-smoothstep(0.0,maxf(.08,.45*host._pet_scale),remaining)
+	return path_heading+clampf(angle_difference(path_heading,arrival_yaw),-PI/3,PI/3)*weight
+
+func _finish_arrival() -> void:
+	_stop_scene_motion()
+	if _completion.is_valid() and not ground_latched: release_to_contact()
+	_notify("arrived")
+
 func release_to_contact(reason: String="contact_handoff", notify_owner: bool=true) -> void:
+	_arrival_pending=false
 	# Explicit mode departure owns cancellation, even if a prior caller already
 	# released the foot. Never leave a completion callback for another request.
 	var callback:=_completion if notify_owner else Callable()
@@ -134,6 +165,7 @@ func release_to_contact(reason: String="contact_handoff", notify_owner: bool=tru
 		holding=false;ground_latched=false;navigation.cancel(reason);host.autonomy.set_process(true)
 	if callback.is_valid():callback.call(reason)
 func cancel(reason: String="cancelled") -> void:
+	_arrival_pending=false;arrival_yaw=NAN
 	if not holding:
 		if _completion.is_valid():_notify(reason)
 		return
