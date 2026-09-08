@@ -11,6 +11,26 @@
         0,
         0.76,
         -0.17
+      ],
+      "approach": [
+        0,
+        0,
+        0.8
+      ],
+      "grip_left": [
+        0.14515,
+        1.006655,
+        -0.211419
+      ],
+      "grip_right": [
+        -0.14515,
+        1.006655,
+        -0.211419
+      ],
+      "manipulate_approach": [
+        0,
+        0,
+        -0.5
       ]
     },
     "seat_width": 0.43,
@@ -29,7 +49,117 @@
     "ground_y": -2.596456383230361e-10,
     "triangles": 25936,
     "material_count": 7,
-    "bytes": 714712
+    "bytes": 714712,
+    "interaction_anchors": {
+      "seat": {
+        "socket": "seat",
+        "frame": "object",
+        "role": "pelvis",
+        "verbs": [
+          "sit"
+        ],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "inspect": {
+        "socket": "inspect",
+        "frame": "object",
+        "role": "gaze",
+        "verbs": [
+          "inspect"
+        ],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "approach": {
+        "socket": "approach",
+        "frame": "object",
+        "role": "standing",
+        "verbs": [
+          "sit"
+        ],
+        "facing": [
+          0,
+          0,
+          -1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "grip_left": {
+        "socket": "grip_left",
+        "frame": "object",
+        "role": "hand_left",
+        "verbs": [],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "grip_right": {
+        "socket": "grip_right",
+        "frame": "object",
+        "role": "hand_right",
+        "verbs": [],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "manipulate_approach": {
+        "socket": "manipulate_approach",
+        "frame": "object",
+        "role": "standing",
+        "verbs": [],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
   },
   "sofa": {
     "asset": "sofa.glb",
@@ -43,6 +173,11 @@
         0,
         0.58,
         -0.19
+      ],
+      "approach": [
+        0,
+        0,
+        0.9
       ]
     },
     "seat_width": 1.46,
@@ -61,7 +196,66 @@
     "ground_y": 0.004999999422580004,
     "triangles": 38540,
     "material_count": 4,
-    "bytes": 1004640
+    "bytes": 1004640,
+    "interaction_anchors": {
+      "seat": {
+        "socket": "seat",
+        "frame": "object",
+        "role": "pelvis",
+        "verbs": [
+          "sit"
+        ],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "inspect": {
+        "socket": "inspect",
+        "frame": "object",
+        "role": "gaze",
+        "verbs": [
+          "inspect"
+        ],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "approach": {
+        "socket": "approach",
+        "frame": "object",
+        "role": "standing",
+        "verbs": [
+          "sit"
+        ],
+        "facing": [
+          0,
+          0,
+          -1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
   },
   "computer": {
     "asset": "workstation.glb",
@@ -112,6 +306,219 @@
         "max": 1.25,
         "default": 1.0
       }
+    },
+    "interaction_anchors": {
+      "use": {
+        "socket": "use",
+        "frame": "object",
+        "role": "work",
+        "verbs": [
+          "use"
+        ],
+        "facing": [
+          0,
+          0,
+          -1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "keyboard_left": {
+        "socket": "keyboard_left",
+        "frame": "object",
+        "role": "hand_left",
+        "verbs": [
+          "use"
+        ],
+        "facing": [
+          0,
+          0,
+          -1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "keyboard_right": {
+        "socket": "keyboard_right",
+        "frame": "object",
+        "role": "hand_right",
+        "verbs": [
+          "use"
+        ],
+        "facing": [
+          0,
+          0,
+          -1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "inspect": {
+        "socket": "inspect",
+        "frame": "object",
+        "role": "gaze",
+        "verbs": [
+          "inspect"
+        ],
+        "facing": [
+          0,
+          0,
+          -1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "seat": {
+        "socket": "seat",
+        "frame": "seat",
+        "role": "pelvis",
+        "verbs": [
+          "use"
+        ],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "existing",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "approach": {
+        "socket": "approach",
+        "frame": "seat",
+        "role": "standing",
+        "verbs": [
+          "use"
+        ],
+        "facing": [
+          0,
+          0,
+          -1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "grip_left": {
+        "socket": "grip_left",
+        "frame": "seat",
+        "role": "hand_left",
+        "verbs": [],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "grip_right": {
+        "socket": "grip_right",
+        "frame": "seat",
+        "role": "hand_right",
+        "verbs": [],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "manipulate_approach": {
+        "socket": "manipulate_approach",
+        "frame": "seat",
+        "role": "standing",
+        "verbs": [],
+        "facing": [
+          0,
+          0,
+          1
+        ],
+        "execution": "reference_only",
+        "up": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    "manipulation": {
+      "version": 1,
+      "component": "seat",
+      "actor_anchor": "manipulate_approach",
+      "hand_anchors": [
+        "grip_left",
+        "grip_right"
+      ],
+      "translation": {
+        "frame": "object",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "parameter": "pullout_local_m",
+        "limits": [
+          0,
+          1.2
+        ]
+      },
+      "rotation": {
+        "frame": "object",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "parameter": "yaw_delta_deg",
+        "limits": [
+          -180,
+          180
+        ]
+      },
+      "actions": {
+        "pull": {
+          "parameter": "pullout_local_m",
+          "sign": 1
+        },
+        "push": {
+          "parameter": "pullout_local_m",
+          "sign": -1
+        }
+      },
+      "admission": "requires actor reach, body and furniture sweep checks; anchors alone do not authorize movement"
     }
   }
 }

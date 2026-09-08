@@ -15,6 +15,8 @@ var object_type := ""
 var recommended_yaw_degrees := 0.0
 var _content: Node3D
 var _sockets: Dictionary = {}
+var _interaction_anchors: Dictionary = {}
+var _seat_sockets: Dictionary = {}
 var _geometry_points := PackedVector3Array()
 var _local_bounds := AABB()
 var _facing_local := Vector3.FORWARD
@@ -83,6 +85,8 @@ func configure(type: String) -> bool:
 		recommended_yaw_degrees = COMPUTER_PRESENTATION_YAW_DEGREES
 	elif not _sockets.has("seat"):
 		return _fail("Seating furniture has no seat socket")
+	if not _read_interaction_anchors(definition, definitions.get("chair", {})):
+		return _fail("Invalid furniture interaction anchors: " + type)
 	_collect_geometry(_content, Transform3D.IDENTITY)
 	if _geometry_points.is_empty():
 		return _fail("Contact furniture contains no mesh geometry")
@@ -113,6 +117,8 @@ func clear() -> void:
 	object_type = ""
 	recommended_yaw_degrees = 0.0
 	_sockets.clear()
+	_interaction_anchors.clear()
+	_seat_sockets.clear()
 	_geometry_points.clear()
 	_local_bounds = AABB()
 	_facing_local = Vector3.FORWARD
@@ -204,6 +210,70 @@ func socket_catalogue(world_space: bool = true) -> Dictionary:
 		result[name] = socket_world(name) if world_space else socket_local(name)
 	return result
 
+## Authored anchor metadata is additive: existing seat/keyboard consumers keep
+## their socket API. Approach is a reference, never a collision-admission bypass;
+## the active clip/rig still determines its precise standing entry pose.
+static func anchor_definitions(type: String) -> Dictionary:
+	var definitions: Variant = JSON.parse_string(FileAccess.get_file_as_string(DEFINITIONS))
+	if not definitions is Dictionary: return {}
+	var entry: Variant = definitions.get(type, {})
+	if not entry is Dictionary: return {}
+	var anchors: Variant = entry.get("interaction_anchors", {})
+	return anchors.duplicate(true) if anchors is Dictionary else {}
+
+static func manipulation_definition(type: String) -> Dictionary:
+	var definitions: Variant = JSON.parse_string(FileAccess.get_file_as_string(DEFINITIONS))
+	if not definitions is Dictionary: return {}
+	var entry: Variant = definitions.get(type, {})
+	if not entry is Dictionary: return {}
+	var manipulation: Variant = entry.get("manipulation", {})
+	return manipulation.duplicate(true) if manipulation is Dictionary else {}
+
+func manipulation_contract() -> Dictionary:
+	return manipulation_definition(object_type) if loaded else {}
+
+func _read_interaction_anchors(definition: Dictionary, chair_definition: Dictionary) -> bool:
+	var entries: Variant = definition.get("interaction_anchors", {})
+	if not entries is Dictionary: return false
+	for name in entries:
+		var entry: Variant = entries[name]
+		if not entry is Dictionary: return false
+		var socket: String = str(entry.get("socket", ""))
+		var frame: String = str(entry.get("frame", "object"))
+		if frame not in ["object", "seat"] or not _valid_xyz(entry.get("facing")): return false
+		if _xyz(entry.facing).length_squared() < 0.000001: return false
+		if not _valid_xyz(entry.get("up")) or _xyz(entry.up).cross(_xyz(entry.facing)).length_squared() < 0.000001: return false
+		if str(entry.get("execution", "")) not in ["existing", "reference_only"]: return false
+		if not entry.get("verbs") is Array or str(entry.get("role", "")).is_empty(): return false
+		if frame == "seat":
+			if not is_instance_valid(_seat_node): return false
+			var local_socket: Variant = chair_definition.get("sockets", {}).get(socket)
+			if not _valid_xyz(local_socket): return false
+			_seat_sockets[socket] = _xyz(local_socket)
+			_sockets[socket] = _seat_node.transform*_xyz(local_socket)
+		elif not _sockets.has(socket): return false
+		_interaction_anchors[str(name)] = entry.duplicate(true)
+	return true
+
+## Canonical metres and unit facing vectors; object-local output includes the
+## current articulated chair transform. No camera/screen-space approximation.
+func interaction_anchor_catalogue(world_space: bool = true) -> Dictionary:
+	var result := {}
+	if not loaded: return result
+	for name in _interaction_anchors:
+		var entry: Dictionary = _interaction_anchors[name].duplicate(true)
+		var direction := _xyz(entry.facing)
+		var up := _xyz(entry.up)
+		if entry.frame == "seat":
+			direction = _seat_node.basis*direction
+			up = _seat_node.basis*up
+		entry["position"] = socket_world(entry.socket) if world_space else socket_local(entry.socket)
+		entry["facing"] = (global_basis*direction if world_space else direction).normalized()
+		entry["up"] = (global_basis*up if world_space else up).normalized()
+		entry["space"] = "desktop_scene_v1" if world_space else "object_local"
+		result[name] = entry
+	return result
+
 func facing_direction_world() -> Vector3:
 	return (global_basis * _facing_local).normalized()
 
@@ -254,6 +324,8 @@ func set_seat_setup(pullout_local_m: float, yaw_delta_deg: float) -> bool:
 	_seat_yaw_delta = yaw_delta_deg
 	_seat_node.transform = Transform3D(Basis(Vector3.UP,PI+deg_to_rad(yaw_delta_deg)).scaled(Vector3.ONE*_seat_scale),COMPUTER_CHAIR_POSITION+Vector3(0,0,pullout_local_m))
 	_sockets["seat"] = _seat_node.transform*_seat_native_anchor
+	for name in _seat_sockets:
+		_sockets[name] = _seat_node.transform*Vector3(_seat_sockets[name])
 	_facing_local = (_seat_node.basis*Vector3.BACK).normalized()
 	var delta := _seat_node.transform*_seat_rest_transform.affine_inverse()
 	_local_bounds = _stationary_bounds.merge(delta*_seat_rest_bounds)

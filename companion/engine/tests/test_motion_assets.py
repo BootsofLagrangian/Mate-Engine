@@ -201,7 +201,7 @@ def test_internal_seated_idle_is_not_a_standalone_gesture(companion_root):
     assert available_motions(EmptyBank(), assets) == []
 
 
-@pytest.mark.parametrize('name', ['walk', 'walk_formal', 'sit_enter', 'sit_exit', 'sit_idle'])
+@pytest.mark.parametrize('name', ['walk', 'walk_formal', 'sit_enter', 'sit_exit', 'sit_idle', 'floor_rest_enter', 'floor_rest_idle', 'floor_rest_exit'])
 def test_reserved_context_names_cannot_leak_from_old_catalog_or_bank(companion_root, name):
     from engine.motion_assets import available_motions
     install(companion_root, name=name)

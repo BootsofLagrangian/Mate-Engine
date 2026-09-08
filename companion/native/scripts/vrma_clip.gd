@@ -2,6 +2,7 @@ class_name VrmaClip
 extends RefCounted
 ## Embedded GLB VRMA rotation playback. Root translation is intentionally pinned
 ## for desktop presentation. Supports LINEAR/STEP float tracks; rejects others.
+var source_revision := 0 # changes even if an in-place reload fails
 var duration := 0.0
 var tracks: Dictionary = {}
 var error := ""
@@ -10,6 +11,7 @@ var hips_rest := Vector3.ZERO
 var source_hips_height := 1.0
 
 func load_file(path: String) -> bool:
+	source_revision += 1
 	tracks.clear()
 	hips_translation.clear()
 	duration = 0.0

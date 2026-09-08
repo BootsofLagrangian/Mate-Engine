@@ -3,11 +3,18 @@ extends Node
 ## Coordinates local behavior, user points, named LLM intents and presentation.
 ## The director never calls a model; only existing conversation turns may return intents.
 var _scene_contact_owned:=false
+var drop_affordance = preload("desktop_drop_affordance.gd").new()
+var _drop_contact: Dictionary = {}
+var _drop_clock := 0.0
+var _drop_stamp := 0
+var drop_diagnostics: Dictionary = {"matches":0,"started":0,"released":0}
 var refresh_diagnostics:Dictionary={"calls":0,"last_refresh_us":0,"last_refresh_msec":0}
 var host
 var director := BehaviorDirector.new()
 var scene_interests = preload("desktop_scene_interests.gd").new()
 var idle_recovery = preload("idle_recovery.gd").new()
+var surface_rest = preload("idle_surface_rest.gd").new()
+var surface_rest_diagnostics: Dictionary = {"requests":0,"admitted":0,"released":0}
 var _recovery_look := false
 var _recovery_settle := false
 var recovery_diagnostics: Dictionary = {"queued":0,"completed":0,"cancelled":0,"phase":"","last_outcome":""}
@@ -245,6 +252,8 @@ func _event(event: Dictionary) -> void:
 		if host.objects != null: host.objects.cancel_commands(type,str(event.get("turn_id", "")) + ":intent")
 
 func cancel(reason: String = "cancelled") -> void:
+	_release_drop_contact(reason)
+	_release_surface_rest()
 	_cancel_idle_recovery(false)
 	# The appearance loader itself clears locomotion with avatar_changed;
 	# every external cancellation must also revoke its pending/deferred load.
@@ -264,6 +273,7 @@ func tick(delta: float) -> void:
 	_clock += maxf(delta, 0.0)
 	var wanted := bool(_settings.get_value("behavior_enabled", true))
 	if wanted != enabled: _set_enabled(wanted)
+	_tick_drop_contact(delta)
 	var contact_owned:bool=scene_interests.interaction_owned(host)
 	if contact_owned!=_scene_contact_owned:
 		_scene_contact_owned=contact_owned
@@ -288,13 +298,14 @@ func tick(delta: float) -> void:
 	var scene_moving:bool=host.get("scene_navigation") != null and host.scene_navigation.navigation.active
 	var scene_ground:bool=host.get("scene_navigation") != null and host.scene_navigation.ground_latched
 	var furniture_busy:bool=host.objects != null and not host.objects._interaction.is_empty()
+	_tick_surface_rest(delta, speaking or listening or thinking, scene_moving, scene_ground, furniture_busy)
 	# Revoke the local return before dispatch, including accepted intents still
 	# waiting in the queue. It must never delay a new explicit movement.
 	_yield_recovery_to_explicit()
 	var can_move: bool = (scene_ground or host.autonomy.can_request_move()) and not host.bridge.dialogue_holding(host._now()) and not host.is_sitting() and not scene_moving and (not furniture_busy or _owns_legacy_furniture_approach())
 	last_output = director.tick(delta, {"character_id":host.session.character_id,"panel_open":host.panel_open,
 		"body_continuing":host.body_action_can_continue(),"dragging":host._drag_active or is_marker_dragging(),"speaking":speaking,"listening":listening,"thinking":thinking,"working":job_active,
-		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move and not idle_recovery.active(),
+		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move and not idle_recovery.active() and _drop_contact.is_empty(),
 		"autonomy_enabled":host.autonomy.enabled,"autonomy_state":"walk" if scene_moving else ("rest" if scene_ground else host.autonomy.state),
 		"moving":scene_moving or host.autonomy.state == "walk", "pointer_point":pointer,
 		"actor_point":Vector2(host.get_window().position) + host.pet_rect.get_center(),
@@ -341,7 +352,7 @@ func tick(delta: float) -> void:
 	_tick_idle_recovery(delta, speaking or listening or thinking, scene_moving, furniture_busy)
 	var state := str(last_output.get("state", "rest"))
 	if state != _last_state:
-		if state in ["listening", "thinking", "speaking", "attentive"] and _last_state not in ["listening", "thinking", "speaking", "attentive"] and not host._drag_active and not host.motion._preview and not host.body_action_owns_heading() and (not idle_recovery.active() or speaking or listening or thinking):
+		if state in ["listening", "thinking", "speaking", "attentive"] and _last_state not in ["listening", "thinking", "speaking", "attentive"] and not host._drag_active and not host.motion._preview and not host.body_action_owns_heading() and _drop_contact.is_empty() and (not idle_recovery.active() or speaking or listening or thinking):
 			host.motion.face_front()
 		_last_state = state
 		host.panel.set_behavior_state(str(LABELS.get(state, state)))
@@ -351,7 +362,7 @@ func tick(delta: float) -> void:
 	_maybe_idle_action(state)
 
 func _maybe_idle_action(state: String) -> void:
-	if idle_recovery.active(): return
+	if idle_recovery.active() or not _drop_contact.is_empty(): return
 	if str(_settings.get_value("idle_clip", "auto")) != "auto": return
 	if _clock < _idle_action_next or state not in ["rest", "sleepy"] or _look.is_finite(): return
 	if host.autonomy.state not in ["rest", "inspect"] or host._dialogue_gesture_active() or not host.motion.heading_ready(): return
@@ -482,7 +493,7 @@ func _yield_recovery_to_explicit() -> void:
 func _tick_idle_recovery(delta: float, foreground_busy: bool, scene_moving: bool, furniture_busy: bool) -> void:
 	_recovery_look = false
 	_recovery_settle = false
-	if not idle_recovery.active(): return
+	if not idle_recovery.active() or not _drop_contact.is_empty(): return
 	var superseded: bool = host._drag_active or is_marker_dragging() or host.is_sitting() or scene_moving or furniture_busy or director.has_explicit_body_intent() or host.motion._preview or host.motion._custom_motion or host.autonomy.state in ["anticipate","walk","arrive","approach"]
 	var result: Dictionary = idle_recovery.tick(delta, {"superseded":superseded,
 		"busy":foreground_busy or host._dialogue_gesture_active() or host.bridge.dialogue_holding(host._now()),
@@ -502,3 +513,210 @@ func _tick_idle_recovery(delta: float, foreground_busy: bool, scene_moving: bool
 	_recovery_look = bool(result.get("look",false))
 	_recovery_settle = bool(result.get("settle",false))
 	if _recovery_settle: _look = Vector2.INF
+
+func _release_surface_rest() -> void:
+	if surface_rest.owns_rest() and host != null:
+		host._stand_up("")
+		surface_rest_diagnostics.released += 1
+	surface_rest.reset()
+
+func _tick_surface_rest(delta: float, foreground_busy: bool, scene_moving: bool, scene_ground: bool, furniture_busy: bool) -> void:
+	var explicit: bool = director.has_explicit_body_intent() or director._queue.any(func(intent): return intent.get("source","local") != "local")
+	var busy: bool = not enabled or not host.autonomy.enabled or host.panel_open or foreground_busy or host._drag_active or is_marker_dragging() or furniture_busy or scene_moving or scene_ground or explicit or idle_recovery.active() or host.motion._preview or host.motion._custom_motion or host._dialogue_gesture_active() or host.bridge.dialogue_holding(host._now()) or host.autonomy._pointer_interaction
+	var contact: Dictionary = host.autonomy.get_support_contact()
+	var action: String = surface_rest.tick(delta,{"support":contact,"busy":busy,
+		"sitting_or_pending":host._sit_active or host._sit_pending,
+		"rebinding":host._sit_active and not host._sit_attached,
+		"can_sit":not host.is_sitting() and not host._sit_pending and host.autonomy.state in ["rest","inspect"] and host.motion.heading_ready() and AutonomyBridge.can_sit(host.autonomy.surface_mode,contact,host.motion.vrma_clips.has(AutonomyBridge.SIT_CLIP),false)})
+	if action == "sit":
+		surface_rest_diagnostics.requests += 1
+		surface_rest_diagnostics["support_id"] = str(contact.get("surface_id",""))
+		surface_rest_diagnostics["support_kind"] = str(contact.get("kind",""))
+		surface_rest_diagnostics["last_outcome"] = "requested"
+		host._request_sit()
+		if host._sit_pending:
+			surface_rest.admitted(str(contact.surface_id))
+			surface_rest_diagnostics.admitted += 1
+			surface_rest_diagnostics["last_outcome"] = "pending"
+		else:
+			surface_rest_diagnostics["last_outcome"] = "rejected"
+	elif action == "stand":
+		host._stand_up("")
+		surface_rest_diagnostics.released += 1
+		surface_rest_diagnostics["last_outcome"] = "released"
+		if not busy: queue_idle_recovery("surface_rest_completed")
+
+## Called after main has committed the final drag foot, float pivot and bounds.
+## Geometry comes from the existing native cache; no process/network call here.
+func on_drag_released(foot: Vector2) -> Dictionary:
+	_release_drop_contact("new_drop")
+	if not enabled or not host.autonomy.surface_mode or not host.avatar.has_model() or not host.world_source.available: return {}
+	var actor: Rect2 = Rect2(Vector2(host.get_window().position)+host.pet_rect.position,host.pet_rect.size)
+	var dpi := float(DisplayServer.screen_get_dpi(host.get_window().current_screen))/96.0
+	_drop_contact=drop_affordance.nearest(host.world_source.snapshot,foot,actor,int(Time.get_unix_time_from_system()*1000.0),dpi)
+	if _drop_contact.is_empty(): return {}
+	_cancel_idle_recovery(false)
+	_drop_clock=0.0
+	_drop_stamp=int(host.world_source.snapshot.get("timestamp_msec",0))
+	drop_diagnostics.matches+=1
+	drop_diagnostics["kind"]=_drop_contact.kind
+	drop_diagnostics["source_id"]=_drop_contact.source_id
+	drop_diagnostics["last_outcome"]="matched"
+	if _drop_contact.kind == "window_wall":
+		_drop_contact["max_adjustment_px"]=minf(96.0*clampf(dpi,0.75,3.0),actor.size.y*0.35)
+		_drop_contact["dpi_scale"]=dpi
+		# Real dragging detaches support. Let the normal short surface approach
+		# reacquire it before asking the arm to carry any wall contact.
+		if host.autonomy.get_support_contact().get("attached",false):
+			if not _begin_drop_lean(): _fallback_drop_seat(host.world_source.snapshot,foot,actor,int(Time.get_unix_time_from_system()*1000.0),dpi)
+		else:
+			drop_diagnostics["last_outcome"]="waiting_for_support"
+	return _drop_contact.duplicate(true)
+
+## Reach failure changes only the suggested action. Windows stay in the snapshot
+## as occluders, so fallback never creates a seat underneath another window.
+func _fallback_drop_seat(snapshot: Dictionary, foot: Vector2, actor: Rect2, now_msec: int, dpi: float) -> void:
+	_release_drop_contact("unreachable")
+	_drop_contact=drop_affordance.nearest(snapshot,foot,actor,now_msec,dpi,false)
+	if _drop_contact.is_empty(): return
+	_drop_clock=0.0
+	_drop_stamp=int(snapshot.get("timestamp_msec",0))
+	drop_diagnostics["kind"]=_drop_contact.kind
+	drop_diagnostics["source_id"]=_drop_contact.source_id
+	drop_diagnostics["last_outcome"]="seat_fallback"
+
+func _reject_drop_lean(reason: String, details: Dictionary = {}) -> bool:
+	drop_diagnostics["lean_rejection"]=reason
+	drop_diagnostics["lean_rejection_details"]=details
+	return false
+
+func _begin_drop_lean() -> bool:
+	if host.motion.seated_carrier.active: return _reject_drop_lean("carrier_owned")
+	if host.scene_navigation==null or host.spatial_camera()==null: return _reject_drop_lean("scene_unavailable")
+	var target_pixel: Vector2=_drop_contact.target-Vector2(host.get_window().position)
+	var shoulder: Vector3=host.avatar.bone_global_position("chest")
+	var target := DesktopView.screen_to_world_at_reference_depth(host.camera,target_pixel,shoulder)
+	if not target.is_finite(): return _reject_drop_lean("projection_invalid")
+	var side := "left" if host.avatar.to_local(target).x>=0.0 else "right"
+	var upper: Vector3=host.avatar.bone_global_position(side+"UpperArm")
+	var elbow: Vector3=host.avatar.bone_global_position(side+"LowerArm")
+	var hand: Vector3=host.avatar.bone_global_position(side+"Hand")
+	var length := upper.distance_to(elbow)+elbow.distance_to(hand)
+	if length<=0.01 or upper.distance_to(target)>length*0.94 or upper.distance_to(target)<length*0.2:
+		return _reject_drop_lean("arm_reach",{"arm_length":length,"target_distance":upper.distance_to(target),"side":side})
+	var already_held: bool=host.scene_navigation.holding
+	var contact: Dictionary=host.autonomy.get_support_contact()
+	var legacy_supported: bool=not already_held and contact.get("attached",false) and contact.get("pose","")=="foot" and contact.get("kind","") in ["taskbar","window","floor"]
+	if legacy_supported:
+		# A verified desktop support already owns this exact foot/pivot. Keep it
+		# while the hand reaches sideways; adopting another canonical floor would
+		# unnecessarily normalize its depth and move the dropped character.
+		pass # The main context lease below holds motion while support polling continues.
+	else:
+		var foot: Vector3=host.avatar.contact_anchors().foot
+		var fit: Dictionary=host.normalize_scene_ground_placement(foot)
+		if not fit.get("ok",false) or fit.get("changed",true): return _reject_drop_lean("ground_fit",fit)
+		var admitted: Dictionary=host.scene_navigation.adopt_ground_placement()
+		if not admitted.get("ok",false): return _reject_drop_lean("ground_admission",admitted)
+	if not host.motion.start_contact_pose("lean",target,host.camera.get_camera_transform().basis.x*Vector2(_drop_contact.normal).x):
+		if not legacy_supported and not already_held: host.scene_navigation.release_to_contact("lean_rejected",false)
+		return _reject_drop_lean("motion_rejected")
+	_drop_clock=0.0
+	_drop_contact["active"]=true
+	_drop_contact["legacy_supported"]=legacy_supported
+	_drop_contact["foot_support_id"]=str(contact.get("surface_id","")) if legacy_supported else ""
+	_drop_contact["foot_world"]=host.avatar.contact_anchors().foot
+	_drop_contact["world_target"]=target
+	_drop_contact["scale"]=host.pet_scale()
+	host._push_autonomy_context()
+	drop_diagnostics.started+=1
+	drop_diagnostics["lean_rejection"]=""
+	drop_diagnostics["foot_owner"]="desktop_support" if legacy_supported else "scene_ground"
+	drop_diagnostics["last_outcome"]="leaning"
+	return true
+
+func has_drop_intent() -> bool:
+	return not _drop_contact.is_empty()
+
+func _tick_pending_drop_lean(snapshot: Dictionary, now_msec: int) -> void:
+	var foot: Vector2=host.camera.unproject_position(host.avatar.contact_anchors().foot)+Vector2(host.get_window().position)
+	var actor := Rect2(Vector2(host.get_window().position)+host.pet_rect.position,host.pet_rect.size)
+	var dpi := float(_drop_contact.get("dpi_scale",1.0))
+	if foot.distance_to(_drop_contact.drop_foot)>float(_drop_contact.get("max_adjustment_px",96.0)):
+		_release_drop_contact("adjustment_too_far"); return
+	var attached: bool=host.autonomy.get_support_contact().get("attached",false)
+	if not attached:
+		if _drop_clock<0.4: return
+		# Nearby real support is acquired by the existing bounded-speed approach;
+		# do not normalize its foot into another world plane while it is settling.
+		var nearby_seat := drop_affordance.nearest(snapshot,foot,actor,now_msec,dpi,false)
+		if not nearby_seat.is_empty() and _drop_clock<6.0: return
+	if not _begin_drop_lean():
+		_fallback_drop_seat(snapshot,foot,actor,now_msec,dpi)
+
+func drop_owns_foot() -> bool:
+	return bool(_drop_contact.get("active",false)) and bool(_drop_contact.get("legacy_supported",false))
+
+func _release_drop_contact(reason: String) -> void:
+	if _drop_contact.is_empty(): return
+	if host!=null and _drop_contact.get("active",false) and _drop_contact.kind=="window_wall" and host.motion.current_contact_pose()=="lean":
+		host.motion.stop_contact_pose()
+	drop_diagnostics.released+=1
+	drop_diagnostics["last_outcome"]=reason
+	_drop_contact.clear()
+	if host!=null and host.has_method("_push_autonomy_context"): host._push_autonomy_context()
+
+func _guard_drop_wall_clearance() -> bool:
+	if _drop_contact.is_empty() or not _drop_contact.get("active",false) or _drop_contact.get("kind","")!="window_wall": return true
+	var diagnostics: Dictionary=host.motion.wall_lean.diagnostics
+	# The first actual pose pass owns this measurement; an empty preparation
+	# result is not evidence of collision. A restored base can still overlap.
+	if not diagnostics.is_empty() and float(diagnostics.get("clearance_m",0.0))<0.0:
+		_release_drop_contact("torso_overlap")
+		return false
+	return true
+
+func _tick_drop_contact(delta: float) -> void:
+	if _drop_contact.is_empty(): return
+	_drop_clock+=maxf(delta,0.0)
+	var explicit: bool=director.has_explicit_body_intent() or director._queue.any(func(intent): return intent.get("source","local")!="local")
+	var interrupted: bool=not enabled or host._drag_active or host.panel_open or host.body_dialogue_busy() or host.mic.is_recording() or explicit or host.motion._preview or host.motion._custom_motion or (host.objects!=null and not host.objects._interaction.is_empty())
+	if interrupted:
+		_release_drop_contact("interrupted"); return
+	var snapshot: Dictionary=host.world_source.snapshot
+	var now := int(Time.get_unix_time_from_system()*1000.0)
+	if not host.world_source.available or not drop_affordance.fresh(snapshot,now):
+		_release_drop_contact("source_expired"); return
+	var stamp := int(snapshot.get("timestamp_msec",0))
+	if stamp!=_drop_stamp:
+		_drop_stamp=stamp
+		if not drop_affordance.still_valid(_drop_contact,snapshot,now):
+			_release_drop_contact("surface_changed"); return
+	if _drop_contact.kind=="window_wall":
+		if not _drop_contact.get("active",false):
+			_tick_pending_drop_lean(snapshot,now); return
+		if not _guard_drop_wall_clearance(): return
+		if _drop_contact.get("legacy_supported",false):
+			var support: Dictionary=host.autonomy.get_support_contact()
+			if not support.get("attached",false) or str(support.get("surface_id",""))!=str(_drop_contact.foot_support_id):
+				_release_drop_contact("foot_support_lost"); return
+		var projected: Vector2=host.camera.unproject_position(_drop_contact.world_target)+Vector2(host.get_window().position)
+		if absf(host.pet_scale()-float(_drop_contact.scale))>0.001 or projected.distance_to(_drop_contact.target)>2.0:
+			_release_drop_contact("placement_changed"); return
+		if host.scene_navigation.navigation.active or host.motion.current_contact_pose()!="lean":
+			_release_drop_contact("superseded"); return
+		if _drop_clock>1.2 and not host.motion.contact_reachable:
+			_release_drop_contact("contact_lost"); return
+		if _drop_clock>18.0:
+			_release_drop_contact("completed")
+			queue_idle_recovery("wall_rest_completed")
+	elif _drop_contact.kind=="taskbar":
+		var contact: Dictionary=host.autonomy.get_support_contact()
+		if _drop_clock>8.0:
+			_release_drop_contact("support_timeout"); return
+		if _drop_clock>0.4 and contact.get("attached",false) and str(contact.get("surface_id","")).begins_with(str(_drop_contact.source_id)+"@") and host.motion.heading_ready() and not host.is_sitting() and not host._sit_pending:
+			host._request_sit()
+			if host._sit_pending:
+				surface_rest.admitted(str(contact.surface_id))
+				drop_diagnostics.started+=1
+			_release_drop_contact("seat_admitted" if host._sit_pending else "seat_rejected")

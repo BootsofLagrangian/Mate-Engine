@@ -18,6 +18,10 @@ const FILL_ENERGY := 0.3
 const AMBIENT_ENERGY := 0.45
 const TONEMAP_EXPOSURE := 0.85
 
+var _last_render_size:=Vector2.ZERO
+var _last_render_origin:=Vector2.ZERO
+var render_diagnostics:Dictionary={}
+
 var avatar: VrmAvatar
 var motion: MotionPlayer
 var audio: AudioOutput
@@ -96,6 +100,13 @@ var _pivot_local: Dictionary = {} # "foot"/"sit" -> avatar-local metres (rest-ba
 var _px_per_m := 300.0
 # Desktop surfaces: latest support contact from the module, manual sit lifecycle.
 var _support: Dictionary = {"attached": false, "pose": "foot"}
+var floor_rest_admission:Dictionary={}
+var _floor_pending_scale:=NAN
+var _floor_pending_view:=false
+var _floor_rest_owned:=false
+var _floor_exit_requested:=false
+var _floor_support_id:=""
+var _floor_navigation_rect:=Rect2()
 var _sit_active := false # user asked to sit (body seated, window re-seating or seated)
 var _sit_attached := false # the module reported the seated contact
 var _sit_pending := false # panel button intent; body stays standing until movement is allowed
@@ -160,6 +171,9 @@ func _ready() -> void:
 
 func _setup_window() -> void:
 	var win := get_window()
+	win.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
+	win.content_scale_size = Vector2i.ZERO
+	win.content_scale_factor = 1.0
 	win.size = WINDOW_SIZE
 	win.borderless = true
 	win.minimize_disabled = true
@@ -176,6 +190,14 @@ func _setup_window() -> void:
 	if DisplayServer.has_feature(DisplayServer.FEATURE_WINDOW_TRANSPARENCY):
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_TRANSPARENT, true)
 	_restore_window_position()
+	RenderingServer.frame_post_draw.connect(_remember_render_origin)
+
+
+func _remember_render_origin() -> void:
+	# Legacy autonomy and scene navigation can move after main._process. Keep
+	# the last fully rendered origin, not the origin from before that travel.
+	if _last_render_size == render_size() and _last_render_size == Vector2(get_window().size):
+		_last_render_origin = Vector2(get_window().position)
 
 
 func _restore_window_position() -> void:
@@ -263,6 +285,7 @@ func _setup_nodes() -> void:
 	motion.name = "Motion"
 	motion.avatar = avatar
 	add_child(motion)
+	motion.floor_rest.finished.connect(_on_floor_rest_finished)
 	audio = AudioOutput.new()
 	audio.name = "AudioOutput"
 	add_child(audio)
@@ -671,6 +694,10 @@ func _frame_avatar() -> void:
 ## View orientation is independent of avatar/object yaw. Both projection modes
 ## reconstruct the exact screen anchor at a declared optical-axis depth.
 func _apply_view_settings(refresh_objects: bool = true) -> void:
+	if _floor_rest_owned and motion.floor_rest.active:
+		_floor_pending_view=true
+		_stand_up("자세를 정리한 뒤 시점을 바꿉니다")
+		return
 	var requested := {}
 	for key in ["view_yaw_deg", "view_pitch_deg", "view_height", "view_zoom"]:
 		requested[key] = Settings.get_value(key, 1.0 if key == "view_zoom" else 0.0)
@@ -686,7 +713,7 @@ func _apply_view_settings(refresh_objects: bool = true) -> void:
 	var foot_px := _default_foot_pixel()
 	# The original orthographic frame uses 28 degrees only to select its depth.
 	# Switching lenses must not alter that baseline on return to orthographic.
-	var cam := AutonomyBridge.pet_camera(_model_aabb.size.y, 28.0, Vector2(WINDOW_SIZE), foot_px,
+	var cam := AutonomyBridge.pet_camera(_model_aabb.size.y, 28.0, render_size(), foot_px,
 		AutonomyBridge.reference_height_px(float(REFERENCE_SIZE.y)))
 	for key in _view_settings: Settings.set_value(key, _view_settings[key])
 	# Shared off-axis crops must draw the same pixel-width MToon outline.
@@ -735,11 +762,58 @@ func _apply_view_settings(refresh_objects: bool = true) -> void:
 ## Canonical metre frame: fixed orbit target at world origin, +Y up, +Z back.
 ## Its nominal film rectangle is REFERENCE_SIZE; render padding changes only crops.
 ## Crops outside that rectangle remain exact, including neighboring monitors.
+func render_size() -> Vector2:
+	var extent:=get_viewport().get_visible_rect().size
+	return extent if extent.x>0 and extent.y>0 else Vector2(get_window().size)
+
 func _default_foot_pixel() -> Vector2:
-	# Settings have their own window. Reserve equal left/right animation room;
-	# the canonical 680x760 camera film remains independent of this render crop.
-	var reference_foot := AutonomyBridge.foot_pivot_px(Vector2(REFERENCE_SIZE), PET_ZONE_WIDTH)
-	return Vector2(WINDOW_SIZE.x * 0.5, reference_foot.y + RENDER_PADDING.y)
+	var reference_foot:=AutonomyBridge.foot_pivot_px(Vector2(REFERENCE_SIZE),PET_ZONE_WIDTH)
+	return RenderSurface.foot_pixel(render_size(),Vector2(REFERENCE_SIZE),reference_foot,Vector2(RENDER_PADDING))
+
+## Rebase a changed render crop before any projected contact is consumed.
+## Moving its transparent margin must not count as character locomotion.
+func _sync_render_surface() -> bool:
+	var extent:=render_size()
+	if extent.distance_to(Vector2(get_window().size))>.01:
+		render_diagnostics={"ready":false,"reason":"native_viewport_resize_pending","viewport":extent,"native":get_window().size}
+		return false
+	if _last_render_size==Vector2.ZERO:
+		_last_render_size=extent;_last_render_origin=Vector2(get_window().position)
+		return true
+	if extent==_last_render_size:
+		_last_render_origin=Vector2(get_window().position)
+		return true
+	var reference_foot:=AutonomyBridge.foot_pivot_px(Vector2(REFERENCE_SIZE),PET_ZONE_WIDTH)
+	var before:=RenderSurface.foot_pixel(_last_render_size,Vector2(REFERENCE_SIZE),reference_foot,Vector2(RENDER_PADDING))
+	var after:=_default_foot_pixel()
+	var shift:=after-before
+	var origin:=_last_render_origin-shift
+	var desktop_shift:=Vector2.ZERO
+	var anchor:=_last_render_origin+_pivot_px
+	var on_screen:=false
+	for i in DisplayServer.get_screen_count():
+		if Rect2(DisplayServer.screen_get_usable_rect(i)).has_point(anchor):on_screen=true;break
+	if not on_screen:
+		var area:=Rect2(_current_workarea()).grow(-16)
+		desktop_shift=anchor.clamp(area.position,area.end)-anchor
+		origin+=desktop_shift
+	get_window().position=Vector2i(origin.round())
+	origin=Vector2(get_window().position)
+	shift=_last_render_origin-origin+desktop_shift
+	_pivot_px+=shift;_pivot_px_target+=shift
+	if _floor_rest_owned:_floor_navigation_rect.position+=shift
+	if spatial_camera()!=null:
+		_spatial_origin+=desktop_shift
+	else:
+		RenderSurface.resize_orthographic(camera,_last_render_size,extent,origin-_last_render_origin,_px_per_m,desktop_shift)
+		_camera_base=camera.position
+	if autonomy!=null:autonomy.rebase_render_origin(origin-autonomy.position)
+	_last_render_size=extent;_last_render_origin=origin
+	_refresh_spatial_crop()
+	if objects!=null:objects.refresh_view()
+	if living!=null:living._refresh_at=0.0
+	render_diagnostics={"ready":true,"viewport":extent,"native":get_window().size,"desktop_shift":desktop_shift,"pixels_per_metre":_px_per_m}
+	return true
 
 
 func spatial_camera() -> Camera3D:
@@ -753,8 +827,9 @@ func spatial_desktop_origin() -> Vector2:
 func _refresh_spatial_crop() -> void:
 	if spatial_camera() == null or not _spatial_origin.is_finite(): return
 	var origin := autonomy.position.round() if autonomy != null and autonomy._simulation else Vector2(get_window().position)
-	DesktopView.configure_crop(camera, _spatial_reference_camera,
-		Rect2(origin - _spatial_origin, Vector2(get_window().size)))
+	var ready:=DesktopView.configure_crop(camera, _spatial_reference_camera,
+		Rect2(origin - _spatial_origin, render_size()))
+	render_diagnostics["crop_ready"]=ready
 
 
 ## Place the avatar so the current pivot (stable rest foot, or seat while sitting) sits exactly at
@@ -820,8 +895,15 @@ func pet_scale() -> float:
 
 func _set_scale_target(value: float) -> void:
 	var clamped := AutonomyBridge.clamp_scale(value)
+	if _floor_rest_owned and motion.floor_rest.active:
+		_floor_pending_scale=clamped
+		panel.set_pet_scale(clamped)
+		_stand_up("자세를 정리한 뒤 크기를 바꿉니다")
+		return
 	if is_equal_approx(clamped, _pet_scale_target):
 		return
+	if objects!=null and objects._interaction.get("stage","") in ["chair_setup","chair_restore"]:
+		objects.cancel_interaction("actor_scale_changed")
 	_pet_scale_target = clamped
 	Settings.set_value("pet_scale", clamped)
 	panel.set_pet_scale(clamped)
@@ -925,7 +1007,7 @@ func _dialogue_gesture_name(event: Dictionary) -> String:
 	# Travel and seated clips need verified geometry and contact ownership.
 	# A spoken suggestion cannot start marching in place or drop the seat anchor.
 	var entry: Dictionary = _vrma_catalog.get(requested, {})
-	if requested in AutonomyBridge.WALK_CLIPS or requested == AutonomyBridge.SIT_CLIP \
+	if requested in ["floor_rest_enter","floor_rest_idle","floor_rest_exit"] or requested in AutonomyBridge.WALK_CLIPS or requested == AutonomyBridge.SIT_CLIP \
 			or bool(entry.get("locomotion", false)):
 		return "idle"
 	return requested
@@ -1267,7 +1349,10 @@ func _input(event: InputEvent) -> void:
 	elif _drag_active and event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_drag_active = false
 		if _drag_moved:
+			_update_avatar_transform(0.0)
+			_update_pet_rect()
 			_save_window_position()
+			if living != null and avatar.has_model():living.on_drag_released(Vector2(get_window().position)+camera.unproject_position(avatar.contact_anchors().foot))
 		else:
 			motion.pet_reaction()
 
@@ -1279,7 +1364,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			# controls consume wheel events over the panel, and a drag in progress ignores it.
 			var notches := 1 if event.button_index == MOUSE_BUTTON_WHEEL_UP else -1
 			var over_pet := pet_rect.grow(20).has_point(event.position)
-			var wanted := AutonomyBridge.wheel_scale(_pet_scale_target, notches, _drag_active, over_pet)
+			var wanted := AutonomyBridge.wheel_scale(_floor_pending_scale if is_finite(_floor_pending_scale) else _pet_scale_target, notches, _drag_active, over_pet)
 			if not is_equal_approx(wanted, _pet_scale_target):
 				_set_scale_target(wanted)
 				get_viewport().set_input_as_handled()
@@ -1290,6 +1375,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				_drag_moved = false
 				_drag_start_mouse = DisplayServer.mouse_get_position()
 				_drag_start_window = DisplayServer.window_get_position()
+				if living!=null:living.cancel("dragged")
+				if autonomy!=null:autonomy._detach_support()
 				if _sit_active:
 					_stand_up("") # a manual drag releases the support; the module detaches too
 			elif event.button_index == MOUSE_BUTTON_RIGHT:
@@ -1299,6 +1386,7 @@ func _unhandled_input(event: InputEvent) -> void:
 # ----------------------------------------------------------------- per frame
 
 func _process(delta: float) -> void:
+	if not _sync_render_surface():return
 	_update_fps_cap()
 	motion.mouth_open = audio.envelope
 	_update_avatar_transform(delta)
@@ -1337,11 +1425,11 @@ func _keep_pet_in_window() -> void:
 	# navigation does. Fitting the current yaw alone moves the stable foot pivot
 	# while shoulders widen, eventually invalidating its latched support anchor.
 	var fit_rect := _navigation_rect() if _pivot_local.has("foot") else _unclipped_pet_rect
-	var shift := AutonomyBridge.fit_shift(fit_rect, Vector2(WINDOW_SIZE))
-	if fit_rect.size.x > WINDOW_SIZE.x:
+	var shift := AutonomyBridge.fit_shift(fit_rect, render_size())
+	if fit_rect.size.x > render_size().x:
 		# A conservative AABB radius can exceed the viewport at the largest scale.
 		# Centre that envelope consistently; never chase its left/right yaw edges.
-		shift.x = float(WINDOW_SIZE.x) * 0.5 - fit_rect.get_center().x
+		shift.x = float(render_size().x) * 0.5 - fit_rect.get_center().x
 	if shift != Vector2.ZERO:
 		# Correct the current pivot, not the already-easing target: accumulating
 		# overflow every frame overshoots and can clip the opposite edge.
@@ -1368,13 +1456,15 @@ func _update_pet_rect() -> void:
 	var presenting: bool = objects != null and objects.has_method("has_presentation_transition") and objects.has_presentation_transition()
 	if presenting:
 		box = objects.presentation_bounds()
+	elif _floor_rest_owned and motion.floor_rest.active:
+		box = motion.floor_rest.profile.get("bounds_local",_model_aabb)
 	elif _sit_active and not seated.is_empty():
 		box = seated.bounds
 	elif _projection_geometry.valid_for(avatar):
 		var measured: Rect2 = _projection_geometry.body_rect(camera, avatar.global_transform)
 		if measured.has_area():
 			_unclipped_pet_rect = AutonomyBridge.body_rect(measured)
-			pet_rect = _unclipped_pet_rect.intersection(Rect2(Vector2.ZERO, Vector2(WINDOW_SIZE)))
+			pet_rect = _unclipped_pet_rect.intersection(Rect2(Vector2.ZERO, render_size()))
 			return
 	var xf := avatar.global_transform
 	var min_p := Vector2(INF, INF)
@@ -1390,14 +1480,14 @@ func _update_pet_rect() -> void:
 	if min_p.x < max_p.x:
 		var r := AutonomyBridge.body_rect(Rect2(min_p, max_p - min_p))
 		_unclipped_pet_rect = r
-		pet_rect = r.intersection(Rect2(Vector2.ZERO, Vector2(WINDOW_SIZE)))
+		pet_rect = r.intersection(Rect2(Vector2.ZERO, render_size()))
 
 
 func _update_gaze() -> void:
 	if living != null and living.apply_attention():
 		return
 	var mouse := get_viewport().get_mouse_position()
-	var inside := Rect2(Vector2.ZERO, Vector2(WINDOW_SIZE)).has_point(mouse) and DisplayServer.window_is_focused() or pet_rect.grow(120).has_point(mouse)
+	var inside := Rect2(Vector2.ZERO, render_size()).has_point(mouse) and DisplayServer.window_is_focused() or pet_rect.grow(120).has_point(mouse)
 	if inside:
 		# Normalised relative to the pet head (0.5,0.45 = straight ahead)
 		var head := camera.unproject_position(avatar.bone_global_position("head")) if avatar.has_model() else pet_rect.get_center()
@@ -1419,6 +1509,7 @@ func _update_gaze() -> void:
 ## The hit area still follows the visible projection; navigation uses a yaw-invariant
 ## envelope so widening shoulders during a reversal cannot invalidate its support.
 func _navigation_rect() -> Rect2:
+	if _floor_rest_owned and _floor_navigation_rect.has_area():return _floor_navigation_rect
 	if objects != null and objects.has_method("has_presentation_transition") and objects.has_presentation_transition():
 		return _unclipped_pet_rect
 	var seated: Dictionary = avatar.get("seated_geometry") if avatar != null and avatar.get("seated_geometry") is Dictionary else {}
@@ -1523,7 +1614,7 @@ func _update_passthrough(force: bool) -> void:
 		region = region.merge(Rect2(handle_button.position, handle_button.size).grow(4))
 	if subtitle.visible:
 		region = region.merge(Rect2(subtitle.position, subtitle.size))
-	region = region.intersection(Rect2(Vector2.ZERO, Vector2(WINDOW_SIZE)))
+	region = region.intersection(Rect2(Vector2.ZERO, render_size()))
 	var poly := PackedVector2Array([region.position, Vector2(region.end.x, region.position.y), region.end, Vector2(region.position.x, region.end.y)])
 	if force or poly != _last_passthrough:
 		_last_passthrough = poly
@@ -1536,13 +1627,13 @@ func _layout_overlays() -> void:
 		var head := camera.unproject_position(avatar.bone_global_position("head"))
 		var head_margin := _model_aabb.size.y * _px_per_m * _pet_scale * 0.13
 		handle_at = head - Vector2(15.0, head_margin + 30.0)
-	handle_button.position = handle_at.clamp(Vector2(4,4), Vector2(WINDOW_SIZE)-Vector2(34,34))
+	handle_button.position = handle_at.clamp(Vector2(4,4), render_size()-Vector2(34,34))
 	handle_dot.position = handle_button.position + Vector2(24, -2)
 	loading_label.size = Vector2(PET_ZONE_WIDTH, 24)
-	loading_label.position = Vector2(_default_foot_pixel().x - PET_ZONE_WIDTH * 0.5, WINDOW_SIZE.y * 0.5)
+	loading_label.position = Vector2(_default_foot_pixel().x - PET_ZONE_WIDTH * 0.5, render_size().y * 0.5)
 	subtitle.size = Vector2(PET_ZONE_WIDTH - 20, 0)
 	subtitle.position = Vector2(clampf(pet_rect.get_center().x - subtitle.size.x * 0.5,
-		10.0, WINDOW_SIZE.x - subtitle.size.x - 10.0), minf(pet_rect.end.y + 6, WINDOW_SIZE.y - 70))
+		10.0, render_size().x - subtitle.size.x - 10.0), minf(pet_rect.end.y + 6, render_size().y - 70))
 
 
 func _show_subtitle(text: String) -> void:
@@ -1591,11 +1682,12 @@ func body_dialogue_busy(include_hold: bool = false) -> bool:
 func body_action_can_continue() -> bool:
 	if objects != null and not objects._interaction.is_empty(): return true
 	if living == null: return false
+	if living.has_method("has_drop_intent") and living.has_drop_intent():return true
 	return living.director.has_explicit_body_intent()
 
 
 func body_action_owns_heading() -> bool:
-	return (scene_navigation != null and scene_navigation.navigation.active) or (objects != null and not objects._interaction.is_empty()) or _sit_active
+	return (scene_navigation != null and scene_navigation.navigation.active) or (objects != null and not objects._interaction.is_empty()) or _sit_active or (living!=null and living.drop_owns_foot())
 
 
 func _push_autonomy_context() -> void:
@@ -1614,6 +1706,7 @@ func _push_autonomy_context() -> void:
 	if objects != null and objects.has_method("admits_contact_during_reply") and objects.admits_contact_during_reply():
 		ctx["speaking"] = false
 		ctx["foreground_busy"] = false
+	if living!=null and living.drop_owns_foot():ctx["foreground_busy"]=true
 	autonomy.update_context(bool(ctx["panel_open"]), bool(ctx["listening"]), bool(ctx["speaking"]),
 		bool(ctx["dragging"]), bool(ctx["foreground_busy"]))
 	# Passthrough hides pointer events outside the pet region, so use the global pointer.
@@ -1746,6 +1839,11 @@ func is_sitting() -> bool:
 
 func _on_support_changed(contact: Dictionary) -> void:
 	_support = contact
+	if _floor_rest_owned:
+		_sit_attached=bool(contact.get("attached",false)) and str(contact.get("surface_id",""))==_floor_support_id
+		if not _sit_attached:_stand_up("지지면이 바뀌어 일어납니다")
+		_refresh_sit_button();_refresh_autonomy_label()
+		return
 	var standing_id := str(contact.get("surface_id","")) if bool(contact.get("attached",false)) and str(contact.get("pose","")) == "foot" and not _sit_active else ""
 	if standing_id != _standing_floor_id:
 		_standing_floor_id = standing_id
@@ -1817,7 +1915,7 @@ func _request_sit() -> void:
 ## Wait for pointer/dialogue/settle policy before changing the body or support anchor.
 ## Reopening the panel or losing the original support cancels this pending intent.
 func _advance_pending_sit() -> void:
-	if not _sit_pending or panel_open or not autonomy.enabled:
+	if not _sit_pending or panel_open or not autonomy.enabled or _drag_active or body_dialogue_busy(true) or mic.is_recording() or motion._preview or motion._custom_motion:
 		return
 	if autonomy.state not in ["walk", "inspect", "rest"]:
 		return
@@ -1826,6 +1924,9 @@ func _advance_pending_sit() -> void:
 		_refresh_autonomy_label()
 		return
 	_sit_pending = false
+	if _support.get("kind","")=="taskbar":
+		_begin_taskbar_rest()
+		return
 	if avatar.has_model() and not _ensure_seated_geometry(): return
 	if not motion.start_contact_pose("sit"):
 		panel.set_status_message("앉기 실패: 모션 플레이어가 sit_idle 을 시작하지 못했습니다")
@@ -1844,6 +1945,13 @@ func _advance_pending_sit() -> void:
 ## pivot back to the foot, module pose "foot" so it re-seats with foot contact and roaming resumes.
 func _stand_up(message: String) -> void:
 	_sit_pending = false
+	if _floor_rest_owned and motion.floor_rest.active:
+		if _drag_active:
+			motion.cancel_floor_rest()
+		else:
+			_floor_exit_requested=true
+			motion.end_floor_rest()
+		return
 	if not _sit_active:
 		return
 	_sit_active = false
@@ -1857,6 +1965,58 @@ func _stand_up(message: String) -> void:
 	_refresh_sit_button()
 	_refresh_autonomy_label()
 
+
+func _begin_taskbar_rest() -> void:
+	floor_rest_admission={"accepted":false,"reason":"source_unavailable"}
+	if not avatar.has_model() or not motion.floor_rest_available():return
+	var profile:=motion.prepare_floor_rest()
+	if profile.is_empty():return
+	# Keep the existing foot support. The whole authored motion may overlap the
+	# actual taskbar strip, but must still fit a physical monitor and render crop.
+	var bounds:AABB=profile.bounds_local
+	var region:=Rect2()
+	for i in 8:
+		var point:Vector3=avatar.global_transform*bounds.get_endpoint(i)
+		if camera.is_position_behind(point):return
+		var pixel:=camera.unproject_position(point)
+		region=Rect2(pixel,Vector2.ZERO) if i==0 else region.expand(pixel)
+	var screen_region:=Rect2(Vector2(get_window().position)+region.position,region.size)
+	var fits:=false
+	for i in DisplayServer.get_screen_count():
+		var screen:=Rect2(Vector2(DisplayServer.screen_get_position(i)),Vector2(DisplayServer.screen_get_size(i)))
+		if screen.encloses(screen_region):fits=true;break
+	floor_rest_admission={"accepted":false,"reason":"outside_display" if not fits else "outside_viewport","region":region,"global_region":screen_region}
+	if not fits or not Rect2(Vector2.ZERO,render_size()).encloses(region):return
+	var navigation:=_navigation_rect()
+	if not motion.begin_floor_rest():return
+	floor_rest_admission["accepted"]=true;floor_rest_admission["reason"]="ready"
+	_floor_navigation_rect=navigation
+	_floor_rest_owned=true;_floor_exit_requested=false
+	_floor_support_id=str(_support.get("surface_id",""))
+	_sit_active=true;_sit_attached=true
+	_walk_started="";_floating=false
+	_push_autonomy_context();_refresh_sit_button();_refresh_autonomy_label()
+
+func _on_floor_rest_finished(outcome:String) -> void:
+	if outcome=="entered":
+		if _floor_exit_requested:motion.end_floor_rest()
+		return
+	_floor_rest_owned=false;_floor_exit_requested=false
+	_floor_navigation_rect=Rect2();_floor_support_id=""
+	_sit_active=false;_sit_attached=false
+	if autonomy!=null:
+		autonomy.set_contact_pose("foot")
+		_on_support_changed(autonomy.get_support_contact())
+	_push_autonomy_context();_refresh_sit_button();_refresh_autonomy_label()
+	if outcome=="exited" and living!=null:living.queue_idle_recovery("floor_rest_completed")
+	if is_finite(_floor_pending_scale) or _floor_pending_view:call_deferred("_apply_floor_pending_edits")
+
+func _apply_floor_pending_edits() -> void:
+	var scale:=_floor_pending_scale
+	var view:=_floor_pending_view
+	_floor_pending_scale=NAN;_floor_pending_view=false
+	if view:_apply_view_settings()
+	if is_finite(scale):_set_scale_target(scale)
 
 ## Change the scale/turn pivot without moving the body: the new pivot starts at its current
 ## projected pixel. Standing eases back to the canonical foot pixel (bottom of the pet zone).

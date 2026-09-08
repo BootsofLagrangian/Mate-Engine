@@ -24,7 +24,7 @@ static func offsets(time:float,gaze:Vector2,idle:bool,attention:bool,locked:bool
   result.neck=Vector3(pitch*.3,yaw*.3,0)
  return result
 func apply(player:MotionPlayer,delta:float)->void:
- var allowed:=player.current_contact_pose()=="sit" and not player.seated_carrier.active and not player.seated_transition.active and not player._preview and not player._custom_motion
+ var allowed:=player.current_contact_pose() in ["sit","floor_rest"] and not player.seated_carrier.active and not player.seated_transition.active and not player._preview and not player._custom_motion
  if not allowed:
   # A carrier freezes the previous final pose itself; never perturb its proof.
   reset();return

@@ -633,8 +633,8 @@ func _build_view_tab() -> void:
 		setting_changed.emit("view_projection", _view_projection.get_selected_metadata()))
 	_refresh_view_projection()
 	_view_reset = Button.new()
-	_view_reset.text = "기본 시점"
-	_view_reset.tooltip_text = "직교 · 회전 0° · 각도 0° · 눈높이 0 · 확대 1.00 · 화각 45° · 거리 3.6 m로 되돌립니다"
+	_view_reset.text = "정면 시점으로"
+	_view_reset.tooltip_text = "원근 · 회전 0° · 각도 0° · 눈높이 0 · 확대 1.00 · 화각 45° · 거리 3.6 m로 되돌립니다"
 	_view_reset.pressed.connect(reset_view_settings)
 	inner.add_child(_view_reset)
 
@@ -976,6 +976,18 @@ func _build_settings_tab() -> void:
 	_scale_slider = _slider_row(inner, "펫 크기", AutonomyBridge.SCALE_MIN, AutonomyBridge.SCALE_MAX, AutonomyBridge.SCALE_WHEEL_STEP,
 		AutonomyBridge.clamp_scale(float(_setting("pet_scale", AutonomyBridge.SCALE_DEFAULT))), "pet_scale")
 	_scale_slider.tooltip_text = "펫 위에서 마우스 휠로도 조절됩니다 (드래그 중에는 무시). 발/엉덩이 접점을 기준으로 커지므로 지지면에서 미끄러지지 않습니다."
+	var size_buttons := HBoxContainer.new()
+	inner.add_child(size_buttons)
+	for entry in [["− 작게",-1.0],["＋ 크게",1.0]]:
+		var button := Button.new()
+		button.text = str(entry[0])
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var direction := float(entry[1])
+		button.pressed.connect(func(): _scale_slider.value = AutonomyBridge.clamp_scale(_scale_slider.value + direction * AutonomyBridge.SCALE_WHEEL_STEP))
+		size_buttons.add_child(button)
+	var scale_tip := _label("펫 위에서 마우스 휠로도 크기를 바꿀 수 있습니다.")
+	scale_tip.add_theme_font_size_override("font_size",11)
+	inner.add_child(scale_tip)
 	_volume_slider = _slider_row(inner, "음량(dB)", -30.0, 6.0, 1.0, float(_setting("volume_db", 0.0)), "volume_db")
 	var gaze := CheckButton.new()
 	gaze.text = "마우스 시선 추적"

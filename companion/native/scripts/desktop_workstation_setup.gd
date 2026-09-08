@@ -6,7 +6,7 @@ const Solids = preload("desktop_scene_solids.gd")
 const PULL_STEP := .05
 const ANGLE_STEP_DEG := 5.0
 
-static func plan(scene: DesktopObjectContactScene, start_world: Vector3, avatar_scale: float, sit_minus_foot: Vector3, source_delta: Vector3, radius: float, height: float, other_solids: Array = [], fit_validator: Callable = Callable(), route_fit: Callable = Callable(), actor_swept: PackedVector3Array = PackedVector3Array()) -> Dictionary:
+static func plan(scene: DesktopObjectContactScene, start_world: Vector3, avatar_scale: float, sit_minus_foot: Vector3, source_delta: Vector3, radius: float, height: float, other_solids: Array = [], fit_validator: Callable = Callable(), route_fit: Callable = Callable(), actor_swept: PackedVector3Array = PackedVector3Array(), candidate_validator: Callable = Callable()) -> Dictionary:
 	if not is_instance_valid(scene) or not scene.supports_seat_setup():return {"accepted":false,"reason":"seat_setup_unsupported"}
 	if not start_world.is_finite() or not sit_minus_foot.is_finite() or not source_delta.is_finite() or not is_finite(avatar_scale) or avatar_scale<=0 or not is_finite(radius) or radius<0 or not is_finite(height) or height<=0:return {"accepted":false,"reason":"invalid_setup_geometry"}
 	for box in other_solids:
@@ -15,12 +15,14 @@ static func plan(scene: DesktopObjectContactScene, start_world: Vector3, avatar_
 	for point in actor_swept:
 		if not point.is_finite():return {"accepted":false,"reason":"invalid_actor_placement_geometry"}
 	var original := scene.seat_setup()
+	var input_geometry := {"start_world":start_world,"sit_minus_foot":sit_minus_foot,"source_delta":source_delta,"avatar_scale":avatar_scale,"radius":radius,"height":height,"scene_transform":scene.global_transform,"seat_setup":original.duplicate(true)}
 	var chair := scene.seat_node()
 	var native_parts:Array=[]
 	_collect_parts(chair,chair.global_transform.affine_inverse(),native_parts)
 	var fixed_parts:Array=[]
 	for child in scene._content.get_children():
 		if child!=chair:_collect_parts(child,scene.global_transform.affine_inverse(),fixed_parts)
+	var fixed_by_part := _fixed_part_candidates(native_parts,chair.transform,fixed_parts)
 	var toward := start_world-scene.socket_world("seat")
 	var preferred := atan2(toward.x,toward.z)
 	var yaws:Array=[0.0,90.0,180.0,-90.0]
@@ -37,18 +39,38 @@ static func plan(scene: DesktopObjectContactScene, start_world: Vector3, avatar_
 		for yaw in yaws:
 			attempts+=1
 			var turn := rad_to_deg(angle_difference(working_yaw,deg_to_rad(yaw)))
-			var sweep := _setup_sweep(scene,pull,turn,native_parts,fixed_parts,start_world,radius,height,other_solids,fit_validator,original)
+			var sweep := _setup_sweep(scene,pull,turn,native_parts,fixed_parts,start_world,radius,height,other_solids,fit_validator,original,fixed_by_part,not candidate_validator.is_valid())
 			if not sweep.get("clear",false):reason=str(sweep.reason);continue
+			var stage_start := start_world
+			if candidate_validator.is_valid():
+				# The host validates actual grasp approach and co-moving body path.
+				# Never substitute a stationary capsule for that moving actor.
+				scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
+				var admission: Variant = candidate_validator.call(pull,turn)
+				scene.set_seat_setup(pull,turn)
+				if not admission is Dictionary or admission.get("accepted") != true:
+					reason = str(admission.get("reason","setup_manipulation_rejected")) if admission is Dictionary else "invalid_setup_manipulation"
+					# Only the host can establish a failed shared precondition,
+					# such as an unreachable original grasp approach.
+					if admission is Dictionary and admission.get("terminal") == true:
+						scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
+						return {"accepted":false,"reason":reason,"attempts":attempts,"planning_ms":(Time.get_ticks_usec()-started)/1000.0,"input_geometry":input_geometry}
+					continue
+				var after: Variant = admission.get("actor_after_world")
+				if not after is Vector3 or not after.is_finite() or absf(after.y-start_world.y) > .01:
+					reason = "invalid_setup_manipulation_endpoint"
+					continue
+				stage_start = after
 			var all_solids:Array=other_solids.duplicate()
 			DesktopObjectsHost._append_scene_solids(scene,all_solids)
 			var entry_basis:=Basis(Vector3.UP,deg_to_rad(yaw)).scaled(Vector3.ONE*avatar_scale)
-			var stage:=DesktopObjectsHost.select_authored_staging(start_world,scene.socket_world("seat"),entry_basis,sit_minus_foot,source_delta,all_solids,radius,height)
+			var stage:=_select_authored_staging(stage_start,scene.socket_world("seat"),entry_basis,sit_minus_foot,source_delta,all_solids,radius,height)
 			if not stage.get("accepted",false):reason=str(stage.get("reason","blocked_endpoint"));continue
 			var actor_placement:=PackedVector3Array()
 			for point in actor_swept:actor_placement.append(scene.to_local(Vector3(stage.target_world)+point*avatar_scale))
 			var path:PackedVector3Array=stage.get("path",PackedVector3Array())
 			var route_ok:bool=not route_fit.is_valid() or (not path.is_empty() and bool(route_fit.call(path)))
-			var candidate:Dictionary={"accepted":true,"reason":"ready","pullout_local_m":pull,"yaw_delta_deg":turn,"target_world":stage.target_world,"entry_facing_yaw":deg_to_rad(yaw),"root_distance_factor":stage.factor,"setup_bounds_local":sweep.bounds,"setup_parts_local":sweep.parts,"actor_placement_vertices_local":actor_placement,"approach_path":path,"navigation_geometry":stage.get("navigation_geometry",{}),"view_failure":"" if route_ok else "approach_route_outside_workarea","attempts":attempts,"planning_ms":(Time.get_ticks_usec()-started)/1000.0}
+			var candidate:Dictionary={"accepted":true,"reason":"ready","pullout_local_m":pull,"yaw_delta_deg":turn,"target_world":stage.target_world,"entry_facing_yaw":deg_to_rad(yaw),"root_distance_factor":stage.factor,"setup_bounds_local":sweep.bounds,"setup_parts_local":sweep.parts,"actor_placement_vertices_local":actor_placement,"approach_path":path,"preparation_actor_world":stage_start,"navigation_geometry":stage.get("navigation_geometry",{}),"view_failure":"" if route_ok else "approach_route_outside_workarea","attempts":attempts,"planning_ms":(Time.get_ticks_usec()-started)/1000.0,"input_geometry":input_geometry}
 			if sweep.get("view_ok",false) and route_ok:
 				scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
 				return candidate
@@ -58,14 +80,65 @@ static func plan(scene: DesktopObjectContactScene, start_world: Vector3, avatar_
 		# the host may reposition this bounded full envelope on the same floor.
 		if not best_geometry.is_empty():break
 	scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
-	return {"accepted":false,"reason":"setup_view_blocked" if not best_geometry.is_empty() else reason,"geometric_candidate":best_geometry,"attempts":attempts,"planning_ms":(Time.get_ticks_usec()-started)/1000.0}
+	return {"accepted":false,"reason":"setup_view_blocked" if not best_geometry.is_empty() else reason,"geometric_candidate":best_geometry,"attempts":attempts,"planning_ms":(Time.get_ticks_usec()-started)/1000.0,"input_geometry":input_geometry}
+
+## Reject an endpoint already inside the exact expanded obstacle union before
+## allocating/baking a navigation map. A surviving candidate still receives
+## the same full navigation and route-fit checks, in the same factor order.
+static func _select_authored_staging(start:Vector3,seat:Vector3,basis:Basis,sit_minus_foot:Vector3,source:Vector3,solids:Array,radius:float,height:float)->Dictionary:
+	var last_reason := "blocked_endpoint"
+	var skipped := 0
+	for factor in [1.0,1.05,1.1,1.15,1.2,1.25]:
+		var adjusted := source
+		adjusted.x *= factor; adjusted.z *= factor
+		var target := DesktopObjectsHost.authored_staging_foot(seat,basis,sit_minus_foot,adjusted,start.y)
+		if not target.is_finite(): return {"accepted":false,"reason":"invalid_staging"}
+		var blocked := false
+		for box in solids:
+			if _capsule_box(start,radius,height,box) or _capsule_box(target,radius,height,box):
+				blocked = true
+				break
+		if blocked:
+			skipped += 1
+			last_reason = "blocked_endpoint"
+			continue
+		var low := Vector2(minf(start.x,target.x),minf(start.z,target.z))-Vector2.ONE*1.2
+		var high := Vector2(maxf(start.x,target.x),maxf(start.z,target.z))+Vector2.ONE*1.2
+		var nav := DesktopSceneNavigation.new()
+		var cell := DesktopSceneNavigationHost.navigation_cell_size(high-low)
+		var geometry := nav.configure(Rect2(low,high-low),start.y,solids,radius,height,cell)
+		var result := nav.plan("staging",start,target) if geometry.get("ok",false) else {"accepted":false,"reason":geometry.get("reason","invalid_geometry")}
+		nav.dispose()
+		if result.get("accepted",false):
+			return {"accepted":true,"target_world":target,"factor":factor,"source_delta_local":source,"applied_delta_local":adjusted,"path":result.path,"navigation_geometry":{"area":Rect2(low,high-low),"cell_size":cell},"blocked_endpoint_skips":skipped}
+		last_reason = str(result.get("reason","unreachable"))
+	return {"accepted":false,"reason":last_reason,"maximum_factor":1.25,"blocked_endpoint_skips":skipped}
 
 static func _collect_parts(node:Node, inverse_frame:Transform3D, result:Array) -> void:
 	if node is MeshInstance3D and node.mesh!=null:
 		for part in Solids.local_parts(node.mesh):result.append(inverse_frame*node.global_transform*AABB(part))
 	for child in node.get_children():_collect_parts(child,inverse_frame,result)
 
-static func _setup_sweep(scene:DesktopObjectContactScene,pull:float,turn:float,parts:Array,fixed:Array,actor:Vector3,radius:float,height:float,others:Array,fit:Callable,initial:Dictionary)->Dictionary:
+## Pullout and yaw preserve each part's Y interval. Only obstacles overlapping
+## that invariant interval can collide; retain all of those exact original boxes.
+static func _fixed_part_candidates(parts:Array,chair_transform:Transform3D,fixed:Array)->Array:
+	var radius:=0.0
+	for part in parts:
+		for corner in 8:
+			var point:Vector3=AABB(part).get_endpoint(corner)
+			radius=maxf(radius,Vector2(point.x,point.z).length())
+	# Match the existing sweep's global sagitta padding, including its Y pad.
+	var pad:=radius*chair_transform.basis.x.length()*(1.0-cos(deg_to_rad(ANGLE_STEP_DEG)*.5))+.00001
+	var result:Array=[]
+	for part in parts:
+		var box:AABB=chair_transform*AABB(part)
+		var candidates:Array=[]
+		for obstacle:AABB in fixed:
+			if box.end.y+pad > obstacle.position.y and box.position.y-pad < obstacle.end.y: candidates.append(obstacle)
+		result.append(candidates)
+	return result
+
+static func _setup_sweep(scene:DesktopObjectContactScene,pull:float,turn:float,parts:Array,fixed:Array,actor:Vector3,radius:float,height:float,others:Array,fit:Callable,initial:Dictionary,fixed_by_part:Array=[],check_actor:bool=true)->Dictionary:
 	var initial_pull:float=initial.pullout_local_m
 	var initial_yaw:float=initial.yaw_delta_deg
 	scene.set_seat_setup(initial_pull,initial_yaw)
@@ -96,10 +169,11 @@ static func _setup_sweep(scene:DesktopObjectContactScene,pull:float,turn:float,p
 				var swept: AABB=(previous*AABB(part)).merge(current*AABB(part)).grow(arc_pad)
 				sweep_parts[part_index]=AABB(sweep_parts[part_index]).merge(swept)
 				bounds=bounds.merge(swept)
-				for obstacle in fixed:
+				var obstacles: Array = fixed_by_part[part_index] if fixed_by_part.size() == parts.size() else fixed
+				for obstacle in obstacles:
 					if _positive_overlap(swept,obstacle):return {"clear":false,"reason":"chair_sweep_hits_desk"}
 				var world:AABB=scene.global_transform*swept
-				if _capsule_box(actor,radius,height,world):return {"clear":false,"reason":"chair_sweep_hits_actor"}
+				if check_actor and _capsule_box(actor,radius,height,world):return {"clear":false,"reason":"chair_sweep_hits_actor"}
 				for obstacle in others:
 					if _positive_overlap(world,obstacle):return {"clear":false,"reason":"chair_sweep_hits_object"}
 			bounds=bounds.merge(scene.get_local_bounds())

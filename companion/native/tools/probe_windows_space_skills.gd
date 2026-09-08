@@ -155,7 +155,7 @@ func choose_floor_corridor() -> bool:
 		"rationale":"own window placed away from the cursor; normal hover/busy/contact policies remain active"}
 	return await wait_for(func(): return app.autonomy.can_request_move() \
 		and bool(app.autonomy.get_support_contact().get("attached",false)) \
-		and str(app.autonomy.get_support_contact().get("surface_id","")).begins_with("floor:"),12.0)
+		and str(app.autonomy.get_support_contact().get("kind","")) in ["floor","taskbar"],12.0)
 
 func cool_materials_applied(window: Window) -> bool:
 	var checked := 0
@@ -335,6 +335,12 @@ func finish() -> void:
 	if closing: return
 	closing = true
 	if app != null:
+		report["fit_diagnostics"]=app.objects.fit_diagnostics.duplicate(true)
+		report["object_records"]=app.objects.store.data()
+		for key in ["planning_input","restoration_input"]:
+			if report.fit_diagnostics.has(key):
+				var fixture:=FileAccess.open(output.path_join(key.replace("_","-")+".bin"),FileAccess.WRITE)
+				if fixture!=null:fixture.store_var(report.fit_diagnostics[key]);fixture.close()
 		report["final_object_count"] = app.objects.rows().size()
 		check(app.objects.rows().size() <= 3,"total object bound respected")
 		app.objects.cancel_commands("probe_cleanup")

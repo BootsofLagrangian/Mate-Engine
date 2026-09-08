@@ -1,6 +1,7 @@
 class_name DesktopAutonomy
 extends Node
 var _projection_displacement_pending := Vector2.ZERO
+var _render_rebase_total := Vector2.ZERO
 var projection_commit_callback := Callable()
 ## Desktop geometry only: no screen capture, recognition, input injection or file access.
 ## Positions use Godot DisplayServer desktop pixels; visible_bounds is window-local.
@@ -224,6 +225,21 @@ func _process(delta: float) -> void:
 	frame_moved.emit(displacement, velocity if state == "walk" and not _blocked and not _pointer_interaction else Vector2.ZERO)
 
 
+## Host-only change of render coordinates after moving the native window origin.
+## Desktop targets/supports stay fixed; window-local anchors move oppositely.
+## This is neither actor travel nor a user drag and must not cancel its owner.
+func rebase_render_origin(delta: Vector2) -> void:
+	if not delta.is_finite() or delta == Vector2.ZERO: return
+	position += delta
+	target += delta
+	if _last_frame_position.is_finite(): _last_frame_position += delta
+	visible_bounds.position -= delta
+	_locked_anchor -= delta
+	for key in _anchors:
+		if _anchors[key] is Vector2: _anchors[key] -= delta
+	_render_rebase_total += delta
+
+
 ## Test hook: no DisplayServer or actual window mutation.
 func configure_simulation(areas: Array[Rect2], origin: Vector2, bounds: Rect2) -> void:
 	_simulation = true
@@ -256,12 +272,13 @@ func _refresh_monitors() -> void:
 
 func advance(delta: float) -> void:
 	var before := position.round() - _projection_displacement_pending
+	var rebase_before := _render_rebase_total
 	_projection_displacement_pending = Vector2.ZERO
 	_advance_state(delta)
 	if _simulation:
 		if projection_commit_callback.is_valid(): projection_commit_callback.call()
 		_projection_displacement_pending = Vector2.ZERO
-		frame_moved.emit(position.round() - before, velocity if state == "walk" and not _blocked and not _pointer_interaction else Vector2.ZERO)
+		frame_moved.emit(position.round() - before - (_render_rebase_total - rebase_before), velocity if state == "walk" and not _blocked and not _pointer_interaction else Vector2.ZERO)
 
 
 func _advance_state(delta: float) -> void:

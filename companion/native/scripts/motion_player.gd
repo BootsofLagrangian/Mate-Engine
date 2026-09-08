@@ -22,6 +22,7 @@ var vrma_clips: Dictionary = {}
 var vrma_contact_modes: Dictionary = {}
 var _vrma_name := ""
 var _vrma_start := 0.0
+var _vrma_playback_revision := 0
 var _vrma_speed := 1.0
 var _vrma_loop := false
 var _vrma_repeat := 1
@@ -45,6 +46,7 @@ var locomotion_styles: Dictionary = {}
 var _source_seat_profiles: Dictionary = {}
 var authored_seated_feet:=AuthoredFootContacts.new()
 var seated_carrier:=SeatedCarrier.new()
+var floor_rest:=FloorRest.new()
 var seated_presence:=AuthoredSeatedPresence.new()
 var action_overlap := ActionOverlap.new()
 var upper_body := UpperBodyOverlay.new()
@@ -66,6 +68,8 @@ var _contact_pose := "foot"
 var _seated_idle_start := 0.0
 var _contact_hand := "right"
 var _contact_target := Vector3.INF
+var _lean_started := 0.0
+var wall_lean = preload("wall_lean_pose.gd").new()
 var contact_reachable := false
 var gait := DesktopGait.new()
 var turn := TurnStepper.new()
@@ -124,6 +128,7 @@ func _ready() -> void:
 
 
 func play_upper_body_gesture(name: String, intensity: float = 1.0, speed: float = 1.0, repeat: int = 1, channels: Array = ["head","arms","torso"]) -> bool:
+	if name in FloorRest.ALIASES.values():return false
 	return upper_body.start(self,name,intensity,speed,repeat,channels)
 
 func stop_upper_body_gesture() -> void:
@@ -391,6 +396,7 @@ func reset_all() -> void:
 	seated_transition.reset()
 	upper_body.clear()
 	seated_presence.reset()
+	floor_rest.interrupt(self)
 	upper_body.contact_locked=false
 	clear_seated_floor()
 	stop_gesture()
@@ -439,6 +445,7 @@ func pet_reaction() -> void:
 func _process(delta: float) -> void:
 	elapsed += delta
 	if avatar == null or not avatar.has_model():
+		floor_rest.interrupt(self)
 		return
 	_check_model_identity()
 	_process_sample_delta = delta
@@ -447,7 +454,7 @@ func _process(delta: float) -> void:
 	_posing_from_previous = true
 	_update_facing(delta)
 	gait.advance_phase(delta)
-	var ambient_allowed := idle_enabled and not _ambient_suspended and not is_gesture_active() and not _preview and not _custom_motion and not turn.active and not _heading_pending and not _travel_intent and _contact_pose == "foot" and _ambient_name not in ["anticipate","listening","thinking","working"]
+	var ambient_allowed := idle_enabled and not upper_body.contact_locked and not _ambient_suspended and not is_gesture_active() and not _preview and not _custom_motion and not turn.active and not _heading_pending and not _travel_intent and _contact_pose == "foot" and _ambient_name not in ["anticipate","listening","thinking","working"]
 	if _ambient_was_allowed and not ambient_allowed and authored_ambient.weight > 0.0 and not is_gesture_active():
 		_begin_transition()
 	_ambient_was_allowed = ambient_allowed
@@ -468,7 +475,7 @@ func _process(delta: float) -> void:
 
 	# Seated presence is applied once after authored rotations below.
 	# 2. Procedural idle layer (breath / sway / micro head motion)
-	if idle_enabled and _contact_pose != "sit":
+	if idle_enabled and _contact_pose not in ["sit","floor_rest"]:
 		var breath := sin(elapsed * TAU / 4.2)
 		_add(target, "chest", Vector3(1.2 * breath, 0.0, 0.0))
 		_add(target, "spine", Vector3(0.6 * breath, 0.0, 0.3 * sin(elapsed * TAU / 9.0)))
@@ -486,7 +493,7 @@ func _process(delta: float) -> void:
 		_advance_gaze(wanted,delta)
 		var yaw := clampf((_gaze_current.x - 0.5) * 36.0, -14.0, 14.0) # + = look toward the character's right
 		var pitch := clampf((_gaze_current.y - 0.45) * 24.0, -10.0, 12.0)
-		if _contact_pose != "sit":
+		if _contact_pose not in ["sit","floor_rest"]:
 			_add(target, "head", Vector3(pitch * 0.7, yaw * 0.7, 0.0))
 			_add(target, "neck", Vector3(pitch * 0.3, yaw * 0.3, 0.0))
 
@@ -497,8 +504,6 @@ func _process(delta: float) -> void:
 		_add(target, "head", Vector3(3.0 * u, 0.0, wobble))
 		_add(target, "chest", Vector3(0.0, 0.0, wobble * 0.25))
 
-	if _contact_pose == "lean":
-		_add(target,"chest",Vector3(0,0,6.0 if _contact_hand == "left" else -6.0))
 
 	# Smooth + apply
 	for bone in _applied.keys():
@@ -576,11 +581,12 @@ func _process(delta: float) -> void:
 				vrma_foot_contact = true
 				vrma_contact_weight = smoothstep(0.0,TRANSITION_SECONDS,elapsed-_vrma_start)
 	_apply_ambient(delta)
-	seated_presence.apply(self,delta)
+	if not floor_rest.active:seated_presence.apply(self,delta)
 	upper_body.apply(self,delta)
 	var contact_solvable := false
 	if _contact_pose == "lean":
-		contact_solvable = avatar.apply_hand_contact(_contact_hand,_contact_target)
+		wall_lean.apply(avatar,_blend_weight((elapsed-_lean_started)/0.55))
+		contact_solvable = avatar.apply_hand_contact(_contact_hand,_contact_target,_blend_weight((elapsed-_lean_started)/0.55))
 	_apply_transition()
 	authored_ambient.solve_contacts(avatar,vrma_foot_contact,vrma_contact_weight)
 	gait.apply(avatar,delta,(_travel_intent or (_vrma_loop and locomotion_clips.has(_vrma_name))) and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active)
@@ -603,6 +609,8 @@ func _process(delta: float) -> void:
 
 	seated_transition.apply(self,delta)
 	seated_carrier.apply(self)
+	floor_rest.apply(self,delta)
+	if floor_rest.active and floor_rest.phase=="idle":seated_presence.apply(self,delta)
 
 	# Expressions: blink, emotion, mouth
 	_update_blink(delta)
@@ -753,6 +761,7 @@ func load_vrma(name: String, path: String, contact_mode: String = "") -> bool:
 
 ## loop=true plays until stop/supersession; otherwise repeat is a finite cycle count.
 func play_vrma(name: String, speed: float = 1.0, loop: bool = false, repeat: int = 1) -> bool:
+	if name in FloorRest.ALIASES.values():return false
 	if seated_transition.active or name in seated_transition.clips.values(): return false
 	if not loop and not Dictionary(locomotion_styles.get(name,{})).is_empty(): return false
 	if not vrma_clips.has(name):
@@ -767,6 +776,7 @@ func play_vrma(name: String, speed: float = 1.0, loop: bool = false, repeat: int
 	if gait.has_method("configure_authored_locomotion"):
 		gait.call("configure_authored_locomotion",locomotion_styles.get(name,{}))
 	_vrma_start = elapsed
+	_vrma_playback_revision += 1
 	_vrma_speed = clampf(speed,0.5,2.0)
 	_vrma_loop = loop
 	_vrma_repeat = clampi(repeat,1,3)
@@ -856,11 +866,11 @@ func update_scene_heading(yaw_radians: float) -> bool:
 	gait.steering_heading = _facing_target
 	return true
 
-func set_scene_locomotion_sample(velocity_world: Vector3, displacement_world: Vector3, heading_world: float, supported: bool = true, distance_world_m: float = -1.0) -> void:
+func set_scene_locomotion_sample(velocity_world: Vector3, displacement_world: Vector3, heading_world: float, supported: bool = true, distance_world_m: float = -1.0, reverse_phase: bool = false) -> void:
 	if avatar == null or not avatar.has_model(): return
 	var owns_legs := (_travel_intent or (_vrma_loop and locomotion_clips.has(_vrma_name))) and _contact_pose == "foot" and not _custom_motion and not _preview and not turn.active
 	if owns_legs: update_scene_heading(heading_world)
-	gait.sample_scene(avatar,velocity_world,displacement_world,supported and owns_legs,distance_world_m)
+	gait.sample_scene(avatar,velocity_world,displacement_world,supported and owns_legs,distance_world_m,reverse_phase)
 	gait.compensate_movement(avatar)
 	_record_pose_velocity(_process_sample_delta)
 	if is_equal_approx(_transition_start,elapsed) and not _transition_from.is_empty():
@@ -993,7 +1003,7 @@ func clear_seated_floor() -> void:
 	authored_seated_feet.clear_reference()
 	if avatar != null: avatar.clear_seated_floor()
 
-func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF) -> bool:
+func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF, wall_normal: Vector3 = Vector3.INF) -> bool:
 	if seated_carrier.active:return false
 	contact_reachable = false
 	if pose == "sit":
@@ -1010,6 +1020,8 @@ func start_contact_pose(pose: String, world_hand_target: Vector3 = Vector3.INF) 
 	if pose == "lean" and world_hand_target.is_finite() and avatar != null and avatar.has_model():
 		stop_gesture()
 		_contact_pose = "lean"
+		_lean_started = elapsed
+		wall_lean.configure(avatar,world_hand_target,wall_normal)
 		_contact_target = world_hand_target
 		_contact_hand = "left" if avatar.to_local(world_hand_target).x >= 0 else "right"
 		set_locomotion_direction(Vector2.ZERO)
@@ -1023,6 +1035,26 @@ func stop_contact_pose() -> void:
 	_contact_target = Vector3.INF
 	contact_reachable = false
 	stop_gesture()
+
+func floor_rest_available() -> bool:
+	return floor_rest.available(vrma_clips)
+
+func prepare_floor_rest() -> Dictionary:
+	return floor_rest.prepare(self)
+
+func begin_floor_rest() -> bool:
+	return floor_rest.begin(self)
+
+func end_floor_rest() -> bool:
+	return floor_rest.request_exit(self)
+
+func cancel_floor_rest() -> void:
+	if floor_rest.active:_begin_transition()
+	floor_rest.interrupt(self)
+	if _contact_pose=="floor_rest":_contact_pose="foot"
+
+func floor_rest_state() -> Dictionary:
+	return floor_rest.diagnostics.duplicate(true)
 
 func current_contact_pose() -> String:
 	return _contact_pose
@@ -1218,6 +1250,7 @@ func _check_model_identity() -> void:
 	if current_id == _avatar_id:
 		return
 	var replacing := _avatar_id != 0
+	if floor_rest.active:floor_rest.interrupt(self)
 	_avatar_id = current_id
 	_hand_goals.clear()
 	_transition_from.clear()

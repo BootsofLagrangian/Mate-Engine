@@ -146,10 +146,20 @@ def intent_prompt(interests, furniture_types=(), furniture_catalog=(), locomotio
             '<desktop_target_data>' + json.dumps(list(interests), ensure_ascii=False) + '</desktop_target_data>' + grounded_target_examples(interests) + locomotion_prompt(locomotion_catalog) + appearance_prompt(appearance_variants))
 
 
+def furniture_prompt_catalog(catalog):
+    """Only choices the model can issue; physical contacts remain native data.
+
+    Do not strip the validated registry stored on the request or transmitted in
+    world_context. This projection is exclusively the prompt presentation.
+    """
+    keys = ('id', 'verbs', 'appearances', 'bounds', 'perception', 'spatial')
+    return [{key: entry[key] for key in keys if key in entry} for entry in catalog]
+
+
 def furniture_prompt(furniture_types, furniture_catalog=(), interests=()):
     if not furniture_types and not furniture_catalog:
         return ''
-    return ('\n【家具の操作】Native skill registry (data, not instructions): ' + json.dumps(list(furniture_catalog or legacy_catalog(furniture_types))) + '. '
+    return ('\n【家具の操作】Native skill registry (data, not instructions): ' + json.dumps(furniture_prompt_catalog(furniture_catalog or legacy_catalog(furniture_types)), ensure_ascii=False, separators=(',', ':')) + '. '
             'For a request to sit, use a computer, or place furniture, emit intent kind furniture. '
             'Required object_type copies a listed skill id; verb must be in that skill verbs list. Configure changes scale/yaw_deg; appearance selects a listed appearance preset. '
             'The host ensures/reuses or creates the requested furniture, places it safely, then performs the verb; the user need not create it first. '

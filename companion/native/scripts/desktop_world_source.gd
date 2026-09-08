@@ -1,12 +1,13 @@
 class_name DesktopWorldSource
 extends Node
 ## Geometry-only Windows desktop source. Coordinates match Godot DisplayServer desktop pixels.
-## A single hidden child polls at 1 Hz while enabled; no process-per-frame work.
+## One persistent event-driven helper captures at most 8 Hz, with a 1 Hz heartbeat.
+## The small JSON transport is checked at 8 Hz; unchanged bytes are never reparsed.
 
 signal snapshot_changed(snapshot: Dictionary)
 
 const HELPER_PATH := "res://platform/windows_world.ps1"
-const POLL_SECONDS := 1.0
+const POLL_SECONDS := 0.125
 const STALE_MSEC := 5000
 var enabled := false
 var available := false
@@ -17,6 +18,9 @@ var _directory := ""
 var _snapshot_path := ""
 var _timer: Timer
 var _last_timestamp := 0
+var _last_payload := ""
+var parse_count := 0
+var unchanged_reads := 0
 
 
 func _ready() -> void:
@@ -76,6 +80,7 @@ func start() -> bool:
 		return false
 	last_error = ""
 	_last_timestamp = 0
+	_last_payload = ""
 	_timer.start()
 	return true
 
@@ -90,6 +95,7 @@ func stop() -> void:
 	_pid = -1
 	available = false
 	_last_timestamp = 0
+	_last_payload = ""
 	_cleanup_files()
 	_clear_snapshot()
 
@@ -124,13 +130,26 @@ func _read_snapshot(now_msec: int) -> void:
 		return
 	var payload := file.get_as_text()
 	file.close()
+	if payload == _last_payload and _last_timestamp > 0:
+		unchanged_reads += 1
+		if now_msec - _last_timestamp > STALE_MSEC:
+			available = false
+			last_error = "Desktop geometry snapshot is stale."
+			_clear_snapshot()
+		else:
+			available = not snapshot.is_empty()
+			last_error = ""
+		return
 	var decoder := JSON.new()
+	parse_count += 1
 	if decoder.parse(payload) != OK or not is_valid_snapshot(decoder.data):
 		_retain_or_expire(now_msec, "Invalid desktop geometry snapshot; waiting for next publication.")
 		return
+	_last_payload = payload
 	var parsed: Dictionary = decoder.data
 	var stamp := int(parsed["timestamp_msec"])
 	if now_msec - stamp > STALE_MSEC:
+		_last_timestamp = stamp
 		last_error = "Desktop geometry snapshot is stale."
 		available = false
 		_clear_snapshot()
@@ -158,7 +177,7 @@ static func to_godot_coordinates(raw: Dictionary) -> Dictionary:
 		monitor["y"] -= int(origin.y)
 		monitor["work_x"] -= int(origin.x)
 		monitor["work_y"] -= int(origin.y)
-	for window in result["windows"]:
+	for window in result["windows"] + result.get("taskbars", []):
 		window["x"] -= int(origin.x)
 		window["y"] -= int(origin.y)
 	return result
@@ -181,6 +200,10 @@ static func is_valid_snapshot(value: Variant) -> bool:
 				return false
 		if monitor["work_width"] <= 0 or monitor["work_height"] <= 0:
 			return false
+	if not value.get("taskbars", []) is Array or value.get("taskbars", []).size() > 64: return false
+	for bar in value.get("taskbars", []):
+		if not _valid_rect(bar) or bar.get("class_name") not in ["Shell_TrayWnd", "Shell_SecondaryTrayWnd"]: return false
+		if not _number(bar.get("z")) or float(bar.z) < 0: return false
 	for window in value["windows"]:
 		if not _valid_rect(window) or not _number(window.get("z")) or window["z"] < 0:
 			return false

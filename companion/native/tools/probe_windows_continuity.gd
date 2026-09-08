@@ -6,6 +6,7 @@ func write_report() -> void:
 
 var frames: Array = []
 var last_frame := -1
+var last_actor_foot:=Vector3.INF
 func sample() -> void:
 	super.sample()
 	if app == null or Engine.get_process_frames() == last_frame: return
@@ -15,9 +16,18 @@ func sample() -> void:
 	var row:Dictionary=frames[-1]
 	row.presence=app.motion.seated_presence.diagnostics.duplicate(true)
 	row.recovery=app.living.recovery_diagnostics.duplicate(true) if app.living != null else {}
+	row.manual_travel_m=0.0
+	if app.avatar.has_model():
+		var foot:Vector3=app.avatar.contact_anchors().foot
+		if last_actor_foot.is_finite() and row.stage in ["chair_setup","chair_restore"] and app.objects._interaction.get("chair_step",{}).get("phase","")=="move":row.manual_travel_m=foot.distance_to(last_actor_foot)
+		last_actor_foot=foot
 	row.ambient_weight=app.motion.authored_ambient.weight
 	row.carrier_admission=app.objects.fit_diagnostics.get("carrier_admission",{}).duplicate(true)
 	row.chair_phase=app.objects.fit_diagnostics.get("chair_phase",{}).duplicate(true)
+	row.standing_manipulation=app.objects.fit_diagnostics.get("standing_manipulation",{}).duplicate(true)
+	row.manipulation_admission=app.objects.fit_diagnostics.get("standing_manipulation_admission",{}).duplicate(true)
+	row.grip_body_clear=app.objects._interaction.get("grip_body_clear",false)
+	row.grip_errors=[app.objects._interaction.get("left_grip_error_m",-1),app.objects._interaction.get("right_grip_error_m",-1)]
 	if row.stage=="using" and row.hand_weight>.99:
 		row.wrist_errors={}
 		for side in ["left","right"]:
@@ -84,7 +94,8 @@ func run() -> void:
 
 	if not direct_skill({"kind":"furniture","object_type":"computer","verb":"use"},"continuity:computer"):
 		await finish(); return
-	if not check(await wait_for(func(): return app.objects._interaction.get("stage","") in ["scene_approaching","approaching"],20.0),"authored computer sequence starts"):
+	var setup_seen:=await wait_for(func(): return app.objects._interaction.get("stage","") in ["scene_approaching","approaching"] or (app.objects._interaction.get("stage","")=="chair_setup" and app.scene_navigation.navigation.active) or command_outcome("continuity:computer"),20.0)
+	if not check(setup_seen and not command_outcome("continuity:computer"),"authored computer sequence starts"):
 		await finish(); return
 	var owner: String = app.objects._interaction.get("command_id","")
 	app._set_panel_open(true,false)
@@ -117,9 +128,13 @@ func run() -> void:
 	check(await wait_for(func():return command_outcome(owner),25.0) and command_outcome(owner,"completed"),"computer use and authored exit finish normally across task announcements")
 	check(report.commands.filter(func(row):return row.id==owner).size()==1 and command_outcome(owner,"completed"),"body action completes exactly once without cancellation")
 	check(frames.any(func(row):return row.hand_weight>0.05 and row.hand_weight<0.95),"work hands acquire contact progressively")
+	var moving_grips:Array=frames.filter(func(row):return row.manual_travel_m>0.0000001 and row.stage in ["chair_setup","chair_restore"])
+	check(not moving_grips.is_empty() and moving_grips.all(func(row):return row.grip_body_clear is Dictionary and row.grip_body_clear.get("clear",false) and row.grip_errors[0]>=0 and row.grip_errors[0]<=.008 and row.grip_errors[1]>=0 and row.grip_errors[1]<=.008),"both palm contacts and body clearance hold during actual chair movement")
+	check(moving_grips.any(func(row):return row.stage=="chair_setup") and moving_grips.any(func(row):return row.stage=="chair_restore"),"actor manually prepares and restores the chair")
+	check(app.objects.fit_diagnostics.get("completed_exit_ground",{}).get("ok",false),"completed manipulation hands off valid standing ground")
 	check(frames.any(func(row):return row.stage=="chair_carry" and row.chair_kind=="settle_in"),"occupied chair swivels and rolls along one admitted path")
 	if not expected_walk.is_empty():check(frames.any(func(row):return row.gesture==expected_walk and row.travel_m>0.00001),"replacement drives committed desktop movement")
-	check(frames.any(func(row):return row.voice and row.travel_m>0.00001),"actual world travel overlaps voice playback")
+	check(frames.any(func(row):return row.voice and (row.travel_m>0.00001 or row.manual_travel_m>0.00001)),"actual committed navigation or manual chair travel overlaps voice playback")
 	check(frames.any(func(row):return row.job in ["starting","running"] and not str(row.stage).is_empty()),"actual body action overlaps background task")
 	if "--expect-presence" in OS.get_cmdline_user_args():
 		check(frames.any(func(row):return row.stage=="using" and row.presence.get("active",false) and row.presence.get("weight",0)>.99),"stationary seated presence resumes after occupied carry")

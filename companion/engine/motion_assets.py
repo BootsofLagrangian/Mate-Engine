@@ -213,7 +213,7 @@ def available_motions(bank, assets):
     motions = bank.bank()['motions']
     names = {motion['name'] for motion in motions}
     # These legacy names remain host-owned even in old catalogs without metadata.
-    context_names = {'walk', 'walk_formal', 'sit_idle', 'sit_enter', 'sit_exit'}
+    context_names = {'walk', 'walk_formal', 'sit_idle', 'sit_enter', 'sit_exit', 'floor_rest_enter', 'floor_rest_idle', 'floor_rest_exit'}
     asset_entries = [entry for entry, _ in assets.entries()]
     # Native capability guards also inspect the VRMA catalog when a bank clip
     # shadows its name, so context ownership must survive name deduplication.

@@ -151,32 +151,33 @@ func _finish_arrival() -> void:
 	if _completion.is_valid() and not ground_latched: release_to_contact()
 	_notify("arrived")
 
-func release_to_contact(reason: String="contact_handoff", notify_owner: bool=true) -> void:
+func release_to_contact(reason: String="contact_handoff", notify_owner: bool=true, preserve_motion:bool=false) -> void:
 	_arrival_pending=false
 	# Explicit mode departure owns cancellation, even if a prior caller already
 	# released the foot. Never leave a completion callback for another request.
 	var callback:=_completion if notify_owner else Callable()
 	if notify_owner:_completion=Callable()
 	if holding:
-		_stop_scene_motion()
+		if not preserve_motion:_stop_scene_motion()
 		if is_instance_valid(host.camera) and host.camera.is_inside_tree():
 			host._pivot_px=host.camera.unproject_position(foot_world);host._pivot_px_target=host._pivot_px
 			host._camera_pivot_depth=DesktopView.depth(host.camera,foot_world)
 		holding=false;ground_latched=false;navigation.cancel(reason);host.autonomy.set_process(true)
 	if callback.is_valid():callback.call(reason)
-func cancel(reason: String="cancelled") -> void:
+func cancel(reason: String="cancelled", preserve_motion:bool=false) -> void:
 	_arrival_pending=false;arrival_yaw=NAN
 	if not holding:
 		if _completion.is_valid():_notify(reason)
 		return
 	navigation.cancel(reason)
-	_stop_scene_motion();host.motion.cancel_heading()
+	if not preserve_motion:
+		_stop_scene_motion();host.motion.cancel_heading()
 	var stopped_scene := reason == "cancelled" and not ground_latched
 	if stopped_scene:ground_latched=true
 	if ground_latched and reason not in ["shutdown","disabled","character_changed","avatar_changed","dragged"]:
 		if _completion.is_valid() or stopped_scene:_notify(reason)
 		return
-	release_to_contact(reason,false)
+	release_to_contact(reason,false,preserve_motion)
 	_notify(reason)
 func shutdown() -> void:
 	if host!=null:cancel("shutdown")

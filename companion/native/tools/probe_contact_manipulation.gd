@@ -1,0 +1,61 @@
+extends SceneTree
+const Helper=preload("../scripts/desktop_contact_manipulation.gd")
+var failures:=0
+func _init()->void:call_deferred("run")
+func check(value:bool,label:String)->void:
+	print(label," ",value)
+	if not value:failures+=1
+func run()->void:
+	var scene:=DesktopObjectContactScene.new();root.add_child(scene)
+	if not scene.configure("computer"):push_error(scene.error);quit(2);return
+	var original:=scene.seat_setup()
+	var target:=Helper.target(scene,0)
+	check(not target.is_empty() and is_zero_approx(target.foot.y),"declared grip approach grounds actor")
+	var result:=Helper.admit(scene,.3,0,0,.12,1.6,[],Callable(),Callable())
+	print("clear path ",result)
+	check(result.accepted and scene.seat_setup()==original,"empty chair translation admits and restores")
+	scene.set_seat_setup(.15,0)
+	var mid:=Helper.target(scene,0)
+	scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
+	var obstacle:=AABB(mid.foot+Vector3(-.05,.2,-.05),Vector3(.1,.3,.1))
+	result=Helper.admit(scene,.3,0,0,.12,1.6,[obstacle],Callable(),Callable())
+	check(not result.accepted and scene.seat_setup()==original,"co moving body obstacle rejected and restored")
+	result=Helper.admit(scene,5,0,0,.12,1.6,[],Callable(),Callable())
+	check(not result.accepted and scene.seat_setup()==original,"invalid chair travel rejects and restores")
+	scene.rotation.y=deg_to_rad(35)
+	scene.set_seat_setup(.35,55)
+	var collected:Array=[];Helper._collect(scene,collected)
+	var runtime:Array=[];DesktopObjectsHost._append_scene_solids(scene,runtime)
+	check(collected==runtime,"selector obstacles exactly match runtime after assembly and chair rotations")
+	scene.rotation.y=0
+	scene.set_seat_setup(.8,0)
+	var turn_start:=scene.seat_setup()
+	result=Helper.admit(scene,.8,90,0,.12,1.6,[],Callable(),Callable())
+	check(result.accepted and scene.seat_setup()==turn_start,"chair relative stance stays clear through swivel")
+	scene.set_seat_setup(.8,45)
+	var orbit:=Helper.target(scene,0)
+	scene.set_seat_setup(.8,0)
+	result=Helper.admit(scene,.8,90,0,.12,1.6,[AABB(orbit.foot+Vector3(-.025,.3,-.025),Vector3(.05,.15,.05))],Callable(),Callable())
+	check(not result.accepted and scene.seat_setup()==turn_start,"real intermediate actor orbit obstacle rejected")
+	scene.set_seat_setup(original.pullout_local_m,original.yaw_delta_deg)
+	for side in ["left","right"]:
+		for i in 100:
+			var offset:=Helper.press_offset(float(i)/37,side,.6)
+			if offset.y<0 or offset.y>.002401 or offset.x!=0 or offset.z!=0:check(false,"keyboard presses stay above surface")
+	check(Helper.press_offset(0,"left",1)!=Helper.press_offset(0,"right",1),"alternating hands are independently phased")
+	var avatar:=VrmAvatar.new();root.add_child(avatar)
+	avatar.model=Node3D.new();avatar.add_child(avatar.model)
+	avatar.skeleton=Skeleton3D.new();avatar.model.add_child(avatar.skeleton)
+	var gait:=DesktopGait.new()
+	gait.sample_scene(avatar,Vector3.FORWARD,Vector3.FORWARD*.02,true,.02,true)
+	check(gait.phase_distance<0,"explicit pull reverses authored phase")
+	var previous:=gait.phase_distance
+	gait.sample_scene(avatar,Vector3.BACK,Vector3.BACK*.02,true,.02)
+	check(gait.phase_distance>previous,"ordinary travel keeps forward phase")
+	previous=gait.phase_distance
+	gait.sample_scene(avatar,Vector3.ZERO,Vector3.ZERO,true,0,true)
+	check(is_equal_approx(previous,gait.phase_distance),"stationary grip adds no fake translation phase")
+	avatar.free()
+	scene.free()
+	print("contact manipulation failures=",failures)
+	quit(1 if failures else 0)

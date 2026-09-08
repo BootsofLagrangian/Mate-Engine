@@ -20,6 +20,7 @@ var _shared_transform := Transform3D.IDENTITY
 var _shared_crop := Rect2()
 var _shared_projection_key: Array = []
 var _geometry_revision := 0
+var _resize_projection_pending := false
 var projection_profile: Dictionary = {"fits":0,"cache_hits":0,"geometry_collections":0,"last_fit_us":0,"last_collect_us":0,"last_lookup_us":0,"last_request_at_us":0,"last_fit_at_us":0,"timestamp_msec":0,"last_call_us":0,"last_call_succeeded":false}
 var _model_nodes: Array[Node3D] = []
 var _base_sockets: Dictionary = {}
@@ -64,6 +65,7 @@ func _init() -> void:
 	focus_exited.connect(_end_drag)
 	close_requested.connect(_end_drag)
 	visibility_changed.connect(_sync_shared_visibility)
+	size_changed.connect(func(): _resize_projection_pending = true)
 
 func configure(record: Dictionary, dimensions: Vector2i) -> bool:
 	object_id = str(record.id)
@@ -208,7 +210,7 @@ func _projection_fit_key() -> Array:
 	var geometry: Array = []
 	for mesh in _scene.find_children("*","MeshInstance3D",true,false):
 		geometry.append([mesh.get_instance_id(),mesh.global_transform,mesh.mesh.get_instance_id() if mesh.mesh != null else 0])
-	return [_shared_camera.get_instance_id(),_shared_camera.get_camera_transform(),_shared_camera.get_camera_projection(),_shared_camera.get_viewport().get_visible_rect().size,_shared_desktop_origin,_shared_transform,_geometry_revision,geometry,size,position,_camera.get_camera_transform(),_camera.get_camera_projection()]
+	return [_shared_camera.get_instance_id(),_shared_camera.get_camera_transform(),_shared_camera.get_camera_projection(),_shared_camera.get_viewport().get_visible_rect().size,_shared_desktop_origin,_shared_transform,_geometry_revision,geometry,size,get_visible_rect().size,position,_camera.get_camera_transform(),_camera.get_camera_projection()]
 
 func pixels_per_metre() -> float:
 	if _camera == null: return 0.0
@@ -350,6 +352,18 @@ func _input_object(event: InputEvent) -> void:
 		position = DisplayServer.mouse_get_position()-_grab
 
 func _process(_delta: float) -> void:
+	if _resize_projection_pending and is_instance_valid(_camera) and is_instance_valid(_scene):
+		_resize_projection_pending = false
+		if is_instance_valid(_shared_camera):
+			# A changed OS canvas is a crop of the same fixed world camera.
+			# Retry while native size and viewport updates settle, without falling
+			# back to an independently centered projection.
+			_shared_crop = Rect2(Vector2(position)-_shared_desktop_origin, Vector2(size))
+			_resize_projection_pending = not DesktopView.configure_crop(_camera, _shared_camera, _shared_crop)
+			_shared_projection_key.clear()
+		else:
+			_camera.keep_aspect = Camera3D.KEEP_HEIGHT
+			_camera.size = get_visible_rect().size.y / maxf(1.0, _reference_ppm*_object_scale*_projection_zoom)
 	if dragging and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT): _end_drag()
 
 func _end_drag() -> void:

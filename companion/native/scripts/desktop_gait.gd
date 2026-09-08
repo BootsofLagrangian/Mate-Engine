@@ -161,7 +161,7 @@ func sample(velocity_px: Vector2, traveled_px: Vector2, pixels_per_metre: float,
 ## Scene locomotion uses actual world X/Z arc length, including depth-only
 ## travel. Pixel X never substitutes for physical path distance or heading.
 func sample_scene(avatar: VrmAvatar, velocity_world: Vector3, traveled_world: Vector3,
-		supported: bool = true, distance_world_m: float = -1.0) -> void:
+		supported: bool = true, distance_world_m: float = -1.0, reverse_phase: bool = false) -> void:
 	if not avatar.has_model() or not velocity_world.is_finite() or not traveled_world.is_finite() or not is_finite(distance_world_m) or distance_world_m < -1.0:
 		sample(Vector2.ZERO,Vector2.ZERO,2.0,false)
 		return
@@ -178,7 +178,7 @@ func sample_scene(avatar: VrmAvatar, velocity_world: Vector3, traveled_world: Ve
 		var distance := (inverse*horizontal_delta).length()
 		if distance_world_m >= 0.0 and horizontal_delta.length() > 0.0000001:
 			distance *= maxf(distance_world_m,horizontal_delta.length())/horizontal_delta.length()
-		phase_distance = prior_phase+distance/maxf(stride,0.1)
+		phase_distance = prior_phase+(-1.0 if reverse_phase else 1.0)*distance/maxf(stride,0.1)
 
 ## Exact critically damped pursuit smooths OS integer-pixel distance impulses.
 ## Contacts still compensate the full actual displacement on the same frame.
