@@ -21,6 +21,7 @@ var fly_async := true
 var _fly_request_point := Vector2.INF
 var _fly_request_revision := -1
 var _fly_request_time := -INF
+var preference_provider: Callable
 var curiosity_enabled := true
 var curiosity_drive: Dictionary = {}
 var curiosity_decisions: Array[Dictionary] = []
@@ -300,9 +301,14 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 	if state == "working": state = "rest"
 	if curiosity_enabled and float(style.curiosity) > 0.0 and _queue.is_empty() and bool(context.get("can_move", false)) and _time >= _next_curiosity_check:
 		var position: Vector2 = context.get("actor_point", Vector2.INF)
-		var candidates: Array = _interests.values().filter(func(item): return item.kind in ["surface", "floor"])
+		var candidates: Array = []
+		for item in _interests.values():
+			if item.kind not in ["surface","floor"]:continue
+			var candidate: Dictionary = item.duplicate()
+			if preference_provider.is_valid(): candidate["preference_bonus"] = preference_provider.call(candidate)
+			candidates.append(candidate)
 		curiosity_drive = {}
-		if fly_enabled and fly_circuit.ready:
+		if fly_enabled and fly_circuit.is_ready():
 			if fly_async:
 				curiosity_drive = fly_circuit.poll()
 				if _fly_request_revision != interest_revision or position.distance_to(_fly_request_point) > 10.0 or _time-_fly_request_time > 5.0:

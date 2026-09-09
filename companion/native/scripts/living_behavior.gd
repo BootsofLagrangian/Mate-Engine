@@ -11,6 +11,11 @@ var drop_diagnostics: Dictionary = {"matches":0,"started":0,"released":0}
 var refresh_diagnostics:Dictionary={"calls":0,"last_refresh_us":0,"last_refresh_msec":0}
 var host
 var director := BehaviorDirector.new()
+var reduced_brain = director.fly_circuit
+var full_brain = preload("full_fly_brain_client.gd").new()
+var placement_preferences = preload("placement_preferences.gd").new()
+var _preference_revision := -1
+var _learning_enabled := true
 var scene_interests = preload("desktop_scene_interests.gd").new()
 var idle_recovery = preload("idle_recovery.gd").new()
 var surface_rest = preload("idle_surface_rest.gd").new()
@@ -49,7 +54,11 @@ const LABELS := {"rest":"편하게 쉬는 중", "curious":"관심 있는 곳 살
 func configure(app) -> void:
 	host = app
 	_settings = get_node("/root/Settings")
+	placement_preferences.configure(str(_settings.get_value("placement_learning_path", "user://placement-preferences.json")))
+	director.preference_provider = _placement_bonus
 	director.fly_circuit.load_file()
+	add_child(full_brain)
+	full_brain.configure(host.client.base_url)
 
 	points = InterestPoints.new()
 	points.name = "InterestPoints"
@@ -58,12 +67,16 @@ func configure(app) -> void:
 	points.set_points(_settings.get_value("interest_points", {}))
 	points.changed.connect(_points_changed)
 	host.panel.bind_interest_points(points)
+	host.panel.preference_reset_requested.connect(func():
+		placement_preferences.reset(host.session.character_id)
+		_update_placement_status())
+	_update_placement_status()
 	host.panel.point_go.connect(func(id: String): _user_point(id, "move_to"))
 	host.panel.point_inspect.connect(func(id: String): _user_point(id, "inspect"))
 	host.autonomy.frame_moved.connect(_frame_moved)
 	host.autonomy.navigation_finished.connect(_navigation_finished)
 	host.session.event_accepted.connect(_event)
-	host.session.character_changed.connect(func(_id: String): _refresh_at = 0.0; _published = "")
+	host.session.character_changed.connect(func(_id: String): _refresh_at = 0.0; _published = ""; _update_placement_status())
 	host.client.disconnected.connect(func(_why: String): cancel("disconnected"); _published = "")
 	director.intent_outcome.connect(func(id: String, outcome: String):
 		object_command_result(id,outcome)
@@ -80,6 +93,7 @@ func _set_enabled(value: bool) -> void:
 	host.autonomy.set_external_decisions(enabled)
 	host.panel.set_behavior_enabled(enabled)
 	if not enabled:
+		full_brain.set_enabled(false)
 		host.motion.set_ambient_state("rest", 0.0)
 		host.panel.set_behavior_state("스스로 행동 끔")
 
@@ -305,7 +319,21 @@ func tick(delta: float) -> void:
 	# waiting in the queue. It must never delay a new explicit movement.
 	_yield_recovery_to_explicit()
 	var can_move: bool = (scene_ground or host.autonomy.can_request_move()) and not host.bridge.dialogue_holding(host._now()) and not host.is_sitting() and not scene_moving and (not furniture_busy or _owns_legacy_furniture_approach())
-	director.configure_curiosity(bool(_settings.get_value("curiosity_enabled", true)), bool(_settings.get_value("fly_curiosity_enabled", false)))
+	var learning_enabled := bool(_settings.get_value("placement_learning_enabled",true))
+	if _preference_revision != placement_preferences._revision or _learning_enabled != learning_enabled:
+		_preference_revision = placement_preferences._revision; _learning_enabled = learning_enabled
+		_update_placement_status()
+		director.fly_circuit.reset(); director._fly_request_revision = -1
+	var brain_mode := str(_settings.get_value("fly_curiosity_mode", "reduced" if bool(_settings.get_value("fly_curiosity_enabled",false)) else "off"))
+	full_brain.configure(host.client.base_url)
+	full_brain.set_enabled(brain_mode=="full")
+	var selected_brain = full_brain if brain_mode=="full" else reduced_brain
+	if director.fly_circuit != selected_brain:
+		director.fly_circuit.reset()
+		director.fly_circuit=selected_brain
+		director.fly_circuit.reset()
+	if brain_mode=="full":reduced_brain.poll() # reap invalidated reduced worker after a mode switch
+	director.configure_curiosity(bool(_settings.get_value("curiosity_enabled", true)), brain_mode!="off")
 	last_output = director.tick(delta, {"character_id":host.session.character_id,"panel_open":host.panel_open,
 		"body_continuing":host.body_action_can_continue(),"dragging":host._drag_active or is_marker_dragging(),"speaking":speaking,"listening":listening,"thinking":thinking,"working":job_active,
 		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move and not idle_recovery.active() and _drop_contact.is_empty(),
@@ -557,6 +585,7 @@ func on_drag_released(foot: Vector2) -> Dictionary:
 	var actor: Rect2 = Rect2(Vector2(host.get_window().position)+host.pet_rect.position,host.pet_rect.size)
 	var dpi := float(DisplayServer.screen_get_dpi(host.get_window().current_screen))/96.0
 	_drop_contact=drop_affordance.nearest(host.world_source.snapshot,foot,actor,int(Time.get_unix_time_from_system()*1000.0),dpi)
+	_record_placement(foot, "window" if _drop_contact.get("kind","")=="window_wall" else str(_drop_contact.get("kind","free")))
 	if _drop_contact.is_empty(): return {}
 	_cancel_idle_recovery(false)
 	_drop_clock=0.0
@@ -723,3 +752,27 @@ func _tick_drop_contact(delta: float) -> void:
 				surface_rest.admitted(str(contact.surface_id))
 				drop_diagnostics.started+=1
 			_release_drop_contact("seat_admitted" if host._sit_pending else "seat_rejected")
+
+## Explicit placement evidence only; autonomous arrival callbacks never call this.
+func _preference_monitor(point:Vector2)->Rect2:
+	if host==null or host.world_source==null:return Rect2()
+	for monitor in host.world_source.snapshot.get("monitors",[]):
+		var area:=Rect2(float(monitor.x),float(monitor.y),float(monitor.width),float(monitor.height))
+		if area.has_point(point):return area
+	return Rect2()
+func _record_placement(point:Vector2,kind:String)->void:
+	if _settings==null or not bool(_settings.get_value("placement_learning_enabled",true)):return
+	placement_preferences.record_placement(host.session.character_id,point,_preference_monitor(point),kind,Time.get_unix_time_from_system())
+	_update_placement_status()
+func _placement_bonus(candidate:Dictionary)->float:
+	if _settings==null or not bool(_settings.get_value("placement_learning_enabled",true)):return 0.0
+	var point:Vector2=candidate.point
+	var kind:=str(candidate.get("kind","unknown"))
+	if str(candidate.get("id","")).begins_with("support:"):
+		kind=str(host.autonomy.get_support_contact().get("kind","surface"))
+	return placement_preferences.bonus(host.session.character_id,point,_preference_monitor(point),kind,Time.get_unix_time_from_system())
+
+func _update_placement_status()->void:
+	if host==null or _settings==null:return
+	var state:Dictionary=placement_preferences.export_diagnostics()
+	host.panel.set_placement_memory_status(int(state.characters.get(host.session.character_id,0)),bool(_settings.get_value("placement_learning_enabled",true)),not str(state.save_error).is_empty())

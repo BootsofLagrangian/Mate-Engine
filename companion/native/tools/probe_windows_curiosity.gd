@@ -74,7 +74,7 @@ func run() -> void:
 	output=argument("--output")
 	if output.is_empty():push_error("--output is required");quit(2);return
 	if not argument("--mode").is_empty():mode=argument("--mode")
-	if mode not in ["baseline","curiosity","fly"]:push_error("invalid --mode");quit(2);return
+	if mode not in ["baseline","curiosity","fly","full"]:push_error("invalid --mode");quit(2);return
 	if not argument("--duration").is_empty():duration_seconds=clampf(float(argument("--duration")),1.0,3600.0)
 	DirAccess.make_dir_recursive_absolute(output)
 	started=Time.get_ticks_msec()
@@ -83,7 +83,7 @@ func run() -> void:
 	settings_node=root.get_node("Settings");original=settings_node.data.duplicate(true)
 	var fixture:={"vad_enabled":false,"panel_open":false,"character":"cheval-grand","pet_scale":0.6,
 		"behavior_enabled":true,"autonomy_enabled":true,"surface_roam":true,
-		"curiosity_enabled":mode!="baseline","fly_curiosity_enabled":mode=="fly",
+		"curiosity_enabled":mode!="baseline","fly_curiosity_enabled":mode in ["fly","full"],"fly_curiosity_mode":"full" if mode=="full" else ("reduced" if mode=="fly" else "off"),"placement_learning_enabled":false,
 		"view_yaw_deg":0.0,"view_pitch_deg":0.0,"view_height":0.0,"view_zoom":1.0,
 		"desktop_objects":{"version":1,"next_id":1,"objects":[]}}
 	settings_node.data.merge(fixture,true)
@@ -101,8 +101,10 @@ func run() -> void:
 		"model_sha256":FileAccess.get_sha256(app.avatar.model_path),"renderer":RenderingServer.get_video_adapter_name()}
 	check(app.objects.rows().is_empty(),"no furniture fixture")
 	check(app.living.director.curiosity_enabled==(mode!="baseline"),"requested production curiosity mode applied")
-	check(app.living.director.fly_enabled==(mode=="fly"),"requested production fly drive mode applied")
-	if mode=="fly" and not check(app.living.director.fly_circuit.ready,"installed fly circuit is ready"):
+	check(app.living.director.fly_enabled==(mode in ["fly","full"]),"requested production fly drive mode applied")
+	if mode=="full":
+		await wait_for(func():return app.living.director.fly_circuit.is_ready(),40.0)
+	if mode in ["fly","full"] and not check(app.living.director.fly_circuit.is_ready(),"installed fly circuit is ready"):
 		await finish();return
 	app.autonomy.navigation_finished.connect(func(id:String,outcome:String):
 		if capture_active:navigation_events.append({"t_s":float(Time.get_ticks_usec()-capture_started_us)/1000000.0,"id":id,"outcome":outcome,"pointer_active":app.autonomy._pointer_interaction,"pointer":str(DisplayServer.mouse_get_position())}))
@@ -137,7 +139,7 @@ func run() -> void:
 	check(finite_trajectory and trajectory.size()>1,"finite actual native trajectory recorded")
 	check(max_displacement_px>20.0 and trajectory.any(func(row): return row.director_active_kind=="move_to"),"autonomous move intent produces more than 20 pixels displacement")
 	check(report.forced_target_injections==0,"no target injected during passive capture")
-	if mode=="fly":check(nonzero_fly_output,"native fly circuit produced nonzero drive output")
+	if mode in ["fly","full"]:check(nonzero_fly_output,"native fly circuit produced nonzero drive output")
 	var chatter:=false
 	for event in navigation_events:
 		if event.outcome!="interrupted" or not event.pointer_active:continue

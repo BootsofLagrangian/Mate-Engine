@@ -8,6 +8,7 @@ signal send_text(text: String)
 signal ptt_pressed
 signal ptt_released
 signal vad_toggled(enabled: bool)
+signal preference_reset_requested
 signal cancel_requested
 signal character_selected(id: String)
 signal avatar_variant_selected(id: String)
@@ -137,6 +138,9 @@ var _idle_choice := "auto"
 var _idle_profile_loop := ""
 var _tabs: TabContainer
 # behavior tab
+var _placement_learning_check: CheckButton
+var _placement_memory_status: Label
+var _placement_memory_reset: Button
 var _behavior_check: CheckButton
 var _behavior_state: Label
 var _point_list: ItemList
@@ -396,6 +400,22 @@ func _build_behavior_tab() -> void:
 	_behavior_state.add_theme_font_size_override("font_size", 11)
 	_behavior_state.modulate = Color(0.7, 0.7, 0.78)
 	v.add_child(_behavior_state)
+
+	_placement_learning_check = CheckButton.new()
+	_placement_learning_check.text = "직접 놓아준 자리 기억하기"
+	_placement_learning_check.tooltip_text = "직접 끌어 놓은 자리를 이 캐릭터의 산책 취향에 반영합니다. 끄면 새로 기억하거나 기존 기억을 사용하지 않습니다."
+	_placement_learning_check.button_pressed = bool(_setting("placement_learning_enabled",true))
+	_placement_learning_check.toggled.connect(func(on: bool): setting_changed.emit("placement_learning_enabled",on))
+	v.add_child(_placement_learning_check)
+	_placement_memory_status = Label.new()
+	_placement_memory_status.text = "기억한 배치: 확인 중"
+	_placement_memory_status.add_theme_font_size_override("font_size",11)
+	v.add_child(_placement_memory_status)
+	_placement_memory_reset = Button.new()
+	_placement_memory_reset.text = "이 캐릭터의 배치 기억 초기화"
+	_placement_memory_reset.tooltip_text = "현재 캐릭터의 배치 취향만 지웁니다. 저장한 관심 지점은 그대로입니다."
+	_placement_memory_reset.pressed.connect(func(): preference_reset_requested.emit())
+	v.add_child(_placement_memory_reset)
 
 	v.add_child(_section("관심 지점 (최대 %d개)" % InterestPoints.MAX_POINTS))
 	_point_list = ItemList.new()
@@ -2171,3 +2191,10 @@ func focus_input() -> void:
 func is_text_focused() -> bool:
 	var f := get_viewport().gui_get_focus_owner()
 	return f is LineEdit or f is TextEdit
+
+## Mirror host-owned learning controls without collecting any evidence here.
+func set_placement_memory_status(count: int, learning_enabled: bool, save_failed: bool = false) -> void:
+	_placement_learning_check.set_pressed_no_signal(learning_enabled)
+	_placement_memory_status.text = "기억한 배치: %d회%s" % [maxi(count,0)," · 사용 끔" if not learning_enabled else ""]
+	if save_failed: _placement_memory_status.text += " · 저장 실패"
+	_placement_memory_reset.disabled = count<=0

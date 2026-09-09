@@ -127,3 +127,5 @@ func poll() -> Dictionary:
 	diagnostics.last_us = result.us; diagnostics.calls += 1
 	diagnostics["last"] = result.drive.duplicate(true)
 	return result.drive
+
+func is_ready()->bool:return ready

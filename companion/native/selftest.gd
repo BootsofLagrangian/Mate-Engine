@@ -1446,6 +1446,17 @@ func _test_panel_behavior_tab() -> void:
 	got.clear()
 	panel.set_behavior_enabled(true)
 	check(panel.behavior_enabled() and got.is_empty(), "host mirror does not re-emit")
+	panel._placement_learning_check.button_pressed = false
+	check(got.has(["placement_learning_enabled",false]),"placement learning toggle uses existing settings channel")
+	got.clear()
+	panel.set_placement_memory_status(3,true)
+	check(got.is_empty() and panel._placement_learning_check.button_pressed and not panel._placement_memory_reset.disabled,"placement status mirrors without feedback loop")
+	var placement_resets: Array = []
+	panel.preference_reset_requested.connect(func(): placement_resets.append(true))
+	panel._placement_memory_reset.pressed.emit()
+	check(placement_resets.size()==1,"placement reset emits one host-owned request")
+	panel.set_placement_memory_status(0,false)
+	check(panel._placement_memory_reset.disabled and panel._placement_memory_status.text.contains("사용 끔"),"empty memory disables reset and shows learning off")
 	check(ControlPanel.behavior_state_text("move_to", "책상") == "'책상' 쪽으로 가는 중" and ControlPanel.behavior_state_text("inspect", "창") == "제자리에서 '창' 살펴보는 중" and ControlPanel.behavior_state_text("rest", "") == "쉬는 중" and ControlPanel.behavior_state_text("", "") == "자유롭게 지내는 중" and ControlPanel.behavior_state_text("move_to", "x", false) == "스스로 행동 끔 · 산책만", "readable state wording without protocol names")
 	panel.set_behavior_state(ControlPanel.behavior_state_text("inspect", "창"))
 	check(panel._behavior_state.text == "지금: 제자리에서 '창' 살펴보는 중", "state label")

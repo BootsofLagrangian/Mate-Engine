@@ -1,0 +1,3 @@
+# Optional full-connectome loader, on top of the existing Omni GPU environment.
+# PyTorch, NumPy and SciPy come from experiments/omni/requirements-lock.txt.
+pyarrow==25.0.1

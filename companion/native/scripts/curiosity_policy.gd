@@ -56,9 +56,10 @@ func choose(candidates: Array, position: Vector2, now: float, drive: Dictionary 
 		var confidence := _number(candidate.get("confidence",0.65),0.65,0.0,1.0)
 		var travel_cost := 0.7 * distance / (distance+300.0)
 		var direction_bonus := _drive_bonus(point-position,drive)
-		var score := 1.0 + confidence*0.25 - habituation*1.1 - travel_cost + direction_bonus
+		var preference_bonus := _number(candidate.get("preference_bonus",0.0),0.0,0.0,0.25)
+		var score := 1.0 + confidence*0.25 - habituation*1.1 - travel_cost + direction_bonus + preference_bonus
 		var entry := {"target_id":id,"point":point,"score":score,"distance":distance,
-			"novelty":1.0-habituation,"travel_cost":travel_cost,"drive_bonus":direction_bonus,
+			"novelty":1.0-habituation,"travel_cost":travel_cost,"drive_bonus":direction_bonus,"preference_bonus":preference_bonus,
 			"tie":_tie(id),"kind":str(candidate.get("kind","point"))}
 		scores.append(entry)
 		if best.is_empty() or score>float(best.score)+0.000001 or (absf(score-float(best.score))<=0.000001 and (int(entry.tie)<int(best.tie) or (int(entry.tie)==int(best.tie) and id<str(best.target_id)))):
@@ -92,7 +93,9 @@ func sensory(candidates: Array, position: Vector2, now: float) -> Dictionary:
 		var relative: Vector2 = (point-anchor)/CELL_SIZE
 		var cell: Dictionary = _memory.get("cell:%d:%d" % [floori(relative.x),floori(relative.y)],{})
 		var novelty := 1.0-maxf(_habituation(target,now),_habituation(cell,now))
-		var salience := novelty*_number(candidate.get("confidence",0.65),0.65,0.0,1.0)/(1.0+offset.length()/600.0)
+		var preference_bonus := _number(candidate.get("preference_bonus",0.0),0.0,0.0,0.25)
+		var salience := (novelty+preference_bonus)*_number(candidate.get("confidence",0.65),0.65,0.0,1.0)/(1.0+offset.length()/600.0)
+		salience = clampf(salience,0.0,1.0)
 		var horizontal := offset.normalized().x
 		output.left = maxf(float(output.left),salience*(1.0-horizontal)*0.5)
 		output.right = maxf(float(output.right),salience*(1.0+horizontal)*0.5)

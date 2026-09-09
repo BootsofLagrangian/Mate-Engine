@@ -20,6 +20,7 @@ from .motion_assets import MotionAssets, available_motions
 from .profiles import load_profiles, valid_id
 from .providers import create_provider, ScriptedProvider
 from .turns import Turn, make_request, is_job_turn
+from .fly_brain_service import FullBrainService, BrainUnavailable
 from .furniture import validate_catalog
 from .intent import validate_interests, validate_furniture_types, validate_locomotion_catalog, WORLD_TTL_SECONDS
 
@@ -42,6 +43,7 @@ def create_app(provider=None, history=None, profiles_dir=None, root=COMPANION_RO
     state.motion_assets = MotionAssets(state.root)
     state.job_settings = job_settings  # None -> read env per request (tests pass explicit settings)
     state.connections = set()
+    state.fly_brain = FullBrainService(state.root)
 
     def profiles():
         problems = []
@@ -77,6 +79,23 @@ def create_app(provider=None, history=None, profiles_dir=None, root=COMPANION_RO
                 'tts_url': config.tts_url(), 'characters': sorted(loaded), 'default_character': default_character(loaded),
                 'jobs': {'available': jobs['available'], 'workspace': jobs['root'], 'sandbox': jobs['sandbox'], 'problems': jobs['problems']},
                 'connections': len(state.connections)}
+
+    @app.get('/autonomy/brain')
+    def brain_status():
+        return state.fly_brain.status()
+
+    @app.post('/autonomy/brain/load')
+    def brain_load():
+        return state.fly_brain.warmup()
+
+    @app.post('/autonomy/brain/step')
+    async def brain_step(body: dict):
+        try:
+            return await asyncio.to_thread(state.fly_brain.step, body)
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+        except BrainUnavailable as exc:
+            raise HTTPException(503, str(exc)) from exc
 
     @app.get('/characters')
     def characters():

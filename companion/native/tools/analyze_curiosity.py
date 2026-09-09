@@ -37,7 +37,7 @@ def main():
     args.output.mkdir(parents=True,exist_ok=True)
     result={'scope':{'policy':'Fixed-speed kinematic replay of production decision policy. No native animation, collisions, monitor APIs or real-time thread scheduling.',
         'native':'Passive Windows execution on the taskbar support. Initial placement only; production selects targets. Sequential unpaired wall-clock runs; cursor/window activity can differ.',
-        'circuit':'154 actual FlyWire neurons / 6327 signed edges, selected PFL3-to-DNa02 subgraph. Engineered novelty input, rate dynamics, gain calibration and action decoding. Not full-brain or biological curiosity.',
+        'circuit':'Reduced fly conditions: 154 FlyWire neurons / 6327 signed edges, engineered rate model. full_connectome native condition: all 138639 supplied neurons / 15091983 signed records, homogeneous LIF on GPU. Both use engineered novelty encoding/action decoding, not biological curiosity.',
         'baseline':'Old idle dispatch cadence; added intermediate reachable destinations shared by all conditions. Novelty versus fly uses the same cadence.',
         'selection':'58-neuron reduction retained as a rejected candidate: nearly silent bilateral calibration reference. 154-neuron graph selected for well-conditioned readouts.',
         'performance':'Recorded frame intervals include all application/render work; they are not attributed solely to the circuit.'}}
@@ -63,7 +63,7 @@ def main():
                 if run['mode']!=mode:continue
                 rows=run['trajectory'];ax.plot([x['t_s'] for x in rows],[x['foot_px'][0] for x in rows],alpha=.45,lw=1)
             ax.set_ylabel(mode+'\nx (px)');ax.grid(alpha=.2)
-        axes[-1].set_xlabel('Simulated time (s)');fig.suptitle('Policy-only replay: 12 paired starts, fixed 75 px/s; not native motion')
+        axes[-1].set_xlabel('Simulated time (s)');fig.suptitle('REDUCED circuit policy-only replay: 12 paired starts, fixed 75 px/s; not native motion')
         fig.tight_layout();fig.savefig(args.output/'policy-trajectories.png',dpi=160);plt.close(fig)
     if args.native:
         native=[];fig,axes=plt.subplots(2,1,figsize=(10,7))
