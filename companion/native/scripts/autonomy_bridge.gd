@@ -86,14 +86,17 @@ static func is_blocked(ctx: Dictionary) -> bool:
 
 
 ## Pointer "near" the interactive pet: inside the grown pet rect or over the handle, or dragging.
-static func pointer_near(mouse_local: Vector2, pet_rect: Rect2, handle_rect: Rect2, dragging: bool) -> bool:
+static func pointer_near(mouse_local: Vector2, pet_rect: Rect2, handle_rect: Rect2, dragging: bool, was_near: bool = false) -> bool:
 	if dragging:
 		return true
 	if not mouse_local.is_finite():
 		return false
-	if pet_rect.grow(POINTER_NEAR_MARGIN).has_point(mouse_local):
+	# Authored poses change the visible silhouette even with planted feet.
+	# Exit farther away so stopping a walk cannot immediately clear its hover.
+	var exit_extra := 24.0 if was_near else 0.0
+	if pet_rect.grow(POINTER_NEAR_MARGIN + exit_extra).has_point(mouse_local):
 		return true
-	return handle_rect.has_area() and handle_rect.grow(POINTER_NEAR_MARGIN * 0.5).has_point(mouse_local)
+	return handle_rect.has_area() and handle_rect.grow(POINTER_NEAR_MARGIN * 0.5 + exit_extra).has_point(mouse_local)
 
 
 static func state_label(state: String, enabled: bool, panel_open: bool, sitting: bool = false) -> String:

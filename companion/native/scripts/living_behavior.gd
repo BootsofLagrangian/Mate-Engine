@@ -49,6 +49,8 @@ const LABELS := {"rest":"편하게 쉬는 중", "curious":"관심 있는 곳 살
 func configure(app) -> void:
 	host = app
 	_settings = get_node("/root/Settings")
+	director.fly_circuit.load_file()
+
 	points = InterestPoints.new()
 	points.name = "InterestPoints"
 	points.anchor_provider = func(): return Vector2i(Vector2(host.get_window().position) + Vector2(host._projected_anchors().get("foot", host.pet_rect.get_center())) - Vector2(0, 2))
@@ -303,12 +305,13 @@ func tick(delta: float) -> void:
 	# waiting in the queue. It must never delay a new explicit movement.
 	_yield_recovery_to_explicit()
 	var can_move: bool = (scene_ground or host.autonomy.can_request_move()) and not host.bridge.dialogue_holding(host._now()) and not host.is_sitting() and not scene_moving and (not furniture_busy or _owns_legacy_furniture_approach())
+	director.configure_curiosity(bool(_settings.get_value("curiosity_enabled", true)), bool(_settings.get_value("fly_curiosity_enabled", false)))
 	last_output = director.tick(delta, {"character_id":host.session.character_id,"panel_open":host.panel_open,
 		"body_continuing":host.body_action_can_continue(),"dragging":host._drag_active or is_marker_dragging(),"speaking":speaking,"listening":listening,"thinking":thinking,"working":job_active,
 		"pointer_interaction":host.autonomy._pointer_interaction,"can_move":can_move and not idle_recovery.active() and _drop_contact.is_empty(),
 		"autonomy_enabled":host.autonomy.enabled,"autonomy_state":"walk" if scene_moving else ("rest" if scene_ground else host.autonomy.state),
 		"moving":scene_moving or host.autonomy.state == "walk", "pointer_point":pointer,
-		"actor_point":Vector2(host.get_window().position) + host.pet_rect.get_center(),
+		"actor_point":Vector2(host.get_window().position) + Vector2(host._projected_anchors().foot),
 		"preview_active":host.motion._preview or host.motion._custom_motion,
 		"dialogue_gesture_active":host._dialogue_gesture_active()})
 	var action: Dictionary = last_output.get("action", {})

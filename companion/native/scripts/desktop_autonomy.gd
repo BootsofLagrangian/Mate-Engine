@@ -854,6 +854,10 @@ func available_surface_targets() -> Array[Dictionary]:
 		return result
 	result.append({"id": "support:left", "point": Vector2(span.x + _locked_anchor.x, float(_support.y)), "kind": "surface", "label": "현재 지지면 왼쪽"})
 	result.append({"id": "support:right", "point": Vector2(span.y + _locked_anchor.x, float(_support.y)), "kind": "surface", "label": "현재 지지면 오른쪽"})
+	# Stable intermediate destinations let curiosity explore without repeatedly
+	# traversing the full monitor. The existing endpoints stay addressable.
+	for i in range(1, 6):
+		result.append({"id":"support:section:%d" % i, "point":Vector2(lerpf(span.x,span.y,float(i)/6.0)+_locked_anchor.x,float(_support.y)), "kind":"surface", "label":"현재 지지면 둘러보기 %d" % i})
 	return result
 
 

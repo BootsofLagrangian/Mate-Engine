@@ -14,6 +14,17 @@ const NAVIGATION_COMPLETION_SECONDS := 45.0
 const STYLE_DEFAULTS := {"idle_interval_s": 12.0, "gaze_hold_s": 2.0,
 	"response_delay_s": 0.25, "curiosity": 0.5, "posture_strength": 0.5}
 
+var curiosity = preload("curiosity_policy.gd").new()
+var fly_circuit = preload("fly_curiosity_circuit.gd").new()
+var fly_enabled := false
+var fly_async := true
+var _fly_request_point := Vector2.INF
+var _fly_request_revision := -1
+var _fly_request_time := -INF
+var curiosity_enabled := true
+var curiosity_drive: Dictionary = {}
+var curiosity_decisions: Array[Dictionary] = []
+var _next_curiosity_check := 12.0
 var character_id := ""
 var interest_revision := 0
 var state := "rest"
@@ -38,6 +49,14 @@ var _pending_cancel: Dictionary = {}
 var _posture_allowed := true
 var _changing_character := false
 
+func configure_curiosity(enabled: bool, use_fly: bool) -> void:
+	if curiosity_enabled != enabled or fly_enabled != use_fly:
+		fly_circuit.reset()
+		_fly_request_revision = -1
+	curiosity_enabled = enabled
+	fly_enabled = use_fly
+	if not enabled or not use_fly: fly_circuit.poll() # reap invalidated finished work
+
 func configure_style(values: Dictionary) -> void:
 	for key in STYLE_DEFAULTS:
 		var value := float(values.get(key, STYLE_DEFAULTS[key]))
@@ -61,6 +80,10 @@ func set_character(value: String) -> void:
 	_history.clear()
 	_last_attention.clear()
 	_last_move_target = ""
+	curiosity.reset()
+	fly_circuit.reset()
+	curiosity_decisions.clear()
+	_next_curiosity_check = _time + 12.0
 	interest_revision += 1
 	_attention = Vector2.INF
 	_attention_id = ""
@@ -150,6 +173,8 @@ func cancel_intent(id: String, reason: String = "cancelled") -> bool:
 	return false
 
 func cancel_all(reason: String = "cancelled") -> void:
+	fly_circuit.reset()
+	_fly_request_revision = -1
 	var queued := _queue.duplicate()
 	_queue.clear()
 	# Retired IDs stay deduplicated even before their individual notifications.
@@ -249,6 +274,7 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 			_active = intent
 			if intent.kind == "move_to":
 				var interest: Dictionary = _interests[intent.target_id]
+				_active["target_point"] = interest.point
 				action = {"type": "move_interest", "id": intent.id, "target_id": intent.target_id,
 					"point": interest.point, "kind": interest.kind, "locomotion_id":intent.get("locomotion_id",""), "ttl": maxf(0.1, float(intent.expires) - _time)}
 				_attention = interest.point
@@ -272,6 +298,35 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 		state = "working"
 		return _snapshot(action)
 	if state == "working": state = "rest"
+	if curiosity_enabled and float(style.curiosity) > 0.0 and _queue.is_empty() and bool(context.get("can_move", false)) and _time >= _next_curiosity_check:
+		var position: Vector2 = context.get("actor_point", Vector2.INF)
+		var candidates: Array = _interests.values().filter(func(item): return item.kind in ["surface", "floor"])
+		curiosity_drive = {}
+		if fly_enabled and fly_circuit.ready:
+			if fly_async:
+				curiosity_drive = fly_circuit.poll()
+				if _fly_request_revision != interest_revision or position.distance_to(_fly_request_point) > 10.0 or _time-_fly_request_time > 5.0:
+					if not curiosity_drive.is_empty(): fly_circuit.reset() # discard recurrent state as well as drive
+					curiosity_drive = {}
+				if curiosity_drive.is_empty():
+					if not fly_circuit.pending():
+						_fly_request_point = position; _fly_request_revision = interest_revision; _fly_request_time = _time
+						fly_circuit.begin(curiosity.sensory(candidates, position, _time))
+					return _snapshot(action)
+			else: curiosity_drive = fly_circuit.step(curiosity.sensory(candidates, position, _time))
+		_next_curiosity_check = _time + 5.0
+		if not curiosity_drive.is_empty(): curiosity_drive["heading"] = Vector2.UP # explicit screen-left/right steering adapter
+		var decision: Dictionary = curiosity.choose(candidates, position, _time, curiosity_drive)
+		decision["drive"] = curiosity_drive.duplicate(true)
+		decision["time"] = _time
+		decision["position"] = position
+		curiosity_decisions.append(decision.duplicate(true))
+		if curiosity_decisions.size() > 64: curiosity_decisions.pop_front()
+		var chosen := str(decision.get("target_id", ""))
+		if not chosen.is_empty():
+			_cycle += 1
+			request_intent("local:curiosity:%d" % _cycle, "move_to", chosen, "local", 45.0)
+			return _snapshot(action)
 	if _time >= _phase_until:
 		_cycle += 1
 		if state == "curious" or state == "sleepy":
@@ -288,7 +343,7 @@ func tick(delta: float, context: Dictionary) -> Dictionary:
 				_last_attention[target_id] = _time
 				_phase_until = _time + float(style.gaze_hold_s)
 				# Local exploration is intermittent and explicit, never an LLM call.
-				if _cycle % 3 == 0 and _time >= _next_move and bool(context.get("can_move", false)) and _interests[target_id].kind in ["surface", "floor"]:
+				if not curiosity_enabled and _cycle % 3 == 0 and _time >= _next_move and bool(context.get("can_move", false)) and _interests[target_id].kind in ["surface", "floor"]:
 					var move_target := target_id
 					if move_target == _last_move_target:
 						var choices := _interests.keys();choices.sort()
@@ -339,6 +394,8 @@ func _finish_active(outcome: String) -> void:
 	if _active.is_empty():
 		return
 	var id := str(_active.id)
+	if id.begins_with("local:curiosity:"):
+		curiosity.observe_arrival(str(_active.target_id), Vector2(_active.get("target_point", Vector2.INF)), _time, outcome)
 	_active.clear()
 	state = "rest"
 	_attention = Vector2.INF

@@ -1712,7 +1712,7 @@ func _push_autonomy_context() -> void:
 	# Passthrough hides pointer events outside the pet region, so use the global pointer.
 	var mouse_local := Vector2(DisplayServer.mouse_get_position() - get_window().position)
 	var handle_rect := Rect2(handle_button.position, handle_button.size) if handle_button.visible else Rect2()
-	autonomy.set_pointer_interaction(not continuing and AutonomyBridge.pointer_near(mouse_local, pet_rect, handle_rect, _drag_active))
+	autonomy.set_pointer_interaction(not continuing and AutonomyBridge.pointer_near(mouse_local, pet_rect, handle_rect, _drag_active, autonomy._pointer_interaction))
 
 
 ## A user turn takes attention. Explicit actions retain their body; spontaneous
